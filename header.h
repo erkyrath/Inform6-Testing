@@ -1118,6 +1118,14 @@ typedef struct operator_s
 #define callfii_gc 78
 #define callfiii_gc 79
 
+/* ------------------------------------------------------------------------- */
+/*   Index numbers into the keyword group "opcode_macros_g" (see "lexer.c")  */
+/* ------------------------------------------------------------------------- */
+
+#define pull_gm   0
+#define push_gm   1
+
+
 #define SYMBOL_TT    0                      /* value = index in symbol table */
 #define NUMBER_TT    1                      /* value = the number            */
 #define DQ_TT        2                      /* no value                      */
@@ -1138,6 +1146,7 @@ typedef struct operator_s
                                                syntax for a directive        */
 #define TRACE_KEYWORD_TT  110               /* keyword used in debugging     */
 #define SYSTEM_CONSTANT_TT 111              /* such as "code_offset"         */
+#define OPCODE_MACRO_TT   112               /* fake opcode for compatibility */
 
 #define OP_TT        200                    /* value = operator no           */
 #define ENDEXP_TT    201                    /* no value                      */
@@ -2345,7 +2354,8 @@ extern void restart_lexer(char *lexical_source, char *name);
 
 extern keyword_group directives, statements, segment_markers,
        conditions, system_functions, local_variables, opcode_names,
-       misc_keywords, directive_keywords, trace_keywords, system_constants;
+       misc_keywords, directive_keywords, trace_keywords, system_constants,
+       opcode_macros;
 
 /* ------------------------------------------------------------------------- */
 /*   Extern definitions for "linker"                                         */

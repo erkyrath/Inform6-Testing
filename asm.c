@@ -554,6 +554,13 @@ static opcodeg opcodes_table_g[] = {
   { (uchar *) "callfiii",   0x0163, St, 0, 5 },
 };
 
+/* The opmacros table is used for fake opcodes. The opcode numbers are
+   ignored; this table is only used for argument parsing. */
+static opcodeg opmacros_table_g[] = {
+  { (uchar *) "pull", 0, St, 0, 1 },
+  { (uchar *) "push", 0,  0, 0, 1 },
+};
+
 static opcodeg custom_opcode_g;
 
 static opcodez internal_number_to_opcode_z(int32 i)
@@ -609,6 +616,11 @@ static opcodeg internal_number_to_opcode_g(int32 i)
     if (i == -1) return custom_opcode_g;
     x = opcodes_table_g[i];
     return x;
+}
+
+static opcodeg internal_number_to_opmacro_g(int32 i)
+{
+    return opmacros_table_g[i];
 }
 
 static void make_opcode_syntax_g(opcodeg opco)
@@ -941,6 +953,60 @@ extern void assemblez_instruction(assembly_instruction *AI)
     OpcodeSyntaxError:
 
     make_opcode_syntax_z(opco);
+    error_named("Assembly mistake: syntax is", opcode_syntax_string);
+}
+
+static void assembleg_macro(assembly_instruction *AI)
+{
+    /* validate macro syntax first */
+    int ix, no_operands_given;
+    opcodeg opco;
+
+    opco = internal_number_to_opmacro_g(AI->internal_number);
+    no_operands_given = AI->operand_count;
+
+    if (no_operands_given != opco.no)
+        goto OpcodeSyntaxError;
+
+    for (ix = 0; ix < no_operands_given; ix++) {
+        int type = AI->operand[ix].type;
+        if ((opco.flags & St)
+          && ((!(opco.flags & Br) && (ix == no_operands_given-1))
+          || ((opco.flags & Br) && (ix == no_operands_given-2)))) {
+            if (is_constant_ot(type)) {
+                error("*** assembly macro tried to store to a constant ***");
+                goto OpcodeSyntaxError;
+            }
+        }
+        if ((opco.flags & St2)
+            && (ix == no_operands_given-2)) {
+            if (is_constant_ot(type)) {
+              error("*** assembly macro tried to store to a constant ***");
+              goto OpcodeSyntaxError;
+            }
+        }
+    }
+
+    /* expand the macro */
+    switch (AI->internal_number) {
+        case pull_gm:
+            assembleg_store(AI->operand[0], stack_pointer);
+            break;
+
+        case push_gm:
+            assembleg_store(stack_pointer, AI->operand[0]);
+            break;
+
+        default:
+            compiler_error("Invalid Glulx assembly macro");
+            break;
+    }
+
+    return;
+
+    OpcodeSyntaxError:
+
+    make_opcode_syntax_g(opco);
     error_named("Assembly mistake: syntax is", opcode_syntax_string);
 }
 
@@ -2729,13 +2795,15 @@ static void parse_assembly_g(void)
 {
   opcodeg O;
   assembly_operand AO;
-  int error_flag = FALSE;
+  int error_flag = FALSE, is_macro = FALSE;
 
   AI.operand_count = 0;
 
   opcode_names.enabled = TRUE;
+  opcode_macros.enabled = TRUE;
   get_next_token();
   opcode_names.enabled = FALSE;
+  opcode_macros.enabled = FALSE;
 
   if (token_type == DQ_TT) {
     error("Runtime assembly definitions are not yet supported in Glulx.");
@@ -2743,13 +2811,18 @@ static void parse_assembly_g(void)
     return;
   }
   else {
-    if (token_type != OPCODE_NAME_TT) {
+    if (token_type != OPCODE_NAME_TT && token_type != OPCODE_MACRO_TT) {
       ebf_error("an opcode name", token_text);
       panic_mode_error_recovery();
       return;
     }
     AI.internal_number = token_value;
-    O = internal_number_to_opcode_g(AI.internal_number);
+    if (token_type == OPCODE_MACRO_TT) {
+      O = internal_number_to_opmacro_g(AI.internal_number);
+      is_macro = TRUE;
+    }
+    else
+      O = internal_number_to_opcode_g(AI.internal_number);
   }
   
   return_sp_as_variable = TRUE;
@@ -2791,8 +2864,12 @@ static void parse_assembly_g(void)
     error_flag = TRUE;
   }
 
-  if (!error_flag)
-    assembleg_instruction(&AI);
+  if (!error_flag) {
+    if (is_macro)
+      assembleg_macro(&AI);
+    else
+      assembleg_instruction(&AI);
+  }
 
   if (error_flag) {
     make_opcode_syntax_g(O);
