@@ -1,10 +1,10 @@
 /* ------------------------------------------------------------------------- */
 /*   Header file for Inform:  Z-machine ("Infocom" format) compiler          */
 /*                                                                           */
-/*                              Inform 6.30                                  */
+/*                              Inform 6.31                                  */
 /*                                                                           */
 /*   This header file and the others making up the Inform source code are    */
-/*   copyright (c) Graham Nelson 1993 - 2004                                 */
+/*   copyright (c) Graham Nelson 1993 - 2006                                 */
 /*                                                                           */
 /*   Manuals for this language are available from the IF-Archive at          */
 /*   http://www.ifarchive.org/                                               */
@@ -30,8 +30,8 @@
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
-#define RELEASE_DATE "27th Feb 2004"
-#define RELEASE_NUMBER 1630
+#define RELEASE_DATE "10th Feb 2006"
+#define RELEASE_NUMBER 1631
 #define GLULX_RELEASE_NUMBER 38
 #define MODULE_VERSION_NUMBER 1
 #define VNUMBER RELEASE_NUMBER
@@ -728,7 +728,7 @@ typedef struct prop {
 typedef struct fpropt {
     uchar atts[6];
     char l;
-    prop pp[32];
+    prop pp[64];
 } fpropt;
 
 typedef struct objecttz {
