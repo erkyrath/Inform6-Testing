@@ -798,9 +798,9 @@ typedef struct ErrorPosition_s
     int  main_flag;
 } ErrorPosition;
 
-/*  A memory block can hold at most 640K:  */
+/*  A memory block can hold at most ALLOC_CHUNK_SIZE * 72:  */
 
-#define ALLOC_CHUNK_SIZE 8192
+extern int ALLOC_CHUNK_SIZE;
 
 typedef struct memory_block_s
 {   int chunks;

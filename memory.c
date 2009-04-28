@@ -123,7 +123,7 @@ extern void write_byte_to_memory_block(memory_block *MB, int32 index, int value)
     {   compiler_error_named("memory: negative index to", chunk_name(MB, 0));
         return;
     }
-    if (ch >= 72) fatalerror("One of the memory blocks has exceeded 640K");
+    if (ch >= 72) memoryerror("ALLOC_CHUNK_SIZE", ALLOC_CHUNK_SIZE);
 
     if (MB->chunk[ch] == NULL)
     {   int i;
@@ -174,6 +174,7 @@ int MAX_GLOBAL_VARIABLES;
 int DICT_WORD_SIZE;
 int NUM_ATTR_BYTES;
 int32 MAX_NUM_STATIC_STRINGS;
+int ALLOC_CHUNK_SIZE;
 
 /* The way memory sizes are set causes great nuisance for those parameters
    which have different defaults under Z-code and Glulx. We have to get
@@ -185,6 +186,7 @@ static int MAX_GLOBAL_VARIABLES_z, MAX_GLOBAL_VARIABLES_g;
 static int MAX_LOCAL_VARIABLES_z, MAX_LOCAL_VARIABLES_g;
 static int DICT_WORD_SIZE_z, DICT_WORD_SIZE_g;
 static int NUM_ATTR_BYTES_z, NUM_ATTR_BYTES_g;
+static int ALLOC_CHUNK_SIZE_z, ALLOC_CHUNK_SIZE_g;
 
 /* ------------------------------------------------------------------------- */
 /*   Memory control from the command line                                    */
@@ -197,6 +199,7 @@ static void list_memory_sizes(void)
     printf("|  %25s = %-7d |\n","MAX_ABBREVS",MAX_ABBREVS);
     printf("|  %25s = %-7d |\n","MAX_ACTIONS",MAX_ACTIONS);
     printf("|  %25s = %-7d |\n","MAX_ADJECTIVES",MAX_ADJECTIVES);
+    printf("|  %25s = %-7d |\n","ALLOC_CHUNK_SIZE",ALLOC_CHUNK_SIZE);
     printf("|  %25s = %-7d |\n","NUM_ATTR_BYTES",NUM_ATTR_BYTES);
     printf("|  %25s = %-7d |\n","MAX_CLASSES",MAX_CLASSES);
     printf("|  %25s = %-7d |\n","MAX_CLASS_TABLE_SIZE",MAX_CLASS_TABLE_SIZE);
@@ -285,6 +288,9 @@ extern void set_memory_sizes(int size_flag)
 
         MAX_GLOBAL_VARIABLES_z = 240;
         MAX_GLOBAL_VARIABLES_g = 512;
+
+        ALLOC_CHUNK_SIZE_z = 8192;
+        ALLOC_CHUNK_SIZE_g = 32768;
     }
     if (size_flag == LARGE_SIZE)
     {
@@ -333,6 +339,9 @@ extern void set_memory_sizes(int size_flag)
 
         MAX_GLOBAL_VARIABLES_z = 240;
         MAX_GLOBAL_VARIABLES_g = 512;
+
+        ALLOC_CHUNK_SIZE_z = 8192;
+        ALLOC_CHUNK_SIZE_g = 16384;
     }
     if (size_flag == SMALL_SIZE)
     {
@@ -381,6 +390,9 @@ extern void set_memory_sizes(int size_flag)
 
         MAX_GLOBAL_VARIABLES_z = 240;
         MAX_GLOBAL_VARIABLES_g = 256;
+
+        ALLOC_CHUNK_SIZE_z = 8192;
+        ALLOC_CHUNK_SIZE_g = 8192;
     }
 
     /* Regardless of size_flag... */
@@ -405,6 +417,7 @@ extern void adjust_memory_sizes()
     MAX_LOCAL_VARIABLES = MAX_LOCAL_VARIABLES_z;
     DICT_WORD_SIZE = DICT_WORD_SIZE_z;
     NUM_ATTR_BYTES = NUM_ATTR_BYTES_z;
+    ALLOC_CHUNK_SIZE = ALLOC_CHUNK_SIZE_z;
   }
   else {
     MAX_ZCODE_SIZE = MAX_ZCODE_SIZE_g;
@@ -413,6 +426,7 @@ extern void adjust_memory_sizes()
     MAX_LOCAL_VARIABLES = MAX_LOCAL_VARIABLES_g;
     DICT_WORD_SIZE = DICT_WORD_SIZE_g;
     NUM_ATTR_BYTES = NUM_ATTR_BYTES_g;
+    ALLOC_CHUNK_SIZE = ALLOC_CHUNK_SIZE_g;
   }
 }
 
@@ -644,7 +658,13 @@ static void explain_parameter(char *command)
 "  MAX_NUM_STATIC_STRINGS is the maximum number of compiled strings \n\
   allowed in the program. (Glulx only)\n");
         return;
-
+    }
+    if (strcmp(command,"ALLOC_CHUNK_SIZE")==0)
+    {
+        printf(
+"  ALLOC_CHUNK_SIZE is a base unit of Inform's internal memory allocation \n\
+  for various structures.\n");
+        return;
     }
 
     printf("No such memory setting as \"%s\"\n",command);
@@ -778,6 +798,10 @@ extern void memory_command(char *command)
             if (strcmp(command,"MAX_GLOBAL_VARIABLES")==0)
             {   MAX_GLOBAL_VARIABLES=j, flag=1;
                 MAX_GLOBAL_VARIABLES_g=MAX_GLOBAL_VARIABLES_z=j;
+            }
+            if (strcmp(command,"ALLOC_CHUNK_SIZE")==0)
+            {   ALLOC_CHUNK_SIZE=j, flag=1;
+                ALLOC_CHUNK_SIZE_g=ALLOC_CHUNK_SIZE_z=j;
             }
 
             if (flag==0)
