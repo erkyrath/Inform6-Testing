@@ -2806,9 +2806,70 @@ static void parse_assembly_g(void)
   opcode_macros.enabled = FALSE;
 
   if (token_type == DQ_TT) {
-    error("Runtime assembly definitions are not yet supported in Glulx.");
-    panic_mode_error_recovery();
-    return;
+    char *cx;
+    int badflags;
+
+    AI.internal_number = -1;
+
+    /* The format is @"FlagsCount:Code". Flags (which are optional)
+       can include "S" for store, "SS" for two stores, "B" for branch
+       format, "R" if execution never continues after the opcode. The
+       Count is the number of arguments (currently limited to 0-9),
+       and the Code is a decimal integer representing the opcode
+       number.
+
+       So: @"S3:123" for a three-argument opcode (load, load, store)
+       whose opcode number is (decimal) 123. Or: @"2:234" for a
+       two-argument opcode (load, load) whose number is 234. */
+
+    custom_opcode_g.name = (uchar *) token_text;
+    custom_opcode_g.flags = 0;
+    custom_opcode_g.op_rules = 0;
+    custom_opcode_g.no = 0;
+
+    badflags = FALSE;
+
+    for (cx = token_text; *cx && *cx != ':'; cx++) {
+      if (badflags)
+      continue;
+
+      switch (*cx) {
+      case 'S':
+      if (custom_opcode_g.flags & St)
+        custom_opcode_g.flags |= St2;
+      else
+        custom_opcode_g.flags |= St;
+      break;
+      case 'B':
+      custom_opcode_g.flags |= Br;
+      break;
+      case 'R':
+      custom_opcode_g.flags |= Rf;
+      break;
+      default:
+      if (isdigit(*cx)) {
+        custom_opcode_g.no = (*cx) - '0';
+        break;
+      }
+      badflags = TRUE;
+      error("Unknown custom opcode flag: options are B (branch), \
+S (store), SS (two stores), R (execution never continues)");
+      break;
+      }
+    }
+
+    if (*cx != ':') {
+      error("Custom opcode must have colon");
+    }
+    else {
+      cx++;
+      if (!(*cx))
+      error("Custom opcode must have colon followed by opcode number");
+      else
+      custom_opcode_g.code = atoi(cx);
+    }
+
+    O = custom_opcode_g;
   }
   else {
     if (token_type != OPCODE_NAME_TT && token_type != OPCODE_MACRO_TT) {
