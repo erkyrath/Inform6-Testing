@@ -287,6 +287,8 @@ typedef struct opcodeg
 
     /* Codes for any unusual operand assembly rules */
 
+    /* Z-code: */
+
 #define VARIAB   1    /* First operand expected to be a variable name and
                          assembled to a short constant: the variable number */
 #define TEXT     2    /* One text operand, to be Z-encoded into the program */
@@ -294,6 +296,10 @@ typedef struct opcodeg
 #define CALL     4    /* First operand is name of a routine, to be assembled
                          as long constant (the routine's packed address):
                          as if the name were prefixed by #r$ */
+
+    /* Glulx: (bit flags for Glulx VM features) */
+
+#define GOP_Unicode    1   /* uses_unicode_features */
 
     /* Codes for the number of operands */
 
@@ -555,7 +561,7 @@ static opcodeg opcodes_table_g[] = {
   { (uchar *) "callfi",     0x0161, St, 0, 3 },
   { (uchar *) "callfii",    0x0162, St, 0, 4 },
   { (uchar *) "callfiii",   0x0163, St, 0, 5 },
-  { (uchar *) "streamunichar", 0x73,  0, 0, 1 },
+  { (uchar *) "streamunichar", 0x73,  0, GOP_Unicode, 1 },
 };
 
 /* The opmacros table is used for fake opcodes. The opcode numbers are
@@ -1046,7 +1052,7 @@ extern void assembleg_instruction(assembly_instruction *AI)
 
     execution_never_reaches_here = ((opco.flags & Rf) != 0);
 
-    if (AI->internal_number == streamunichar_gc) {
+    if (opco.op_rules & GOP_Unicode) {
         uses_unicode_features = TRUE;
     }
 

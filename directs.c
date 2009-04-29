@@ -807,6 +807,13 @@ the first constant definition");
             if (module_switch && (AO.marker != 0))
                 error("A definite value must be given as version number");
             else
+            if (glulx_mode)
+            {
+              warning("The Version directive does not work in Glulx. Use \
+-vX.Y.Z instead, as either a command-line argument or a header comment.");
+              break;
+            }
+            else
             {   i = AO.value;
                 if ((i<3) || (i>8))
                 {   error("The version number must be in the range 3 to 8");

@@ -2294,6 +2294,7 @@ extern int
 extern int oddeven_packing_switch;
 
 extern int glulx_mode, compression_switch;
+extern int32 requested_glulx_version;
 
 extern int error_format,    store_the_text,       asm_trace_setting,
     double_space_setting,   trace_fns_setting,    character_set_setting,
@@ -2393,7 +2394,8 @@ extern int MAX_QTEXT_SIZE,  MAX_SYMBOLS,    HASH_TAB_SIZE,   MAX_DICT_ENTRIES,
 
 extern int32 MAX_STATIC_STRINGS, MAX_ZCODE_SIZE, MAX_LINK_DATA_SIZE,
            MAX_TRANSCRIPT_SIZE,  MAX_INDIV_PROP_TABLE_SIZE,
-           MAX_NUM_STATIC_STRINGS, MAX_UNICODE_CHARS;
+           MAX_NUM_STATIC_STRINGS, MAX_UNICODE_CHARS,
+           MAX_STACK_SIZE;
 
 extern int32 MAX_OBJ_PROP_COUNT, MAX_OBJ_PROP_TABLE_SIZE;
 extern int MAX_LOCAL_VARIABLES, MAX_GLOBAL_VARIABLES;
