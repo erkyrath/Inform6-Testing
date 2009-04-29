@@ -1117,6 +1117,7 @@ typedef struct operator_s
 #define callfi_gc 77
 #define callfii_gc 78
 #define callfiii_gc 79
+#define streamunichar_gc 80
 
 /* ------------------------------------------------------------------------- */
 /*   Index numbers into the keyword group "opcode_macros_g" (see "lexer.c")  */
@@ -2002,6 +2003,7 @@ extern int32 zmachine_pc;
 
 extern int32 no_instructions;
 extern int   sequence_point_follows;
+extern int   uses_unicode_features;
 extern dbgl  debug_line_ref;
 extern int   execution_never_reaches_here;
 extern int   *variable_usage;
@@ -2120,6 +2122,7 @@ extern void  backpatch_zmachine(int mv, int zmachine_area, int32 offset);
 /* ------------------------------------------------------------------------- */
 
 extern uchar source_to_iso_grid[];
+extern int32 iso_to_unicode_grid[];
 extern int   character_digit_value[];
 extern uchar alphabet[3][27];
 extern int   alphabet_modified;
@@ -2390,7 +2393,7 @@ extern int MAX_QTEXT_SIZE,  MAX_SYMBOLS,    HASH_TAB_SIZE,   MAX_DICT_ENTRIES,
 
 extern int32 MAX_STATIC_STRINGS, MAX_ZCODE_SIZE, MAX_LINK_DATA_SIZE,
            MAX_TRANSCRIPT_SIZE,  MAX_INDIV_PROP_TABLE_SIZE,
-           MAX_NUM_STATIC_STRINGS;
+           MAX_NUM_STATIC_STRINGS, MAX_UNICODE_CHARS;
 
 extern int32 MAX_OBJ_PROP_COUNT, MAX_OBJ_PROP_TABLE_SIZE;
 extern int MAX_LOCAL_VARIABLES, MAX_GLOBAL_VARIABLES;
@@ -2553,8 +2556,17 @@ extern int32 static_strings_extent;
    compression. */
 
 extern int32 no_strings, no_dynamic_strings;
+extern int no_unicode_chars;
 
 #define MAX_DYNAMIC_STRINGS (64)
+
+typedef struct unicode_usage_s unicode_usage_t;
+struct unicode_usage_s {
+  int32 ch;
+  unicode_usage_t *next;  
+};
+
+extern unicode_usage_t *unicode_usage_entries;
 
 /* This is the maximum number of (8-bit) bytes that can encode a single
    Huffman entity. Four should be plenty, unless someone starts encoding
@@ -2581,7 +2593,8 @@ extern huffentity_t *huff_entities;
 
 extern int32 compression_table_size, compression_string_size;
 extern int32 *compressed_offsets;
-extern int no_huff_entities, huff_abbrev_start, huff_dynam_start;
+extern int no_huff_entities;
+extern int huff_abbrev_start, huff_dynam_start, huff_unicode_start;
 extern int huff_entity_root;
 
 extern void  compress_game_text(void);

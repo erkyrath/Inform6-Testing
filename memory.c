@@ -174,6 +174,7 @@ int MAX_GLOBAL_VARIABLES;
 int DICT_WORD_SIZE;
 int NUM_ATTR_BYTES;
 int32 MAX_NUM_STATIC_STRINGS;
+int32 MAX_UNICODE_CHARS;
 int ALLOC_CHUNK_SIZE;
 
 /* The way memory sizes are set causes great nuisance for those parameters
@@ -232,6 +233,8 @@ static void list_memory_sizes(void)
     printf("|  %25s = %-7d |\n","SYMBOLS_CHUNK_SIZE",SYMBOLS_CHUNK_SIZE);
     printf("|  %25s = %-7ld |\n","MAX_TRANSCRIPT_SIZE",
            (long int) MAX_TRANSCRIPT_SIZE);
+    printf("|  %25s = %-7ld |\n","MAX_UNICODE_CHARS",
+           (long int) MAX_UNICODE_CHARS);
     printf("|  %25s = %-7d |\n","MAX_VERBS",MAX_VERBS);
     printf("|  %25s = %-7d |\n","MAX_VERBSPACE",MAX_VERBSPACE);
     printf("|  %25s = %-7ld |\n","MAX_ZCODE_SIZE",
@@ -404,6 +407,7 @@ extern void set_memory_sizes(int size_flag)
     DICT_WORD_SIZE_g = 9;
     NUM_ATTR_BYTES_z = 6;
     NUM_ATTR_BYTES_g = 7;
+    MAX_UNICODE_CHARS = 64;
 
     adjust_memory_sizes();
 }
@@ -566,7 +570,6 @@ static void explain_parameter(char *command)
   Inform automatically ensures that this is at least twice the size of\n\
   MAX_QTEXT_SIZE, to be on the safe side.");
         return;
-
     }
     if (strcmp(command,"MAX_ZCODE_SIZE")==0)
     {
@@ -657,6 +660,14 @@ static void explain_parameter(char *command)
         printf(
 "  MAX_NUM_STATIC_STRINGS is the maximum number of compiled strings \n\
   allowed in the program. (Glulx only)\n");
+        return;
+    }
+    if (strcmp(command,"MAX_UNICODE_CHARS")==0)
+    {
+        printf(
+"  MAX_UNICODE_CHARS is the maximum number of different Unicode characters \n\
+  (beyond the Latin-1 range, $00..$FF) which the game text can use. \n\
+  (Glulx only)\n");
         return;
     }
     if (strcmp(command,"ALLOC_CHUNK_SIZE")==0)
@@ -803,6 +814,8 @@ extern void memory_command(char *command)
             {   ALLOC_CHUNK_SIZE=j, flag=1;
                 ALLOC_CHUNK_SIZE_g=ALLOC_CHUNK_SIZE_z=j;
             }
+            if (strcmp(command,"MAX_UNICODE_CHARS")==0)
+                MAX_UNICODE_CHARS=j, flag=1;
 
             if (flag==0)
                 printf("No such memory setting as \"%s\"\n", command);

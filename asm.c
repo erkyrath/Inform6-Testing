@@ -39,6 +39,9 @@ static int label_moved_error_already_given;
 int  sequence_point_follows;       /* Will the next instruction assembled    */
                                    /* be at a sequence point in the routine? */
 
+int uses_unicode_features;         /* Makes use of Glulx Unicode (3.0)
+                                      features?                              */
+
 dbgl debug_line_ref;               /* Source code ref of current statement   */
 
 
@@ -552,6 +555,7 @@ static opcodeg opcodes_table_g[] = {
   { (uchar *) "callfi",     0x0161, St, 0, 3 },
   { (uchar *) "callfii",    0x0162, St, 0, 4 },
   { (uchar *) "callfiii",   0x0163, St, 0, 5 },
+  { (uchar *) "streamunichar", 0x73,  0, 0, 1 },
 };
 
 /* The opmacros table is used for fake opcodes. The opcode numbers are
@@ -1041,6 +1045,10 @@ extern void assembleg_instruction(assembly_instruction *AI)
         warning("This statement can never be reached");
 
     execution_never_reaches_here = ((opco.flags & Rf) != 0);
+
+    if (AI->internal_number == streamunichar_gc) {
+        uses_unicode_features = TRUE;
+    }
 
     no_operands_given = AI->operand_count;
 
@@ -2964,6 +2972,8 @@ extern void init_asm_vars(void)
 {   int i;
 
     for (i=0;i<16;i++) flags2_requirements[i]=0;
+
+    uses_unicode_features = FALSE;
 
     sequence_point_follows = TRUE;
     label_moved_error_already_given = FALSE;

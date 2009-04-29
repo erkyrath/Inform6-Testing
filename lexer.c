@@ -264,6 +264,7 @@ static char *opcode_list_g[] = {
     "glk", "getstringtbl", "setstringtbl", "getiosys", "setiosys",
     "linearsearch", "binarysearch", "linkedsearch",
     "callf", "callfi", "callfii", "callfiii", 
+    "streamunichar",
     ""
 };
 

@@ -242,6 +242,14 @@ static void output_compression(int entnum, int32 *size)
     sf_put('\0');
     (*size) += 1;  
     break;
+  case 4:
+    val = unicode_usage_entries[ent->u.val].ch;
+    sf_put((val >> 24) & 0xFF);
+    sf_put((val >> 16) & 0xFF);
+    sf_put((val >> 8) & 0xFF);
+    sf_put((val) & 0xFF);
+    (*size) += 4;
+    break;
   case 9:
     val = abbreviations_offset + 4 + ent->u.val*4;
     sf_put((val >> 24) & 0xFF);
@@ -472,6 +480,7 @@ static void output_file_z(void)
 static void output_file_g(void)
 {   FILE *fin; char new_name[PATHLEN];
     int32 size, i, j;
+    int32 val;
 
     ASSERT_GLULX();
 
@@ -501,11 +510,15 @@ static void output_file_g(void)
     sf_put('l');
     sf_put('u');
     sf_put('l');
-    /* Version number -- 0x00020000 for now. */
-    sf_put(0x00);
-    sf_put(0x02);
-    sf_put(0x00);
-    sf_put(0x00);
+    /* Version number. */
+    if (no_unicode_chars == 0 && (!uses_unicode_features))
+      val = 0x00020000;
+    else
+      val = 0x00030000;
+    sf_put((val >> 24));
+    sf_put((val >> 16));
+    sf_put((val >> 8));
+    sf_put((val));
     /* RAMSTART */
     sf_put((Write_RAM_At >> 24));
     sf_put((Write_RAM_At >> 16));
@@ -753,7 +766,7 @@ static void output_file_g(void)
             else if (ch == '0') {
               ch = '\0';
             }
-            else if (ch == 'A' || ch == 'D') {
+            else if (ch == 'A' || ch == 'D' || ch == 'U') {
               escapelen = 4;
               escapetype = ch;
               escapeval = 0;
@@ -772,6 +785,9 @@ static void output_file_g(void)
               }
               else if (escapetype == 'D') {
                 ch = huff_dynam_start+escapeval;
+              }
+              else if (escapetype == 'U') {
+                ch = huff_unicode_start+escapeval;
               }
               else {
                 compiler_error("Strange @ escape in processed text.");
