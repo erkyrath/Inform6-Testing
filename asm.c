@@ -983,51 +983,51 @@ static void assembleg_macro(assembly_instruction *AI)
     /* validate macro syntax first */
     int ix, no_operands_given;
     opcodeg opco;
-
+    
     opco = internal_number_to_opmacro_g(AI->internal_number);
     no_operands_given = AI->operand_count;
-
+    
     if (no_operands_given != opco.no)
         goto OpcodeSyntaxError;
-
+    
     for (ix = 0; ix < no_operands_given; ix++) {
         int type = AI->operand[ix].type;
-        if ((opco.flags & St)
+        if ((opco.flags & St) 
           && ((!(opco.flags & Br) && (ix == no_operands_given-1))
           || ((opco.flags & Br) && (ix == no_operands_given-2)))) {
             if (is_constant_ot(type)) {
                 error("*** assembly macro tried to store to a constant ***");
-                goto OpcodeSyntaxError;
+                goto OpcodeSyntaxError; 
             }
         }
-        if ((opco.flags & St2)
+        if ((opco.flags & St2) 
             && (ix == no_operands_given-2)) {
             if (is_constant_ot(type)) {
               error("*** assembly macro tried to store to a constant ***");
-              goto OpcodeSyntaxError;
+              goto OpcodeSyntaxError; 
             }
         }
     }
-
+    
     /* expand the macro */
     switch (AI->internal_number) {
         case pull_gm:
             assembleg_store(AI->operand[0], stack_pointer);
             break;
-
+        
         case push_gm:
             assembleg_store(stack_pointer, AI->operand[0]);
             break;
-
+        
         default:
             compiler_error("Invalid Glulx assembly macro");
             break;
     }
-
+    
     return;
-
+    
     OpcodeSyntaxError:
-
+    
     make_opcode_syntax_g(opco);
     error_named("Assembly mistake: syntax is", opcode_syntax_string);
 }

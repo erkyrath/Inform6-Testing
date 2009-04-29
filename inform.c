@@ -69,8 +69,8 @@ static int select_glulx_version(char *str)
     }
   }
 
-  requested_glulx_version = ((major & 0x7FFF) << 16)
-    + ((minor & 0xFF) << 8)
+  requested_glulx_version = ((major & 0x7FFF) << 16) 
+    + ((minor & 0xFF) << 8) 
     + (patch & 0xFF);
   return (cx - str);
 }

@@ -301,7 +301,7 @@ extern void set_memory_sizes(int size_flag)
 
         MAX_GLOBAL_VARIABLES_z = 240;
         MAX_GLOBAL_VARIABLES_g = 512;
-
+        
         ALLOC_CHUNK_SIZE_z = 8192;
         ALLOC_CHUNK_SIZE_g = 32768;
     }
@@ -352,7 +352,7 @@ extern void set_memory_sizes(int size_flag)
 
         MAX_GLOBAL_VARIABLES_z = 240;
         MAX_GLOBAL_VARIABLES_g = 512;
-
+        
         ALLOC_CHUNK_SIZE_z = 8192;
         ALLOC_CHUNK_SIZE_g = 16384;
     }
@@ -403,7 +403,7 @@ extern void set_memory_sizes(int size_flag)
 
         MAX_GLOBAL_VARIABLES_z = 240;
         MAX_GLOBAL_VARIABLES_g = 256;
-
+        
         ALLOC_CHUNK_SIZE_z = 8192;
         ALLOC_CHUNK_SIZE_g = 8192;
     }

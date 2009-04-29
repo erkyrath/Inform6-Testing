@@ -463,7 +463,7 @@ static void make_keywords_tables(void)
         opcode_names.keywords[j] = oplist[j];
     }
     opcode_names.keywords[j] = "";
-
+    
     for (j=0; *(maclist[j]); j++) {
         opcode_macros.keywords[j] = maclist[j];
     }
