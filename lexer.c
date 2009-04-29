@@ -265,6 +265,7 @@ static char *opcode_list_g[] = {
     "linearsearch", "binarysearch", "linkedsearch",
     "callf", "callfi", "callfii", "callfiii", 
     "streamunichar",
+    "mzero", "mcopy", "malloc", "mfree",
     ""
 };
 

@@ -510,6 +510,9 @@ static void output_file_g(void)
     if (no_unicode_chars != 0 || (uses_unicode_features)) {
       VersionNum = 0x00030000;
     }
+    if (uses_memheap_features) {
+      VersionNum = 0x00030100;
+    }
 
     /* And check if the user has requested a specific version. */
     if (requested_glulx_version) {
