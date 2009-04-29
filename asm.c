@@ -911,7 +911,7 @@ extern void assemblez_instruction(assembly_instruction *AI)
 
     Instruction_Done:
 
-    if ((asm_trace_level > 0) && (veneer_mode == FALSE))
+    if (asm_trace_level > 0)
     {   int i;
         printf("%5d  +%05lx %3s %-12s ", ErrorReport.line_number,
             ((long int) offset),
@@ -1274,7 +1274,7 @@ extern void assembleg_instruction(assembly_instruction *AI)
     }
 
     /* Print assembly trace. */
-    if ((asm_trace_level > 0) && (veneer_mode == FALSE)) {
+    if (asm_trace_level > 0) {
       int i;
       printf("%5d  +%05lx %3s %-12s ", ErrorReport.line_number,
         ((long int) offset),
@@ -1325,7 +1325,7 @@ extern void assembleg_instruction(assembly_instruction *AI)
 
 extern void assemble_label_no(int n)
 {
-    if ((asm_trace_level > 0) && (veneer_mode == FALSE))
+    if (asm_trace_level > 0)
         printf("%5d  +%05lx    .L%d\n", ErrorReport.line_number,
             ((long int) zmachine_pc), n);
     set_label_offset(n, zmachine_pc);
@@ -1356,7 +1356,7 @@ extern int32 assemble_routine_header(int no_locals,
     else routine_starts_line = ErrorReport.line_number
              + 0x10000*ErrorReport.file_number;
 
-    if ((asm_trace_level > 0) && (veneer_mode == FALSE))
+    if (asm_trace_level > 0)
     {   printf("\n%5d  +%05lx  [ %s ", ErrorReport.line_number,
             ((long int) zmachine_pc), name);
         for (i=1; i<=no_locals; i++) printf("%s ", variable_name(i));
