@@ -276,6 +276,7 @@ static int32 unique_task_id(void)
 #define FN_SEP '/'
 /* 5 */
 #define Temporary_Directory "/tmp"
+/* 6 */
 #define PATHLEN 512
 #endif
 /* ------------------------------------------------------------------------- */
@@ -352,6 +353,8 @@ static int32 unique_task_id(void)
 {   return (int32)getpid();
 }
 #endif
+/* 6 */
+#define PATHLEN 8192
 #endif
 /* ------------------------------------------------------------------------- */
 /*   PC and PC_QUICKC block                                                  */
@@ -388,6 +391,7 @@ static int32 unique_task_id(void)
 #define FN_SEP '\\'
 /* 6 */
 #define DEFAULT_ERROR_FORMAT 1
+#define PATHLEN 512
 #endif
 /* ------------------------------------------------------------------------- */
 /*   UNIX block                                                              */
