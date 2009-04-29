@@ -1084,7 +1084,7 @@ static void cli_print_help(int help_level)
 {
     printf(
 "\nThis program is a compiler of Infocom format (also called \"Z-machine\")\n\
-story files: copyright (c) Graham Nelson 1993 - 2006.\n\n");
+story files: copyright (c) Graham Nelson 1993 - 2009.\n\n");
 
    /* For people typing just "inform", a summary only: */
 
@@ -1572,7 +1572,7 @@ char banner_line[80];
 
 static void banner(void)
 {
-    sprintf(banner_line, "Inform %d.%d%d",
+    sprintf(banner_line, "Inform %d.%d%dN",
         (VNUMBER/100)%10, (VNUMBER/10)%10, VNUMBER%10);
     if (0) {
         sprintf(banner_line+strlen(banner_line), " (biplatform, G%d.%d%d)",
