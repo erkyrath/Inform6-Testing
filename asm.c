@@ -43,6 +43,8 @@ int uses_unicode_features;         /* Makes use of Glulx Unicode (3.0)
                                       features?                              */
 int uses_memheap_features;         /* Makes use of Glulx mem/heap (3.1)
                                       features?                              */
+int uses_acceleration_features;    /* Makes use of Glulx acceleration (3.1.1)
+                                      features?                              */
 
 dbgl debug_line_ref;               /* Source code ref of current statement   */
 
@@ -301,8 +303,9 @@ typedef struct opcodeg
 
     /* Glulx: (bit flags for Glulx VM features) */
 
-#define GOP_Unicode    1   /* uses_unicode_features */
-#define GOP_MemHeap    2   /* uses_memheap_features */
+#define GOP_Unicode      1   /* uses_unicode_features */
+#define GOP_MemHeap      2   /* uses_memheap_features */
+#define GOP_Acceleration 4   /* uses_acceleration_features */
 
     /* Codes for the number of operands */
 
@@ -569,6 +572,8 @@ static opcodeg opcodes_table_g[] = {
   { (uchar *) "mcopy",      0x171,  0, GOP_MemHeap, 3 },
   { (uchar *) "malloc",     0x178,  St, GOP_MemHeap, 2 },
   { (uchar *) "mfree",      0x179,  0, GOP_MemHeap, 1 },
+  { (uchar *) "accelfunc",  0x180,  0, GOP_Acceleration, 2 },
+  { (uchar *) "accelparam", 0x181,  0, GOP_Acceleration, 2 },
 };
 
 /* The opmacros table is used for fake opcodes. The opcode numbers are
@@ -1064,6 +1069,9 @@ extern void assembleg_instruction(assembly_instruction *AI)
     }
     if (opco.op_rules & GOP_MemHeap) {
         uses_memheap_features = TRUE;
+    }
+    if (opco.op_rules & GOP_Acceleration) {
+        uses_acceleration_features = TRUE;
     }
 
     no_operands_given = AI->operand_count;
@@ -2991,6 +2999,7 @@ extern void init_asm_vars(void)
 
     uses_unicode_features = FALSE;
     uses_memheap_features = FALSE;
+    uses_acceleration_features = FALSE;
 
     sequence_point_follows = TRUE;
     label_moved_error_already_given = FALSE;

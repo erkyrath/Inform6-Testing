@@ -266,6 +266,7 @@ static char *opcode_list_g[] = {
     "callf", "callfi", "callfii", "callfiii", 
     "streamunichar",
     "mzero", "mcopy", "malloc", "mfree",
+    "accelfunc", "accelparam",
     ""
 };
 

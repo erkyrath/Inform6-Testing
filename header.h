@@ -1122,6 +1122,8 @@ typedef struct operator_s
 #define mcopy_gc 82
 #define malloc_gc 83
 #define mfree_gc 84
+#define accelfunc_gc 85
+#define accelparam_gc 86
 
 /* ------------------------------------------------------------------------- */
 /*   Index numbers into the keyword group "opcode_macros_g" (see "lexer.c")  */
@@ -2008,7 +2010,8 @@ extern int32 zmachine_pc;
 
 extern int32 no_instructions;
 extern int   sequence_point_follows;
-extern int   uses_unicode_features, uses_memheap_features;
+extern int   uses_unicode_features, uses_memheap_features, 
+    uses_acceleration_features;
 extern dbgl  debug_line_ref;
 extern int   execution_never_reaches_here;
 extern int   *variable_usage;
