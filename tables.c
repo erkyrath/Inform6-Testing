@@ -587,7 +587,7 @@ table format requested (producing number 2 format instead)");
     if (oddeven_packing_switch)
         while ((mark%(scale_factor*2)) != 0) p[mark++]=0;
 
-    if (mark > 0x10000)
+    if (mark > 0x0FFFE)
     {   error("This program has overflowed the maximum readable-memory \
 size of the Z-machine format. See the memory map below: the start \
 of the area marked \"above readable memory\" must be brought down to $10000 \
