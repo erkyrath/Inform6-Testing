@@ -1500,7 +1500,7 @@ typedef struct operator_s
 
 /*  Index numbers into the operators group "separators" (see "lexer.c")  */
 
-#define NUMBER_SEPARATORS 48
+#define NUMBER_SEPARATORS 49
 
 #define ARROW_SEP        0
 #define DARROW_SEP       1
@@ -1545,11 +1545,12 @@ typedef struct operator_s
 #define NBRANCH_SEP     40
 #define BRANCH_SEP      41
 #define HASHADOLLAR_SEP 42
-#define HASHNDOLLAR_SEP 43
-#define HASHRDOLLAR_SEP 44
-#define HASHWDOLLAR_SEP 45
-#define HASHHASH_SEP    46
-#define HASH_SEP        47
+#define HASHGDOLLAR_SEP 43
+#define HASHNDOLLAR_SEP 44
+#define HASHRDOLLAR_SEP 45
+#define HASHWDOLLAR_SEP 46
+#define HASHHASH_SEP    47
+#define HASH_SEP        48
 
 #define UNARY_MINUS_SEP 100
 #define POST_INC_SEP    101
