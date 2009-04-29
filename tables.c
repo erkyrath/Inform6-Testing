@@ -590,7 +590,7 @@ table format requested (producing number 2 format instead)");
     if (mark > 0x0FFFE)
     {   error("This program has overflowed the maximum readable-memory \
 size of the Z-machine format. See the memory map below: the start \
-of the area marked \"above readable memory\" must be brought down to $10000 \
+of the area marked \"above readable memory\" must be brought down to $FFFE \
 or less.");
         memory_map_switch = TRUE;
         /* Backpatching the grammar tables requires us to trust some of the */
