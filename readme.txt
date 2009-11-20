@@ -47,6 +47,9 @@ change, and requires the library to use both bytes of the verb number
 for it to work.
 http://freespace.virgin.net/davidk.kinder/inform6/verbnum.patch
 
+Remove one argument form of Glulx print_to_array() veneer method
+http://mailman-new.greennet.org.uk/pipermail/inform-maintenance/2009-November/001709.html
+
 Increased PATHLEN and set the HUGE memory model as the default for
 OSX, Linux, Unix and Unix64.
 
