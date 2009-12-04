@@ -2413,7 +2413,7 @@ extern int32 MAX_STATIC_STRINGS, MAX_ZCODE_SIZE, MAX_LINK_DATA_SIZE,
 
 extern int32 MAX_OBJ_PROP_COUNT, MAX_OBJ_PROP_TABLE_SIZE;
 extern int MAX_LOCAL_VARIABLES, MAX_GLOBAL_VARIABLES;
-extern int DICT_WORD_SIZE, NUM_ATTR_BYTES;
+extern int DICT_WORD_SIZE, DICT_CHAR_SIZE, NUM_ATTR_BYTES;
 
 extern void *my_malloc(int32 size, char *whatfor);
 extern void *my_calloc(int32 size, int32 howmany, char *whatfor);

@@ -107,6 +107,10 @@ static void select_target(int targ)
       DICT_WORD_SIZE = 6;
       fatalerror("You cannot change DICT_WORD_SIZE in Z-code");
     }
+    if (DICT_CHAR_SIZE != 1) {
+      DICT_CHAR_SIZE = 1;
+      fatalerror("You cannot change DICT_CHAR_SIZE in Z-code");
+    }
     if (NUM_ATTR_BYTES != 6) {
       NUM_ATTR_BYTES = 6;
       fatalerror("You cannot change NUM_ATTR_BYTES in Z-code");
@@ -134,6 +138,11 @@ static void select_target(int targ)
     if (NUM_ATTR_BYTES % 4 != 3) {
       NUM_ATTR_BYTES += (3 - (NUM_ATTR_BYTES % 4)); 
       warning_numbered("NUM_ATTR_BYTES must be a multiple of four, plus three. Increasing to", NUM_ATTR_BYTES);
+    }
+
+    if (DICT_CHAR_SIZE != 1 && DICT_CHAR_SIZE != 4) {
+      DICT_CHAR_SIZE = 4;
+      warning_numbered("DICT_CHAR_SIZE must be either 1 or 4. Setting to", DICT_CHAR_SIZE);
     }
 
     OBJECT_BYTE_LENGTH = (1 + (NUM_ATTR_BYTES) + 6*4);
