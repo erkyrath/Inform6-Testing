@@ -1065,7 +1065,7 @@ static void compress_dumptable(int entnum, int depth)
     break;
   case 4:
     ix = ent->u.val;
-    printf("'U+%lX'\n", unicode_usage_entries[ix].ch);
+    printf("'U+%lX'\n", (long)unicode_usage_entries[ix].ch);
     break;
   case 9:
     printf("print-var @%02d\n", ent->u.val);
@@ -1588,6 +1588,7 @@ apostrophe in", dword);
 static void dictionary_prepare_g(char *dword, uchar *optresult)
 { 
   int i, j, k;
+  int32 unicode;
 
   number_and_case = 0;
 
@@ -1608,7 +1609,7 @@ to give gender or number of dictionary word", dword);
     }
     if (i>=DICT_WORD_SIZE) break;
 
-    k= (int)dword[j];
+    k= ((unsigned char *)dword)[j];
     if (k=='\'') 
       warning_named("Obsolete usage: use the ^ character for the \
 apostrophe in", dword);
@@ -1618,18 +1619,21 @@ apostrophe in", dword);
       k='\"';
 
     if (k=='@') {
-      int32 unicode = text_to_unicode(dword+j);
+      unicode = text_to_unicode(dword+j);
       j += textual_form_length - 1;
-      if (unicode >= 0 && unicode < 256) {
-        k = unicode;
-      }
-      else {
-        error("Unicode characters beyond Latin-1 are not yet supported in Glulx");
-        k = '?';
-      }
+    }
+    else {
+      unicode = iso_to_unicode_grid[k];
+    }
+    if (unicode >= 0 && unicode < 256) {
+      k = unicode;
+    }
+    else {
+      error("Unicode characters beyond Latin-1 are not yet supported in Glulx");
+      k = '?';
     }
     
-    if (k >= 'A' && k <= 'Z')
+    if (k >= (unsigned)'A' && k <= (unsigned)'Z')
       k += ('a' - 'A');
 
     prepared_sort[i] = k;
