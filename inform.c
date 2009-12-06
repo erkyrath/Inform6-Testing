@@ -177,8 +177,9 @@ static void select_target(int targ)
 
   if (!targ) {
     /* Z-machine */
-    /* The Z-code generator doesn't use these variables, although it would
-       be a little cleaner if it did. */
+    DICT_WORD_BYTES = DICT_WORD_SIZE;
+    /* The Z-code generator doesn't use the following variables, although 
+       it would be a little cleaner if it did. */
     OBJECT_BYTE_LENGTH = 0;
     DICT_ENTRY_BYTE_LENGTH = 0;
     DICT_ENTRY_FLAG_POS = 0;

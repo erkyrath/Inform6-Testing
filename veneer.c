@@ -1884,7 +1884,7 @@ static VeneerRoutine VRs_g[VENEER_ROUTINES] =
              return;\
            }\
            for (ix=1 : ix <= DICT_WORD_SIZE : ix++) {\
-             #ifndef DICT_IS_UNICODE; ch = addr->ix; #else; ch = addr-->ix; #endif; \
+             #ifndef DICT_IS_UNICODE; ch = addr->ix; #ifnot; ch = addr-->ix; #endif; \
              if (ch == 0)\
                return;\
              print (char) ch;\
