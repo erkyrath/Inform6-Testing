@@ -171,8 +171,9 @@ int32 MAX_OBJ_PROP_TABLE_SIZE;
 int MAX_OBJ_PROP_COUNT;
 int MAX_LOCAL_VARIABLES;
 int MAX_GLOBAL_VARIABLES;
-int DICT_WORD_SIZE;
-int DICT_CHAR_SIZE;
+int DICT_WORD_SIZE; /* number of characters in a dict word */
+int DICT_CHAR_SIZE; /* (glulx) 1 for one-byte chars, 4 for Unicode chars */
+int DICT_WORD_BYTES; /* DICT_WORD_SIZE*DICT_CHAR_SIZE */
 int NUM_ATTR_BYTES;
 int32 MAX_NUM_STATIC_STRINGS;
 int32 MAX_UNICODE_CHARS;

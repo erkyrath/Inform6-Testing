@@ -1458,12 +1458,12 @@ table format requested (producing number 2 format instead)");
       p[mark+i] = dictionary[i];
 
     for (i=0; i<dict_entries; i++) {
-      k = 4 + i*(7+DICT_WORD_SIZE);
-      j = mark + 4 + final_dict_order[i]*(7+DICT_WORD_SIZE);
-      for (l=0; l<(7+DICT_WORD_SIZE); l++)
+      k = 4 + i*DICT_ENTRY_BYTE_LENGTH;
+      j = mark + 4 + final_dict_order[i]*DICT_ENTRY_BYTE_LENGTH;
+      for (l=0; l<DICT_ENTRY_BYTE_LENGTH; l++)
         p[j++] = dictionary[k++];
     }
-    mark += 4 + dict_entries * (7+DICT_WORD_SIZE);
+    mark += 4 + dict_entries * DICT_ENTRY_BYTE_LENGTH;
 
     /*  -------------------------- All Data -------------------------------- */
     
@@ -1522,7 +1522,7 @@ table format requested (producing number 2 format instead)");
               switch(topbits) {
               case 1:
                 value = dictionary_offset + 4
-                  + final_dict_order[value]*(7+DICT_WORD_SIZE);
+                  + final_dict_order[value]*DICT_ENTRY_BYTE_LENGTH;
                 break;
               case 2:
                 value += code_offset;

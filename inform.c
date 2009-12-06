@@ -93,6 +93,13 @@ int INDIV_PROP_START;
    Not used in Z-code. 
 */
 int OBJECT_BYTE_LENGTH;
+/* The total length of a dict entry, in bytes. Not used in Z-code. 
+*/
+int DICT_ENTRY_BYTE_LENGTH;
+/* The position in a dict entry that the flag values begin.
+   Not used in Z-code. 
+*/
+int DICT_ENTRY_FLAG_POS;
 
 static void select_target(int targ)
 {
@@ -101,7 +108,6 @@ static void select_target(int targ)
     WORDSIZE = 2;
     MAXINTWORD = 0x7FFF;
     INDIV_PROP_START = 64;
-    OBJECT_BYTE_LENGTH = 0; /* not used */
 
     if (DICT_WORD_SIZE != 6) {
       DICT_WORD_SIZE = 6;
@@ -144,8 +150,6 @@ static void select_target(int targ)
       DICT_CHAR_SIZE = 4;
       warning_numbered("DICT_CHAR_SIZE must be either 1 or 4. Setting to", DICT_CHAR_SIZE);
     }
-
-    OBJECT_BYTE_LENGTH = (1 + (NUM_ATTR_BYTES) + 6*4);
   }
 
   if (MAX_LOCAL_VARIABLES >= 120) {
@@ -167,6 +171,30 @@ static void select_target(int targ)
       "NUM_ATTR_BYTES cannot exceed MAX_NUM_ATTR_BYTES; resetting",
       MAX_NUM_ATTR_BYTES);
     /* MAX_NUM_ATTR_BYTES can be increased in header.h without fear. */
+  }
+
+  /* Set up a few more variables that depend on the above values */
+
+  if (!targ) {
+    /* Z-machine */
+    /* The Z-code generator doesn't use these variables, although it would
+       be a little cleaner if it did. */
+    OBJECT_BYTE_LENGTH = 0;
+    DICT_ENTRY_BYTE_LENGTH = 0;
+    DICT_ENTRY_FLAG_POS = 0;
+  }
+  else {
+    /* Glulx */
+    OBJECT_BYTE_LENGTH = (1 + (NUM_ATTR_BYTES) + 6*4);
+    DICT_WORD_BYTES = DICT_WORD_SIZE*DICT_CHAR_SIZE;
+    if (DICT_CHAR_SIZE == 1) {
+      DICT_ENTRY_BYTE_LENGTH = (7+DICT_WORD_BYTES);
+      DICT_ENTRY_FLAG_POS = (1+DICT_WORD_BYTES);
+    }
+    else {
+      DICT_ENTRY_BYTE_LENGTH = (10+DICT_WORD_BYTES);
+      DICT_ENTRY_FLAG_POS = (4+DICT_WORD_BYTES);
+    }
   }
 }
 

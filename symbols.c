@@ -567,6 +567,8 @@ static void stockup_symbols(void)
     else {
         create_symbol("DICT_WORD_SIZE",     DICT_WORD_SIZE, CONSTANT_T);
         create_symbol("DICT_CHAR_SIZE",     DICT_CHAR_SIZE, CONSTANT_T);
+        if (DICT_CHAR_SIZE != 1)
+            create_symbol("DICT_IS_UNICODE", 1, CONSTANT_T);
         create_symbol("NUM_ATTR_BYTES",     NUM_ATTR_BYTES, CONSTANT_T);
         create_symbol("INDIV_PROP_START",   INDIV_PROP_START, CONSTANT_T);
     }    
