@@ -1773,9 +1773,12 @@ static VeneerRoutine VRs_g[VENEER_ROUTINES] =
       */
         "RT__ChPrintC",
         "c;\
-           if (c<10 || (c>10 && c<32) || (c>126 && c<160) || c>255)\
+           if (c<10 || (c>10 && c<32) || (c>126 && c<160))\
              return RT__Err(33,c);\
-           @streamchar c;\
+           if (c>=0 && c<256)\
+             @streamchar c;\
+           else\
+             @streamunichar c;\
          ]", "", "", "", "", ""
     },
     {
