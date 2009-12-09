@@ -1637,7 +1637,8 @@ apostrophe in", dword);
       k = unicode;
     }
     else {
-      error("Unicode characters beyond Latin-1 are not yet supported in Glulx");
+      error("The dictionary cannot contain Unicode characters beyond Latin-1. \
+Define DICT_CHAR_SIZE=4 for a Unicode-compatible dictionary.");
       k = '?';
     }
     
