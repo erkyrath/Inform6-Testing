@@ -1632,7 +1632,8 @@ apostrophe in", dword);
     else {
       unicode = iso_to_unicode_grid[k];
     }
-    if (unicode >= 0 && unicode < 256) {
+
+    if (DICT_CHAR_SIZE != 1 || (unicode >= 0 && unicode < 256)) {
       k = unicode;
     }
     else {
