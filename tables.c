@@ -1445,6 +1445,12 @@ table format requested (producing number 2 format instead)");
     mark += no_actions*4;
     /* Values to be written in later. */
 
+    if (DICT_CHAR_SIZE != 1) {
+      /* If the dictionary is Unicode, we'd like it to be word-aligned. */
+      while (mark % 4)
+        p[mark++]=0;
+    }
+
     preactions_at = mark;
     adjectives_offset = mark;
     dictionary_offset = mark;

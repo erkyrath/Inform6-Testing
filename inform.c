@@ -181,7 +181,7 @@ static void select_target(int targ)
     /* The Z-code generator doesn't use the following variables, although 
        it would be a little cleaner if it did. */
     OBJECT_BYTE_LENGTH = 0;
-    DICT_ENTRY_BYTE_LENGTH = 0;
+    DICT_ENTRY_BYTE_LENGTH = (version_number==3)?7:9;
     DICT_ENTRY_FLAG_POS = 0;
   }
   else {
@@ -193,7 +193,7 @@ static void select_target(int targ)
       DICT_ENTRY_FLAG_POS = (1+DICT_WORD_BYTES);
     }
     else {
-      DICT_ENTRY_BYTE_LENGTH = (10+DICT_WORD_BYTES);
+      DICT_ENTRY_BYTE_LENGTH = (12+DICT_WORD_BYTES);
       DICT_ENTRY_FLAG_POS = (4+DICT_WORD_BYTES);
     }
   }
