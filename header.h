@@ -30,7 +30,7 @@
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
-#define RELEASE_DATE "16th November 2009"
+#define RELEASE_DATE "22nd April 2010"
 #define RELEASE_NUMBER 1631
 #define GLULX_RELEASE_NUMBER 38
 #define MODULE_VERSION_NUMBER 1
