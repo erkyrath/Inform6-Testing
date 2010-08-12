@@ -45,7 +45,7 @@ int uses_memheap_features;         /* Makes use of Glulx mem/heap (3.1)
                                       features?                              */
 int uses_acceleration_features;    /* Makes use of Glulx acceleration (3.1.1)
                                       features?                              */
-int uses_float_features;           /* Makes use of Glulx floating-point (3.2)
+int uses_float_features;           /* Makes use of Glulx floating-point (3.1.2)
                                       features?                              */
 
 dbgl debug_line_ref;               /* Source code ref of current statement   */
