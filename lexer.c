@@ -870,6 +870,31 @@ static void new_syntax_line(void)
     report_errors_at_current_line();
 }
 
+static double pow10_cheap(int expo)
+{
+    #define POW10_RANGE (4)
+    static double powers[POW10_RANGE*2+1] = {
+        0.0001, 0.001, 0.01, 0.1,
+        1.0,
+        10.0, 100.0, 1000.0, 10000.0
+    };
+
+    double res = 1.0;
+
+    if (expo < 0) {
+        for (; expo < -POW10_RANGE; expo += POW10_RANGE) {
+            res *= powers[0];
+        }
+        return res * powers[POW10_RANGE+expo];
+    }
+    else {
+        for (; expo > POW10_RANGE; expo -= POW10_RANGE) {
+            res *= powers[POW10_RANGE*2];
+        }
+        return res * powers[POW10_RANGE+expo];
+    }
+}
+
 /* Return the IEEE-754 single-precision encoding of a floating-point
  * number. See http://www.psc.edu/general/software/packages/ieee/ieee.php
  * for an explanation.
@@ -894,7 +919,7 @@ static void new_syntax_line(void)
  */
 static int32 construct_float(int signbit, double intv, double fracv, int expo)
 {
-    double absval = (intv + fracv) * pow(10, expo);
+    double absval = (intv + fracv) * pow10_cheap(expo);
     int32 sign = (signbit ? 0x80000000 : 0x0);
     double mant;
     int32 fbits;
