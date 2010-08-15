@@ -883,6 +883,11 @@ static void new_syntax_line(void)
  * 0x80000000). If any of the inputs are NaN, this returns NaN (but the
  * lexer should never do that).
  *
+ * Note that using a float constant does *not* set the uses_float_features
+ * flag (which would cause the game file to be labelled 3.1.2). There's
+ * no VM feature here, just an integer. Of course, any use of the float
+ * *opcodes* will set the flag.
+ *
  * The math functions in this routine require #including <math.h>, but
  * they should not require linking the math library (-lm). At least,
  * they do not on OSX and Linux.
@@ -1221,7 +1226,6 @@ extern void get_next_token(void)
             *lex_p++ = 0;
             circle[circle_position].type = NUMBER_TT;
             circle[circle_position].value = n;
-            printf("### token (%d): '%s' (%d)\n", radix, circle[circle_position].text, lex_p-circle[circle_position].text);
             break;
 
             FloatNumber:
