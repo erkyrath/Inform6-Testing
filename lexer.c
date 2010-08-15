@@ -1229,21 +1229,23 @@ extern void get_next_token(void)
             break;
 
             FloatNumber:
-            {   int expo=0, intv=0, fracv=0;
+            {   int expo=0; double intv=0, fracv=0;
                 int expocount=0, intcount=0, fraccount=0;
                 int signbit = (d == '-');
                 *lex_p++ = d;
                 while (character_digit_value[lookahead] < 10) {
-                    intv = 10*intv + character_digit_value[lookahead];
+                    intv = 10.0*intv + character_digit_value[lookahead];
                     intcount++;
                     *lex_p++ = lookahead;
                     (*get_next_char)();
                 }
                 if (lookahead == '.') {
+                    double fracpow = 1.0;
                     *lex_p++ = lookahead;
                     (*get_next_char)();
                     while (character_digit_value[lookahead] < 10) {
-                        fracv = 10*fracv + character_digit_value[lookahead];
+                        fracpow *= 0.1;
+                        fracv = fracv + fracpow*character_digit_value[lookahead];
                         fraccount++;
                         *lex_p++ = lookahead;
                         (*get_next_char)();
@@ -1270,8 +1272,8 @@ extern void get_next_token(void)
                 }
                 if (intcount + fraccount == 0)
                     error("Floating-point literal must have digits");
-                printf("### parsed %d . %d e %d\n", intv, fracv, expo);
-                n = construct_float(signbit, (double)intv, (double)fracv * pow(10, -fraccount), expo);
+                printf("### parsed %f . %f e %d\n", intv, fracv, expo);
+                n = construct_float(signbit, intv, fracv, expo);
             }
             *lex_p++ = 0;
             circle[circle_position].type = NUMBER_TT;
