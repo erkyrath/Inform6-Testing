@@ -870,13 +870,20 @@ static void new_syntax_line(void)
     report_errors_at_current_line();
 }
 
+/* Return 10 raised to the expo power.
+
+   I'm avoiding the standard pow() function for a rather lame reason:
+   it's in the libmath (-lm) library, and I don't want to change the
+   build model for the compiler. (For some reason, frexp() and ldexp(),
+   which are used later on, do not require libmath to be linked in.)
+*/
 static double pow10_cheap(int expo)
 {
-    #define POW10_RANGE (4)
+    #define POW10_RANGE (8)
     static double powers[POW10_RANGE*2+1] = {
-        0.0001, 0.001, 0.01, 0.1,
+        0.00000001, 0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1,
         1.0,
-        10.0, 100.0, 1000.0, 10000.0
+        10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 10000000.0, 100000000.0
     };
 
     double res = 1.0;
