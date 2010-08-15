@@ -871,12 +871,17 @@ static void new_syntax_line(void)
 }
 
 /* Return 10 raised to the expo power.
-
-   I'm avoiding the standard pow() function for a rather lame reason:
-   it's in the libmath (-lm) library, and I don't want to change the
-   build model for the compiler. (For some reason, frexp() and ldexp(),
-   which are used later on, do not require libmath to be linked in.)
-*/
+ *
+ * I'm avoiding the standard pow() function for a rather lame reason:
+ * it's in the libmath (-lm) library, and I don't want to change the
+ * build model for the compiler. So, this is implemented with a stupid
+ * lookup table. It's faster than pow() for small values of expo.
+ * Probably not as fast if expo is 200, but "$+1e200" is an overflow
+ * anyway, so I don't expect that to be a problem.
+ *
+ * (For some reason, frexp() and ldexp(), which are used later on, do
+ * not require libmath to be linked in.)
+ */
 static double pow10_cheap(int expo)
 {
     #define POW10_RANGE (8)
