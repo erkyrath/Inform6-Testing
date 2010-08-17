@@ -1309,15 +1309,12 @@ extern void get_next_token(void)
                 }
                 if (intcount + fraccount == 0)
                     error("Floating-point literal must have digits");
-                printf("### parsed %f . %f e %d\n", intv, fracv, expo);
                 n = construct_float(signbit, intv, fracv, expo);
             }
             *lex_p++ = 0;
             circle[circle_position].type = NUMBER_TT;
             circle[circle_position].value = n;
             if (!glulx_mode) error("Floating-point literals are not available in Z-code");
-            printf("### token (fl): %s (%d)\n", circle[circle_position].text, lex_p-circle[circle_position].text);
-            printf("### result: 0x%x\n", n);
             break;
 
         case RADIX_CODE:
