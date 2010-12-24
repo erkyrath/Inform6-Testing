@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------- */
 /*   "lexer" : Lexical analyser                                              */
 /*                                                                           */
-/*   Part of Inform 6.31                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2006                                 */
+/*   Part of Inform 6.32                                                     */
+/*   copyright (c) Graham Nelson 1993 - 2010                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -264,6 +264,26 @@ static char *opcode_list_g[] = {
     "glk", "getstringtbl", "setstringtbl", "getiosys", "setiosys",
     "linearsearch", "binarysearch", "linkedsearch",
     "callf", "callfi", "callfii", "callfiii", 
+    "streamunichar",
+    "mzero", "mcopy", "malloc", "mfree",
+    "accelfunc", "accelparam",
+    "numtof", "ftonumz", "ftonumn", "ceil", "floor",
+    "fadd", "fsub", "fmul", "fdiv", "fmod",
+    "sqrt", "exp", "log", "pow",
+    "sin", "cos", "tan", "asin", "acos", "atan", "atan2",
+    "jfeq", "jfne", "jflt", "jfle", "jfgt", "jfge", "jisnan", "jisinf",
+    ""
+};
+
+keyword_group opcode_macros =
+{ { "" },
+  OPCODE_MACRO_TT, FALSE, TRUE
+};
+
+static char *opmacro_list_z[] = { "" };
+
+static char *opmacro_list_g[] = {
+    "pull", "push",
     ""
 };
 
@@ -364,10 +384,10 @@ keyword_group system_constants =
     SYSTEM_CONSTANT_TT, FALSE, TRUE
 };
 
-keyword_group *keyword_groups[11]
+keyword_group *keyword_groups[12]
 = { NULL, &opcode_names, &directives, &trace_keywords, &segment_markers,
     &directive_keywords, &misc_keywords, &statements, &conditions,
-    &system_functions, &system_constants};
+    &system_functions, &system_constants, &opcode_macros};
 
 keyword_group local_variables =
 { { "" },                                 /* Filled in when routine declared */
@@ -433,24 +453,33 @@ static char one_letter_locals[128];
 
 static void make_keywords_tables(void)
 {   int i, j, h, tp=0;
-    char **oplist;
+    char **oplist, **maclist;
 
-    if (!glulx_mode)
+    if (!glulx_mode) {
         oplist = opcode_list_z;
-    else
+        maclist = opmacro_list_z;
+    }
+    else {
         oplist = opcode_list_g;
+        maclist = opmacro_list_g;
+    }
 
     for (j=0; *(oplist[j]); j++) {
         opcode_names.keywords[j] = oplist[j];
     }
     opcode_names.keywords[j] = "";
+    
+    for (j=0; *(maclist[j]); j++) {
+        opcode_macros.keywords[j] = maclist[j];
+    }
+    opcode_macros.keywords[j] = "";
 
     for (i=0; i<HASH_TAB_SIZE; i++)
     {   keywords_hash_table[i] = -1;
         keywords_hash_ends_table[i] = -1;
     }
 
-    for (i=1; i<=10; i++)
+    for (i=1; i<=11; i++)
     {   keyword_group *kg = keyword_groups[i];
         for (j=0; *(kg->keywords[j]) != 0; j++)
         {   h = hash_code_from_string(kg->keywords[j]);
@@ -613,7 +642,7 @@ static const char separators[NUMBER_SEPARATORS][4] =
     ".&", ".#", "..&", "..#", "..", ".",
     "::", ":", "@", ";", "[", "]", "{", "}",
     "$", "?~", "?",
-    "#a$", "#n$", "#r$", "#w$", "##", "#"
+    "#a$", "#g$", "#n$", "#r$", "#w$", "##", "#"
 };
 
 static void make_tokeniser_grid(void)
@@ -839,6 +868,120 @@ static void reached_new_line(void)
 static void new_syntax_line(void)
 {   if (source_to_analyse != NULL) forerrors_pointer = 0;
     report_errors_at_current_line();
+}
+
+/* Return 10 raised to the expo power.
+ *
+ * I'm avoiding the standard pow() function for a rather lame reason:
+ * it's in the libmath (-lm) library, and I don't want to change the
+ * build model for the compiler. So, this is implemented with a stupid
+ * lookup table. It's faster than pow() for small values of expo.
+ * Probably not as fast if expo is 200, but "$+1e200" is an overflow
+ * anyway, so I don't expect that to be a problem.
+ *
+ * (For some reason, frexp() and ldexp(), which are used later on, do
+ * not require libmath to be linked in.)
+ */
+static double pow10_cheap(int expo)
+{
+    #define POW10_RANGE (8)
+    static double powers[POW10_RANGE*2+1] = {
+        0.00000001, 0.0000001, 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1,
+        1.0,
+        10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 10000000.0, 100000000.0
+    };
+
+    double res = 1.0;
+
+    if (expo < 0) {
+        for (; expo < -POW10_RANGE; expo += POW10_RANGE) {
+            res *= powers[0];
+        }
+        return res * powers[POW10_RANGE+expo];
+    }
+    else {
+        for (; expo > POW10_RANGE; expo -= POW10_RANGE) {
+            res *= powers[POW10_RANGE*2];
+        }
+        return res * powers[POW10_RANGE+expo];
+    }
+}
+
+/* Return the IEEE-754 single-precision encoding of a floating-point
+ * number. See http://www.psc.edu/general/software/packages/ieee/ieee.php
+ * for an explanation.
+ *
+ * The number is provided in the pieces it was parsed in:
+ *    [+|-] intv "." fracv "e" [+|-]expo
+ *
+ * If the magnitude is too large (beyond about 3.4e+38), this returns
+ * an infinite value (0x7f800000 or 0xff800000). If the magnitude is too
+ * small (below about 1e-45), this returns a zero value (0x00000000 or 
+ * 0x80000000). If any of the inputs are NaN, this returns NaN (but the
+ * lexer should never do that).
+ *
+ * Note that using a float constant does *not* set the uses_float_features
+ * flag (which would cause the game file to be labelled 3.1.2). There's
+ * no VM feature here, just an integer. Of course, any use of the float
+ * *opcodes* will set the flag.
+ *
+ * The math functions in this routine require #including <math.h>, but
+ * they should not require linking the math library (-lm). At least,
+ * they do not on OSX and Linux.
+ */
+static int32 construct_float(int signbit, double intv, double fracv, int expo)
+{
+    double absval = (intv + fracv) * pow10_cheap(expo);
+    int32 sign = (signbit ? 0x80000000 : 0x0);
+    double mant;
+    int32 fbits;
+ 
+    if (isinf(absval)) {
+        return sign | 0x7f800000; /* infinity */
+    }
+    if (isnan(absval)) {
+        return sign | 0x7fc00000;
+    }
+
+    mant = frexp(absval, &expo);
+
+    /* Normalize mantissa to be in the range [1.0, 2.0) */
+    if (0.5 <= mant && mant < 1.0) {
+        mant *= 2.0;
+        expo--;
+    }
+    else if (mant == 0.0) {
+        expo = 0;
+    }
+    else {
+        return sign | 0x7f800000; /* infinity */
+    }
+
+    if (expo >= 128) {
+        return sign | 0x7f800000; /* infinity */
+    }
+    else if (expo < -126) {
+        /* Denormalized (very small) number */
+        mant = ldexp(mant, 126 + expo);
+        expo = 0;
+    }
+    else if (!(expo == 0 && mant == 0.0)) {
+        expo += 127;
+        mant -= 1.0; /* Get rid of leading 1 */
+    }
+
+    mant *= 8388608.0; /* 2^23 */
+    fbits = (int32)(mant + 0.5); /* round mant to nearest int */
+    if (fbits >> 23) {
+        /* The carry propagated out of a string of 23 1 bits. */
+        fbits = 0;
+        expo++;
+        if (expo >= 255) {
+            return sign | 0x7f800000; /* infinity */
+        }
+    }
+
+    return (sign) | ((int32)(expo << 23)) | (fbits);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1122,8 +1265,61 @@ extern void get_next_token(void)
             circle[circle_position].value = n;
             break;
 
+            FloatNumber:
+            {   int expo=0; double intv=0, fracv=0;
+                int expocount=0, intcount=0, fraccount=0;
+                int signbit = (d == '-');
+                *lex_p++ = d;
+                while (character_digit_value[lookahead] < 10) {
+                    intv = 10.0*intv + character_digit_value[lookahead];
+                    intcount++;
+                    *lex_p++ = lookahead;
+                    (*get_next_char)();
+                }
+                if (lookahead == '.') {
+                    double fracpow = 1.0;
+                    *lex_p++ = lookahead;
+                    (*get_next_char)();
+                    while (character_digit_value[lookahead] < 10) {
+                        fracpow *= 0.1;
+                        fracv = fracv + fracpow*character_digit_value[lookahead];
+                        fraccount++;
+                        *lex_p++ = lookahead;
+                        (*get_next_char)();
+                    }
+                }
+                if (lookahead == 'e' || lookahead == 'E') {
+                    int exposign = 0;
+                    *lex_p++ = lookahead;
+                    (*get_next_char)();
+                    if (lookahead == '+' || lookahead == '-') {
+                        exposign = (lookahead == '-');
+                        *lex_p++ = lookahead;
+                        (*get_next_char)();
+                    }
+                    while (character_digit_value[lookahead] < 10) {
+                        expo = 10*expo + character_digit_value[lookahead];
+                        expocount++;
+                        *lex_p++ = lookahead;
+                        (*get_next_char)();
+                    }
+                    if (expocount == 0)
+                        error("Floating-point literal must have digits after the 'e'");
+                    if (exposign) { expo = -expo; }
+                }
+                if (intcount + fraccount == 0)
+                    error("Floating-point literal must have digits");
+                n = construct_float(signbit, intv, fracv, expo);
+            }
+            *lex_p++ = 0;
+            circle[circle_position].type = NUMBER_TT;
+            circle[circle_position].value = n;
+            if (!glulx_mode) error("Floating-point literals are not available in Z-code");
+            break;
+
         case RADIX_CODE:
             radix = 16; d = (*get_next_char)();
+            if (d == '-' || d == '+') { goto FloatNumber; }
             if (d == '$') { d = (*get_next_char)(); radix = 2; }
             if (character_digit_value[d] >= radix)
             {   if (radix == 2)
@@ -1282,6 +1478,7 @@ extern void get_next_token(void)
                     *lex_p++ = 0;
                     break;
                 case HASHADOLLAR_SEP:
+                case HASHGDOLLAR_SEP:
                 case HASHRDOLLAR_SEP:
                 case HASHHASH_SEP:
                     if (tokeniser_grid[lookahead] != IDENTIFIER_CODE)

@@ -2,8 +2,8 @@
 /*   "inform" :  The top level of Inform: switches, pathnames, filenaming    */
 /*               conventions, ICL (Inform Command Line) files, main          */
 /*                                                                           */
-/*   Part of Inform 6.31                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2006                                 */
+/*   Part of Inform 6.32                                                     */
+/*   copyright (c) Graham Nelson 1993 - 2010                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -24,16 +24,15 @@ int endofpass_flag;      /* set to TRUE when an "end" directive is reached
 /*   Version control                                                         */
 /* ------------------------------------------------------------------------- */
 
-/* This stuff is Z-code only, for now. It might handle multiple Glulx
-   versions someday, if needed. */
-
-int version_number,      /* 3 to 8                                           */
+int version_number,      /* 3 to 8 (Z-code)                                  */
     instruction_set_number,
                          /* 3 to 6: versions 7 and 8 use instruction set of
                             version 5                                        */
     extend_memory_map;   /* extend using function- and string-offsets        */
 int32 scale_factor,      /* packed address multiplier                        */
     length_scale_factor; /* length-in-header multiplier                      */
+
+int32 requested_glulx_version;
 
 extern void select_version(int vn)
 {   version_number = vn;
@@ -49,6 +48,31 @@ extern void select_version(int vn)
 
     instruction_set_number = version_number;
     if ((version_number==7)||(version_number==8)) instruction_set_number = 5;
+}
+
+static int select_glulx_version(char *str)
+{
+  /* Parse an "X.Y.Z" style version number, and store it for later use. */
+  char *cx = str;
+  int major=0, minor=0, patch=0;
+
+  while (isdigit(*cx))
+    major = major*10 + ((*cx++)-'0');
+  if (*cx == '.') {
+    cx++;
+    while (isdigit(*cx))
+      minor = minor*10 + ((*cx++)-'0');
+    if (*cx == '.') {
+      cx++;
+      while (isdigit(*cx))
+        patch = patch*10 + ((*cx++)-'0');
+    }
+  }
+
+  requested_glulx_version = ((major & 0x7FFF) << 16) 
+    + ((minor & 0xFF) << 8) 
+    + (patch & 0xFF);
+  return (cx - str);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -69,6 +93,13 @@ int INDIV_PROP_START;
    Not used in Z-code. 
 */
 int OBJECT_BYTE_LENGTH;
+/* The total length of a dict entry, in bytes. Not used in Z-code. 
+*/
+int DICT_ENTRY_BYTE_LENGTH;
+/* The position in a dict entry that the flag values begin.
+   Not used in Z-code. 
+*/
+int DICT_ENTRY_FLAG_POS;
 
 static void select_target(int targ)
 {
@@ -77,23 +108,30 @@ static void select_target(int targ)
     WORDSIZE = 2;
     MAXINTWORD = 0x7FFF;
     INDIV_PROP_START = 64;
-    OBJECT_BYTE_LENGTH = 0; /* not used */
 
     if (DICT_WORD_SIZE != 6) {
       DICT_WORD_SIZE = 6;
-      warning("You cannot change DICT_WORD_SIZE in Z-code; resetting to 6");
+      fatalerror("You cannot change DICT_WORD_SIZE in Z-code");
+    }
+    if (DICT_CHAR_SIZE != 1) {
+      DICT_CHAR_SIZE = 1;
+      fatalerror("You cannot change DICT_CHAR_SIZE in Z-code");
     }
     if (NUM_ATTR_BYTES != 6) {
       NUM_ATTR_BYTES = 6;
-      warning("You cannot change NUM_ATTR_BYTES in Z-code; resetting to 6");
+      fatalerror("You cannot change NUM_ATTR_BYTES in Z-code");
     }
     if (MAX_LOCAL_VARIABLES != 16) {
       MAX_LOCAL_VARIABLES = 16;
-      warning("You cannot change MAX_LOCAL_VARIABLES in Z-code; resetting to 16");
+      fatalerror("You cannot change MAX_LOCAL_VARIABLES in Z-code");
     }
     if (MAX_GLOBAL_VARIABLES != 240) {
       MAX_GLOBAL_VARIABLES = 240;
-      warning("You cannot change MAX_GLOBAL_VARIABLES in Z-code; resetting to 240");
+      fatalerror("You cannot change MAX_GLOBAL_VARIABLES in Z-code");
+    }
+    if (MAX_VERBS > 255) {
+      MAX_VERBS = 255;
+      fatalerror("MAX_VERBS can only go above 255 when Glulx is used");
     }
   }
   else {
@@ -108,7 +146,10 @@ static void select_target(int targ)
       warning_numbered("NUM_ATTR_BYTES must be a multiple of four, plus three. Increasing to", NUM_ATTR_BYTES);
     }
 
-    OBJECT_BYTE_LENGTH = (1 + (NUM_ATTR_BYTES) + 6*4);
+    if (DICT_CHAR_SIZE != 1 && DICT_CHAR_SIZE != 4) {
+      DICT_CHAR_SIZE = 4;
+      warning_numbered("DICT_CHAR_SIZE must be either 1 or 4. Setting to", DICT_CHAR_SIZE);
+    }
   }
 
   if (MAX_LOCAL_VARIABLES >= 120) {
@@ -130,6 +171,31 @@ static void select_target(int targ)
       "NUM_ATTR_BYTES cannot exceed MAX_NUM_ATTR_BYTES; resetting",
       MAX_NUM_ATTR_BYTES);
     /* MAX_NUM_ATTR_BYTES can be increased in header.h without fear. */
+  }
+
+  /* Set up a few more variables that depend on the above values */
+
+  if (!targ) {
+    /* Z-machine */
+    DICT_WORD_BYTES = DICT_WORD_SIZE;
+    /* The Z-code generator doesn't use the following variables, although 
+       it would be a little cleaner if it did. */
+    OBJECT_BYTE_LENGTH = 0;
+    DICT_ENTRY_BYTE_LENGTH = (version_number==3)?7:9;
+    DICT_ENTRY_FLAG_POS = 0;
+  }
+  else {
+    /* Glulx */
+    OBJECT_BYTE_LENGTH = (1 + (NUM_ATTR_BYTES) + 6*4);
+    DICT_WORD_BYTES = DICT_WORD_SIZE*DICT_CHAR_SIZE;
+    if (DICT_CHAR_SIZE == 1) {
+      DICT_ENTRY_BYTE_LENGTH = (7+DICT_WORD_BYTES);
+      DICT_ENTRY_FLAG_POS = (1+DICT_WORD_BYTES);
+    }
+    else {
+      DICT_ENTRY_BYTE_LENGTH = (12+DICT_WORD_BYTES);
+      DICT_ENTRY_FLAG_POS = (4+DICT_WORD_BYTES);
+    }
   }
 }
 
@@ -250,6 +316,7 @@ static void reset_switch_settings(void)
 
     compression_switch = TRUE;
     glulx_mode = FALSE;
+    requested_glulx_version = 0;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1055,7 +1122,7 @@ static void cli_print_help(int help_level)
 {
     printf(
 "\nThis program is a compiler of Infocom format (also called \"Z-machine\")\n\
-story files: copyright (c) Graham Nelson 1993 - 2006.\n\n");
+story files: copyright (c) Graham Nelson 1993 - 2010.\n\n");
 
    /* For people typing just "inform", a summary only: */
 
@@ -1254,7 +1321,8 @@ extern void switches(char *p, int cmode)
         case 's': statistics_switch = state; break;
         case 't': asm_trace_setting=2; break;
         case 'u': optimise_switch = state; break;
-        case 'v': if ((cmode==0) && (version_set_switch)) { s=2; break; }
+        case 'v': if (glulx_mode) { s = select_glulx_version(p+i+1)+1; break; }
+                  if ((cmode==0) && (version_set_switch)) { s=2; break; }
                   version_set_switch = TRUE; s=2;
                   switch(p[i+1])
                   {   case '3': select_version(3); break;
@@ -1267,6 +1335,8 @@ extern void switches(char *p, int cmode)
                                 version_set_switch=0; s=1;
                                 break;
                   }
+                  if ((version_number < 5) && (r_e_c_s_set == FALSE))
+                      runtime_error_checking_switch = FALSE;
                   break;
         case 'w': nowarnings_switch = state; break;
         case 'x': hash_switch = state; break;

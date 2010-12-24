@@ -1,10 +1,10 @@
 /* ------------------------------------------------------------------------- */
 /*   Header file for Inform:  Z-machine ("Infocom" format) compiler          */
 /*                                                                           */
-/*                              Inform 6.31                                  */
+/*                              Inform 6.32                                  */
 /*                                                                           */
 /*   This header file and the others making up the Inform source code are    */
-/*   copyright (c) Graham Nelson 1993 - 2006                                 */
+/*   copyright (c) Graham Nelson 1993 - 2010                                 */
 /*                                                                           */
 /*   Manuals for this language are available from the IF-Archive at          */
 /*   http://www.ifarchive.org/                                               */
@@ -30,8 +30,8 @@
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
-#define RELEASE_DATE "10th Feb 2006"
-#define RELEASE_NUMBER 1631
+#define RELEASE_DATE "18th November 2010"
+#define RELEASE_NUMBER 1632
 #define GLULX_RELEASE_NUMBER 38
 #define MODULE_VERSION_NUMBER 1
 #define VNUMBER RELEASE_NUMBER
@@ -82,6 +82,7 @@
 #include <string.h>
 #include <time.h>
 #include <limits.h>
+#include <math.h>
 
 #ifndef VAX
 #if   SCHAR_MAX >= 0x7FFFFFFFL && SCHAR_MIN <= -0x7FFFFFFFL
@@ -124,7 +125,7 @@
 /*                                                                           */
 /*   3. An estimate of the typical amount of memory likely to be free        */
 /*   should be given in DEFAULT_MEMORY_SIZE.                                 */
-/*   For most modern machines, LARGE_SIZE is the appropriate setting, but    */
+/*   For most modern machines, HUGE_SIZE is the appropriate setting, but     */
 /*   some older micros may benefit from SMALL_SIZE.                          */
 /* ------------------------------------------------------------------------- */
 
@@ -276,6 +277,7 @@ static int32 unique_task_id(void)
 #define FN_SEP '/'
 /* 5 */
 #define Temporary_Directory "/tmp"
+/* 6 */
 #define PATHLEN 512
 #endif
 /* ------------------------------------------------------------------------- */
@@ -352,6 +354,8 @@ static int32 unique_task_id(void)
 {   return (int32)getpid();
 }
 #endif
+/* 6 */
+#define PATHLEN 8192
 #endif
 /* ------------------------------------------------------------------------- */
 /*   PC and PC_QUICKC block                                                  */
@@ -388,6 +392,7 @@ static int32 unique_task_id(void)
 #define FN_SEP '\\'
 /* 6 */
 #define DEFAULT_ERROR_FORMAT 1
+#define PATHLEN 512
 #endif
 /* ------------------------------------------------------------------------- */
 /*   UNIX block                                                              */
@@ -398,10 +403,11 @@ static int32 unique_task_id(void)
 /* 2 */
 #define USE_TEMPORARY_FILES
 /* 3 */
-#define DEFAULT_MEMORY_SIZE LARGE_SIZE
+#define DEFAULT_MEMORY_SIZE HUGE_SIZE
 /* 4 */
 #define FN_SEP '/'
 /* 5 */
+#define PATHLEN 512
 #define Temporary_Directory "/tmp"
 #define INCLUDE_TASK_ID
 #ifdef MAIN_INFORM_FILE
@@ -415,15 +421,18 @@ static int32 unique_task_id(void)
 /* ------------------------------------------------------------------------- */
 #ifdef UNIX64
 /* 1 */
+#ifndef MACHINE_STRING
 #define MACHINE_STRING   "Unix"
+#endif
 /* 2 */
 #define USE_TEMPORARY_FILES
 /* 3 */
-#define DEFAULT_MEMORY_SIZE LARGE_SIZE
+#define DEFAULT_MEMORY_SIZE HUGE_SIZE
 /* 4 */
 #define FN_SEP '/'
 /* 5 */
 #define Temporary_Directory "/tmp"
+#define PATHLEN 512
 #define INCLUDE_TASK_ID
 #ifdef MAIN_INFORM_FILE
 static int32 unique_task_id(void)
@@ -681,6 +690,7 @@ static int32 unique_task_id(void)
 #define  MAX_IDENTIFIER_LENGTH  32
 #define  MAX_ABBREV_LENGTH      64
 #define  MAX_DICT_WORD_SIZE     40
+#define  MAX_DICT_WORD_BYTES    (40*4)
 #define  MAX_NUM_ATTR_BYTES     39
 
 #define  VENEER_CONSTRAINT_ON_CLASSES_Z       256
@@ -798,9 +808,9 @@ typedef struct ErrorPosition_s
     int  main_flag;
 } ErrorPosition;
 
-/*  A memory block can hold at most 640K:  */
+/*  A memory block can hold at most ALLOC_CHUNK_SIZE * 72:  */
 
-#define ALLOC_CHUNK_SIZE 8192
+extern int ALLOC_CHUNK_SIZE;
 
 typedef struct memory_block_s
 {   int chunks;
@@ -1117,6 +1127,50 @@ typedef struct operator_s
 #define callfi_gc 77
 #define callfii_gc 78
 #define callfiii_gc 79
+#define streamunichar_gc 80
+#define mzero_gc 81
+#define mcopy_gc 82
+#define malloc_gc 83
+#define mfree_gc 84
+#define accelfunc_gc 85
+#define accelparam_gc 86
+#define numtof_gc 87
+#define ftonumz_gc 88
+#define ftonumn_gc 89
+#define ceil_gc 90
+#define floor_gc 91
+#define fadd_gc 92
+#define fsub_gc 93
+#define fmul_gc 94
+#define fdiv_gc 95
+#define fmod_gc 96
+#define sqrt_gc 97
+#define exp_gc 98
+#define log_gc 99
+#define pow_gc 100
+#define sin_gc 101
+#define cos_gc 102
+#define tan_gc 103
+#define asin_gc 104
+#define acos_gc 105
+#define atan_gc 106
+#define atan2_gc 107
+#define jfeq_gc 108
+#define jfne_gc 109
+#define jflt_gc 110
+#define jfle_gc 111
+#define jfgt_gc 112
+#define jfge_gc 113
+#define jisnan_gc 114
+#define jisinf_gc 115
+
+/* ------------------------------------------------------------------------- */
+/*   Index numbers into the keyword group "opcode_macros_g" (see "lexer.c")  */
+/* ------------------------------------------------------------------------- */
+
+#define pull_gm   0
+#define push_gm   1
+
 
 #define SYMBOL_TT    0                      /* value = index in symbol table */
 #define NUMBER_TT    1                      /* value = the number            */
@@ -1138,6 +1192,7 @@ typedef struct operator_s
                                                syntax for a directive        */
 #define TRACE_KEYWORD_TT  110               /* keyword used in debugging     */
 #define SYSTEM_CONSTANT_TT 111              /* such as "code_offset"         */
+#define OPCODE_MACRO_TT   112               /* fake opcode for compatibility */
 
 #define OP_TT        200                    /* value = operator no           */
 #define ENDEXP_TT    201                    /* no value                      */
@@ -1486,7 +1541,7 @@ typedef struct operator_s
 
 /*  Index numbers into the operators group "separators" (see "lexer.c")  */
 
-#define NUMBER_SEPARATORS 48
+#define NUMBER_SEPARATORS 49
 
 #define ARROW_SEP        0
 #define DARROW_SEP       1
@@ -1531,11 +1586,12 @@ typedef struct operator_s
 #define NBRANCH_SEP     40
 #define BRANCH_SEP      41
 #define HASHADOLLAR_SEP 42
-#define HASHNDOLLAR_SEP 43
-#define HASHRDOLLAR_SEP 44
-#define HASHWDOLLAR_SEP 45
-#define HASHHASH_SEP    46
-#define HASH_SEP        47
+#define HASHGDOLLAR_SEP 43
+#define HASHNDOLLAR_SEP 44
+#define HASHRDOLLAR_SEP 45
+#define HASHWDOLLAR_SEP 46
+#define HASHHASH_SEP    47
+#define HASH_SEP        48
 
 #define UNARY_MINUS_SEP 100
 #define POST_INC_SEP    101
@@ -1993,6 +2049,8 @@ extern int32 zmachine_pc;
 
 extern int32 no_instructions;
 extern int   sequence_point_follows;
+extern int   uses_unicode_features, uses_memheap_features, 
+    uses_acceleration_features, uses_float_features;
 extern dbgl  debug_line_ref;
 extern int   execution_never_reaches_here;
 extern int   *variable_usage;
@@ -2111,6 +2169,7 @@ extern void  backpatch_zmachine(int mv, int zmachine_area, int32 offset);
 /* ------------------------------------------------------------------------- */
 
 extern uchar source_to_iso_grid[];
+extern int32 iso_to_unicode_grid[];
 extern int   character_digit_value[];
 extern uchar alphabet[3][27];
 extern int   alphabet_modified;
@@ -2261,7 +2320,8 @@ extern int endofpass_flag;
 extern int version_number,  instruction_set_number, extend_memory_map;
 extern int32 scale_factor,  length_scale_factor;
 
-extern int WORDSIZE, INDIV_PROP_START, OBJECT_BYTE_LENGTH;
+extern int WORDSIZE, INDIV_PROP_START, 
+    OBJECT_BYTE_LENGTH, DICT_ENTRY_BYTE_LENGTH, DICT_ENTRY_FLAG_POS;
 extern int32 MAXINTWORD;
 
 extern int asm_trace_level, line_trace_level,     expr_trace_level,
@@ -2282,6 +2342,7 @@ extern int
 extern int oddeven_packing_switch;
 
 extern int glulx_mode, compression_switch;
+extern int32 requested_glulx_version;
 
 extern int error_format,    store_the_text,       asm_trace_setting,
     double_space_setting,   trace_fns_setting,    character_set_setting,
@@ -2345,7 +2406,8 @@ extern void restart_lexer(char *lexical_source, char *name);
 
 extern keyword_group directives, statements, segment_markers,
        conditions, system_functions, local_variables, opcode_names,
-       misc_keywords, directive_keywords, trace_keywords, system_constants;
+       misc_keywords, directive_keywords, trace_keywords, system_constants,
+       opcode_macros;
 
 /* ------------------------------------------------------------------------- */
 /*   Extern definitions for "linker"                                         */
@@ -2380,11 +2442,12 @@ extern int MAX_QTEXT_SIZE,  MAX_SYMBOLS,    HASH_TAB_SIZE,   MAX_DICT_ENTRIES,
 
 extern int32 MAX_STATIC_STRINGS, MAX_ZCODE_SIZE, MAX_LINK_DATA_SIZE,
            MAX_TRANSCRIPT_SIZE,  MAX_INDIV_PROP_TABLE_SIZE,
-           MAX_NUM_STATIC_STRINGS;
+           MAX_NUM_STATIC_STRINGS, MAX_UNICODE_CHARS,
+           MAX_STACK_SIZE, MEMORY_MAP_EXTENSION;
 
 extern int32 MAX_OBJ_PROP_COUNT, MAX_OBJ_PROP_TABLE_SIZE;
 extern int MAX_LOCAL_VARIABLES, MAX_GLOBAL_VARIABLES;
-extern int DICT_WORD_SIZE, NUM_ATTR_BYTES;
+extern int DICT_WORD_SIZE, DICT_CHAR_SIZE, DICT_WORD_BYTES, NUM_ATTR_BYTES;
 
 extern void *my_malloc(int32 size, char *whatfor);
 extern void *my_calloc(int32 size, int32 howmany, char *whatfor);
@@ -2543,8 +2606,17 @@ extern int32 static_strings_extent;
    compression. */
 
 extern int32 no_strings, no_dynamic_strings;
+extern int no_unicode_chars;
 
 #define MAX_DYNAMIC_STRINGS (64)
+
+typedef struct unicode_usage_s unicode_usage_t;
+struct unicode_usage_s {
+  int32 ch;
+  unicode_usage_t *next;  
+};
+
+extern unicode_usage_t *unicode_usage_entries;
 
 /* This is the maximum number of (8-bit) bytes that can encode a single
    Huffman entity. Four should be plenty, unless someone starts encoding
@@ -2571,7 +2643,8 @@ extern huffentity_t *huff_entities;
 
 extern int32 compression_table_size, compression_string_size;
 extern int32 *compressed_offsets;
-extern int no_huff_entities, huff_abbrev_start, huff_dynam_start;
+extern int no_huff_entities;
+extern int huff_abbrev_start, huff_dynam_start, huff_unicode_start;
 extern int huff_entity_root;
 
 extern void  compress_game_text(void);

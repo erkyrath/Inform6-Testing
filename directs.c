@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------- */
 /*   "directs" : Directives (# commands)                                     */
 /*                                                                           */
-/*   Part of Inform 6.31                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2006                                 */
+/*   Part of Inform 6.32                                                     */
+/*   copyright (c) Graham Nelson 1993 - 2010                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -806,6 +806,13 @@ the first constant definition");
             AO = parse_expression(CONSTANT_CONTEXT);
             if (module_switch && (AO.marker != 0))
                 error("A definite value must be given as version number");
+            else 
+            if (glulx_mode) 
+            {
+              warning("The Version directive does not work in Glulx. Use \
+-vX.Y.Z instead, as either a command-line argument or a header comment.");
+              break;
+            }
             else
             {   i = AO.value;
                 if ((i<3) || (i>8))
@@ -827,8 +834,8 @@ the first constant definition");
     case ZCHARACTER_CODE:
 
         if (glulx_mode) {
-            error("Glulx Inform does not handle Unicode yet.");
-            break;
+            error("The Zcharacter directive has no meaning in Glulx.");
+            return TRUE;
         }
 
         directive_keywords.enabled = TRUE;

@@ -3,8 +3,8 @@
 /*               end of dynamic memory, gluing together all the required     */
 /*               tables.                                                     */
 /*                                                                           */
-/*   Part of Inform 6.31                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2006                                 */
+/*   Part of Inform 6.32                                                     */
+/*   copyright (c) Graham Nelson 1993 - 2010                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -233,6 +233,7 @@ static void construct_storyfile_z(void)
           abbrevs_at, prop_defaults_at, object_tree_at, object_props_at,
           map_of_module, grammar_table_at, charset_at, headerext_at,
           terminating_chars_at, unicode_at, id_names_length;
+    int skip_backpatching = FALSE;
     char *output_called = (module_switch)?"module":"story file";
 
     ASSERT_ZCODE();
@@ -586,12 +587,16 @@ table format requested (producing number 2 format instead)");
     if (oddeven_packing_switch)
         while ((mark%(scale_factor*2)) != 0) p[mark++]=0;
 
-    if (mark > 0x10000)
+    if (mark > 0x0FFFE)
     {   error("This program has overflowed the maximum readable-memory \
 size of the Z-machine format. See the memory map below: the start \
-of the area marked \"above readable memory\" must be brought down to $10000 \
+of the area marked \"above readable memory\" must be brought down to $FFFE \
 or less.");
         memory_map_switch = TRUE;
+        /* Backpatching the grammar tables requires us to trust some of the */
+        /* addresses we've written into Z-machine memory, but they may have */
+        /* been truncated to 16 bits, so we can't do it.                    */
+        skip_backpatching = TRUE;
     }
 
     /*  -------------------------- Code Area ------------------------------- */
@@ -821,7 +826,7 @@ or less.");
 
     /*  ---- Backpatch the Z-machine, now that all information is in ------- */
 
-    if (!module_switch)
+    if (!module_switch && !skip_backpatching)
     {   backpatch_zmachine_image_z();
         for (i=1; i<id_names_length; i++)
         {   int32 v = 256*p[identifier_names_offset + i*2]
@@ -1440,6 +1445,12 @@ table format requested (producing number 2 format instead)");
     mark += no_actions*4;
     /* Values to be written in later. */
 
+    if (DICT_CHAR_SIZE != 1) {
+      /* If the dictionary is Unicode, we'd like it to be word-aligned. */
+      while (mark % 4)
+        p[mark++]=0;
+    }
+
     preactions_at = mark;
     adjectives_offset = mark;
     dictionary_offset = mark;
@@ -1453,12 +1464,12 @@ table format requested (producing number 2 format instead)");
       p[mark+i] = dictionary[i];
 
     for (i=0; i<dict_entries; i++) {
-      k = 4 + i*(7+DICT_WORD_SIZE);
-      j = mark + 4 + final_dict_order[i]*(7+DICT_WORD_SIZE);
-      for (l=0; l<(7+DICT_WORD_SIZE); l++)
+      k = 4 + i*DICT_ENTRY_BYTE_LENGTH;
+      j = mark + 4 + final_dict_order[i]*DICT_ENTRY_BYTE_LENGTH;
+      for (l=0; l<DICT_ENTRY_BYTE_LENGTH; l++)
         p[j++] = dictionary[k++];
     }
-    mark += 4 + dict_entries * (7+DICT_WORD_SIZE);
+    mark += 4 + dict_entries * DICT_ENTRY_BYTE_LENGTH;
 
     /*  -------------------------- All Data -------------------------------- */
     
@@ -1517,7 +1528,7 @@ table format requested (producing number 2 format instead)");
               switch(topbits) {
               case 1:
                 value = dictionary_offset + 4
-                  + final_dict_order[value]*(7+DICT_WORD_SIZE);
+                  + final_dict_order[value]*DICT_ENTRY_BYTE_LENGTH;
                 break;
               case 2:
                 value += code_offset;

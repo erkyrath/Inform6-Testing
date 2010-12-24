@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------- */
 /*   "text" : Text translation, the abbreviations optimiser, the dictionary  */
 /*                                                                           */
-/*   Part of Inform 6.31                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2006                                 */
+/*   Part of Inform 6.32                                                     */
+/*   copyright (c) Graham Nelson 1993 - 2010                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -52,6 +52,8 @@ int no_strings;                        /* No of strings in static strings
 int no_dynamic_strings;                /* No. of @.. string escapes used
                                           (actually, the highest value used
                                           plus one)                          */
+int no_unicode_chars;                  /* Number of distinct Unicode chars
+                                          used. (Beyond 0xFF.)               */
 
 static int MAX_CHARACTER_SET;          /* Number of possible entities */
 huffentity_t *huff_entities;           /* The list of entities (characters,
@@ -60,6 +62,8 @@ huffentity_t *huff_entities;           /* The list of entities (characters,
 static huffentity_t **hufflist;        /* Copy of the list, for sorting      */
 
 int no_huff_entities;                  /* The number of entities in the list */
+int huff_unicode_start;                /* Position in the list where Unicode
+                                          chars begin.                       */
 int huff_abbrev_start;                 /* Position in the list where string
                                           abbreviations begin.               */
 int huff_dynam_start;                  /* Position in the list where @..
@@ -77,6 +81,12 @@ int32 *compressed_offsets;             /* The beginning of every string in
                                           the game, relative to the beginning
                                           of the Huffman table. (So entry 0
                                           is equal to compression_table_size)*/
+
+#define UNICODE_HASH_BUCKETS (64)
+unicode_usage_t *unicode_usage_entries;
+static unicode_usage_t *unicode_usage_hash[UNICODE_HASH_BUCKETS];
+
+static int unicode_entity_index(int32 unicode);
 
 /* ------------------------------------------------------------------------- */
 /*   Abbreviation arrays                                                     */
@@ -537,6 +547,7 @@ advance as part of 'Zcharacter table':", unicode);
        "@0" to indicate a zero byte,
        "@ANNNN" to indicate an abbreviation,
        "@DNNNN" to indicate a dynamic string thing.
+       "@UNNNN" to indicate a four-byte Unicode value (0x100 or higher).
        (NNNN is a four-digit hex number using the letters A-P... an
        ugly representation but a convenient one.) 
     */
@@ -623,7 +634,20 @@ string; substituting '   '.");
             write_z_char_g(unicode);
           }
           else {
-            error("Unicode characters beyond Latin-1 are not yet supported in Glulx");
+            if (!compression_switch) {
+              warning("Unicode characters will not work in non-compressed \
+string; substituting '?'.");
+              write_z_char_g('?');
+            }
+            else {
+              j = unicode_entity_index(unicode);
+              write_z_char_g('@');
+              write_z_char_g('U');
+              write_z_char_g('A' + ((j >>12) & 0x0F));
+              write_z_char_g('A' + ((j >> 8) & 0x0F));
+              write_z_char_g('A' + ((j >> 4) & 0x0F));
+              write_z_char_g('A' + ((j     ) & 0x0F));
+            }
           }
         }
       }
@@ -631,14 +655,65 @@ string; substituting '   '.");
         write_z_char_g(0x0A);
       else if (text_in[i] == '~')
         write_z_char_g('"');
-      else
-        write_z_char_g(text_in[i]);
+      else {
+        unicode = iso_to_unicode_grid[text_in[i]];
+        if (unicode >= 0 && unicode < 256) {
+          write_z_char_g(unicode);
+        }
+        else {
+          if (!compression_switch) {
+            warning("Unicode characters will not work in non-compressed \
+string; substituting '?'.");
+            write_z_char_g('?');
+          }
+          else {
+            j = unicode_entity_index(unicode);
+            write_z_char_g('@');
+            write_z_char_g('U');
+            write_z_char_g('A' + ((j >>12) & 0x0F));
+            write_z_char_g('A' + ((j >> 8) & 0x0F));
+            write_z_char_g('A' + ((j >> 4) & 0x0F));
+            write_z_char_g('A' + ((j     ) & 0x0F));
+          }
+        }
+      }
     }
     write_z_char_g(0);
 
   }
 
     return((uchar *) text_out_pc);
+}
+
+static int unicode_entity_index(int32 unicode)
+{
+  unicode_usage_t *uptr;
+  int j;
+  int buck = unicode % UNICODE_HASH_BUCKETS;
+
+  for (uptr = unicode_usage_hash[buck]; uptr; uptr=uptr->next) {
+    if (uptr->ch == unicode)
+      break;
+  }
+  if (uptr) {
+    j = (uptr - unicode_usage_entries);
+  }
+  else {
+    if (no_unicode_chars >= MAX_UNICODE_CHARS) {
+      memoryerror("MAX_UNICODE_CHARS", MAX_UNICODE_CHARS);
+      j = 0;
+    }
+    else {
+      j = no_unicode_chars;
+      no_unicode_chars++;
+      uptr = unicode_usage_entries + j;
+      uptr->ch = unicode;
+      uptr->next = unicode_usage_hash[buck];
+      unicode_usage_hash[buck] = uptr;
+    }
+  }
+
+  return j;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -664,8 +739,11 @@ void compress_game_text()
   if (compression_switch) {
 
     /* How many entities have we currently got? Well, 256 plus the
-       string-terminator plus abbrevations plus dynamic strings. */
+       string-terminator plus Unicode chars plus abbrevations plus
+       dynamic strings. */
     entities = 256+1;
+    huff_unicode_start = entities;
+    entities += no_unicode_chars;
     huff_abbrev_start = entities;
     if (economy_switch)
       entities += no_abbreviations;
@@ -684,6 +762,11 @@ void compress_game_text()
     /* Terminator */
     huff_entities[256].type = 1;
     huff_entities[256].count = 0;
+    for (jx=0; jx<no_unicode_chars; jx++) {
+      huff_entities[huff_unicode_start+jx].type = 4;
+      huff_entities[huff_unicode_start+jx].count = 0;
+      huff_entities[huff_unicode_start+jx].u.val = jx;
+    }
     if (economy_switch) {
       for (jx=0; jx<no_abbreviations; jx++) {
         huff_entities[huff_abbrev_start+jx].type = 3;
@@ -701,6 +784,7 @@ void compress_game_text()
     /* No compression; use defaults that will make it easy to check
        for errors. */
     no_huff_entities = 257;
+    huff_unicode_start = 257;
     huff_abbrev_start = 257;
     huff_dynam_start = 257+MAX_ABBREVS;
     compression_table_size = 0;
@@ -735,7 +819,7 @@ void compress_game_text()
           else if (ch == '0') {
             ch = '\0';
           }
-          else if (ch == 'A' || ch == 'D') {
+          else if (ch == 'A' || ch == 'D' || ch == 'U') {
             escapelen = 4;
             escapetype = ch;
             escapeval = 0;
@@ -754,6 +838,9 @@ void compress_game_text()
             }
             else if (escapetype == 'D') {
               ch = huff_dynam_start+escapeval;
+            }
+            else if (escapetype == 'U') {
+              ch = huff_unicode_start+escapeval;
             }
             else {
               compiler_error("Strange @ escape in processed text.");
@@ -839,7 +926,7 @@ void compress_game_text()
     compression_table_size = 12;
     
     compress_makebits(huff_entity_root, 0, -1, &bits);
-    /* compress_dumptable(huff_entity_root, 0);  */
+    /* compress_dumptable(huff_entity_root, 0); */
     
   }
 
@@ -877,7 +964,7 @@ void compress_game_text()
         else if (ch == '0') {
           ch = '\0';
         }
-        else if (ch == 'A' || ch == 'D') {
+        else if (ch == 'A' || ch == 'D' || ch == 'U') {
           escapelen = 4;
           escapetype = ch;
           escapeval = 0;
@@ -896,6 +983,9 @@ void compress_game_text()
           }
           else if (escapetype == 'D') {
             ch = huff_dynam_start+escapeval;
+          }
+          else if (escapetype == 'U') {
+            ch = huff_unicode_start+escapeval;
           }
           else {
             compiler_error("Strange @ escape in processed text.");
@@ -924,9 +1014,9 @@ void compress_game_text()
         if (ch >= huff_dynam_start) {
           compression_string_size += 3;
         }
-        else if (ch >= huff_abbrev_start) {
-          compiler_error("Abbreviation in non-compressed string should \
-be impossible.");
+        else if (ch >= huff_unicode_start) {
+          compiler_error("Abbreviation/Unicode in non-compressed string \
+should be impossible.");
         }
         else
           compression_string_size += 1;
@@ -973,6 +1063,10 @@ static void compress_dumptable(int entnum, int depth)
     cx = (char *)abbreviations_at + ent->u.val*MAX_ABBREV_LENGTH;
     printf("abbrev %d, \"%s\"\n", ent->u.val, cx);
     break;
+  case 4:
+    ix = ent->u.val;
+    printf("'U+%lX'\n", (long)unicode_usage_entries[ix].ch);
+    break;
   case 9:
     printf("print-var @%02d\n", ent->u.val);
     break;
@@ -1009,6 +1103,7 @@ static void compress_makebits(int entnum, int depth, int prevbit,
     cx = (char *)abbreviations_at + ent->u.val*MAX_ABBREV_LENGTH;
     compression_table_size += (1 + 1 + strlen(cx));
     break;
+  case 4:
   case 9:
     compression_table_size += 5;
     break;
@@ -1375,24 +1470,31 @@ int dict_entries;                     /* Total number of records entered     */
 /*   as before. In Glulx, it can be any value up to MAX_DICT_WORD_SIZE.      */
 /*   (That limit is defined as 40 in the header; it exists only for a few    */
 /*   static buffers, and can be increased without using significant memory.) */
+/*                                                                           */
+/*   ###- Well, that certainly bit me on the butt, didn't it. In further     */
+/*   modifying the compiler to generate a Unicode dictionary, I have to      */
+/*   store four-byte values in the uchar array. This is handled by making    */
+/*   the array size DICT_WORD_BYTES (which is DICT_WORD_SIZE*DICT_CHAR_SIZE).*/
+/*   Then we store the 32-bit character value big-endian. This lets us       */
+/*   continue to compare arrays bytewise, which is a nice simplification.    */
 /* ------------------------------------------------------------------------- */
 
 extern int compare_sorts(uchar *d1, uchar *d2)
 {   int i;
-    for (i=0; i<DICT_WORD_SIZE; i++) 
+    for (i=0; i<DICT_WORD_BYTES; i++) 
         if (d1[i]!=d2[i]) return((int)(d1[i]) - (int)(d2[i]));
-    /* (since memcmp(d1, d2, DICT_WORD_SIZE); runs into a bug on some Unix 
+    /* (since memcmp(d1, d2, DICT_WORD_BYTES); runs into a bug on some Unix 
        libraries) */
     return(0);
 }
 
 extern void copy_sorts(uchar *d1, uchar *d2)
 {   int i;
-    for (i=0; i<DICT_WORD_SIZE; i++) 
+    for (i=0; i<DICT_WORD_BYTES; i++) 
         d1[i] = d2[i];
 }
 
-static uchar prepared_sort[MAX_DICT_WORD_SIZE];      /* Holds the sort code
+static uchar prepared_sort[MAX_DICT_WORD_BYTES];     /* Holds the sort code
                                                         of current word */
 
 static int number_and_case;
@@ -1493,6 +1595,7 @@ apostrophe in", dword);
 static void dictionary_prepare_g(char *dword, uchar *optresult)
 { 
   int i, j, k;
+  int32 unicode;
 
   number_and_case = 0;
 
@@ -1513,7 +1616,7 @@ to give gender or number of dictionary word", dword);
     }
     if (i>=DICT_WORD_SIZE) break;
 
-    k= (int)dword[j];
+    k= ((unsigned char *)dword)[j];
     if (k=='\'') 
       warning_named("Obsolete usage: use the ^ character for the \
 apostrophe in", dword);
@@ -1523,25 +1626,48 @@ apostrophe in", dword);
       k='\"';
 
     if (k=='@') {
-      int32 unicode = text_to_unicode(dword+j);
+      unicode = text_to_unicode(dword+j);
       j += textual_form_length - 1;
-      if (unicode >= 0 && unicode < 256) {
-        k = unicode;
-      }
-      else {
-        error("Unicode characters beyond Latin-1 are not yet supported in Glulx");
-        k = '?';
-      }
+    }
+    else {
+      unicode = iso_to_unicode_grid[k];
+    }
+
+    if (DICT_CHAR_SIZE != 1 || (unicode >= 0 && unicode < 256)) {
+      k = unicode;
+    }
+    else {
+      error("The dictionary cannot contain Unicode characters beyond Latin-1. \
+Define DICT_CHAR_SIZE=4 for a Unicode-compatible dictionary.");
+      k = '?';
     }
     
-    if (k >= 'A' && k <= 'Z')
+    if (k >= (unsigned)'A' && k <= (unsigned)'Z')
       k += ('a' - 'A');
 
-    prepared_sort[i] = k;
+    if (DICT_CHAR_SIZE == 1) {
+      prepared_sort[i] = k;
+    }
+    else {
+      prepared_sort[4*i]   = (k >> 24) & 0xFF;
+      prepared_sort[4*i+1] = (k >> 16) & 0xFF;
+      prepared_sort[4*i+2] = (k >>  8) & 0xFF;
+      prepared_sort[4*i+3] = (k)       & 0xFF;
+    }
   }
 
-  for (; i<DICT_WORD_SIZE; i++)
-    prepared_sort[i] = 0;
+  if (DICT_CHAR_SIZE == 1) {
+    for (; i<DICT_WORD_SIZE; i++)
+      prepared_sort[i] = 0;
+  }
+  else {
+    for (; i<DICT_WORD_SIZE; i++) {
+      prepared_sort[4*i]   = 0;
+      prepared_sort[4*i+1] = 0;
+      prepared_sort[4*i+2] = 0;
+      prepared_sort[4*i+3] = 0;
+    }
+  }
 
   if (optresult) copy_sorts(optresult, prepared_sort);
 }
@@ -1639,7 +1765,7 @@ static int dictionary_find(char *dword)
     dictionary_prepare(dword, NULL);
 
     while (at != VACANT)
-    {   n = compare_sorts(prepared_sort, dict_sort_codes+at*DICT_WORD_SIZE);
+    {   n = compare_sorts(prepared_sort, dict_sort_codes+at*DICT_WORD_BYTES);
         if (n==0) return at + 1;
         if (n>0) at = dtree[at].branch[1]; else at = dtree[at].branch[0];
     }
@@ -1667,7 +1793,7 @@ extern int dictionary_add(char *dword, int x, int y, int z)
     }
     while (TRUE)
     {
-        n = compare_sorts(prepared_sort, dict_sort_codes+at*DICT_WORD_SIZE);
+        n = compare_sorts(prepared_sort, dict_sort_codes+at*DICT_WORD_BYTES);
         if (n==0)
         {
             if (!glulx_mode) {
@@ -1676,8 +1802,8 @@ extern int dictionary_add(char *dword, int x, int y, int z)
                 if (x & 128) p[0] = (p[0])|number_and_case;
             }
             else {
-                p = dictionary+4 + at*(7+DICT_WORD_SIZE) + 1+DICT_WORD_SIZE;
-                p[1]=(p[1])|x; p[3]=(p[3])|y; p[5]=(p[5])|z;
+                p = dictionary+4 + at*DICT_ENTRY_BYTE_LENGTH + DICT_ENTRY_FLAG_POS;
+                p[1]=(p[1])|x; p[2]=(p[2])|(y/256); p[3]=(p[3])|(y%256); p[5]=(p[5])|z;
                 if (x & 128) p[1] = (p[1]) | number_and_case;
             }
             return at;
@@ -1793,23 +1919,25 @@ extern int dictionary_add(char *dword, int x, int y, int z)
     }
     else {
         int i;
-        p = dictionary + 4 + (7+DICT_WORD_SIZE)*dict_entries;
+        p = dictionary + 4 + DICT_ENTRY_BYTE_LENGTH*dict_entries;
         p[0] = 0x60; /* type byte -- dict word */
 
-        for (i=0; i<DICT_WORD_SIZE; i++)
-          p[1+i] = prepared_sort[i];
+        p += DICT_CHAR_SIZE;
+        for (i=0; i<DICT_WORD_BYTES; i++)
+          p[i] = prepared_sort[i];
         
-        p[1+DICT_WORD_SIZE+0] = 0; p[1+DICT_WORD_SIZE+1] = x;
-        p[1+DICT_WORD_SIZE+2] = 0; p[1+DICT_WORD_SIZE+3] = y;
-        p[1+DICT_WORD_SIZE+4] = 0; p[1+DICT_WORD_SIZE+5] = z;
+        p += DICT_WORD_BYTES;
+        p[0] = 0; p[1] = x;
+        p[2] = y/256; p[3] = y%256;
+        p[4] = 0; p[5] = z;
         if (x & 128) 
-          p[1+DICT_WORD_SIZE+1] |= number_and_case;
+          p[1] |= number_and_case;
         
-        dictionary_top += (7+DICT_WORD_SIZE);
+        dictionary_top += DICT_ENTRY_BYTE_LENGTH;
 
     }
 
-    copy_sorts(dict_sort_codes+dict_entries*DICT_WORD_SIZE, prepared_sort);
+    copy_sorts(dict_sort_codes+dict_entries*DICT_WORD_BYTES, prepared_sort);
 
     return dict_entries++;
 }
@@ -1831,8 +1959,8 @@ extern void dictionary_set_verb_number(char *dword, int to)
             p[1]=to;
         }
         else {
-            p=dictionary+4 + (i-1)*(7+DICT_WORD_SIZE) + 1+DICT_WORD_SIZE; 
-            p[3]=to;
+            p=dictionary+4 + (i-1)*DICT_ENTRY_BYTE_LENGTH + DICT_ENTRY_FLAG_POS; 
+            p[2]=to/256; p[3]=to%256;
         }
     }
 }
@@ -2037,6 +2165,7 @@ extern void text_begin_pass(void)
     static_strings_extent = 0;
     no_strings = 0;
     no_dynamic_strings = 0;
+    no_unicode_chars = 0;
 }
 
 /*  Note: for allocation and deallocation of all_the_text, see inform.c      */
@@ -2052,14 +2181,14 @@ extern void text_allocate_arrays(void)
                                  "red-black tree for dictionary");
     final_dict_order = my_calloc(sizeof(int),  MAX_DICT_ENTRIES,
                                  "final dictionary ordering table");
-    dict_sort_codes  = my_calloc(DICT_WORD_SIZE,   MAX_DICT_ENTRIES,
+    dict_sort_codes  = my_calloc(DICT_WORD_BYTES, MAX_DICT_ENTRIES,
                                  "dictionary sort codes");
 
     if (!glulx_mode)
         dictionary = my_malloc(9*MAX_DICT_ENTRIES+7,
             "dictionary");
     else
-        dictionary = my_malloc((7+DICT_WORD_SIZE)*MAX_DICT_ENTRIES+4,
+        dictionary = my_malloc(DICT_ENTRY_BYTE_LENGTH*MAX_DICT_ENTRIES+4,
             "dictionary");
 
     strings_holding_area
@@ -2068,6 +2197,7 @@ extern void text_allocate_arrays(void)
 
     huff_entities = NULL;
     hufflist = NULL;
+    unicode_usage_entries = NULL;
     done_compression = FALSE;
     compression_table_size = 0;
     compressed_offsets = NULL;
@@ -2076,11 +2206,17 @@ extern void text_allocate_arrays(void)
 
     if (glulx_mode) {
       if (compression_switch) {
-        MAX_CHARACTER_SET = 257 + MAX_ABBREVS + MAX_DYNAMIC_STRINGS;
+        int ix;
+        MAX_CHARACTER_SET = 257 + MAX_ABBREVS + MAX_DYNAMIC_STRINGS 
+          + MAX_UNICODE_CHARS;
         huff_entities = my_calloc(sizeof(huffentity_t), MAX_CHARACTER_SET*2+1, 
           "huffman entities");
         hufflist = my_calloc(sizeof(huffentity_t *), MAX_CHARACTER_SET, 
           "huffman node list");
+        unicode_usage_entries = my_calloc(sizeof(unicode_usage_t), 
+          MAX_UNICODE_CHARS, "unicode entity entries");
+        for (ix=0; ix<UNICODE_HASH_BUCKETS; ix++)
+          unicode_usage_hash[ix] = NULL;
       }
       compressed_offsets = my_calloc(sizeof(int32), MAX_NUM_STATIC_STRINGS,
         "static strings index table");
@@ -2105,6 +2241,7 @@ extern void text_free_arrays(void)
     my_free(&compressed_offsets, "static strings index table");
     my_free(&hufflist, "huffman node list");
     my_free(&huff_entities, "huffman entities");
+    my_free(&unicode_usage_entries, "unicode entity entities");
 
     deallocate_memory_block(&static_strings_area);
 }
