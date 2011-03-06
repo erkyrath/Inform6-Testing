@@ -197,11 +197,28 @@ def run_symbols_chunk_size():
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10042}, glulx=True)
     res.is_ok()
     
+def run_max_objects():
+    set_testname('MAX_OBJECTS')
+    
+    res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':523})
+    res.is_memsetting('MAX_OBJECTS')
+
+    res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':524})
+    res.is_ok()
+
+    res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':523}, glulx=True)
+    res.is_memsetting('MAX_OBJECTS')
+
+    res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':524}, glulx=True)
+    res.is_ok()
+
 def run_all_tests():
     run_max_symbols()
     run_symbols_chunk_size()
+    run_max_objects()
     
-run_all_tests()
+#run_all_tests()
+run_max_objects()
 
 print
 
