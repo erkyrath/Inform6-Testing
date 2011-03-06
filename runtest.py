@@ -19,8 +19,18 @@ import os
 import re
 import signal
 import subprocess
+import optparse
 
-informbinary = '../inform'
+popt = optparse.OptionParser(usage='runtest.py [options] [tests...]')
+
+popt.add_option('-b', '--binary',
+    action='store', dest='binary', default='../inform',
+    help='path to Inform binary (default: ../inform)')
+popt.add_option('--underflow',
+    action='store_true', dest='underflow',
+    help='guard against array underflow (rather than overflow)')
+
+(opts, args) = popt.parse_args()
 
 testname = '???'
 errorlist = []
@@ -28,7 +38,7 @@ errorlist = []
 def compile(srcfile, glulx=False, memsettings={}):
     """Perform one Inform compile, and return a Result object.
     """
-    argls = [ informbinary ]
+    argls = [ opts.binary ]
     if (glulx):
         argls.append('-G')
     for (key, val) in memsettings.items():
@@ -40,7 +50,8 @@ def compile(srcfile, glulx=False, memsettings={}):
     env = dict(os.environ)
     env['DYLD_INSERT_LIBRARIES'] = '/usr/lib/libgmalloc.dylib'
     env['MALLOC_WORD_SIZE'] = '1'
-    #env['MALLOC_PROTECT_BEFORE'] = '1'
+    if (opts.underflow):
+        env['MALLOC_PROTECT_BEFORE'] = '1'
     
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -183,8 +194,6 @@ def error(msg):
 # And now, the tests themselves.
     
 def run_max_symbols():
-    set_testname('MAX_SYMBOLS')
-    
     res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10035})
     res.is_memsetting('MAX_SYMBOLS')
 
@@ -198,8 +207,6 @@ def run_max_symbols():
     res.is_ok()
 
 def run_symbols_chunk_size():
-    set_testname('SYMBOLS_CHUNK_SIZE')
-    
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 800, 'MAX_SYMBOLS':10036})
     res.is_memsetting('SYMBOLS_CHUNK_SIZE')
     
@@ -213,8 +220,6 @@ def run_symbols_chunk_size():
     res.is_ok()
     
 def run_max_objects():
-    set_testname('MAX_OBJECTS')
-    
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':523})
     res.is_memsetting('MAX_OBJECTS')
 
@@ -228,8 +233,6 @@ def run_max_objects():
     res.is_ok()
 
 def run_max_classes():
-    set_testname('MAX_CLASSES')
-    
     res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':73})
     res.is_memsetting('MAX_CLASSES')
 
@@ -242,14 +245,27 @@ def run_max_classes():
     res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':74}, glulx=True)
     res.is_ok()
 
-def run_all_tests():
-    run_max_symbols()
-    run_symbols_chunk_size()
-    run_max_objects()
-    run_max_classes()
-    
-run_all_tests()
+test_catalog = [
+    ('MAX_SYMBOLS', run_max_symbols),
+    ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
+    ('MAX_OBJECTS', run_max_objects),
+    ('MAX_CLASSES', run_max_classes),
+    ]
 
+test_map = dict(test_catalog)
+
+if (not args):
+    args = [ key for (key, func) in test_catalog ]
+
+for key in args:
+    key = key.upper()
+    set_testname(key)
+    func = test_map.get(key)
+    if (not func):
+        error('No such test!')
+        continue
+    func()
+    
 print
 
 if (not errorlist):
