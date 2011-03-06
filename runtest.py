@@ -12,9 +12,8 @@
 # to other debugging-malloc libraries, but you'd have to adjust the
 # magic environment variables, and maybe the stderr parsing.
 #
-# This currently only tests two memory settings: MAX_SYMBOLS and
-# SYMBOLS_CHUNK_SIZE. (Really, SYMBOLS_CHUNK_SIZE is testing for *low*
-# values.) Feel free to expand it.
+# This currently only tests a few of the memory settings. Feel free to
+# expand it.
 
 import os
 import re
@@ -26,14 +25,9 @@ informbinary = '../inform'
 testname = '???'
 errorlist = []
 
-def set_testname(val):
-    global testname
-    testname = val
-    print
-    print '* Test:', testname
-    print
-    
 def compile(srcfile, glulx=False, memsettings={}):
+    """Perform one Inform compile, and return a Result object.
+    """
     argls = [ informbinary ]
     if (glulx):
         argls.append('-G')
@@ -58,10 +52,15 @@ def compile(srcfile, glulx=False, memsettings={}):
     print '...%s' % (res,)
     return res
 
-def error(msg):
-    errorlist.append( (testname, msg) )
-
 class Result:
+    """Result: Represents the result of an Inform compile.
+
+    The compile() function constructs one of these. The constructor will
+    note an error if there's anything blatantly wrong (like a segfault).
+    Then the test function can call is_ok() or is_memsetting() to check
+    that the result is as expected.
+    """
+    
     SIGNAL = 'signal'
     OK = 'ok'
     ERROR = 'error'
@@ -167,6 +166,22 @@ class Result:
         print '...TEST FAILED'
         return False
 
+def set_testname(val):
+    """Set the current test name. (Used for error output.)
+    """
+    global testname
+    testname = val
+    print
+    print '* Test:', testname
+    print
+    
+def error(msg):
+    """Note an error in the global error list.
+    """
+    errorlist.append( (testname, msg) )
+
+# And now, the tests themselves.
+    
 def run_max_symbols():
     set_testname('MAX_SYMBOLS')
     
@@ -212,13 +227,28 @@ def run_max_objects():
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':524}, glulx=True)
     res.is_ok()
 
+def run_max_classes():
+    set_testname('MAX_CLASSES')
+    
+    res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':73})
+    res.is_memsetting('MAX_CLASSES')
+
+    res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':74})
+    res.is_ok()
+
+    res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':73}, glulx=True)
+    res.is_memsetting('MAX_CLASSES')
+
+    res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':74}, glulx=True)
+    res.is_ok()
+
 def run_all_tests():
     run_max_symbols()
     run_symbols_chunk_size()
     run_max_objects()
+    run_max_classes()
     
-#run_all_tests()
-run_max_objects()
+run_all_tests()
 
 print
 
