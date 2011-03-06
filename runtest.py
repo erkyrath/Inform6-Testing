@@ -245,11 +245,27 @@ def run_max_classes():
     res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':74}, glulx=True)
     res.is_ok()
 
+def run_max_prop_table_size():
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23592})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23593})
+    res.is_ok()
+
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52425}, glulx=True)
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52426}, glulx=True)
+    res.is_ok()
+
+    
+    
 test_catalog = [
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
     ('MAX_OBJECTS', run_max_objects),
     ('MAX_CLASSES', run_max_classes),
+    ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ]
 
 test_map = dict(test_catalog)
