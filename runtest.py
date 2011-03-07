@@ -167,14 +167,14 @@ class Result:
         if (self.status == Result.OK):
             return True
         error('Should be ok, but was: %s' % (self,))
-        print '...TEST FAILED'
+        print '*** TEST FAILED ***'
         return False
 
     def is_memsetting(self, val):
         if (self.status == Result.ERROR and self.memsetting == val):
             return True
         error('Should be error (%s), but was: %s' % (val, self,))
-        print '...TEST FAILED'
+        print '*** TEST FAILED ***'
         return False
 
 def set_testname(val):
@@ -220,7 +220,8 @@ def run_symbols_chunk_size():
     
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10042}, glulx=True)
     res.is_ok()
-    
+
+
 def run_max_objects():
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':523})
     res.is_memsetting('MAX_OBJECTS')
@@ -233,6 +234,7 @@ def run_max_objects():
 
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':524}, glulx=True)
     res.is_ok()
+
 
 def run_max_classes():
     res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':73})
@@ -268,7 +270,15 @@ def run_max_prop_table_size():
 
     res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52426}, glulx=True)
     res.is_ok()
+
+    # A single large object can run into this setting too.
     
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':4000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':40000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
 
 def run_max_indiv_prop_table_size():
     # We include some extra MAX_INDIV_PROP_TABLE_SIZE values which triggered
@@ -286,8 +296,22 @@ def run_max_indiv_prop_table_size():
     res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23432})
     res.is_ok()
 
-    # Glulx does not use this setting.
+    # Glulx does not use this setting, so no Glulx tests.
+
     
+def run_max_obj_prop_table_size():
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':4000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':4000}, glulx=True)
+    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
+
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':40000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':4000}, glulx=True)
+    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
+
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':19999}, glulx=True)
+    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
+
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':20000}, glulx=True)
+    res.is_ok()
+
     
 test_catalog = [
     ('MAX_SYMBOLS', run_max_symbols),
@@ -296,6 +320,7 @@ test_catalog = [
     ('MAX_CLASSES', run_max_classes),
     ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
+    ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
     ]
 
 test_map = dict(test_catalog)
