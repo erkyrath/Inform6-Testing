@@ -195,12 +195,18 @@ def error(msg):
 # And now, the tests themselves.
     
 def run_max_symbols():
+    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':4000})
+    res.is_memsetting('MAX_SYMBOLS')
+
     res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10035})
     res.is_memsetting('MAX_SYMBOLS')
 
     res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10036})
     res.is_ok()
     
+    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':4000}, glulx=True)
+    res.is_memsetting('MAX_SYMBOLS')
+
     res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10041}, glulx=True)
     res.is_memsetting('MAX_SYMBOLS')
 
@@ -212,12 +218,24 @@ def run_symbols_chunk_size():
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 800, 'MAX_SYMBOLS':10036})
     res.is_memsetting('SYMBOLS_CHUNK_SIZE')
     
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1000, 'MAX_SYMBOLS':10036})
+    res.is_memsetting('SYMBOLS_CHUNK_SIZE')
+    
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1001, 'MAX_SYMBOLS':10036})
+    res.is_ok()
+    
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10036})
     res.is_ok()
     
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 800, 'MAX_SYMBOLS':10042}, glulx=True)
     res.is_memsetting('SYMBOLS_CHUNK_SIZE')
     
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1000, 'MAX_SYMBOLS':10042}, glulx=True)
+    res.is_memsetting('SYMBOLS_CHUNK_SIZE')
+    
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1001, 'MAX_SYMBOLS':10042}, glulx=True)
+    res.is_ok()
+
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10042}, glulx=True)
     res.is_ok()
 
@@ -251,11 +269,17 @@ def run_max_classes():
 
 
 def run_max_prop_table_size():
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':10000})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23592})
     res.is_memsetting('MAX_PROP_TABLE_SIZE')
 
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23593})
     res.is_ok()
+
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':20000}, glulx=True)
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
 
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52425}, glulx=True)
     res.is_memsetting('MAX_PROP_TABLE_SIZE')
@@ -284,6 +308,9 @@ def run_max_indiv_prop_table_size():
     # We include some extra MAX_INDIV_PROP_TABLE_SIZE values which triggered
     # memory errors in I632N.
     
+    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':10000})
+    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
+
     res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23263})
     res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
 
@@ -304,6 +331,9 @@ def run_max_obj_prop_table_size():
     res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
 
     res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':40000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':4000}, glulx=True)
+    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
+
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':10000}, glulx=True)
     res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
 
     res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':19999}, glulx=True)
