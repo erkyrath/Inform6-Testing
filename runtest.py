@@ -17,9 +17,7 @@
 # MAX_ABBREVS
 # MAX_ACTIONS
 # MAX_ADJECTIVES
-# ALLOC_CHUNK_SIZE
 # NUM_ATTR_BYTES
-# MAX_CLASS_TABLE_SIZE
 # MAX_DICT_ENTRIES
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
@@ -62,6 +60,12 @@ popt.add_option('-b', '--binary',
 popt.add_option('--underflow',
     action='store_true', dest='underflow',
     help='guard against array underflow (rather than overflow)')
+popt.add_option('--stdout',
+    action='store_true', dest='stdout',
+    help='display stdout for every compile')
+popt.add_option('--stderr',
+    action='store_true', dest='stderr',
+    help='display stderr for every compile')
 
 (opts, args) = popt.parse_args()
 
@@ -94,6 +98,14 @@ def compile(srcfile, glulx=False, memsettings={}):
     res = Result(res, stdout, stderr)
 
     print '...%s' % (res,)
+    if (opts.stdout):
+        print '--- stdout:'
+        print stdout
+        print '---'
+    if (opts.stderr):
+        print '--- stderr:'
+        print stderr
+        print '---'
     return res
 
 class Result:
@@ -135,7 +147,7 @@ class Result:
             outlines = 0
             for ln in lines:
                 
-                match = re.match('line (\d+): Fatal error:', ln)
+                match = re.match('(?:"[^"]*", )?line (\d+): Fatal error:', ln)
                 if (match):
                     outlines += 1
                     self.errors = 1
@@ -447,7 +459,27 @@ def run_max_static_data():
     res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42048}, glulx=True)
     res.is_ok()
 
-    
+
+def run_alloc_chunk_size():
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':150})
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':300})
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':611})
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':612})
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':613})
+    res.is_ok()
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':16384})
+    res.is_ok()
+
+
 test_catalog = [
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
@@ -458,6 +490,7 @@ test_catalog = [
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
     ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
     ('MAX_STATIC_DATA', run_max_static_data),
+    ('ALLOC_CHUNK_SIZE', run_alloc_chunk_size),
     ]
 
 test_map = dict(test_catalog)
