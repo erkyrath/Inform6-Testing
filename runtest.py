@@ -199,6 +199,8 @@ class Result:
         return res + '>'
 
     def is_ok(self):
+        """ Assert that the compile was successful.
+        """
         if (self.status == Result.OK):
             return True
         error('Should be ok, but was: %s' % (self,))
@@ -206,9 +208,22 @@ class Result:
         return False
 
     def is_memsetting(self, val):
+        """ Assert that the compile ended with an "increase $SETTING"
+        error (recognizable by I7).
+        """
         if (self.status == Result.ERROR and self.memsetting == val):
             return True
         error('Should be error (%s), but was: %s' % (val, self,))
+        print '*** TEST FAILED ***'
+        return False
+
+    def is_error(self):
+        """ Assert that the compile failed, but *not* with an
+        "increase $SETTING" error.
+        """
+        if (self.status == Result.ERROR and not self.memsetting):
+            return True
+        error('Should be error, but was: %s' % (self,))
         print '*** TEST FAILED ***'
         return False
 
@@ -377,6 +392,21 @@ def run_max_obj_prop_table_size():
     res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':20000}, glulx=True)
     res.is_ok()
 
+
+def run_max_global_variables():
+    # In Z-code, at most 233 globals are available, and you can't raise the
+    # limit.
+    res = compile('max_global_variables_test.inf')
+    res.is_ok()
+    
+    res = compile('max_global_variables_test_2.inf')
+    res.is_error()
+    
+    res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':510}, glulx=True)
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
+
+    res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':511}, glulx=True)
+    res.is_ok()
     
 test_catalog = [
     ('MAX_SYMBOLS', run_max_symbols),
@@ -386,6 +416,7 @@ test_catalog = [
     ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
+    ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
     ]
 
 test_map = dict(test_catalog)
