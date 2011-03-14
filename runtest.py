@@ -24,7 +24,6 @@
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # MAX_EXPRESSION_NODES
-# MAX_GLOBAL_VARIABLES
 # HASH_TAB_SIZE
 # MAX_INCLUSION_DEPTH
 # MAX_LABELS
@@ -36,7 +35,6 @@
 # MAX_OBJ_PROP_COUNT (glulx)
 # MAX_QTEXT_SIZE
 # MAX_SOURCE_FILES
-# MAX_STATIC_DATA
 # MAX_STATIC_STRINGS
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
@@ -407,6 +405,48 @@ def run_max_global_variables():
 
     res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':511}, glulx=True)
     res.is_ok()
+
+
+def run_max_static_data():
+    # We were getting overflow errors on odd values, so we have a lot of test
+    # cases here.
+    
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20477})
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20478})
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20479})
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20480})
+    res.is_ok()
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20481})
+    res.is_ok()
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42042}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42043}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42044}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42045}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42046}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42047}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42048}, glulx=True)
+    res.is_ok()
+
     
 test_catalog = [
     ('MAX_SYMBOLS', run_max_symbols),
@@ -417,6 +457,7 @@ test_catalog = [
     ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
     ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
+    ('MAX_STATIC_DATA', run_max_static_data),
     ]
 
 test_map = dict(test_catalog)
