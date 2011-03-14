@@ -253,7 +253,21 @@ def error(msg):
 
 
 # And now, the tests themselves.
+
+def run_max_inclusion_depth():
+    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5})
+    res.is_memsetting('MAX_INCLUSION_DEPTH')
+
+    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':6})
+    res.is_ok()
     
+    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5}, glulx=True)
+    res.is_memsetting('MAX_INCLUSION_DEPTH')
+
+    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':6}, glulx=True)
+    res.is_ok()
+    
+
 def run_max_symbols():
     res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':4000})
     res.is_memsetting('MAX_SYMBOLS')
@@ -511,6 +525,7 @@ def run_alloc_chunk_size():
 
 
 test_catalog = [
+    ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
     ('MAX_OBJECTS', run_max_objects),
