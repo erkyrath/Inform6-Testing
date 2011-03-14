@@ -301,11 +301,17 @@ def run_symbols_chunk_size():
 
 
 def run_max_objects():
+    res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':200})
+    res.is_memsetting('MAX_OBJECTS')
+
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':523})
     res.is_memsetting('MAX_OBJECTS')
 
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':524})
     res.is_ok()
+
+    res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':200}, glulx=True)
+    res.is_memsetting('MAX_OBJECTS')
 
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':523}, glulx=True)
     res.is_memsetting('MAX_OBJECTS')
@@ -412,6 +418,9 @@ def run_max_global_variables():
     res = compile('max_global_variables_test_2.inf')
     res.is_error()
     
+    res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':100}, glulx=True)
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
+
     res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':510}, glulx=True)
     res.is_memsetting('MAX_GLOBAL_VARIABLES')
 
@@ -423,6 +432,9 @@ def run_max_static_data():
     # We were getting overflow errors on odd values, so we have a lot of test
     # cases here.
     
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':5000})
+    res.is_memsetting('MAX_STATIC_DATA')
+
     res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20477})
     res.is_memsetting('MAX_STATIC_DATA')
 
@@ -437,6 +449,9 @@ def run_max_static_data():
 
     res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20481})
     res.is_ok()
+
+    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':5000}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
 
     res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42042}, glulx=True)
     res.is_memsetting('MAX_STATIC_DATA')
