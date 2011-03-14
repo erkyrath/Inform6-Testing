@@ -479,6 +479,21 @@ def run_alloc_chunk_size():
     res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':16384})
     res.is_ok()
 
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':256}, glulx=True)
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':914}, glulx=True)
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':915}, glulx=True)
+    res.is_memsetting('ALLOC_CHUNK_SIZE')
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':916}, glulx=True)
+    res.is_ok()
+
+    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':32768}, glulx=True)
+    res.is_ok()
+
 
 test_catalog = [
     ('MAX_SYMBOLS', run_max_symbols),
