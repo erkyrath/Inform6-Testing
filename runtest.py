@@ -12,8 +12,43 @@
 # to other debugging-malloc libraries, but you'd have to adjust the
 # magic environment variables, and maybe the stderr parsing.
 #
-# This currently only tests a few of the memory settings. Feel free to
-# expand it.
+# Memory settings not yet tested:
+#
+# MAX_ABBREVS
+# MAX_ACTIONS
+# MAX_ADJECTIVES
+# ALLOC_CHUNK_SIZE
+# NUM_ATTR_BYTES
+# MAX_CLASS_TABLE_SIZE
+# MAX_DICT_ENTRIES
+# DICT_WORD_SIZE
+# DICT_CHAR_SIZE (glulx)
+# MAX_EXPRESSION_NODES
+# MAX_GLOBAL_VARIABLES
+# HASH_TAB_SIZE
+# MAX_INCLUSION_DEPTH
+# MAX_LABELS
+# MAX_LINESPACE
+# MAX_LINK_DATA_SIZE
+# MAX_LOCAL_VARIABLES (glulx)
+# MAX_LOW_STRINGS
+# MAX_NUM_STATIC_STRINGS (glulx)
+# MAX_OBJ_PROP_COUNT (glulx)
+# MAX_QTEXT_SIZE
+# MAX_SOURCE_FILES
+# MAX_STATIC_DATA
+# MAX_STATIC_STRINGS
+# MAX_TRANSCRIPT_SIZE
+# MAX_UNICODE_CHARS (glulx)
+# MAX_VERBS
+# MAX_VERBSPACE
+# MAX_ZCODE_SIZE
+
+# Settings that don't result in compiler memory allocations, so they don't
+# need to be tested here:
+#
+# MEMORY_MAP_EXTENSION
+# MAX_STACK_SIZE
 
 import os
 import re
