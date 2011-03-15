@@ -3,7 +3,7 @@
 # This script runs the Inform 6 compiler many times, testing for memory
 # overflow conditions. It uses the I6 source files in this directory.
 # It also assumes that there's a usable Inform binary in the parent
-# directory. (If not, adjust the informbinary variable below.)
+# directory. (If not, supply a --binary argument.)
 #
 # To run: "python runtest.py".
 #
@@ -23,7 +23,6 @@
 # DICT_CHAR_SIZE (glulx)
 # MAX_EXPRESSION_NODES
 # HASH_TAB_SIZE
-# MAX_INCLUSION_DEPTH
 # MAX_LABELS
 # MAX_LINESPACE
 # MAX_LINK_DATA_SIZE
@@ -31,9 +30,7 @@
 # MAX_LOW_STRINGS
 # MAX_NUM_STATIC_STRINGS (glulx)
 # MAX_OBJ_PROP_COUNT (glulx)
-# MAX_QTEXT_SIZE
 # MAX_SOURCE_FILES
-# MAX_STATIC_STRINGS
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
 # MAX_VERBS
@@ -356,6 +353,12 @@ def run_max_prop_table_size():
     res.is_memsetting('MAX_PROP_TABLE_SIZE')
 
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23593})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23868})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23869})
     res.is_ok()
 
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':20000}, glulx=True)
@@ -382,6 +385,23 @@ def run_max_prop_table_size():
 
     res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':40000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
     res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    # So can a Z-code object's shortname.
+
+    res = compile('large_object_short_name_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':500})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('large_object_short_name_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':582})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('large_object_short_name_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':583})
+    res.is_ok()
+
+    res = compile('large_object_short_name_test_2.inf', memsettings={'MAX_PROP_TABLE_SIZE':500})
+    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+
+    res = compile('large_object_short_name_test_2.inf', memsettings={'MAX_PROP_TABLE_SIZE':584})
+    res.is_error()
 
 
 def run_max_indiv_prop_table_size():
@@ -524,6 +544,88 @@ def run_alloc_chunk_size():
     res.is_ok()
 
 
+def run_max_num_static_strings():
+    # Glulx only
+
+    res = compile('static_text_test.inf', memsettings={'MAX_NUM_STATIC_STRINGS':271}, glulx=True)
+    res.is_memsetting('MAX_NUM_STATIC_STRINGS')
+
+    res = compile('static_text_test.inf', memsettings={'MAX_NUM_STATIC_STRINGS':272}, glulx=True)
+    res.is_ok()
+
+    
+def run_max_qtext_size():
+    # Push MAX_STATIC_STRINGS high so that we don't run into it. That's
+    # a different test.
+    
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':2000})
+    res.is_memsetting('MAX_QTEXT_SIZE')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':8000})
+    res.is_memsetting('MAX_QTEXT_SIZE')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':8001})
+    res.is_ok()
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':60000, 'MAX_QTEXT_SIZE':2000}, glulx=True)
+    res.is_memsetting('MAX_QTEXT_SIZE')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':60000, 'MAX_QTEXT_SIZE':8000}, glulx=True)
+    res.is_memsetting('MAX_QTEXT_SIZE')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':60000, 'MAX_QTEXT_SIZE':8001}, glulx=True)
+    res.is_ok()
+
+    
+def run_max_static_strings():
+    # The compiler ensures that MAX_STATIC_STRINGS is (at least) twice
+    # MAX_QTEXT_SIZE.
+    
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':16002})
+    res.is_memsetting('MAX_STATIC_STRINGS')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':21333})
+    res.is_memsetting('MAX_STATIC_STRINGS')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':21334})
+    res.is_ok()
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':16002}, glulx=True)
+    res.is_memsetting('MAX_STATIC_STRINGS')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':48000}, glulx=True)
+    res.is_memsetting('MAX_STATIC_STRINGS')
+
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':48001}, glulx=True)
+    res.is_ok()
+
+
+def run_max_low_strings():
+    # Only meaningful for Z-code.
+    
+    res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':1000})
+    res.is_memsetting('MAX_LOW_STRINGS')
+
+    res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':3439})
+    res.is_memsetting('MAX_LOW_STRINGS')
+
+    res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':3440})
+    res.is_ok()
+
+    
+def run_max_zcode_size():
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':10000, 'MAX_QTEXT_SIZE':8001})
+    res.is_memsetting('MAX_ZCODE_SIZE')
+
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':21336, 'MAX_QTEXT_SIZE':8001})
+    res.is_memsetting('MAX_ZCODE_SIZE')
+
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':21337, 'MAX_QTEXT_SIZE':8001})
+    res.is_ok()
+
+    ### Many more tests should be done here.
+
+
 test_catalog = [
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
@@ -536,6 +638,11 @@ test_catalog = [
     ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
     ('MAX_STATIC_DATA', run_max_static_data),
     ('ALLOC_CHUNK_SIZE', run_alloc_chunk_size),
+    ('MAX_NUM_STATIC_STRINGS', run_max_num_static_strings),
+    ('MAX_QTEXT_SIZE', run_max_qtext_size),
+    ('MAX_STATIC_STRINGS', run_max_static_strings),
+    ('MAX_LOW_STRINGS', run_max_low_strings),
+    ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ]
 
 test_map = dict(test_catalog)
