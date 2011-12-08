@@ -4,7 +4,7 @@
 /*                              Inform 6.32                                  */
 /*                                                                           */
 /*   This header file and the others making up the Inform source code are    */
-/*   copyright (c) Graham Nelson 1993 - 2010                                 */
+/*   copyright (c) Graham Nelson 1993 - 2011                                 */
 /*                                                                           */
 /*   Manuals for this language are available from the IF-Archive at          */
 /*   http://www.ifarchive.org/                                               */
@@ -30,11 +30,14 @@
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
-#define RELEASE_DATE "18th November 2010"
+#define RELEASE_DATE "2nd November 2011"
 #define RELEASE_NUMBER 1632
 #define GLULX_RELEASE_NUMBER 38
 #define MODULE_VERSION_NUMBER 1
 #define VNUMBER RELEASE_NUMBER
+
+/* N indicates an intermediate release for Inform 7 */
+#define RELEASE_SUFFIX "N"
 
 /* ------------------------------------------------------------------------- */
 /*   Our host machine or OS for today is...                                  */
@@ -2436,9 +2439,9 @@ extern int MAX_QTEXT_SIZE,  MAX_SYMBOLS,    HASH_TAB_SIZE,   MAX_DICT_ENTRIES,
            MAX_OBJECTS,     MAX_ACTIONS,    MAX_ADJECTIVES,   MAX_ABBREVS,
            MAX_STATIC_DATA,      MAX_PROP_TABLE_SIZE,   SYMBOLS_CHUNK_SIZE,
            MAX_EXPRESSION_NODES, MAX_LABELS,            MAX_LINESPACE,
-           MAX_LOW_STRINGS,      MAX_CLASSES,           MAX_CLASS_TABLE_SIZE,
-           MAX_VERBS,            MAX_VERBSPACE,         MAX_ARRAYS,
-           MAX_INCLUSION_DEPTH,  MAX_SOURCE_FILES;
+           MAX_LOW_STRINGS,      MAX_CLASSES,           MAX_VERBS,
+           MAX_VERBSPACE,        MAX_ARRAYS,            MAX_INCLUSION_DEPTH,
+           MAX_SOURCE_FILES;
 
 extern int32 MAX_STATIC_STRINGS, MAX_ZCODE_SIZE, MAX_LINK_DATA_SIZE,
            MAX_TRANSCRIPT_SIZE,  MAX_INDIV_PROP_TABLE_SIZE,
@@ -2653,7 +2656,7 @@ extern void  compress_game_text(void);
 
 extern void  ao_free_arrays(void);
 extern int32 compile_string(char *b, int in_low_memory, int is_abbrev);
-extern uchar *translate_text(uchar *p, char *s_text);
+extern uchar *translate_text(uchar *p, uchar *p_limit, char *s_text);
 extern void  optimise_abbreviations(void);
 extern void  make_abbreviation(char *text);
 extern void  show_dictionary(void);

@@ -3,7 +3,7 @@
 /*              (with error throwback code for RISC OS machines)             */
 /*                                                                           */
 /*   Part of Inform 6.32                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2010                                 */
+/*   copyright (c) Graham Nelson 1993 - 2011                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -32,7 +32,7 @@ static void print_preamble(void)
     if (j <= 0) p = ErrorReport.source;
     else p = InputFiles[j-1].filename;
 
-    if (!p) p = ""; /* ###-call me paranoid */
+    if (!p) p = "";
     
     switch(error_format)
     {

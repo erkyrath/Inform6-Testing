@@ -2,7 +2,7 @@
 /*   "lexer" : Lexical analyser                                              */
 /*                                                                           */
 /*   Part of Inform 6.32                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2010                                 */
+/*   copyright (c) Graham Nelson 1993 - 2011                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -1357,8 +1357,7 @@ extern void get_next_token(void)
             do
             {   d = (*get_next_char)(); *lex_p++ = d;
                 if (quoted_size++==MAX_QTEXT_SIZE)
-                {   error(
-                  "Too much text for one pair of quotations \"...\" to hold");
+                {   memoryerror("MAX_QTEXT_SIZE", MAX_QTEXT_SIZE);
                     break;
                 }
                 if (d == '\n')

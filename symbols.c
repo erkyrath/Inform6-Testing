@@ -2,7 +2,7 @@
 /*   "symbols" :  The symbols table; creating stock of reserved words        */
 /*                                                                           */
 /*   Part of Inform 6.32                                                     */
-/*   copyright (c) Graham Nelson 1993 - 2010                                 */
+/*   copyright (c) Graham Nelson 1993 - 2011                                 */
 /*                                                                           */
 /* ------------------------------------------------------------------------- */
 
@@ -54,6 +54,8 @@ int no_named_constants;                         /* Copied into story file    */
 /*   Memory to hold the text of symbol names: note that this memory is       */
 /*   allocated as needed in chunks of size SYMBOLS_CHUNK_SIZE.               */
 /* ------------------------------------------------------------------------- */
+
+#define MAX_SYMBOL_CHUNKS (100)
 
 static uchar *symbols_free_space,       /* Next byte free to hold new names  */
            *symbols_ceiling;            /* Pointer to the end of the current
@@ -185,6 +187,12 @@ extern int symbol_index(char *p, int hashcode)
     {   symbols_free_space
             = my_malloc(SYMBOLS_CHUNK_SIZE, "symbol names chunk");
         symbols_ceiling = symbols_free_space + SYMBOLS_CHUNK_SIZE;
+        /* If we've passed MAX_SYMBOL_CHUNKS chunks, we print an error
+           message telling the user to increase SYMBOLS_CHUNK_SIZE.
+           That is the correct cure, even though the error comes out
+           worded inaccurately. */
+        if (no_symbol_name_space_chunks >= MAX_SYMBOL_CHUNKS)
+            memoryerror("SYMBOLS_CHUNK_SIZE", SYMBOLS_CHUNK_SIZE);
         symbol_name_space_chunks[no_symbol_name_space_chunks++]
             = (char *) symbols_free_space;
     }
@@ -696,7 +704,7 @@ extern void symbols_allocate_arrays(void)
                      "hash code list beginnings");
 
     symbol_name_space_chunks
-        = my_calloc(sizeof(char *), 100, "symbol names chunk addresses");
+        = my_calloc(sizeof(char *), MAX_SYMBOL_CHUNKS, "symbol names chunk addresses");
 
     init_symbol_banks();
     stockup_symbols();
