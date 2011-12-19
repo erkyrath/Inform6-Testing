@@ -2349,7 +2349,7 @@ extern int32 requested_glulx_version;
 
 extern int error_format,    store_the_text,       asm_trace_setting,
     double_space_setting,   trace_fns_setting,    character_set_setting,
-    header_ext_setting;
+    character_set_unicode,  header_ext_setting;
 
 extern char Debugging_Name[];
 extern char Transcript_Name[];
