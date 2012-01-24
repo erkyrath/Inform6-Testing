@@ -137,7 +137,12 @@ class Result:
         else:
             lines = stderr.split('\n')
             for ln in lines:
+                inheader = True
                 if ('GuardMalloc[' in ln):
+                    if (inheader):
+                        if re.match('GuardMalloc[^:]*: version [0-9.]*', ln):
+                            inheader = False
+                        continue
                     error('Apparent libgmalloc error ' + ln)
             
             lines = stdout.split('\n')
