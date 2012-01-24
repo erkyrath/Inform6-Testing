@@ -29,7 +29,6 @@
 # MAX_LOCAL_VARIABLES (glulx)
 # MAX_LOW_STRINGS
 # MAX_NUM_STATIC_STRINGS (glulx)
-# MAX_OBJ_PROP_COUNT (glulx)
 # MAX_SOURCE_FILES
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
@@ -462,6 +461,14 @@ def run_max_obj_prop_table_size():
     res.is_ok()
 
 
+def run_max_obj_prop_count():
+    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':128}, glulx=True)
+    res.is_memsetting('MAX_OBJ_PROP_COUNT')
+
+    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':129}, glulx=True)
+    res.is_ok()
+
+
 def run_max_global_variables():
     # In Z-code, at most 233 globals are available, and you can't raise the
     # limit.
@@ -657,6 +664,7 @@ test_catalog = [
     ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
+    ('MAX_OBJ_PROP_COUNT', run_max_obj_prop_count),
     ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
     ('MAX_STATIC_DATA', run_max_static_data),
     ('ALLOC_CHUNK_SIZE', run_alloc_chunk_size),
