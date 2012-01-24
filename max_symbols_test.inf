@@ -1,7 +1,7 @@
 [ Main;
 ];
 
-Constant test_0 = 0;
+Constant test_0abcdefghijklmnopqrstuvwxyz = 0;
 Constant test_1 = 1;
 Constant test_2 = 2;
 Constant test_3 = 3;

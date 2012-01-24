@@ -328,6 +328,10 @@ def run_symbols_chunk_size():
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10042}, glulx=True)
     res.is_ok()
 
+    # Distinct case: a single symbol overrunning the chunk size
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE':20})
+    res.is_memsetting('SYMBOLS_CHUNK_SIZE')
+
 
 def run_max_objects():
     res = compile('max_objects_test.inf', memsettings={'MAX_OBJECTS':200})
