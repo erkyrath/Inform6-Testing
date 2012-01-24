@@ -43,6 +43,7 @@
 # MEMORY_MAP_EXTENSION
 # MAX_STACK_SIZE
 
+import sys
 import os
 import re
 import signal
@@ -57,12 +58,18 @@ popt.add_option('-b', '--binary',
 popt.add_option('--underflow',
     action='store_true', dest='underflow',
     help='guard against array underflow (rather than overflow)')
+popt.add_option('--alignment',
+    action='store', type=int, dest='alignment', default=1,
+    help='align allocation on N-byte boundaries (must be 1, 4, or 16; default is 1)')
 popt.add_option('--stdout',
     action='store_true', dest='stdout',
     help='display stdout for every compile')
 popt.add_option('--stderr',
     action='store_true', dest='stderr',
     help='display stderr for every compile')
+popt.add_option('-l', '--list',
+    action='store_true', dest='listtests',
+    help='display list of tests')
 
 (opts, args) = popt.parse_args()
 
@@ -83,7 +90,14 @@ def compile(srcfile, glulx=False, memsettings={}):
 
     env = dict(os.environ)
     env['DYLD_INSERT_LIBRARIES'] = '/usr/lib/libgmalloc.dylib'
-    env['MALLOC_WORD_SIZE'] = '1'
+    
+    if opts.alignment == 4:
+        env['MALLOC_WORD_SIZE'] = '1'
+    elif opts.alignment == 16:
+        env['MALLOC_VECTOR_SIZE'] = '1'
+    else:
+        env['MALLOC_STRICT_SIZE'] = '1'
+        
     if (opts.underflow):
         env['MALLOC_PROTECT_BEFORE'] = '1'
     
@@ -651,6 +665,16 @@ test_catalog = [
     ]
 
 test_map = dict(test_catalog)
+
+if (opts.listtests):
+    print 'Tests in this suite:'
+    for (key, func) in test_catalog:
+        print ' ', key
+    sys.exit(-1)
+
+if opts.alignment not in (1, 4, 16):
+    print 'Alignment must be 1, 4, or 16.'
+    sys.exit(-1)
 
 if (not args):
     args = [ key for (key, func) in test_catalog ]
