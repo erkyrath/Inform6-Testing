@@ -466,10 +466,10 @@ def run_max_obj_prop_table_size():
 
 
 def run_max_obj_prop_count():
-    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':128}, glulx=True)
+    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':200}, glulx=True)
     res.is_memsetting('MAX_OBJ_PROP_COUNT')
 
-    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':129}, glulx=True)
+    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':201}, glulx=True)
     res.is_ok()
 
 
