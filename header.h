@@ -2257,7 +2257,7 @@ extern operator operators[];
 
 extern assembly_operand stack_pointer, temp_var1, temp_var2, temp_var3, 
     temp_var4, zero_operand, one_operand, two_operand, three_operand,
-    valueless_operand;
+    four_operand, valueless_operand;
 
 assembly_operand code_generate(assembly_operand AO, int context, int label);
 assembly_operand check_nonzero_at_runtime(assembly_operand AO1, int label,
