@@ -173,7 +173,14 @@ static void parse_action(void)
                 assemblez_4(call_zc, AO, AO2, AO3, AO4);
             break;
           case 3:
-            error("### not yet implemented");
+            AO5 = code_generate(AO5, QUANTITY_CONTEXT, -1);
+            AO4 = code_generate(AO4, QUANTITY_CONTEXT, -1);
+            AO3 = code_generate(AO3, QUANTITY_CONTEXT, -1);
+            if (codegen_action) AO2 = code_generate(AO2, QUANTITY_CONTEXT, -1);
+            if (version_number>=5)
+                assemblez_5(call_vn2_zc, AO, AO2, AO3, AO4, AO5);
+            /* if V4 or earlier, we've already displayed an error */
+            break;
             break;
       }
 
