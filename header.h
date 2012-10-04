@@ -2121,6 +2121,10 @@ extern void assemblez_4_to(int internal_number,
                        assembly_operand o1, assembly_operand o2,
                        assembly_operand o3, assembly_operand o4,
                        assembly_operand st);
+extern void assemblez_5_to(int internal_number,
+                       assembly_operand o1, assembly_operand o2,
+                       assembly_operand o3, assembly_operand o4,
+                       assembly_operand o5, assembly_operand st);
 
 extern void assemblez_inc(assembly_operand o1);
 extern void assemblez_dec(assembly_operand o1);

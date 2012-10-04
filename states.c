@@ -113,9 +113,9 @@ static void parse_action(void)
 
     if ((token_type == SEP_TT) && (token_value == COMMA_SEP))
     {
-        if (!glulx_mode && (version_number < 5))
+        if (!glulx_mode && (version_number < 4))
         {
-            error("<x, y> syntax is not available in Z-code V4 or earlier");
+            error("<x, y> syntax is not available in Z-code V3 or earlier");
         }
         args = 3;
         AO5 = parse_expression(QUANTITY_CONTEXT);
@@ -179,7 +179,10 @@ static void parse_action(void)
             if (codegen_action) AO2 = code_generate(AO2, QUANTITY_CONTEXT, -1);
             if (version_number>=5)
                 assemblez_5(call_vn2_zc, AO, AO2, AO3, AO4, AO5);
-            /* if V4 or earlier, we've already displayed an error */
+            else
+            if (version_number==4)
+                assemblez_5_to(call_vs2_zc, AO, AO2, AO3, AO4, AO5, temp_var1);
+            /* if V3 or earlier, we've already displayed an error */
             break;
             break;
       }
