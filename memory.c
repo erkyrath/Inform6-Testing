@@ -27,7 +27,8 @@ extern void my_realloc(void *pointer, int32 oldsize, int32 size,
     char *whatfor)
 {   char _huge *c;
     if (size==0) {
-        my_free(pointer, whatfor);
+        my_free(*(int **)pointer, whatfor);
+        *(int **)pointer = NULL;
         return;
     }
     c=halloc(size,1); malloced_bytes+=size;
@@ -57,7 +58,8 @@ extern void my_recalloc(void *pointer, int32 size, int32 oldhowmany,
     int32 howmany, char *whatfor)
 {   void _huge *c;
     if (size*howmany==0) {
-        my_free(pointer, whatfor);
+        my_free(*(int **)pointer, whatfor);
+        *(int **)pointer = NULL;
         return;
     }
     c=(void _huge *)halloc(size*howmany,1); malloced_bytes+=size*howmany;
@@ -90,7 +92,8 @@ extern void my_realloc(void *pointer, int32 oldsize, int32 size,
     char *whatfor)
 {   void *c;
     if (size==0) {
-        my_free(pointer, whatfor);
+        my_free(*(int **)pointer, whatfor);
+        *(int **)pointer = NULL;
         return;
     }
     c=realloc(*(int **)pointer, (size_t) size); malloced_bytes+=size;
@@ -121,7 +124,8 @@ extern void my_recalloc(void *pointer, int32 size, int32 oldhowmany,
     int32 howmany, char *whatfor)
 {   void *c;
     if (size*howmany==0) {
-        my_free(pointer, whatfor);
+        my_free(*(int **)pointer, whatfor);
+        *(int **)pointer = NULL;
         return;
     }
     c=realloc(*(int **)pointer, (size_t)size*(size_t)howmany); 
