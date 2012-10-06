@@ -76,7 +76,7 @@ extern int parse_directive(int internal_flag)
 
         Returns: TRUE if program continues, FALSE if end of file reached.    */
 
-    int routine_symbol;
+    int routine_symbol, rep_symbol;
 
     begin_syntax_line(FALSE);
     get_next_token();
@@ -123,6 +123,18 @@ extern int parse_directive(int internal_flag)
                 ROUTINE_T);
             slines[routine_symbol] = routine_starts_line;
         }
+
+        rep_symbol = routine_symbol;
+        if (find_symbol_replacement(&rep_symbol)) {
+            /* This function was subject to a "Replace X Y" directive.
+               The first time we see a definition for symbol X, we
+               copy it to Y -- that's the "original" form of the
+               function. */
+            if (svals[rep_symbol] == 0) {
+                assign_symbol(rep_symbol, svals[routine_symbol], ROUTINE_T);
+            }
+        }
+
         get_next_token();
         if ((token_type != SEP_TT) || (token_value != SEMICOLON_SEP))
         {   ebf_error("';' after ']'", token_text);
