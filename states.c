@@ -918,6 +918,20 @@ static void parse_statement_z(int break_label, int continue_label)
                      break;
                  }
 
+                 if (version_number >= 5)
+                 {   /* Use the V5 @set_text_style opcode. This is
+                        equivalent to "style fixed" (for font off) or
+                        "style roman" (for font on). */
+                     AO.type = SHORT_CONSTANT_OT; AO.marker = 0;
+                     if (token_value == ON_MK)
+                         AO.value = 0;
+                     else
+                         AO.value = 8;
+                     assemblez_1(set_text_style_zc, AO);
+                     break;
+                 }
+
+                 /* Set the fixed-pitch header bit. */
                  AO.type = SHORT_CONSTANT_OT;
                  AO.value = 0;
                  AO.marker = 0;
