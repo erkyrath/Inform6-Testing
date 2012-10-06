@@ -77,6 +77,7 @@ extern int parse_directive(int internal_flag)
         Returns: TRUE if program continues, FALSE if end of file reached.    */
 
     int routine_symbol, rep_symbol;
+    int is_renamed;
 
     begin_syntax_line(FALSE);
     get_next_token();
@@ -106,8 +107,16 @@ extern int parse_directive(int internal_flag)
 
         routine_symbol = token_value;
 
-        if ((sflags[routine_symbol] & REPLACE_SFLAG) && (is_systemfile()))
-        {   dont_enter_into_symbol_table = TRUE;
+        rep_symbol = routine_symbol;
+        is_renamed = find_symbol_replacement(&rep_symbol);
+
+        if ((sflags[routine_symbol] & REPLACE_SFLAG) 
+            && !is_renamed && (is_systemfile()))
+        {   /* The function is definitely being replaced (system_file
+               always loses priority in a replacement) but is not
+               being renamed to something else. Skip its definition
+               entirely. */
+            dont_enter_into_symbol_table = TRUE;
             do
             {   get_next_token();
             } while (!((token_type == EOF_TT)
@@ -117,15 +126,15 @@ extern int parse_directive(int internal_flag)
             if (token_type == EOF_TT) return FALSE;
         }
         else
-        {   assign_symbol(routine_symbol,
+        {   /* Parse the function definition and assign its symbol. */
+            assign_symbol(routine_symbol,
                 parse_routine(lexical_source, FALSE,
                     (char *) symbs[routine_symbol], FALSE, routine_symbol),
                 ROUTINE_T);
             slines[routine_symbol] = routine_starts_line;
         }
 
-        rep_symbol = routine_symbol;
-        if (find_symbol_replacement(&rep_symbol)) {
+        if (is_renamed) {
             /* This function was subject to a "Replace X Y" directive.
                The first time we see a definition for symbol X, we
                copy it to Y -- that's the "original" form of the
