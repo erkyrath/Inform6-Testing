@@ -11,12 +11,9 @@
 <h2>Introduction</h2>
 This is a maintenance release of the Inform system for creating adventure games, intended to address 
 issues that have arisen since the 6.21 compiler and 6/10 library files were released in 1999, and 
-subsequently since the 6.30 compiler was released in 2004. The focus is primarily on fixing the 
-problems which are identified in the Inform Patch List:
-<pre>  <a href="http://www.inform-fiction.org/patches/index.html">http://www.inform-fiction.org/patches/index.html</a></pre>
-In addition, a small number of enhancements are included, based on the ideas collected in the Inform 
-Suggestions List:
-<pre>  <a href="http://www.inform-fiction.org/suggestions/index.html">http://www.inform-fiction.org/suggestions/index.html</a></pre>
+subsequently since the 6.30 compiler was released in 2004. The focus is primarily on fixing problems,
+but a small number of enhancements are included.
+<p>
 Although just about all known bugs are fixed, the approach to enhancing Inform is more conservative. 
 The selection of suggestions to implement has been governed by three factors:
 <ul>
@@ -44,10 +41,8 @@ suggestions, providing support and facilities, testing, and so on &mdash; for th
 listed. So instead, this is a general thank-you to everybody who has made this release happen, and 
 specific ones to Graham for permitting it in the first place, and to Andrew for his pioneering work on 
 Glulx.
-There are, naturally, sure to be imperfections in the release, and these should be reported in the usual 
-way: bug reports to the Patch List, enhancement ideas to the Suggestions List. Any really serious 
-issues should perhaps be raised on the rec.arts.int-fiction Usenet newsgroup, with a Subject line 
-beginning &ldquo;<tt>[Inform6] ...</tt>&rdquo;.
+There are, naturally, sure to be imperfections in the release, and these should be reported through the
+<a href="http://inform7.com/mantis/">Inform bug tracker</a>.
 
 <h2>Compiler 6.33</h2>
 These are the changes delivered in version 6.33 of the Inform compiler.
@@ -56,8 +51,28 @@ These are the changes delivered in version 6.33 of the Inform compiler.
 <li><p>A new command line switch <tt><b>-Cu</b></tt> can be used to specify that the source file
 character set is UTF-8, allowing source files to contain Unicode characters beyond those defined in
 ISO 8859-1 to 8859-9.
-<li><p>
-The previously deprecated <tt>Dictionary</tt> directive can now have the following forms:
+<li><p>A new <tt>#Undef</tt> directive will cause a previously defined constant to become undefined.
+<li><p>Action statements can have an optional extra &lsquo;actor&rsquo; argument, allowing action
+statements of the form
+<pre>
+  &lt;Take pie, orc&gt;; ! simple form
+  &lt;&lt;Look, floyd&gt;&gt;; ! auto-returning form
+</pre>
+Note that this also requires a library change to be useful.
+<li><p>A previously declared routine can be renamed with a new form of the <tt>Replace</tt> directive.
+For example, if a source file contained
+<pre>
+  Replace Banner OriginalBanner;
+</pre>
+It could then (after including the library) contain this definion of a function:
+<pre>
+  [ Banner;
+    OriginalBanner();
+    print "Extra version info!^";
+  ];
+</pre>
+The library's banner code would then be in <tt>OriginalBanner()</tt>.
+<li><p>The previously deprecated <tt>Dictionary</tt> directive can now have the following forms:
 <pre>
   Dictionary 'word';
   Dictionary 'word' val1;
@@ -69,6 +84,8 @@ bitwise-or&rsquo;s the value in if the word already exists. The third form also 
 in the same way as for <tt>dict_par1</tt>.
 <p>
 The values can be numeric literals or constants. They can be 0-255 for Z-code, or 0-65535 for Glulx.
+<li><p>The &ldquo;<tt>font on</tt>&rdquo; and &ldquo;<tt>font off</tt>&rdquo; statements now call the
+<tt>@set_font</tt> opcode for Z-code V5 and higher.
 <li><p>The Glulx version of the <tt>Unsigned__Compare()</tt> veneer routine has been changed to a
 more efficient implementation, using Glulx&rsquo;s unsigned comparison opcodes.
 </ul>
@@ -89,6 +106,13 @@ increase the <tt>$MAX_GLOBAL_VARIABLES</tt> setting. [Mantis 611]
 containing no routines at all. [Mantis 843]
 <li><p>Floating-point constants in &ldquo;<tt>#Ifdef TARGET_GLULX;</tt>&rdquo; sections do not now cause an error
 when compiling to Z-code. [Mantis 927]
+<li><p>The error message produced if an action routine is not found for an action name has been improved to include
+the action name, and a sensible line number. [Mantis 1014]
+<li><p>The compiler is now better at not producing spurious additional errors after it has encountered a directive
+that contains an error. [Mantis 1018]
+<li><p>The compiler no longer crashes when reporting errors after line 65,535 in long Inform 6 source files. [Mantis 1023]
+<li><p>The compiler now reports a meaningful text compression rate when outputting statistics for Glulx with the
+<tt>-Gs</tt> switches. [Mantis 1026]
 </ul>
 
 <h2>Compiler 6.32</h2>
@@ -943,8 +967,9 @@ accomplish this is:
 <pre>  glk($0086, 2);</pre>
 The hex value $0086 means <tt>glk_set_style</tt>; the value &ldquo;2&rdquo; means <tt>Preformatted</tt>.<p>
 The table of Glk calls, and the integers that refer to them, is in the Glk specification (remember 
-that the values given there are hexadecimal). See:
-<pre>  <a href="http://www.eblong.com/zarf/glk/glk-spec-070_11.html#s.1.6">http://www.eblong.com/zarf/glk/glk-spec-070_11.html#s.1.6</a></pre>
+that the values given there are hexadecimal), in
+<a href="http://www.eblong.com/zarf/glk/glk-spec-074_12.html#s.1.6">Section 12.1.6</a>.
+<p>
 Since calls based on numeric codes are not very easy to read, we recommend that you download 
 John Cater&rsquo;s <tt>infglk.h</tt> library header, which defines wrapper functions and constants. For 
 example, you could achieve the same effect with this call:
