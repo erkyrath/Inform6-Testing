@@ -659,6 +659,14 @@ def run_max_zcode_size():
     ### Many more tests should be done here.
 
 
+def run_omit_unused_routines():
+    res = compile('i7gentest.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res.is_ok();
+
+    res = compile('i7gentest.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
+    res.is_ok();
+
+
 test_catalog = [
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
@@ -677,6 +685,7 @@ test_catalog = [
     ('MAX_STATIC_STRINGS', run_max_static_strings),
     ('MAX_LOW_STRINGS', run_max_low_strings),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
+    ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ]
 
 test_map = dict(test_catalog)
