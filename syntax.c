@@ -79,7 +79,6 @@ extern void get_next_token_with_directives(void)
        object, too. Don't. It's about as well-supported as Wile E.
        Coyote one beat before the plummet-lines kick in.) */
 
-    int not_directive = FALSE;
     int directives_save, segment_markers_save, statements_save;
 
     while (TRUE)
@@ -87,7 +86,7 @@ extern void get_next_token_with_directives(void)
         get_next_token();
 
         /* If the first token is not a '#', return it directly. */
-        if ((token_type != SEP_TT) || (token_value != HASH_SEP) || not_directive)
+        if ((token_type != SEP_TT) || (token_value != HASH_SEP))
             return;
 
         /* Save the lexer flags, and set up for directive parsing. */
@@ -113,11 +112,8 @@ extern void get_next_token_with_directives(void)
         if (token_type == DIRECTIVE_TT)
             parse_given_directive(TRUE);
         else
-        {
-            /* That wasn't a directive. Set not_directive, which means
-               restore the lexer state and bail out. */
-            put_token_back(); put_token_back(); put_token_back();
-            not_directive = TRUE;
+        {   ebf_error("directive", token_text);
+            return;
         }
 
         /* Restore all the lexer flags. (We are squashing several of them
@@ -240,7 +236,12 @@ extern int parse_directive(int internal_flag)
     }
 
     if (token_type != DIRECTIVE_TT)
-    {   ebf_error("directive, '[' or class name", token_text);
+    {   /* If we're internal, we expect only a directive here. If
+           we're top-level, the possibilities are broader. */
+        if (internal_flag)
+            ebf_error("directive", token_text);
+        else
+            ebf_error("directive, '[' or class name", token_text);
         panic_mode_error_recovery();
         return TRUE;
     }
