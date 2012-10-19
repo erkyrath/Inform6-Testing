@@ -63,6 +63,73 @@ extern void panic_mode_error_recovery(void)
         get_next_token();
 }
 
+extern void get_next_token_with_directives(void)
+{
+    /* A higher-level version of get_next_token(), which detects and
+       obeys directives such as #ifdef/#ifnot/#endif. (The # sign is
+       required in this case.)
+
+       This is called while parsing a long construct, such as Class or
+       Object, where we want to support internal #ifdefs. (Although
+       function-parsing predates this and doesn't make use of it.)
+
+       (Technically this permits *any* #-directive, which means you
+       can define global variables or properties or what-have-you in
+       the middle of an object. You can do that in the middle of an
+       object, too. Don't. It's about as well-supported as Wile E.
+       Coyote one beat before the plummet-lines kick in.) */
+
+    int not_directive = FALSE;
+    int directives_save, segment_markers_save, statements_save;
+
+    while (TRUE)
+    {
+        get_next_token();
+
+        /* If the first token is not a '#', return it directly. */
+        if ((token_type != SEP_TT) || (token_value != HASH_SEP) || not_directive)
+            return;
+
+        /* Save the lexer flags, and set up for directive parsing. */
+        directives_save = directives.enabled;
+        segment_markers_save = segment_markers.enabled;
+        statements_save = statements.enabled;
+
+        directives.enabled = TRUE;
+        segment_markers.enabled = FALSE;
+        statements.enabled = FALSE;
+        conditions.enabled = FALSE;
+        local_variables.enabled = FALSE;
+        misc_keywords.enabled = FALSE;
+        system_functions.enabled = FALSE;
+
+        get_next_token();
+
+        if (token_type == DIRECTIVE_TT)
+            parse_given_directive();
+        else
+        {
+            /* That wasn't a directive. Set not_directive, which means
+               restore the lexer state and bail out. */
+            put_token_back(); put_token_back(); put_token_back();
+            not_directive = TRUE;
+        }
+
+        /* Restore all the lexer flags. (We are squashing several of them
+           into a single save variable, which I think is safe because that's
+           what CKnight did.)
+        */
+        directive_keywords.enabled = FALSE;
+        directives.enabled = directives_save;
+        segment_markers.enabled = segment_markers_save;
+        statements.enabled =
+            conditions.enabled =
+            local_variables.enabled =
+            misc_keywords.enabled = 
+            system_functions.enabled = statements_save;
+    }
+}
+
 extern void parse_program(char *source)
 {
     lexical_source = source;

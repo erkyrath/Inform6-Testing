@@ -41,7 +41,9 @@ static int ebf_error_recover(char *s1, char *s2)
 /* ------------------------------------------------------------------------- */
 
 extern int parse_given_directive(void)
-{   int *trace_level; int32 i, j, k, n, flag;
+{   /*  Returns: FALSE if program continues, TRUE if end of file reached.    */
+
+    int *trace_level; int32 i, j, k, n, flag;
 
     switch(token_value)
     {
