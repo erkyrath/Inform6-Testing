@@ -105,8 +105,13 @@ extern void get_next_token_with_directives(void)
 
         get_next_token();
 
+        if ((token_type == SEP_TT) && (token_value == OPEN_SQUARE_SEP))
+        {   error("It is illegal to nest a routine inside an object using '#['");
+            return;
+        }
+
         if (token_type == DIRECTIVE_TT)
-            parse_given_directive();
+            parse_given_directive(TRUE);
         else
         {
             /* That wasn't a directive. Set not_directive, which means
@@ -139,7 +144,8 @@ extern void parse_program(char *source)
 extern int parse_directive(int internal_flag)
 {
     /*  Internal_flag is FALSE if the directive is encountered normally,
-        TRUE if encountered with a # prefix inside a routine.
+        TRUE if encountered with a # prefix inside a routine or object
+        definition.
 
         Returns: TRUE if program continues, FALSE if end of file reached.    */
 
@@ -224,7 +230,11 @@ extern int parse_directive(int internal_flag)
     }
 
     if ((token_type == SYMBOL_TT) && (stypes[token_value] == CLASS_T))
-    {   sflags[token_value] |= USED_SFLAG;
+    {   if (internal_flag)
+        {   error("It is illegal to nest an object in a routine using '#classname'");
+            return(TRUE);
+        }
+        sflags[token_value] |= USED_SFLAG;
         make_object(FALSE, NULL, -1, -1, svals[token_value]);
         return TRUE;
     }
@@ -235,7 +245,7 @@ extern int parse_directive(int internal_flag)
         return TRUE;
     }
 
-    return !(parse_given_directive());
+    return !(parse_given_directive(internal_flag));
 }
 
 static int switch_sign(void)

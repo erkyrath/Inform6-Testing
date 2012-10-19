@@ -2223,7 +2223,7 @@ extern int32 routine_starts_line;
 extern int  no_routines, no_named_routines, no_locals, no_termcs;
 extern int  terminating_characters[];
 
-extern int  parse_given_directive(void);
+extern int  parse_given_directive(int internal_flag);
 
 /* ------------------------------------------------------------------------- */
 /*   Extern definitions for "errors"                                         */
