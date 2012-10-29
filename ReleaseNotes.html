@@ -48,10 +48,16 @@ There are, naturally, sure to be imperfections in the release, and these should 
 These are the changes delivered in version 6.33 of the Inform compiler.
 <h3>Features added</h3>
 <ul>
+<li><p>Unused routines can now be detected and omitted from the compiled game, through two
+new settings. If <tt>$WARN_UNUSED_ROUTINES</tt> is set to 1, unused routines are reported during
+compilation. If <tt>$OMIT_UNUSED_ROUTINES</tt> is set to 1, unused routines (other than those in the
+Inform library) are omitted; if it is set to 2, unused routines anywhere, even in the library, are
+omitted.
 <li><p>A new command line switch <tt><b>-Cu</b></tt> can be used to specify that the source file
 character set is UTF-8, allowing source files to contain Unicode characters beyond those defined in
 ISO 8859-1 to 8859-9.
 <li><p>A new <tt>#Undef</tt> directive will cause a previously defined constant to become undefined.
+<li><p><tt>#Ifdef</tt> directives are now allowed within an object declaration.
 <li><p>Action statements can have an optional extra &lsquo;actor&rsquo; argument, allowing action
 statements of the form
 <pre>
@@ -109,10 +115,11 @@ when compiling to Z-code. [Mantis 927]
 <li><p>The error message produced if an action routine is not found for an action name has been improved to include
 the action name, and a sensible line number. [Mantis 1014]
 <li><p>The compiler is now better at not producing spurious additional errors after it has encountered a directive
-that contains an error. [Mantis 1018]
+that contains an error. [Mantis 1018,1035]
 <li><p>The compiler no longer crashes when reporting errors after line 65,535 in long Inform 6 source files. [Mantis 1023]
 <li><p>The compiler now reports a meaningful text compression rate when outputting statistics for Glulx with the
 <tt>-Gs</tt> switches. [Mantis 1026]
+<li><p>An error is now reported if a source file ends with an unterminated object definition. [Mantis 1036]
 </ul>
 
 <h2>Compiler 6.32</h2>
@@ -423,11 +430,8 @@ individual rooms by providing a compass_look property:
          ], 
          e_to hallway; 
 </pre>
-This enhancement uses the mechanism described at:
-<pre>
-  <a href="http://www.firthworks.com/roger/informfaq/ww.html#1">http://www.firthworks.com/roger/informfaq/ww.html#1</a>
-  <a href="http://www.onyxring.com/InformGuide.aspx?article=23">http://www.onyxring.com/InformGuide.aspx?article=23</a>
-</pre>
+This enhancement uses the mechanism described in
+<a href="http://www.firthworks.com/roger/informfaq/ww.html#1">this topic in the Inform 6 FAQ</a>
 (except that the <tt>compass_look</tt> property was previously named <tt>compasslook</tt>), and means that you 
 no longer need to make the library changes described there.
 <li><p>The verbs <tt>ASK <i>npc</i> TO <i>command</i></tt> and <tt>TELL <i>npc</i> TO <i>command</i></tt>
@@ -517,8 +521,8 @@ during an inventory. Here&rsquo;s an example:
               ], 
     has   container open; 
 </pre>
-This enhancement uses the mechanism described at:
-<pre>  <a href="http://www.firthworks.com/roger/informfaq/ww.html#4">http://www.firthworks.com/roger/informfaq/ww.html#4</a></pre>
+This enhancement uses the mechanism described in
+<a href="http://www.firthworks.com/roger/informfaq/ww.html#4">this topic in the Inform 6 FAQ</a>
 and means that you no longer need to <tt>Include WriteList</tt>.
 <li><p>The <tt>turns</tt> counter is now initialised to 0, not 1. You can change this if you define a constant 
 <tt>START_MOVE</tt> near the start of your game. 
@@ -966,9 +970,8 @@ Say, for example, that you want to set the text style to &ldquo;preformatted&rdq
 accomplish this is: 
 <pre>  glk($0086, 2);</pre>
 The hex value $0086 means <tt>glk_set_style</tt>; the value &ldquo;2&rdquo; means <tt>Preformatted</tt>.<p>
-The table of Glk calls, and the integers that refer to them, is in the Glk specification (remember 
-that the values given there are hexadecimal), in
-<a href="http://www.eblong.com/zarf/glk/glk-spec-074_12.html#s.1.6">Section 12.1.6</a>.
+The table of Glk calls, and the integers that refer to them, is given in Section 12.1.6 of the Glk specification
+(remember that the values given there are hexadecimal).
 <p>
 Since calls based on numeric codes are not very easy to read, we recommend that you download 
 John Cater&rsquo;s <tt>infglk.h</tt> library header, which defines wrapper functions and constants. For 
