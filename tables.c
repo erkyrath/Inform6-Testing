@@ -1801,11 +1801,6 @@ printf("        |    grammar table    |\n");
 printf("        + - - - - - - - - - - +   %06lx\n", 
   (long int) (Write_RAM_At+actions_at));
 printf("        |       actions       |\n");
-printf("        + - - - - - - - - - - +   %06lx\n", (long int) preactions_at);
-printf("        |   parsing routines  |\n");
-printf("        + - - - - - - - - - - +   %06lx\n",
-                                          (long int) adjectives_offset);
-printf("        |     adjectives      |\n");
 printf("        +---------------------+   %06lx\n", 
   (long int) dictionary_offset);
 printf("        |     dictionary      |\n");
