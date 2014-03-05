@@ -145,7 +145,7 @@ static int32 rough_size_of_paged_memory_z(void)
             + 6*32;                                   /* abbreviations table */
 
     total += 8;                                    /* header extension table */
-    if (header_ext_setting>3) total += (header_ext_setting-3)*2;
+    if (ZCODE_HEADER_EXT_WORDS>3) total += (ZCODE_HEADER_EXT_WORDS-3)*2;
 
     if (alphabet_modified) total += 78;               /* character set table */
 
@@ -290,8 +290,12 @@ static void construct_storyfile_z(void)
     /*  ------------------- Header extension table ------------------------- */
 
     headerext_at = mark;
-    headerext_length = 3;                            /* Usually 3 words long */
-    if (header_ext_setting>3) headerext_length = header_ext_setting;
+    headerext_length = ZCODE_HEADER_EXT_WORDS;
+    if (zscii_defn_modified) {
+        /* Need at least 3 words for unicode table address */
+        if (headerext_length < 3)
+            headerext_length = 3;
+    }
     p[mark++] = 0; p[mark++] = headerext_length;
     for (i=0; i<headerext_length; i++)
     {   p[mark++] = 0; p[mark++] = 0;
@@ -780,11 +784,18 @@ or less.");
 
     /*  ------------------------ Header Extension -------------------------- */
 
-    i = headerext_at + 2;
-    p[i++] = 0; p[i++] = 0;                       /* Mouse x-coordinate slot */
-    p[i++] = 0; p[i++] = 0;                       /* Mouse y-coordinate slot */
-    j = unicode_at;
-    p[i++] = j/256; p[i++] = j%256;     /* Unicode translation table address */
+    for (i=0; i<headerext_length; i++) {
+        switch (i) {
+        case 2:
+            j = unicode_at;             /* Unicode translation table address */
+            break;
+        default:
+            j = 0;
+            break;
+        }
+        p[headerext_at+2+2*i] = j / 256;
+        p[headerext_at+3+2*i] = j % 256;
+    }
 
     /*  ----------------- The Header: Extras for modules ------------------- */
 
