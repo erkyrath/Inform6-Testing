@@ -296,6 +296,11 @@ static void construct_storyfile_z(void)
         if (headerext_length < 3)
             headerext_length = 3;
     }
+    if (ZCODE_HEADER_FLAGS_3) {
+        /* Need at least 4 words for the flags-3 field (ZSpec 1.1) */
+        if (headerext_length < 4)
+            headerext_length = 4;
+    }
     p[mark++] = 0; p[mark++] = headerext_length;
     for (i=0; i<headerext_length; i++)
     {   p[mark++] = 0; p[mark++] = 0;
@@ -784,17 +789,23 @@ or less.");
 
     /*  ------------------------ Header Extension -------------------------- */
 
-    for (i=0; i<headerext_length; i++) {
+    /* The numbering in the spec is a little weird -- it's headerext_length
+       words *after* the initial length word. We follow the spec numbering
+       in this switch statement, so the count is 1-based. */
+    for (i=1; i<=headerext_length; i++) {
         switch (i) {
-        case 2:
+        case 3:
             j = unicode_at;             /* Unicode translation table address */
+            break;
+        case 4:
+            j = ZCODE_HEADER_FLAGS_3;                        /* Flags 3 word */
             break;
         default:
             j = 0;
             break;
         }
-        p[headerext_at+2+2*i] = j / 256;
-        p[headerext_at+3+2*i] = j % 256;
+        p[headerext_at+2*i+0] = j / 256;
+        p[headerext_at+2*i+1] = j % 256;
     }
 
     /*  ----------------- The Header: Extras for modules ------------------- */
