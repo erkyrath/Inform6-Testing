@@ -21,7 +21,6 @@
 # MAX_DICT_ENTRIES
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
-# MAX_EXPRESSION_NODES
 # HASH_TAB_SIZE
 # MAX_LABELS
 # MAX_LINESPACE
@@ -33,7 +32,6 @@
 # MAX_UNICODE_CHARS (glulx)
 # MAX_VERBS
 # MAX_VERBSPACE
-# MAX_ZCODE_SIZE
 
 # Settings that don't result in compiler memory allocations, so they don't
 # need to be tested here:
@@ -658,7 +656,21 @@ def run_max_low_strings():
     res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':3440})
     res.is_ok()
 
+
+def run_max_expression_nodes():
+    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
+    res.is_memsetting('MAX_EXPRESSION_NODES')
     
+    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':43})
+    res.is_ok()
+
+    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42}, glulx=True)
+    res.is_memsetting('MAX_EXPRESSION_NODES')
+    
+    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':43}, glulx=True)
+    res.is_ok()
+
+
 def run_max_zcode_size():
     res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':10000, 'MAX_QTEXT_SIZE':8001})
     res.is_memsetting('MAX_ZCODE_SIZE')
@@ -698,6 +710,7 @@ test_catalog = [
     ('MAX_QTEXT_SIZE', run_max_qtext_size),
     ('MAX_STATIC_STRINGS', run_max_static_strings),
     ('MAX_LOW_STRINGS', run_max_low_strings),
+    ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ]
