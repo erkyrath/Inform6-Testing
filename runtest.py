@@ -296,10 +296,10 @@ def run_max_symbols():
     res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':4000}, glulx=True)
     res.is_memsetting('MAX_SYMBOLS')
 
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10041}, glulx=True)
+    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10049}, glulx=True)
     res.is_memsetting('MAX_SYMBOLS')
 
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10042}, glulx=True)
+    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10050}, glulx=True)
     res.is_ok()
 
 
