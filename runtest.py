@@ -316,16 +316,16 @@ def run_symbols_chunk_size():
     res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10036})
     res.is_ok()
     
-    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 800, 'MAX_SYMBOLS':10042}, glulx=True)
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 800, 'MAX_SYMBOLS':10050}, glulx=True)
     res.is_memsetting('SYMBOLS_CHUNK_SIZE')
     
-    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1000, 'MAX_SYMBOLS':10042}, glulx=True)
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1000, 'MAX_SYMBOLS':10050}, glulx=True)
     res.is_memsetting('SYMBOLS_CHUNK_SIZE')
     
-    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1001, 'MAX_SYMBOLS':10042}, glulx=True)
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1001, 'MAX_SYMBOLS':10050}, glulx=True)
     res.is_ok()
 
-    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10042}, glulx=True)
+    res = compile('max_symbols_test.inf', memsettings={'SYMBOLS_CHUNK_SIZE': 1600, 'MAX_SYMBOLS':10050}, glulx=True)
     res.is_ok()
 
     # Distinct case: a single symbol overrunning the chunk size
