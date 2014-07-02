@@ -367,6 +367,20 @@ def run_max_classes():
     res.is_ok()
 
 
+def run_max_arrays():
+    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':149})
+    res.is_memsetting('MAX_ARRAYS')
+
+    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150})
+    res.is_ok()
+
+    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':149}, glulx=True)
+    res.is_memsetting('MAX_ARRAYS')
+
+    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
+    res.is_ok()
+
+
 def run_max_prop_table_size():
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':10000})
     res.is_memsetting('MAX_PROP_TABLE_SIZE')
@@ -673,6 +687,7 @@ test_catalog = [
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
     ('MAX_OBJECTS', run_max_objects),
     ('MAX_CLASSES', run_max_classes),
+    ('MAX_ARRAYS', run_max_arrays),
     ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
