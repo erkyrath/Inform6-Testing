@@ -657,6 +657,22 @@ def run_max_low_strings():
     res.is_ok()
 
 
+def run_max_verb_word_size():
+    # Fixed limit; no memory setting to change.
+    
+    res = compile('max_verb_word_size.inf')
+    res.is_ok()
+
+    res = compile('max_verb_word_size_2.inf')
+    res.is_error()
+    
+    res = compile('max_verb_word_size.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_verb_word_size_2.inf', glulx=True)
+    res.is_error()
+
+
 def run_max_expression_nodes():
     res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
     res.is_memsetting('MAX_EXPRESSION_NODES')
@@ -710,6 +726,7 @@ test_catalog = [
     ('MAX_QTEXT_SIZE', run_max_qtext_size),
     ('MAX_STATIC_STRINGS', run_max_static_strings),
     ('MAX_LOW_STRINGS', run_max_low_strings),
+    ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
