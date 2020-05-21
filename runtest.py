@@ -620,6 +620,8 @@ def run_alloc_chunk_size():
     res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':32768}, glulx=True)
     res.is_ok()
 
+    ### Many more tests should be done here.
+
 
 def run_max_num_static_strings():
     # Glulx only
