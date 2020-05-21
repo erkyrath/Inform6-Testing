@@ -585,6 +585,18 @@ def run_max_static_data():
     res = compile('max_static_data_test_2.inf', memsettings={'MAX_STATIC_DATA':40000}, glulx=True)
     res.is_ok()
 
+    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':20479, 'MAX_ARRAYS':200})
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':20480, 'MAX_ARRAYS':200})
+    res.is_ok()
+
+    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':42047, 'MAX_ARRAYS':200}, glulx=True)
+    res.is_memsetting('MAX_STATIC_DATA')
+
+    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':42048, 'MAX_ARRAYS':200}, glulx=True)
+    res.is_ok()
+
 
 def run_alloc_chunk_size():
     res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':150})
