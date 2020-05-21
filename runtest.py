@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # This script runs the Inform 6 compiler many times, testing for memory
 # overflow conditions. It uses the I6 source files in this directory.
@@ -78,11 +78,11 @@ def compile(srcfile, glulx=False, memsettings={}):
     argls = [ opts.binary ]
     if (glulx):
         argls.append('-G')
-    for (key, val) in memsettings.items():
+    for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
     argls.append('-w')
     argls.append(srcfile)
-    print 'Running:', ' '.join(argls)
+    print('Running:', ' '.join(argls))
 
     env = dict(os.environ)
     env['DYLD_INSERT_LIBRARIES'] = '/usr/lib/libgmalloc.dylib'
@@ -100,19 +100,19 @@ def compile(srcfile, glulx=False, memsettings={}):
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = run.wait()
-    stdout = run.stdout.read()
-    stderr = run.stderr.read()
+    stdout = run.stdout.read().decode()
+    stderr = run.stderr.read().decode()
     res = Result(res, stdout, stderr)
 
-    print '...%s' % (res,)
+    print('...%s' % (res,))
     if (opts.stdout):
-        print '--- stdout:'
-        print stdout
-        print '---'
+        print('--- stdout:')
+        print(stdout)
+        print('---')
     if (opts.stderr):
-        print '--- stderr:'
-        print stderr
-        print '---'
+        print('--- stderr:')
+        print(stderr)
+        print('---')
     return res
 
 class Result:
@@ -226,7 +226,7 @@ class Result:
         if (self.status == Result.OK):
             return True
         error('Should be ok, but was: %s' % (self,))
-        print '*** TEST FAILED ***'
+        print('*** TEST FAILED ***')
         return False
 
     def is_memsetting(self, val):
@@ -236,7 +236,7 @@ class Result:
         if (self.status == Result.ERROR and self.memsetting == val):
             return True
         error('Should be error (%s), but was: %s' % (val, self,))
-        print '*** TEST FAILED ***'
+        print('*** TEST FAILED ***')
         return False
 
     def is_error(self):
@@ -246,7 +246,7 @@ class Result:
         if (self.status == Result.ERROR and not self.memsetting):
             return True
         error('Should be error, but was: %s' % (self,))
-        print '*** TEST FAILED ***'
+        print('*** TEST FAILED ***')
         return False
 
 def set_testname(val):
@@ -254,9 +254,9 @@ def set_testname(val):
     """
     global testname
     testname = val
-    print
-    print '* Test:', testname
-    print
+    print()
+    print('* Test:', testname)
+    print()
     
 def error(msg):
     """Note an error in the global error list.
@@ -735,13 +735,13 @@ test_catalog = [
 test_map = dict(test_catalog)
 
 if (opts.listtests):
-    print 'Tests in this suite:'
+    print('Tests in this suite:')
     for (key, func) in test_catalog:
-        print ' ', key
+        print(' ', key)
     sys.exit(-1)
 
 if opts.alignment not in (1, 4, 16):
-    print 'Alignment must be 1, 4, or 16.'
+    print('Alignment must be 1, 4, or 16.')
     sys.exit(-1)
 
 if (not args):
@@ -756,12 +756,12 @@ for key in args:
         continue
     func()
     
-print
+print()
 
 if (not errorlist):
-    print 'All tests passed.'
+    print('All tests passed.')
 else:
-    print '%d errors!' % (len(errorlist),)
+    print('%d errors!' % (len(errorlist),))
     for (test, msg) in errorlist:
-        print '  %s: %s' % (test, msg)
+        print('  %s: %s' % (test, msg))
 
