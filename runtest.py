@@ -377,6 +377,30 @@ def run_max_arrays():
     res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
     res.is_ok()
 
+    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':149})
+    res.is_memsetting('MAX_ARRAYS')
+
+    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':150})
+    res.is_ok()
+
+    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':149}, glulx=True)
+    res.is_memsetting('MAX_ARRAYS')
+
+    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
+    res.is_ok()
+
+    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':99})
+    res.is_memsetting('MAX_ARRAYS')
+
+    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':100})
+    res.is_ok()
+
+    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':99}, glulx=True)
+    res.is_memsetting('MAX_ARRAYS')
+
+    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':100}, glulx=True)
+    res.is_ok()
+
 
 def run_max_prop_table_size():
     res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':10000})
