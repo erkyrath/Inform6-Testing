@@ -76,6 +76,7 @@ def compile(srcfile, glulx=False, memsettings={}):
     """Perform one Inform compile, and return a Result object.
     """
     argls = [ opts.binary ]
+    argls.append('+include_path=src')
     argls.append('+code_path=build')
     if (glulx):
         argls.append('-G')
