@@ -104,7 +104,7 @@ def compile(srcfile, glulx=False, memsettings={}):
     res = run.wait()
     stdout = run.stdout.read().decode()
     stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr)
+    res = Result(res, stdout, stderr, srcfile=srcfile, glulx=glulx)
 
     print('...%s' % (res,))
     if (opts.stdout):
@@ -130,12 +130,24 @@ class Result:
     OK = 'ok'
     ERROR = 'error'
     
-    def __init__(self, retcode, stdout, stderr):
+    def __init__(self, retcode, stdout, stderr, srcfile=None, glulx=False):
         self.status = None
+        self.filename = None
         self.signame = None
         self.warnings = 0
         self.errors = 0
         self.memsetting = None
+
+        if srcfile is not None:
+            if not srcfile.endswith('.inf'):
+                raise Exception('srcfile is not a .inf file')
+            val = srcfile[ : -4 ]
+            suffix = ''
+            if not glulx:
+                suffix = '.z5'
+            else:
+                suffix = '.ulx'
+            self.filename = os.path.join('build', val+suffix)
         
         if (retcode < 0):
             signame = 'SIG???'
@@ -222,10 +234,16 @@ class Result:
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
 
-    def is_ok(self):
+    def is_ok(self, md5=None):
         """ Assert that the compile was successful.
+        If the md5 argument is passed, we check that the resulting binary
+        matches.
         """
         if (self.status == Result.OK):
+            if not os.path.exists(self.filename):
+                error('Game file does not exist: %s' % (self.filename,))
+                print('*** TEST FAILED ***')
+                return False
             return True
         error('Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
@@ -267,6 +285,13 @@ def error(msg):
 
 
 # And now, the tests themselves.
+
+def run_checksum_test():
+    res = compile('minimal_test.inf')
+    res.is_ok(md5='fa27cbd72c81f40bd712044b01be9711')
+
+    res = compile('minimal_test.inf', glulx=True)
+    res.is_ok(md5='9a448249cfc0b2c3375783f7c1578abc')
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5})
@@ -754,13 +779,14 @@ def run_max_zcode_size():
 
 def run_omit_unused_routines():
     res = compile('i7gentest.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok();
+    res.is_ok()
 
     res = compile('i7gentest.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
-    res.is_ok();
+    res.is_ok()
 
 
 test_catalog = [
+    ('CHECKSUM', run_checksum_test),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
