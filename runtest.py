@@ -82,7 +82,7 @@ def compile(srcfile, glulx=False, memsettings={}):
     for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
     argls.append('-w')
-    argls.append(srcfile)
+    argls.append(os.path.join('src', srcfile))
     print('Running:', ' '.join(argls))
 
     env = dict(os.environ)
