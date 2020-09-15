@@ -2,7 +2,7 @@
 
 # This script runs the Inform 6 compiler many times, testing for memory
 # overflow conditions. It uses the I6 source files in this directory.
-# It also assumes that there's a usable Inform binary in the parent
+# It also assumes that there's a usable Inform binary in the current
 # directory. (If not, supply a --binary argument.)
 #
 # To run: "python runtest.py".
@@ -49,8 +49,8 @@ import optparse
 popt = optparse.OptionParser(usage='runtest.py [options] [tests...]')
 
 popt.add_option('-b', '--binary',
-    action='store', dest='binary', default='../inform',
-    help='path to Inform binary (default: ../inform)')
+    action='store', dest='binary', default='./inform',
+    help='path to Inform binary (default: ./inform)')
 popt.add_option('--underflow',
     action='store_true', dest='underflow',
     help='guard against array underflow (rather than overflow)')
@@ -792,6 +792,10 @@ if (opts.listtests):
 
 if opts.alignment not in (1, 4, 16):
     print('Alignment must be 1, 4, or 16.')
+    sys.exit(-1)
+
+if not os.path.exists(opts.binary):
+    print('Inform binary not found:', opts.binary)
     sys.exit(-1)
 
 if (not args):
