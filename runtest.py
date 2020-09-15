@@ -76,6 +76,7 @@ def compile(srcfile, glulx=False, memsettings={}):
     """Perform one Inform compile, and return a Result object.
     """
     argls = [ opts.binary ]
+    argls.append('+code_path=build')
     if (glulx):
         argls.append('-G')
     for (key, val) in list(memsettings.items()):
@@ -797,6 +798,9 @@ if opts.alignment not in (1, 4, 16):
 if not os.path.exists(opts.binary):
     print('Inform binary not found:', opts.binary)
     sys.exit(-1)
+
+if not os.path.exists('build'):
+    os.mkdir('build')
 
 if (not args):
     args = [ key for (key, func) in test_catalog ]
