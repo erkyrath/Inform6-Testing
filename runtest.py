@@ -298,10 +298,10 @@ def error(msg):
 
 def run_checksum_test():
     res = compile('minimal_test.inf')
-    res.is_ok(md5='fa27cbd72c81f40bd712044b01be9711')
+    res.is_ok(md5='666ad5e11db0afa6d225f24791624962')
 
     res = compile('minimal_test.inf', glulx=True)
-    res.is_ok(md5='9a448249cfc0b2c3375783f7c1578abc')
+    res.is_ok(md5='db5cf5fb15fc67f08a4c629ed6cfaf78')
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5})
