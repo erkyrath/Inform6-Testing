@@ -387,6 +387,15 @@ def run_checksum_test():
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='e603310679dfcb3185194dfc85941a73')
 
+    res = compile('cloak-metro84-v3test.inf', zversion=3)
+    res.is_ok(md5='a378cd678a18d41308f675ec720e919e')
+
+    res = compile('cloak-metro84-v3test.inf', zversion=4)
+    res.is_ok(md5='afaa158cf037c0c8b217d762e47a936a')
+
+    res = compile('cloak-metro84-v3test.inf', zversion=5)
+    res.is_ok(md5='44a69b2c9342a17356e54de151fb4688')
+
     
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
