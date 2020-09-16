@@ -298,6 +298,9 @@ def error(msg):
 # And now, the tests themselves.
 
 def run_checksum_test():
+    # The source files tested here must have an explicit serial-number
+    # directive.
+
     res = compile('minimal_test.inf')
     res.is_ok(md5='666ad5e11db0afa6d225f24791624962')
 
@@ -309,6 +312,12 @@ def run_checksum_test():
 
     res = compile('i7gentest.inf', glulx=True)
     res.is_ok(md5='1a5566218d96adcf497476796fd73e60')
+
+    res = compile('Advent.inf', includedir='i6lib-611')
+    res.is_ok(md5='945c30f435dc6ae049a2af32280adfff')
+
+    res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
+    res.is_ok(md5='9221642842d97ceec2137bab646c82b6')
 
     
 def run_max_inclusion_depth():
