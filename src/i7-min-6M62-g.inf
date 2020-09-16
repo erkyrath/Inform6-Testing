@@ -19,7 +19,7 @@
 ! if the I6 compiler builds this into the same game file, I haven't broken
 ! it.
 !
-! This should compile to Z5, Z8, or Glulx without errors. (But with a whole
+! This should compile to Glulx without errors. (But with a whole
 ! pile of warnings.)
 
 
