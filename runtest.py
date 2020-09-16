@@ -42,6 +42,7 @@
 import sys
 import os
 import re
+import hashlib
 import signal
 import subprocess
 import optparse
@@ -244,6 +245,15 @@ class Result:
                 error('Game file does not exist: %s' % (self.filename,))
                 print('*** TEST FAILED ***')
                 return False
+            if md5:
+                infl = open(self.filename, 'rb')
+                dat = infl.read()
+                infl.close()
+                val = hashlib.md5(dat).hexdigest()
+                if val != md5:
+                    error('Game file mismatch: %s is not %s' % (val, md5,))
+                    print('*** TEST FAILED ***')
+                    return False
             return True
         error('Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
