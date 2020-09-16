@@ -73,11 +73,12 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, memsettings={}):
+def compile(srcfile, glulx=False, includedir=None, memsettings={}):
     """Perform one Inform compile, and return a Result object.
     """
     argls = [ opts.binary ]
-    argls.append('+include_path=src')
+    if includedir:
+        argls.append('+include_path='+includedir)
     argls.append('+code_path=build')
     if (glulx):
         argls.append('-G')
@@ -311,16 +312,16 @@ def run_checksum_test():
 
     
 def run_max_inclusion_depth():
-    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5})
+    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
     res.is_memsetting('MAX_INCLUSION_DEPTH')
 
-    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':6})
+    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':6})
     res.is_ok()
     
-    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5}, glulx=True)
+    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5}, glulx=True)
     res.is_memsetting('MAX_INCLUSION_DEPTH')
 
-    res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':6}, glulx=True)
+    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':6}, glulx=True)
     res.is_ok()
     
 
