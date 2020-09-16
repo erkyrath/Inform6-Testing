@@ -302,7 +302,14 @@ def run_checksum_test():
 
     res = compile('minimal_test.inf', glulx=True)
     res.is_ok(md5='db5cf5fb15fc67f08a4c629ed6cfaf78')
+    
+    res = compile('i7gentest.inf')
+    res.is_ok(md5='3a33dcf5d927a3675bd0db240e366076')
 
+    res = compile('i7gentest.inf', glulx=True)
+    res.is_ok(md5='1a5566218d96adcf497476796fd73e60')
+
+    
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', memsettings={'MAX_INCLUSION_DEPTH':5})
     res.is_memsetting('MAX_INCLUSION_DEPTH')
@@ -790,9 +797,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7gentest.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
+    res.is_ok(md5='02220381cf4d5e91789491a738625b91')
 
     res = compile('i7gentest.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
+    res.is_ok(md5='44dfeda31294f553e6a743eab614b7fb')
 
 
 test_catalog = [
