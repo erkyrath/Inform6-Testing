@@ -336,9 +336,6 @@ def error(res, msg):
 # And now, the tests themselves.
 
 def run_checksum_test():
-    # The source files tested here must have an explicit serial-number
-    # directive.
-
     res = compile('minimal_test.inf')
     res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
 
