@@ -875,11 +875,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='02220381cf4d5e91789491a738625b91')
+    res.is_ok(md5='6e81c775d77ca5a05917f782eb502981')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='44dfeda31294f553e6a743eab614b7fb')
+    res.is_ok(md5='b4754e75f23e1d6bf922e0fa6f236177')
 
 
 test_catalog = [
