@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # This script runs the Inform 6 compiler many times, testing for memory
-# overflow conditions. It uses the I6 source files in this directory.
+# overflow conditions. It uses the I6 source files in the src directory.
 # It also assumes that there's a usable Inform binary in the current
 # directory. (If not, supply a --binary argument.)
 #
