@@ -73,7 +73,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, includedir=None, memsettings={}):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}):
     """Perform one Inform compile, and return a Result object.
     """
     argls = [ opts.binary ]
@@ -82,6 +82,8 @@ def compile(srcfile, glulx=False, includedir=None, memsettings={}):
     argls.append('+code_path=build')
     if (glulx):
         argls.append('-G')
+    elif (zversion):
+        argls.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
     argls.append('-w')
@@ -106,7 +108,7 @@ def compile(srcfile, glulx=False, includedir=None, memsettings={}):
     res = run.wait()
     stdout = run.stdout.read().decode()
     stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr, srcfile=srcfile, glulx=glulx)
+    res = Result(res, stdout, stderr, srcfile=srcfile, zversion=zversion, glulx=glulx)
 
     print('...%s' % (res,))
     if (opts.stdout):
@@ -132,7 +134,7 @@ class Result:
     OK = 'ok'
     ERROR = 'error'
     
-    def __init__(self, retcode, stdout, stderr, srcfile=None, glulx=False):
+    def __init__(self, retcode, stdout, stderr, srcfile=None, zversion=None, glulx=False):
         self.status = None
         self.filename = None
         self.signame = None
@@ -146,7 +148,10 @@ class Result:
             val = srcfile[ : -4 ]
             suffix = ''
             if not glulx:
-                suffix = '.z5'
+                if zversion:
+                    suffix = '.z%d' % (zversion,)
+                else:
+                    suffix = '.z5'
             else:
                 suffix = '.ulx'
             self.filename = os.path.join('build', val+suffix)
@@ -304,17 +309,41 @@ def run_checksum_test():
     res = compile('minimal_test.inf')
     res.is_ok(md5='666ad5e11db0afa6d225f24791624962')
 
+    res = compile('minimal_test.inf', zversion=3)
+    res.is_ok(md5='f8f4e05e92eadfec061042a8d4a510c0')
+
+    res = compile('minimal_test.inf', zversion=4)
+    res.is_ok(md5='bc43c06935ea63433df869c71e56202a')
+
+    res = compile('minimal_test.inf', zversion=5)
+    res.is_ok(md5='666ad5e11db0afa6d225f24791624962')
+
+    res = compile('minimal_test.inf', zversion=6)
+    res.is_ok(md5='6364e3d4aff3545c1d42841a1eb9333d')
+
+    res = compile('minimal_test.inf', zversion=7)
+    res.is_ok(md5='9e1e6e9c0d579348d06467e542e7a650')
+
+    res = compile('minimal_test.inf', zversion=8)
+    res.is_ok(md5='0bf834ecb4c66f818414b3525cc0e27a')
+
     res = compile('minimal_test.inf', glulx=True)
     res.is_ok(md5='db5cf5fb15fc67f08a4c629ed6cfaf78')
     
     res = compile('i7gentest.inf')
     res.is_ok(md5='3a33dcf5d927a3675bd0db240e366076')
 
+    res = compile('i7gentest.inf', zversion=8)
+    res.is_ok(md5='419a9fa355a5099263420fc9a2b38258')
+
     res = compile('i7gentest.inf', glulx=True)
     res.is_ok(md5='1a5566218d96adcf497476796fd73e60')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='945c30f435dc6ae049a2af32280adfff')
+
+    res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
+    res.is_ok(md5='ef279fbcc579820781f186d2717ad4bb')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='9221642842d97ceec2137bab646c82b6')
