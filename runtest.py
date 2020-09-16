@@ -135,6 +135,9 @@ class Result:
     ERROR = 'error'
     
     def __init__(self, retcode, stdout, stderr, srcfile=None, zversion=None, glulx=False):
+        self.srcfile = srcfile
+        self.glulx = glulx
+        self.zversion = zversion
         self.status = None
         self.filename = None
         self.signame = None
@@ -241,6 +244,36 @@ class Result:
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
 
+    def canonical_checksum(self):
+        """ Load a file and construct an MD5 checksum, allowing for
+        differences in serial number and compiler version.
+        """
+        infl = open(self.filename, 'rb')
+        dat = infl.read()
+        infl.close()
+        dat = bytearray(dat)
+        
+        if not self.glulx:
+            if len(dat) < 64:
+                raise Exception('Not a valid Z-code file')
+            # Serial number
+            dat[18:24] = b'\0\0\0\0\0\0'
+            # Checksum
+            dat[28:30] = b'\0\0'
+            # Compiler version number (not part of the Z-spec, but always produced by Inform 6)
+            dat[60:64] = b'\0\0\0\0'
+        else:
+            if len(dat) < 64:
+                raise Exception('Not a valid Glulx file')
+            # Checksum
+            dat[32:36] = b'\0\0\0\0'
+            # Compiler version number
+            dat[44:48] = b'\0\0\0\0'
+            # Serial number
+            dat[54:60] = b'\0\0\0\0\0\0'
+
+        return hashlib.md5(dat).hexdigest()
+
     def is_ok(self, md5=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
@@ -252,10 +285,7 @@ class Result:
                 print('*** TEST FAILED ***')
                 return False
             if md5:
-                infl = open(self.filename, 'rb')
-                dat = infl.read()
-                infl.close()
-                val = hashlib.md5(dat).hexdigest()
+                val = self.canonical_checksum()
                 if val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
                     print('*** TEST FAILED ***')
@@ -310,52 +340,52 @@ def run_checksum_test():
     # directive.
 
     res = compile('minimal_test.inf')
-    res.is_ok(md5='666ad5e11db0afa6d225f24791624962')
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
 
     res = compile('minimal_test.inf', zversion=3)
-    res.is_ok(md5='f8f4e05e92eadfec061042a8d4a510c0')
+    res.is_ok(md5='6143c98e20a44d843c1a6fbe2c19ecae')
 
     res = compile('minimal_test.inf', zversion=4)
-    res.is_ok(md5='bc43c06935ea63433df869c71e56202a')
+    res.is_ok(md5='f82709a196ebbefe109525084220c35a')
 
     res = compile('minimal_test.inf', zversion=5)
-    res.is_ok(md5='666ad5e11db0afa6d225f24791624962')
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
 
     res = compile('minimal_test.inf', zversion=6)
-    res.is_ok(md5='6364e3d4aff3545c1d42841a1eb9333d')
+    res.is_ok(md5='08b59209daa947437a5119b8060522ef')
 
     res = compile('minimal_test.inf', zversion=7)
-    res.is_ok(md5='9e1e6e9c0d579348d06467e542e7a650')
+    res.is_ok(md5='26bd70faebf8c61638a736a72f57c7ad')
 
     res = compile('minimal_test.inf', zversion=8)
-    res.is_ok(md5='0bf834ecb4c66f818414b3525cc0e27a')
+    res.is_ok(md5='fa7fc9bbe032d27355b0fcf4fb4f2c53')
 
     res = compile('minimal_test.inf', glulx=True)
-    res.is_ok(md5='db5cf5fb15fc67f08a4c629ed6cfaf78')
+    res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6')
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='3a33dcf5d927a3675bd0db240e366076')
+    res.is_ok(md5='72f858186e126859010cbbca40602ce3')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='419a9fa355a5099263420fc9a2b38258')
+    res.is_ok(md5='5feea90b2cf68a270d33795245008383')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='1a5566218d96adcf497476796fd73e60')
+    res.is_ok(md5='e9d3046de7a45028812aad9d5a132d32')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='df1c1725b63cbd206cd818420b1fd4e3')
+    res.is_ok(md5='5d684cd1f5028c923ec16fe4761ed5c9')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='22a214255bea0c56ba2dab82d2df533c')
+    res.is_ok(md5='ccb67fdaf4a272dfd4b829cc4f2202f6')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='945c30f435dc6ae049a2af32280adfff')
+    res.is_ok(md5='453977372e150037f9f3f93cdf847e35')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='ef279fbcc579820781f186d2717ad4bb')
+    res.is_ok(md5='04c6ff040938ad7e410da6f0c0bbf093')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='9221642842d97ceec2137bab646c82b6')
+    res.is_ok(md5='e603310679dfcb3185194dfc85941a73')
 
     
 def run_max_inclusion_depth():
