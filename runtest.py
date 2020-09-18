@@ -415,6 +415,12 @@ def run_directives_test():
     res = compile('undefdirectivetest.inf', glulx=True)
     res.is_ok(md5='cb28a5edcd681dfde63e472ac2542a95')
 
+    res = compile('replacerenametest.inf', includedir='src')
+    res.is_ok(md5='20f77c3bc7002792f218a345f547b91c')
+
+    res = compile('replacerenametest.inf', includedir='src', glulx=True)
+    res.is_ok(md5='3626d00770bcb1c6c9adfe476f53f943')
+
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
