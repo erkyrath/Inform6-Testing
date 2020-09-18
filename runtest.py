@@ -421,6 +421,12 @@ def run_directives_test():
     res = compile('replacerenametest.inf', includedir='src', glulx=True)
     res.is_ok(md5='3626d00770bcb1c6c9adfe476f53f943')
 
+    res = compile('replacerecursetest.inf')
+    res.is_ok(md5='f9abd6adec9bd6cfdd215fccb1abf22b')
+
+    res = compile('replacerecursetest.inf', glulx=True)
+    res.is_ok(md5='e6ff7304a967ab9cae5b99da9e7a3df1')
+
     res = compile('dictflagtest.inf')
     res.is_ok(md5='494cc7406f0d8183e9c2621ab8c0d204')
 
