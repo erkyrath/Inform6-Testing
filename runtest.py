@@ -409,6 +409,12 @@ def run_directives_test():
     res = compile('staticarraytest.inf', glulx=True)
     res.is_ok(md5='7b48eec04c0d8263a93d3e8d70a99029')
 
+    res = compile('undefdirectivetest.inf')
+    res.is_ok(md5='de2f2e32f82bf14a4178f3a992762e6b')
+
+    res = compile('undefdirectivetest.inf', glulx=True)
+    res.is_ok(md5='cb28a5edcd681dfde63e472ac2542a95')
+
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
