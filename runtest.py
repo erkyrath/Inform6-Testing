@@ -402,6 +402,14 @@ def run_v3_test():
     res.is_ok(md5='1be758056fc55b2c67f4dd1ce69e6dce')
 
 
+def run_directives_test():
+    res = compile('staticarraytest.inf')
+    res.is_ok(md5='2a4ff857dae93117b7ccb0a3ef7aa964')
+
+    res = compile('staticarraytest.inf', glulx=True)
+    res.is_ok(md5='7b48eec04c0d8263a93d3e8d70a99029')
+
+
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
     res.is_memsetting('MAX_INCLUSION_DEPTH')
@@ -899,6 +907,7 @@ def run_omit_unused_routines():
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('V3', run_v3_test),
+    ('DIRECTIVES', run_directives_test),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
