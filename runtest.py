@@ -393,7 +393,15 @@ def run_checksum_test():
     res = compile('cloak-metro84-v3test.inf', zversion=5)
     res.is_ok(md5='44a69b2c9342a17356e54de151fb4688')
 
-    
+
+def run_v3_test():
+    res = compile('dict-size-v3test.inf')
+    res.is_ok(md5='09300a2de87d8f8fee3d5a79d151aff4')
+
+    res = compile('dict-size-v3test.inf', zversion=3)
+    res.is_ok(md5='1be758056fc55b2c67f4dd1ce69e6dce')
+
+
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
     res.is_memsetting('MAX_INCLUSION_DEPTH')
@@ -890,6 +898,7 @@ def run_omit_unused_routines():
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
+    ('V3', run_v3_test),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
