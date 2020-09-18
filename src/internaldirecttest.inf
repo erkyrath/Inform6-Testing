@@ -132,6 +132,7 @@ Object testobj
 	TestObject();
 	TestFunc1();
 	TestFunc2();
+	TestFunc3();
 
 	new_line;
 	if (failures == 0)
@@ -272,4 +273,67 @@ Object testobj
 	check_value(val, 117);
 	print ".^";
 
+];
+
+[ SwitchTest val;
+	switch (val) {
+		0: return 0;
+		#ifdef ISDEF;
+		1: return 11;
+		2: return 22;
+		#ifnot;
+		7: return 77;
+		#endif;
+		3: return 33;
+		#ifdef NOTDEF;
+		4: return 44;
+		5: return 55;
+		#endif;
+		6:
+			#ifdef ISDEF;
+			return 66;
+			#ifnot;
+			return 67;
+			#endif;
+		#ifdef NOTDEF;
+		#ifnot;
+		8: return 88;
+		#endif;
+		#ifdef ISDEF;
+		default: return -1;
+		#endif;
+	}
+];
+
+[ TestFunc3;
+	print "SwitchTest(-1): ";
+	check_value(SwitchTest(-1), -1);
+	print ".^";
+	print "SwitchTest(0): ";
+	check_value(SwitchTest(0), 0);
+	print ".^";
+	print "SwitchTest(1): ";
+	check_value(SwitchTest(1), 11);
+	print ".^";
+	print "SwitchTest(2): ";
+	check_value(SwitchTest(2), 22);
+	print ".^";
+	print "SwitchTest(3): ";
+	check_value(SwitchTest(3), 33);
+	print ".^";
+	print "SwitchTest(4): ";
+	check_value(SwitchTest(4), -1);
+	print ".^";
+	print "SwitchTest(5): ";
+	check_value(SwitchTest(5), -1);
+	print ".^";
+	print "SwitchTest(6): ";
+	check_value(SwitchTest(6), 66);
+	print ".^";
+	print "SwitchTest(7): ";
+	check_value(SwitchTest(7), -1);
+	print ".^";
+	print "SwitchTest(8): ";
+	check_value(SwitchTest(8), 88);
+	print ".^";
 ];
