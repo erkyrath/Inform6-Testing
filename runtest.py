@@ -75,6 +75,12 @@ errorlist = []
 
 def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}):
     """Perform one Inform compile, and return a Result object.
+
+    By default, this compiles to the Inform default target (z5). You
+    can pass zversion=N or Glulx=True to build a different target.
+    If the source file has Includes, supply the include path as includedir.
+    The memsettings (now a misnomer) can include any "$FOO=..." compiler
+    setting.
     """
     argls = [ opts.binary ]
     if includedir:

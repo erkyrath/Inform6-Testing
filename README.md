@@ -1,9 +1,11 @@
 ## Inform 6 compiler tests
 
 This script runs the Inform 6 compiler many times, testing for various
-problems such as overflow conditions. It also compiles a bunch of known
-source files, making sure that the generated game files are exactly as
-expected.
+problems such as overflow conditions. It also compiles a bunch of
+known source files, making sure that the generated game files are
+exactly as expected. ("Exactly" excludes serial number, since that can
+change between compiles, and the compiler version number, since we
+might want to run this on older version of Inform.)
 
 The tests should always be in sync with the latest version (not the
 latest *released* version!) of the I6 compiler source:
