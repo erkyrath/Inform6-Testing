@@ -421,6 +421,18 @@ def run_directives_test():
     res = compile('replacerenametest.inf', includedir='src', glulx=True)
     res.is_ok(md5='3626d00770bcb1c6c9adfe476f53f943')
 
+    res = compile('dictflagtest.inf')
+    res.is_ok(md5='494cc7406f0d8183e9c2621ab8c0d204')
+
+    res = compile('dictflagtest.inf', glulx=True)
+    res.is_ok(md5='438aead86360423e32aecb2dda8e2341')
+
+    res = compile('actionextension.inf')
+    res.is_ok(md5='8434dd954b155675ec9a853052b5a5bc')
+
+    res = compile('actionextension.inf', glulx=True)
+    res.is_ok(md5='a90ea20de4c538312842ef1c5a5ee932')
+
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
