@@ -399,6 +399,12 @@ def run_checksum_test():
     res = compile('cloak-metro84-v3test.inf', zversion=5)
     res.is_ok(md5='44a69b2c9342a17356e54de151fb4688')
 
+    res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
+    res.is_ok(md5='e4c564649bc470901ddaf9c2df4ba031')
+
+    res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res.is_ok(md5='148e77a6c596ff59734a9e14f8edde81')
+
 
 def run_v3_test():
     res = compile('dict-size-v3test.inf')
