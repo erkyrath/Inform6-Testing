@@ -45,3 +45,17 @@ we can possibly manage it.
 
 (Of course, if we fix a code generation bug, then the compiler output
 will change. But if we add a new compiler feature, it will be opt-in.)
+
+### License
+
+The runtest.py script and the test scripts are released under the MIT
+license, except as noted below:
+
+- Inform 6/11 library (i6lib-611): Artistic license
+  https://gitlab.com/DavidGriffith/inform6lib
+
+- MetroCenter '84 library and Cloak of Darkness port (cloak-metro84-v3test.inf): Artistic license
+  https://github.com/ByteProject/Metrocenter84
+
+- PunyInform 1.6 (punylib-16) and Library of Horror (library_of_horror.inf): MIT license
+  https://github.com/johanberntsson/PunyInform
