@@ -277,6 +277,9 @@ Object testobj
 
 [ SwitchTest val;
 	switch (val) {
+		#ifdef ISDEF;
+		9: return 99;
+		#endif;
 		0: return 0;
 		#ifdef ISDEF;
 		1: return 11;
@@ -335,5 +338,8 @@ Object testobj
 	print ".^";
 	print "SwitchTest(8): ";
 	check_value(SwitchTest(8), 88);
+	print ".^";
+	print "SwitchTest(9): ";
+	check_value(SwitchTest(9), 99);
 	print ".^";
 ];
