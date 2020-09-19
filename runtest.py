@@ -445,6 +445,12 @@ def run_directives_test():
     res = compile('actionextension.inf', glulx=True)
     res.is_ok(md5='a90ea20de4c538312842ef1c5a5ee932')
 
+    res = compile('internaldirecttest.inf')
+    res.is_ok(md5='191fd5acfff6e1208b04f0d6d178f8eb')
+
+    res = compile('internaldirecttest.inf', glulx=True)
+    res.is_ok(md5='69666314dc31e270809d11f2ee9cebd6')
+
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
