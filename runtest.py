@@ -416,10 +416,10 @@ def run_v3_test():
 
 def run_directives_test():
     res = compile('staticarraytest.inf')
-    res.is_ok(md5='2a4ff857dae93117b7ccb0a3ef7aa964')
+    res.is_ok(md5='736f5df15951398ec41b0d05e4280cce')
 
     res = compile('staticarraytest.inf', glulx=True)
-    res.is_ok(md5='7b48eec04c0d8263a93d3e8d70a99029')
+    res.is_ok(md5='45b07b21aa4ff3ba2563bdbfd134dd1a')
 
     res = compile('undefdirectivetest.inf')
     res.is_ok(md5='de2f2e32f82bf14a4178f3a992762e6b')

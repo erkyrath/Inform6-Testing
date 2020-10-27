@@ -122,6 +122,8 @@ Array stringarray string "frotz";
 Array tablearray table 6;
 Array bufferarray buffer 11;
 Array bigarray -> 431;
+Array bracket1array table [ 4 ];
+Array bracket5array table [ 55 66 77; 'eight'; 99 ];
 
 Global stringarrayref = stringarray;
 
@@ -171,6 +173,13 @@ Object propobj
 	bigarray->430 = 75;
 	print "bigarray->430: "; check_value(bigarray->430, 75); print "^";
 
+	print "bracket1array-->0: "; check_value(bracket1array-->0, 1); print "^";
+	print "bracket1array-->1: "; check_value(bracket1array-->1, 4); print "^";
+	print "bracket5array-->0: "; check_value(bracket5array-->0, 5); print "^";
+	print "bracket5array-->1: "; check_value(bracket5array-->1, 55); print "^";
+	print "bracket5array-->4: "; check_value(bracket5array-->4, 'eight'); print "^";
+	print "bracket5array-->5: "; check_value(bracket5array-->5, 99); print "^";
+
 	! The random() function implicitly constructs an array.
 	val = random(8, 8, 8, 8, 8);
 	print "random(): "; check_value(val, 8); print "^";
@@ -181,6 +190,8 @@ Object propobj
 	print "tablearray: "; check_address_dynamic(tablearray);
 	print "bufferarray: "; check_address_dynamic(bufferarray);
 	print "bigarray: "; check_address_dynamic(bigarray);
+	print "bracket1array: "; check_address_dynamic(bracket1array);
+	print "bracket5array: "; check_address_dynamic(bracket5array);
 
 	#ifdef STRICT_MODE;
 	
