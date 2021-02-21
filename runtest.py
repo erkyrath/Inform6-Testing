@@ -457,6 +457,12 @@ def run_directives_test():
     res = compile('internaldirecttest.inf', glulx=True)
     res.is_ok(md5='69666314dc31e270809d11f2ee9cebd6')
 
+    res = compile('ifelsedirecttest.inf')
+    res.is_ok(md5='33dfb4452ebb69030ae6e7c3db2f0833')
+
+    res = compile('ifelsedirecttest.inf', glulx=True)
+    res.is_ok(md5='c9f1ab6a8dfba69f4bb2746c20c3fbbb')
+
     res = compile('classordertest.inf')
     res.is_ok(md5='d065c980637c8531133e75bf040e1731')
 
