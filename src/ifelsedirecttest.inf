@@ -95,6 +95,7 @@ Global failures;
 
 	TestFunc1();
 	TestFunc2();
+	TestFunc3();
 
 	new_line;
 	if (failures == 0)
@@ -245,6 +246,115 @@ Constant ISDEF 1;
 	val = GetAbs(0);
 	print "GetAbs(0): ";
 	check_value(val, 0);
+	print ".^";
+	
+];
+
+! Four variations where both the "if" and "else" are conditional!
+
+[ Path1 arg val;
+
+#ifdef ISDEF;
+	if (arg) val = 1;
+#ifnot;
+	if (arg) val = 2;
+#endif;
+#ifdef ISDEF;
+	else val = 3;
+#ifnot;
+	else val = 4;
+#endif;
+
+	return val;
+];
+
+[ Path2 arg val;
+
+#ifdef ISDEF;
+	if (arg) val = 1;
+#ifnot;
+	if (arg) val = 2;
+#endif;
+#ifdef ISNOTDEF;
+	else val = 3;
+#ifnot;
+	else val = 4;
+#endif;
+
+	return val;
+];
+
+[ Path3 arg val;
+
+#ifdef ISNOTDEF;
+	if (arg) val = 1;
+#ifnot;
+	if (arg) val = 2;
+#endif;
+#ifdef ISDEF;
+	else val = 3;
+#ifnot;
+	else val = 4;
+#endif;
+
+	return val;
+];
+
+[ Path4 arg val;
+
+#ifdef ISNOTDEF;
+	if (arg) val = 1;
+#ifnot;
+	if (arg) val = 2;
+#endif;
+#ifdef ISNOTDEF;
+	else val = 3;
+#ifnot;
+	else val = 4;
+#endif;
+
+	return val;
+];
+
+[ TestFunc3 val;
+	val = Path1(false);
+	print "Path1(false): ";
+	check_value(val, 3);
+	print ".^";
+	
+	val = Path1(true);
+	print "Path1(true): ";
+	check_value(val, 1);
+	print ".^";
+	
+	val = Path2(false);
+	print "Path2(false): ";
+	check_value(val, 4);
+	print ".^";
+	
+	val = Path2(true);
+	print "Path2(true): ";
+	check_value(val, 1);
+	print ".^";
+	
+	val = Path3(false);
+	print "Path3(false): ";
+	check_value(val, 3);
+	print ".^";
+	
+	val = Path3(true);
+	print "Path3(true): ";
+	check_value(val, 2);
+	print ".^";
+	
+	val = Path4(false);
+	print "Path4(false): ";
+	check_value(val, 4);
+	print ".^";
+	
+	val = Path4(true);
+	print "Path4(true): ";
+	check_value(val, 2);
 	print ".^";
 	
 ];
