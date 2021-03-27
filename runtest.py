@@ -935,6 +935,24 @@ def run_max_dynamic_strings():
     res = compile('max_dynamic_strings_test_at64.inf', glulx=True, memsettings={})
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
+    res = compile('max_dynamic_strings_test_str31.inf', memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_str32.inf', memsettings={})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_str31.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_str32.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_str63.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_str64.inf', glulx=True, memsettings={})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
 
 def run_max_verb_word_size():
     # Fixed limit; no memory setting to change.
