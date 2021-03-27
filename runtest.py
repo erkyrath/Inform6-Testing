@@ -26,7 +26,6 @@
 # MAX_LINESPACE
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
-# MAX_LOW_STRINGS
 # MAX_SOURCE_FILES
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
@@ -911,6 +910,32 @@ def run_max_low_strings():
     res.is_ok()
 
 
+def run_max_dynamic_strings():
+    res = compile('max_dynamic_strings_test_at15.inf', memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at31.inf', memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at32.inf', memsettings={})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at15.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at31.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at32.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at63.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at64.inf', glulx=True, memsettings={})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+
 def run_max_verb_word_size():
     # Fixed limit; no memory setting to change.
     
@@ -985,6 +1010,7 @@ test_catalog = [
     ('MAX_QTEXT_SIZE', run_max_qtext_size),
     ('MAX_STATIC_STRINGS', run_max_static_strings),
     ('MAX_LOW_STRINGS', run_max_low_strings),
+    ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
