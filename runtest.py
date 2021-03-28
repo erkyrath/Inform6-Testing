@@ -956,6 +956,30 @@ def run_max_dynamic_strings():
     res = compile('max_dynamic_strings_test_str64.inf', glulx=True, memsettings={})
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
+    res = compile('max_dynamic_strings_test_at32.inf', memsettings={'MAX_DYNAMIC_STRINGS':33})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at95.inf', memsettings={'MAX_DYNAMIC_STRINGS':95})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at95.inf', memsettings={'MAX_DYNAMIC_STRINGS':96})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_str32.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':32})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at32.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':32})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_str64.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':65})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_at99.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':99})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at99.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':100})
+    res.is_ok()
+
     
 def run_max_abbrevs():
     res = compile('abbrevtest.inf', moresettings=[])
