@@ -965,6 +965,21 @@ def run_max_dynamic_strings():
     res = compile('max_dynamic_strings_test_at95.inf', memsettings={'MAX_DYNAMIC_STRINGS':96})
     res.is_ok()
 
+    res = compile('max_dynamic_strings_test_str31.inf', memsettings={'MAX_ABBREVS':65})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at31.inf', memsettings={'MAX_ABBREVS':65})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at95.inf', memsettings={'MAX_ABBREVS':1})
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('max_dynamic_strings_test_at95.inf', memsettings={'MAX_ABBREVS':0})
+    res.is_ok()
+
+    res = compile('max_dynamic_strings_test_str64.inf', memsettings={'MAX_ABBREVS':31})
+    res.is_ok()
+
     res = compile('max_dynamic_strings_test_str32.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':32})
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
