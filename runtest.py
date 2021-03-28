@@ -14,7 +14,6 @@
 #
 # Memory settings not yet tested:
 #
-# MAX_ABBREVS
 # MAX_ACTIONS
 # MAX_ADJECTIVES
 # NUM_ATTR_BYTES
@@ -72,7 +71,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, moresettings=None):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -80,6 +79,7 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     If the source file has Includes, supply the include path as includedir.
     The memsettings (now a misnomer) can include any "$FOO=..." compiler
     setting.
+    The moresettings can include any Inform option.
     """
     argls = [ opts.binary ]
     if includedir:
@@ -91,6 +91,9 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         argls.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
+    if moresettings:
+        for key in moresettings:
+            argls.append(key)
     argls.append('-w')
     argls.append(os.path.join('src', srcfile))
     print('Running:', ' '.join(argls))
@@ -909,7 +912,7 @@ def run_max_low_strings():
     res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':3440})
     res.is_ok()
 
-
+    
 def run_max_dynamic_strings():
     res = compile('max_dynamic_strings_test_at15.inf', memsettings={})
     res.is_ok()
@@ -953,6 +956,20 @@ def run_max_dynamic_strings():
     res = compile('max_dynamic_strings_test_str64.inf', glulx=True, memsettings={})
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
+    
+def run_max_abbrevs():
+    res = compile('abbrevtest.inf', moresettings=[])
+    res.is_ok(md5='037c643cd38396fc3870119bf49b69f6')
+    
+    res = compile('abbrevtest.inf', glulx=True, moresettings=[])
+    res.is_ok(md5='ab49bb2007e82436816831f36658d446')
+    
+    res = compile('abbrevtest.inf', moresettings=['-e'])
+    res.is_ok(md5='dd03eb8c46343be4991b139926a1c296')
+    
+    res = compile('abbrevtest.inf', glulx=True, moresettings=['-e'])
+    res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
+    
 
 def run_max_verb_word_size():
     # Fixed limit; no memory setting to change.
@@ -1029,6 +1046,7 @@ test_catalog = [
     ('MAX_STATIC_STRINGS', run_max_static_strings),
     ('MAX_LOW_STRINGS', run_max_low_strings),
     ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
+    ('MAX_ABBREVS', run_max_abbrevs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
