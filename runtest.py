@@ -1008,6 +1008,57 @@ def run_max_abbrevs():
     res = compile('abbrevtest.inf', glulx=True, economy=True)
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
+    res = compile('max_abbrevs_test_64.inf', memsettings={})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_64.inf', memsettings={'MAX_ABBREVS':63})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':32})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':31})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':96})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':95})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':1})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_100.inf', memsettings={'MAX_ABBREVS':96})
+    res.is_error()
+
+    res = compile('max_abbrevs_test_64.inf', glulx=True, memsettings={})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_64.inf', glulx=True, memsettings={'MAX_ABBREVS':63})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_32.inf', glulx=True, memsettings={'MAX_ABBREVS':32})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_32.inf', glulx=True, memsettings={'MAX_ABBREVS':31})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_96.inf', glulx=True, memsettings={'MAX_ABBREVS':96})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_96.inf', glulx=True, memsettings={'MAX_ABBREVS':95})
+    res.is_memsetting('MAX_ABBREVS')
+
+    res = compile('max_abbrevs_test_100.inf', glulx=True, memsettings={'MAX_ABBREVS':100})
+    res.is_ok()
+
+    res = compile('max_abbrevs_test_100.inf', glulx=True, memsettings={'MAX_ABBREVS':99})
+    res.is_memsetting('MAX_ABBREVS')
+
 
 def run_max_verb_word_size():
     # Fixed limit; no memory setting to change.
