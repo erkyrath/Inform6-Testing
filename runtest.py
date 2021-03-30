@@ -71,7 +71,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, moresettings=None):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, economy=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -79,7 +79,7 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     If the source file has Includes, supply the include path as includedir.
     The memsettings (now a misnomer) can include any "$FOO=..." compiler
     setting.
-    The moresettings can include any Inform option.
+    The economy setting turns on Inform abbreviation mode (-e).
     """
     argls = [ opts.binary ]
     if includedir:
@@ -91,9 +91,8 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         argls.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
-    if moresettings:
-        for key in moresettings:
-            argls.append(key)
+    if economy:
+        argls.append('-e')
     argls.append('-w')
     argls.append(os.path.join('src', srcfile))
     print('Running:', ' '.join(argls))
@@ -997,16 +996,16 @@ def run_max_dynamic_strings():
 
     
 def run_max_abbrevs():
-    res = compile('abbrevtest.inf', moresettings=[])
+    res = compile('abbrevtest.inf')
     res.is_ok(md5='037c643cd38396fc3870119bf49b69f6')
     
-    res = compile('abbrevtest.inf', glulx=True, moresettings=[])
+    res = compile('abbrevtest.inf', glulx=True)
     res.is_ok(md5='ab49bb2007e82436816831f36658d446')
     
-    res = compile('abbrevtest.inf', moresettings=['-e'])
+    res = compile('abbrevtest.inf', economy=True)
     res.is_ok(md5='dd03eb8c46343be4991b139926a1c296')
     
-    res = compile('abbrevtest.inf', glulx=True, moresettings=['-e'])
+    res = compile('abbrevtest.inf', glulx=True, economy=True)
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
 
