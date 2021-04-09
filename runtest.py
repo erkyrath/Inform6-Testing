@@ -71,7 +71,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, debug=False, economy=False, bigmem=False):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, debug=False, strict=True, economy=False, bigmem=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -81,8 +81,9 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     setting.
     Other switches:
     - debug turns on DEBUG mode (-D)
-    - economy turns on abbreviation mode (-e).
-    - bigmem turns on large-memory (odd-even) for V6/7 (-B)
+    - strict=False turns off STRICT mode (-~S)
+    - economy turns on economy (abbreviation) mode (-e).
+    - bigmem turns on large-memory (odd-even) mode for V6/7 (-B)
     """
     argls = [ opts.binary ]
     if includedir:
@@ -96,6 +97,8 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         argls.append('$%s=%s' % (key, val))
     if debug:
         argls.append('-D')
+    if not strict:
+        argls.append('-~S')
     if economy:
         argls.append('-e')
     if bigmem:
@@ -403,6 +406,12 @@ def run_checksum_test():
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='e603310679dfcb3185194dfc85941a73')
+
+    res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
+    res.is_ok(md5='c51d3a8c451bf7c296e4445fdb5f75c3')
+
+    res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
+    res.is_ok(md5='94ba670fc39d1ab92bfdc73a3b50fe90')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
     res.is_ok(md5='01cfbb8f2ba5266aed0e7f0b5e20455a')
