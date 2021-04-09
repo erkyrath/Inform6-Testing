@@ -71,7 +71,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, economy=False, bigmem=False):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, debug=False, economy=False, bigmem=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -80,7 +80,8 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     The memsettings (now a misnomer) can include any "$FOO=..." compiler
     setting.
     Other switches:
-    - economy turns on Inform abbreviation mode (-e).
+    - debug turns on DEBUG mode (-D)
+    - economy turns on abbreviation mode (-e).
     - bigmem turns on large-memory (odd-even) for V6/7 (-B)
     """
     argls = [ opts.binary ]
@@ -93,6 +94,8 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         argls.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
+    if debug:
+        argls.append('-D')
     if economy:
         argls.append('-e')
     if bigmem:
@@ -400,6 +403,12 @@ def run_checksum_test():
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='e603310679dfcb3185194dfc85941a73')
+
+    res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
+    res.is_ok(md5='01cfbb8f2ba5266aed0e7f0b5e20455a')
+
+    res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
+    res.is_ok(md5='5135238ba7ef10a868a236aa914ae7f1')
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
     res.is_ok(md5='52dc4fa45ad64e85c8a211833b083009')
