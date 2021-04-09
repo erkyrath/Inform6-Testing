@@ -71,7 +71,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, economy=False):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, economy=False, bigmem=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -79,7 +79,9 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     If the source file has Includes, supply the include path as includedir.
     The memsettings (now a misnomer) can include any "$FOO=..." compiler
     setting.
-    The economy setting turns on Inform abbreviation mode (-e).
+    Other switches:
+    - economy turns on Inform abbreviation mode (-e).
+    - bigmem turns on large-memory (odd-even) for V6/7 (-B)
     """
     argls = [ opts.binary ]
     if includedir:
@@ -93,6 +95,8 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         argls.append('$%s=%s' % (key, val))
     if economy:
         argls.append('-e')
+    if bigmem:
+        argls.append('-B')
     argls.append('-w')
     argls.append(os.path.join('src', srcfile))
     print('Running:', ' '.join(argls))
@@ -358,8 +362,14 @@ def run_checksum_test():
     res = compile('minimal_test.inf', zversion=6)
     res.is_ok(md5='08b59209daa947437a5119b8060522ef')
 
+    res = compile('minimal_test.inf', zversion=6, bigmem=True)
+    res.is_ok(md5='e273d746baf6dac4324c95e45982bec0')
+
     res = compile('minimal_test.inf', zversion=7)
     res.is_ok(md5='26bd70faebf8c61638a736a72f57c7ad')
+
+    res = compile('minimal_test.inf', zversion=7, bigmem=True)
+    res.is_ok(md5='814c9ac5777674f1cc98f9a0cd22d6da')
 
     res = compile('minimal_test.inf', zversion=8)
     res.is_ok(md5='fa7fc9bbe032d27355b0fcf4fb4f2c53')
