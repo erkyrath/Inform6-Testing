@@ -6,7 +6,7 @@
 ! ### This file has the metro84 library included inline, so it will compile
 ! ### standalone. Compilable with -v3.
 
-Switches e;  ! Use Economize mode - abbreviations are in parser.h
+! ### Switches e;  ! This version can be compiled with or without Economize
 
 Constant Story      "Cloak of Darkness";
 Constant Headline   "^A basic IF demonstration.^";

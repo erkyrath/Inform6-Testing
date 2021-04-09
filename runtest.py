@@ -401,13 +401,22 @@ def run_checksum_test():
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='e603310679dfcb3185194dfc85941a73')
 
-    res = compile('cloak-metro84-v3test.inf', zversion=3)
+    res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
+    res.is_ok(md5='52dc4fa45ad64e85c8a211833b083009')
+
+    res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
+    res.is_ok(md5='64c9fc5d9de47be75f2cacf0a1a40b36')
+
+    res = compile('cloak-metro84-v3test.inf', zversion=5, economy=False)
+    res.is_ok(md5='010d54a6ff19170a6674caabcd6fac29')
+
+    res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
     res.is_ok(md5='a378cd678a18d41308f675ec720e919e')
 
-    res = compile('cloak-metro84-v3test.inf', zversion=4)
+    res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
     res.is_ok(md5='afaa158cf037c0c8b217d762e47a936a')
 
-    res = compile('cloak-metro84-v3test.inf', zversion=5)
+    res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
     res.is_ok(md5='44a69b2c9342a17356e54de151fb4688')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
