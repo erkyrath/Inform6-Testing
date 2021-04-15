@@ -507,6 +507,18 @@ def run_directives_test():
     res = compile('classordertest.inf', glulx=True)
     res.is_ok(md5='2844efeeff5ff0842b7185a56e80f6dd')
 
+    res = compile('forwardproptest.inf')
+    res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6')
+
+    res = compile('forwardproptest.inf', strict=False)
+    res.is_ok(md5='b181a2d7edd1d8188e0575767f53a886')
+
+    res = compile('forwardproptest.inf', glulx=True)
+    res.is_ok(md5='665d237c43611454965e1b680f12d596')
+
+    res = compile('forwardproptest.inf', glulx=True, strict=False)
+    res.is_ok(md5='5592d67a77e3fda229465e2c799fb213')
+
 
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
