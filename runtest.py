@@ -71,7 +71,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, debug=False, strict=True, economy=False, bigmem=False):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -95,6 +95,11 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         argls.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
         argls.append('$%s=%s' % (key, val))
+    for (key, val) in list(define.items()):
+        if val is None:
+            argls.append('$#%s' % (key,))
+        else:
+            argls.append('$#%s=%d' % (key, val))
     if debug:
         argls.append('-D')
     if not strict:
@@ -520,6 +525,65 @@ def run_directives_test():
     res.is_ok(md5='5592d67a77e3fda229465e2c799fb213')
 
 
+def run_defineopt_test():
+    res = compile('defineopttest.inf')
+    res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
+
+    res = compile('defineopttest.inf', debug=True)
+    res.is_ok(md5='6f23ba9a571008507addca8d474adc68')
+
+    res = compile('defineopttest.inf', define={ 'DEBUG':None })
+    res.is_ok(md5='6f23ba9a571008507addca8d474adc68')
+
+    res = compile('defineopttest.inf', define={ 'DEBUG':0 })
+    res.is_ok(md5='6f23ba9a571008507addca8d474adc68')
+
+    res = compile('defineopttest.inf', define={ 'FOO':26, 'BAR':-923, 'BAZ':None, 'QUUX':123, 'MUM':-1, 'NERTZ':99999 })
+    res.is_ok(md5='6d114e7ba8015c04e3ccd9d9356ca12b')
+
+    # Can't redefine a compiler constant
+    res = compile('defineopttest.inf', define={ 'WORDSIZE':3 })
+    res.is_error()
+
+    # Symbols are case-insensitive
+    res = compile('defineopttest.inf', define={ 'Wordsize':4 })
+    res.is_error()
+
+    # Can't redefine a global or other symbol type either
+    res = compile('defineopttest.inf', define={ 'sw__var':None })
+    res.is_error()
+
+    res = compile('defineopttest.inf', define={ 'name':1 })
+    res.is_error()
+
+    # Can't define the same constant twice (symbols are case-insensitive!)
+    res = compile('defineopttest.inf', define={ 'XFOO':1, 'xfoo':2 })
+    res.is_error()
+
+    # Redefining a constant to the same value is ok
+    res = compile('defineopttest.inf', define={ 'WORDSIZE':2 })
+    res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
+
+    res = compile('defineopttest.inf', define={ 'XFOO':3, 'xfoo':3 })
+    res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
+
+    res = compile('defineopttest.inf', glulx=True)
+    res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
+
+    res = compile('defineopttest.inf', glulx=True, debug=True)
+    res.is_ok(md5='ba60f7883b7af76f05942aa92e348d87')
+
+    res = compile('defineopttest.inf', glulx=True, define={ 'DEBUG':None })
+    res.is_ok(md5='ba60f7883b7af76f05942aa92e348d87')
+
+    res = compile('defineopttest.inf', glulx=True, define={ 'DEBUG':0 })
+    res.is_ok(md5='ba60f7883b7af76f05942aa92e348d87')
+
+    res = compile('defineopttest.inf', glulx=True, define={ 'Wordsize':4 })
+    res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
+
+
+    
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
     res.is_memsetting('MAX_INCLUSION_DEPTH')
@@ -1166,6 +1230,7 @@ test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('V3', run_v3_test),
     ('DIRECTIVES', run_directives_test),
+    ('DEFINEOPT', run_defineopt_test),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
