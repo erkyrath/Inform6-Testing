@@ -97,3 +97,19 @@ Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
 	print "BAR: ", BAR, "^";
 	#endif;
 ];
+
+#ifdef TESTWORKFLAG;
+
+Attribute attr;
+Object obj;
+
+[ AddVeneer val;
+	! If DEBUG is set, this adds the veneer code which uses workflag
+	! and DebugAttribute.
+	give obj attr;
+
+	! Silence not-used warning.
+	val = AddVeneer;
+];
+
+#endif;
