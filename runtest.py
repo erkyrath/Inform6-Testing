@@ -200,7 +200,7 @@ class Result:
             outlines = 0
             for ln in lines:
                 
-                match = re.match('(?:"[^"]*", )?line (\d+): Fatal error:', ln)
+                match = re.match(r'(?:"[^"]*", )?line (\d+): Fatal error:', ln)
                 if (match):
                     outlines += 1
                     self.errors = 1
@@ -210,20 +210,20 @@ class Result:
                         self.memsetting = match.group(1)
                     continue
                 
-                match = re.match('Compiled with (\d+) errors? \(no output\)', ln)
+                match = re.match(r'Compiled with (\d+) errors? \(no output\)', ln)
                 if (match):
                     outlines += 1
                     self.errors = int(match.group(1))
                     continue
                 
-                match = re.match('Compiled with (\d+) errors? and (\d+) suppressed warnings? \(no output\)', ln)
+                match = re.match(r'Compiled with (\d+) errors? and (\d+) suppressed warnings? \(no output\)', ln)
                 if (match):
                     outlines += 1
                     self.errors = int(match.group(1))
                     self.warnings = int(match.group(2))
                     continue
 
-                match = re.match('Compiled with (\d+) suppressed warnings?', ln)
+                match = re.match(r'Compiled with (\d+) suppressed warnings?', ln)
                 if (match):
                     outlines += 1
                     self.warnings = int(match.group(1))
