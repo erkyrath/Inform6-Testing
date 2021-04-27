@@ -89,25 +89,33 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     if includedir:
         argls.append('+include_path='+includedir)
     argls.append('+code_path=build')
+
+    # Arguments which will be displayed in the results.
+    showargs = []
+    
     if (glulx):
-        argls.append('-G')
+        showargs.append('-G')
     elif (zversion):
-        argls.append('-v%d' % (zversion,))
+        showargs.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
-        argls.append('$%s=%s' % (key, val))
+        showargs.append('$%s=%s' % (key, val))
     for (key, val) in list(define.items()):
         if val is None:
-            argls.append('$#%s' % (key,))
+            showargs.append('$#%s' % (key,))
         else:
-            argls.append('$#%s=%d' % (key, val))
+            showargs.append('$#%s=%d' % (key, val))
     if debug:
-        argls.append('-D')
+        showargs.append('-D')
     if not strict:
-        argls.append('-~S')
+        showargs.append('-~S')
     if economy:
-        argls.append('-e')
+        showargs.append('-e')
     if bigmem:
-        argls.append('-B')
+        showargs.append('-B')
+        
+    argls.extend(showargs)
+
+    # Final arguments.
     argls.append('-w')
     argls.append(os.path.join('src', srcfile))
     print('Running:', ' '.join(argls))
@@ -130,7 +138,7 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     res = run.wait()
     stdout = run.stdout.read().decode()
     stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr, srcfile=srcfile, zversion=zversion, glulx=glulx)
+    res = Result(res, stdout, stderr, srcfile=srcfile, args=showargs, zversion=zversion, glulx=glulx)
 
     print('...%s' % (res,))
     if (opts.stdout):
@@ -156,8 +164,9 @@ class Result:
     OK = 'ok'
     ERROR = 'error'
     
-    def __init__(self, retcode, stdout, stderr, srcfile=None, zversion=None, glulx=False):
+    def __init__(self, retcode, stdout, stderr, srcfile=None, args=[], zversion=None, glulx=False):
         self.srcfile = srcfile
+        self.args = args
         self.glulx = glulx
         self.zversion = zversion
         self.status = None
@@ -349,10 +358,10 @@ def set_testname(val):
 def error(res, msg):
     """Note an error in the global error list.
     """
-    filename = '-'
-    if res and res.filename:
-        filename = res.filename
-    errorlist.append( (testname, filename, msg) )
+    label = res.srcfile
+    if res and res.args:
+        label += ' ' + ' '.join(res.args)
+    errorlist.append( (testname, label, msg) )
 
 
 # And now, the tests themselves.
@@ -1293,6 +1302,6 @@ if (not errorlist):
     print('All tests passed.')
 else:
     print('%d test failures!' % (len(errorlist),))
-    for (test, filename, msg) in errorlist:
-        print('  %s (%s): %s' % (test, filename, msg))
+    for (test, label, msg) in errorlist:
+        print('  %s (%s): %s' % (test, label, msg))
 
