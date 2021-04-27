@@ -1292,7 +1292,7 @@ print()
 if (not errorlist):
     print('All tests passed.')
 else:
-    print('%d errors!' % (len(errorlist),))
+    print('%d test failures!' % (len(errorlist),))
     for (test, filename, msg) in errorlist:
         print('  %s (%s): %s' % (test, filename, msg))
 
