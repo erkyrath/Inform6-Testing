@@ -254,9 +254,9 @@ class Result:
         else:
             res = '<Error'
         if (self.errors):
-            res = res + ' (%d errors)' % (self.errors,)
+            res = res + ' (%d error%s)' % (self.errors, ('' if self.errors==1 else 's'),)
         if (self.warnings):
-            res = res + ' (%d warnings)' % (self.warnings,)
+            res = res + ' (%d warning%s)' % (self.warnings, ('' if self.warnings==1 else 's'),)
         if (self.memsetting):
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
