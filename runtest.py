@@ -210,13 +210,13 @@ class Result:
                         self.memsetting = match.group(1)
                     continue
                 
-                match = re.match(r'Compiled with (\d+) errors? \(no output\)', ln)
+                match = re.match(r'Compiled with (\d+) errors?(?: \(no output\))?', ln)
                 if (match):
                     outlines += 1
                     self.errors = int(match.group(1))
                     continue
                 
-                match = re.match(r'Compiled with (\d+) errors? and (\d+) suppressed warnings? \(no output\)', ln)
+                match = re.match(r'Compiled with (\d+) errors? and (\d+) suppressed warnings?(?: \(no output\))?', ln)
                 if (match):
                     outlines += 1
                     self.errors = int(match.group(1))
