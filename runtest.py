@@ -21,7 +21,6 @@
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
-# MAX_LABELS
 # MAX_LINESPACE
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
@@ -1153,6 +1152,25 @@ def run_max_expression_nodes():
     res.is_ok()
 
 
+def run_max_labels():
+    res = compile('max_labels_test.inf')
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1099})
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1100})
+    res.is_ok()
+    
+    res = compile('max_labels_test.inf', glulx=True)
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1099}, glulx=True)
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1100}, glulx=True)
+    res.is_ok()
+    
 def run_max_zcode_size():
     res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':10000, 'MAX_QTEXT_SIZE':8001})
     res.is_memsetting('MAX_ZCODE_SIZE')
@@ -1201,6 +1219,7 @@ test_catalog = [
     ('MAX_ABBREVS', run_max_abbrevs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
+    ('MAX_LABELS', run_max_labels),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ]
