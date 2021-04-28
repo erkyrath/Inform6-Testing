@@ -27,7 +27,6 @@
 # MAX_SOURCE_FILES
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
-# MAX_VERBS
 # MAX_VERBSPACE
 
 # Settings that don't result in compiler memory allocations, so they don't
@@ -1138,6 +1137,32 @@ def run_max_verb_word_size():
     res.is_error()
 
 
+def run_max_verbs():
+    res = compile('max_verbs.inf')
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':254})
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':255})
+    res.is_ok()
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256})
+    res.is_error()
+    
+    res = compile('max_verbs.inf', glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':254}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':255}, glulx=True)
+    res.is_ok()
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256}, glulx=True)
+    res.is_ok()
+    
+    
 def run_max_expression_nodes():
     res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
     res.is_memsetting('MAX_EXPRESSION_NODES')
@@ -1217,6 +1242,7 @@ test_catalog = [
     ('MAX_LOW_STRINGS', run_max_low_strings),
     ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
     ('MAX_ABBREVS', run_max_abbrevs),
+    ('MAX_VERBS', run_max_verbs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_LABELS', run_max_labels),
