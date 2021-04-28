@@ -1162,6 +1162,30 @@ def run_max_verbs():
     res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256}, glulx=True)
     res.is_ok()
     
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255})
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':259}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':260}, glulx=True)
+    res.is_ok()
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255})
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':259}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':260}, glulx=True)
+    res.is_ok()
+    
     
 def run_max_expression_nodes():
     res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
