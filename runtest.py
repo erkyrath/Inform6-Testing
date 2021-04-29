@@ -14,7 +14,6 @@
 #
 # Memory settings not yet tested:
 #
-# MAX_ACTIONS
 # MAX_ADJECTIVES
 # NUM_ATTR_BYTES
 # MAX_DICT_ENTRIES
@@ -1187,6 +1186,26 @@ def run_max_verbs():
     res.is_ok()
     
     
+def run_max_actions():
+    res = compile('max_actions.inf')
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':219})
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220})
+    res.is_ok()
+
+    res = compile('max_actions.inf', glulx=True)
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':219}, glulx=True)
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220}, glulx=True)
+    res.is_ok()
+
+    
 def run_max_expression_nodes():
     res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
     res.is_memsetting('MAX_EXPRESSION_NODES')
@@ -1268,6 +1287,7 @@ test_catalog = [
     ('MAX_ABBREVS', run_max_abbrevs),
     ('MAX_VERBS', run_max_verbs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
+    ('MAX_ACTIONS', run_max_actions),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_LABELS', run_max_labels),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
