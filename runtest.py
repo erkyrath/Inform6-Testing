@@ -1206,6 +1206,27 @@ def run_max_actions():
     res.is_ok()
 
     
+def run_max_adjectives():
+    res = compile('max_adjectives.inf')
+    res.is_memsetting('MAX_ADJECTIVES')
+
+    res = compile('max_adjectives.inf', memsettings={'MAX_ADJECTIVES':99})
+    res.is_memsetting('MAX_ADJECTIVES')
+
+    res = compile('max_adjectives.inf', memsettings={'MAX_ADJECTIVES':100})
+    res.is_ok()
+
+    # Glulx uses Grammar__Version 2, so adjectives are not used.
+    res = compile('max_adjectives.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_adjectives_2.inf')
+    res.is_ok()
+
+    res = compile('max_adjectives_2.inf', glulx=True)
+    res.is_ok()
+
+    
 def run_max_expression_nodes():
     res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
     res.is_memsetting('MAX_EXPRESSION_NODES')
@@ -1288,6 +1309,7 @@ test_catalog = [
     ('MAX_VERBS', run_max_verbs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_ACTIONS', run_max_actions),
+    ('MAX_ADJECTIVES', run_max_adjectives),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
     ('MAX_LABELS', run_max_labels),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
