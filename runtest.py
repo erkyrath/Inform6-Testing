@@ -1223,6 +1223,9 @@ def run_max_adjectives():
     res = compile('max_adjectives_2.inf')
     res.is_ok()
 
+    res = compile('max_adjectives_2.inf', memsettings={'MAX_ADJECTIVES':3})
+    res.is_ok()
+
     res = compile('max_adjectives_2.inf', glulx=True)
     res.is_ok()
 
