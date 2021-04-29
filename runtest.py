@@ -14,7 +14,6 @@
 #
 # Memory settings not yet tested:
 #
-# MAX_ADJECTIVES
 # NUM_ATTR_BYTES
 # MAX_DICT_ENTRIES
 # DICT_WORD_SIZE
