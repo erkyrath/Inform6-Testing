@@ -14,21 +14,17 @@
 #
 # Memory settings not yet tested:
 #
-# MAX_ACTIONS
-# MAX_ADJECTIVES
 # NUM_ATTR_BYTES
 # MAX_DICT_ENTRIES
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
-# MAX_LABELS
 # MAX_LINESPACE
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
 # MAX_SOURCE_FILES
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
-# MAX_VERBS
 # MAX_VERBSPACE
 
 # Settings that don't result in compiler memory allocations, so they don't
@@ -1198,6 +1194,100 @@ def run_max_verb_word_size():
     res.is_error()
 
 
+def run_max_verbs():
+    res = compile('max_verbs.inf')
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':254})
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':255})
+    res.is_ok()
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256})
+    res.is_error()
+    
+    res = compile('max_verbs.inf', glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':254}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':255}, glulx=True)
+    res.is_ok()
+    
+    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256}, glulx=True)
+    res.is_ok()
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255})
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':259}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':260}, glulx=True)
+    res.is_ok()
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255})
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':259}, glulx=True)
+    res.is_memsetting('MAX_VERBS')
+    
+    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':260}, glulx=True)
+    res.is_ok()
+    
+    
+def run_max_actions():
+    res = compile('max_actions.inf')
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':219})
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220})
+    res.is_ok()
+
+    res = compile('max_actions.inf', glulx=True)
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':219}, glulx=True)
+    res.is_memsetting('MAX_ACTIONS')
+
+    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220}, glulx=True)
+    res.is_ok()
+
+    
+def run_max_adjectives():
+    res = compile('max_adjectives.inf')
+    res.is_memsetting('MAX_ADJECTIVES')
+
+    res = compile('max_adjectives.inf', memsettings={'MAX_ADJECTIVES':99})
+    res.is_memsetting('MAX_ADJECTIVES')
+
+    res = compile('max_adjectives.inf', memsettings={'MAX_ADJECTIVES':100})
+    res.is_ok()
+
+    # Glulx uses Grammar__Version 2, so adjectives are not used.
+    res = compile('max_adjectives.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_adjectives_2.inf')
+    res.is_ok()
+
+    res = compile('max_adjectives_2.inf', memsettings={'MAX_ADJECTIVES':3})
+    res.is_ok()
+
+    res = compile('max_adjectives_2.inf', glulx=True)
+    res.is_ok()
+
+    
 def run_max_expression_nodes():
     res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
     res.is_memsetting('MAX_EXPRESSION_NODES')
@@ -1212,6 +1302,25 @@ def run_max_expression_nodes():
     res.is_ok()
 
 
+def run_max_labels():
+    res = compile('max_labels_test.inf')
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1099})
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1100})
+    res.is_ok()
+    
+    res = compile('max_labels_test.inf', glulx=True)
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1099}, glulx=True)
+    res.is_memsetting('MAX_LABELS')
+    
+    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1100}, glulx=True)
+    res.is_ok()
+    
 def run_max_zcode_size():
     res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':10000, 'MAX_QTEXT_SIZE':8001})
     res.is_memsetting('MAX_ZCODE_SIZE')
@@ -1259,8 +1368,12 @@ test_catalog = [
     ('MAX_LOW_STRINGS', run_max_low_strings),
     ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
     ('MAX_ABBREVS', run_max_abbrevs),
+    ('MAX_VERBS', run_max_verbs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
+    ('MAX_ACTIONS', run_max_actions),
+    ('MAX_ADJECTIVES', run_max_adjectives),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
+    ('MAX_LABELS', run_max_labels),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ]
