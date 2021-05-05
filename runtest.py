@@ -27,6 +27,10 @@
 # MAX_UNICODE_CHARS (glulx)
 # MAX_VERBSPACE
 
+# Limits which are fixed but should still be tested:
+# MAX_LINES_PER_VERB
+# English_verbs_given array in verbs.c
+
 # Settings that don't result in compiler memory allocations, so they don't
 # need to be tested here:
 #
@@ -588,6 +592,13 @@ def run_defineopt_test():
     res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
 
 
+def run_max_ifdef_stack():
+    res = compile('max_ifdef_stack_32.inf')
+    res.is_ok();
+
+    res = compile('max_ifdef_stack_33.inf')
+    res.is_error();
+    
     
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
@@ -1349,6 +1360,7 @@ test_catalog = [
     ('V3', run_v3_test),
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
+    ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
