@@ -27,10 +27,6 @@
 # MAX_UNICODE_CHARS (glulx)
 # MAX_VERBSPACE
 
-# Limits which are fixed but should still be tested:
-# MAX_LINES_PER_VERB
-# English_verbs_given array in verbs.c
-
 # Settings that don't result in compiler memory allocations, so they don't
 # need to be tested here:
 #
@@ -599,16 +595,6 @@ def run_max_ifdef_stack():
     res.is_ok();
 
     res = compile('max_ifdef_stack_33.inf')
-    res.is_error();
-    
-    
-def run_max_verb_synonyms():
-    # Fixed limit; no memory setting to change.
-    
-    res = compile('max_verb_synonyms_32.inf')
-    res.is_ok();
-
-    res = compile('max_verb_synonyms_33.inf')
     res.is_error();
     
     
@@ -1217,6 +1203,26 @@ def run_max_verb_word_size():
     res.is_error()
 
 
+def run_max_lines_per_verb():
+    # Fixed limit; no memory setting to change.
+    
+    res = compile('max_lines_per_verb_32.inf')
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_33.inf')
+    res.is_error()
+
+    
+def run_max_verb_synonyms():
+    # Fixed limit; no memory setting to change.
+    
+    res = compile('max_verb_synonyms_32.inf')
+    res.is_ok();
+
+    res = compile('max_verb_synonyms_33.inf')
+    res.is_error();
+    
+    
 def run_max_verbs():
     res = compile('max_verbs.inf')
     res.is_memsetting('MAX_VERBS')
@@ -1373,7 +1379,6 @@ test_catalog = [
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
-    ('MAX_VERB_SYNONYMS', run_max_verb_synonyms),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
@@ -1395,6 +1400,8 @@ test_catalog = [
     ('MAX_ABBREVS', run_max_abbrevs),
     ('MAX_VERBS', run_max_verbs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
+    ('MAX_VERB_SYNONYMS', run_max_verb_synonyms),
+    ('MAX_LINES_PER_VERB', run_max_lines_per_verb),
     ('MAX_ACTIONS', run_max_actions),
     ('MAX_ADJECTIVES', run_max_adjectives),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
