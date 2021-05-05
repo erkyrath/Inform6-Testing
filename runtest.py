@@ -593,10 +593,22 @@ def run_defineopt_test():
 
 
 def run_max_ifdef_stack():
+    # Fixed limit; no memory setting to change.
+    
     res = compile('max_ifdef_stack_32.inf')
     res.is_ok();
 
     res = compile('max_ifdef_stack_33.inf')
+    res.is_error();
+    
+    
+def run_max_verb_synonyms():
+    # Fixed limit; no memory setting to change.
+    
+    res = compile('max_verb_synonyms_32.inf')
+    res.is_ok();
+
+    res = compile('max_verb_synonyms_33.inf')
     res.is_error();
     
     
@@ -1361,6 +1373,7 @@ test_catalog = [
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
+    ('MAX_VERB_SYNONYMS', run_max_verb_synonyms),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
