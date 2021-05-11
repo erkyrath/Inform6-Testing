@@ -455,11 +455,20 @@ def run_checksum_test():
 
 
 def run_v3_test():
-    res = compile('dict-size-v3test.inf')
-    res.is_ok(md5='09300a2de87d8f8fee3d5a79d151aff4')
-
     res = compile('dict-size-v3test.inf', zversion=3)
     res.is_ok(md5='1be758056fc55b2c67f4dd1ce69e6dce')
+
+    res = compile('dict-size-v3test.inf', zversion=5)
+    res.is_ok(md5='09300a2de87d8f8fee3d5a79d151aff4')
+
+    res = compile('dict-cutoff-v3test.inf', strict=False, zversion=3)
+    res.is_ok(md5='a1e1de6b77a08070f474e5175f86be44')
+
+    res = compile('dict-cutoff-v3test.inf', strict=False, zversion=4)
+    res.is_ok(md5='24d79e2b61cd0303aefee138d4ac7072')
+
+    res = compile('dict-cutoff-v3test.inf', strict=False, zversion=5)
+    res.is_ok(md5='8ef389de3680e6959ac19ae4abcee86f')
 
 
 def run_directives_test():
