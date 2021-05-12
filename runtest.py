@@ -454,7 +454,7 @@ def run_checksum_test():
     res.is_ok(md5='148e77a6c596ff59734a9e14f8edde81')
 
 
-def run_v3_test():
+def run_dict_test():
     res = compile('dict-size-v3test.inf', zversion=3)
     res.is_ok(md5='1be758056fc55b2c67f4dd1ce69e6dce')
 
@@ -469,6 +469,15 @@ def run_v3_test():
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=5)
     res.is_ok(md5='8ef389de3680e6959ac19ae4abcee86f')
+
+    res = compile('dict-cutoff-alttest.inf', strict=False, zversion=4)
+    res.is_ok(md5='3596351198e057d4df8fa406237bb236')
+
+    res = compile('dict-cutoff-alttest.inf', strict=False, zversion=5)
+    res.is_ok(md5='676a3809b2b92b18b93afc9889eafa63')
+
+    res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
+    res.is_ok(md5='0aa492c144e57c87e46124492ce11939')
 
 
 def run_directives_test():
@@ -1384,7 +1393,7 @@ def run_omit_unused_routines():
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
-    ('V3', run_v3_test),
+    ('DICT', run_dict_test),
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),

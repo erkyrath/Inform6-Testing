@@ -8,7 +8,7 @@ Constant Story "Dict-Cutoff-Alt Test";
 Constant Headline "Not a game.^";
 
 ! Compiler test for Z-characters in dict words being truncated.
-! Alternate alphabets, v5 only.
+! Alternate alphabets, v4+ only.
 ! (This test is Z-code only.)
 
 Release 1;
