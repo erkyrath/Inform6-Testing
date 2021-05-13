@@ -471,13 +471,13 @@ def run_dict_test():
     res.is_ok(md5='8ef389de3680e6959ac19ae4abcee86f')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=4)
-    res.is_ok(md5='3596351198e057d4df8fa406237bb236')
+    res.is_ok(md5='96b7be57a011a6357149c29cf840de32')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=5)
-    res.is_ok(md5='676a3809b2b92b18b93afc9889eafa63')
+    res.is_ok(md5='7f00da7b281c32d2a2bf514eda1b7c39')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
-    res.is_ok(md5='0aa492c144e57c87e46124492ce11939')
+    res.is_ok(md5='babab7a13980537b30e01d53885e4691')
 
 
 def run_directives_test():
