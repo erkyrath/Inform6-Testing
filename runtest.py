@@ -606,6 +606,20 @@ def run_defineopt_test():
     res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
 
 
+def run_fwconst_test():
+    res = compile('fwconst_release_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 })
+    res.is_ok()
+
+    res = compile('fwconst_release_test.inf', glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 }, glulx=True)
+    res.is_ok()
+
+    
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
     
@@ -1396,6 +1410,7 @@ test_catalog = [
     ('DICT', run_dict_test),
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
+    ('FWCONST', run_fwconst_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
