@@ -354,9 +354,11 @@ def set_testname(val):
 def error(res, msg):
     """Note an error in the global error list.
     """
-    label = res.srcfile
-    if res and res.args:
-        label += ' ' + ' '.join(res.args)
+    label = '-'
+    if res:
+        label = res.srcfile
+        if res.args:
+            label += ' ' + ' '.join(res.args)
     errorlist.append( (testname, label, msg) )
 
 
