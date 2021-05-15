@@ -614,6 +614,83 @@ def run_defineopt_test():
     res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
 
 
+def run_fwconst_test():
+    res = compile('fwconst_release_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 })
+    res.is_ok()
+
+    res = compile('fwconst_release_test.inf', glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 }, glulx=True)
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':3 })
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':5 })
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':8 })
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':9 })
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1 })
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_B':2 })
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1, 'FORWARD_CONSTANT_B':2 })
+    res.is_ok()
+
+    res = compile('fwconst_dictionary_test.inf', glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1 }, glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_B':2 }, glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1, 'FORWARD_CONSTANT_B':2 }, glulx=True)
+    res.is_ok()
+
+    res = compile('fwconst_iftrue_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_A':1 })
+    res.is_error()
+
+    res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_B':1 })
+    res.is_error()
+
+    res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_A':1, 'FORWARD_CONSTANT_B':1 })
+    res.is_ok()
+
+    res = compile('fwconst_iftrue_test.inf', glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_A':0 }, glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_B':0 }, glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_A':0, 'FORWARD_CONSTANT_B':0 }, glulx=True)
+    res.is_ok()
+
+    
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
     
@@ -1404,6 +1481,7 @@ test_catalog = [
     ('DICT', run_dict_test),
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
+    ('FWCONST', run_fwconst_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
