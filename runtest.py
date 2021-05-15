@@ -537,6 +537,12 @@ def run_directives_test():
     res = compile('classordertest.inf', glulx=True)
     res.is_ok(md5='2844efeeff5ff0842b7185a56e80f6dd')
 
+    res = compile('classcopytest.inf')
+    res.is_ok(md5='6dc016b201b6591501911ccac02e152c')
+
+    res = compile('classcopytest.inf', glulx=True)
+    res.is_ok(md5='aef9bdc052d269b239a6ddbd81f62160')
+
     res = compile('forwardproptest.inf')
     res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6')
 
