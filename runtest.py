@@ -619,6 +619,21 @@ def run_fwconst_test():
     res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 }, glulx=True)
     res.is_ok()
 
+    res = compile('fwconst_version_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':3 })
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':5 })
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':8 })
+    res.is_ok()
+
+    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':9 })
+    res.is_error()
+
     res = compile('fwconst_dictionary_test.inf')
     res.is_error()
 
