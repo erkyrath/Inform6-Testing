@@ -619,6 +619,30 @@ def run_fwconst_test():
     res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 }, glulx=True)
     res.is_ok()
 
+    res = compile('fwconst_dictionary_test.inf')
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1 })
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_B':2 })
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1, 'FORWARD_CONSTANT_B':2 })
+    res.is_ok()
+
+    res = compile('fwconst_dictionary_test.inf', glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1 }, glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_B':2 }, glulx=True)
+    res.is_error()
+
+    res = compile('fwconst_dictionary_test.inf', define={ 'FORWARD_CONSTANT_A':1, 'FORWARD_CONSTANT_B':2 }, glulx=True)
+    res.is_ok()
+
     
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
