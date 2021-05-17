@@ -418,25 +418,25 @@ def run_checksum_test():
     res.is_ok(md5='ccb67fdaf4a272dfd4b829cc4f2202f6')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='453977372e150037f9f3f93cdf847e35')
+    res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='04c6ff040938ad7e410da6f0c0bbf093')
+    res.is_ok(md5='04c6ff040938ad7e410da6f0c0bbf093', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='e603310679dfcb3185194dfc85941a73')
+    res.is_ok(md5='e603310679dfcb3185194dfc85941a73', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
-    res.is_ok(md5='c51d3a8c451bf7c296e4445fdb5f75c3')
+    res.is_ok(md5='c51d3a8c451bf7c296e4445fdb5f75c3', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='94ba670fc39d1ab92bfdc73a3b50fe90')
+    res.is_ok(md5='94ba670fc39d1ab92bfdc73a3b50fe90', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
-    res.is_ok(md5='01cfbb8f2ba5266aed0e7f0b5e20455a')
+    res.is_ok(md5='01cfbb8f2ba5266aed0e7f0b5e20455a', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='5135238ba7ef10a868a236aa914ae7f1')
+    res.is_ok(md5='5135238ba7ef10a868a236aa914ae7f1', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
     res.is_ok(md5='52dc4fa45ad64e85c8a211833b083009')
