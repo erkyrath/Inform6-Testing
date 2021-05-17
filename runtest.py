@@ -301,10 +301,12 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None):
+    def is_ok(self, md5=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
+        If the warnings argument is passed, we check that exactly that
+        many warnings were generated.
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
@@ -315,6 +317,11 @@ class Result:
                 val = self.canonical_checksum()
                 if val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
+                    print('*** TEST FAILED ***')
+                    return False
+            if warnings is not None:
+                if self.warnings != warnings:
+                    error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
                     print('*** TEST FAILED ***')
                     return False
             return True
@@ -366,7 +373,7 @@ def error(res, msg):
 
 def run_checksum_test():
     res = compile('minimal_test.inf')
-    res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4', warnings=0)
 
     res = compile('minimal_test.inf', zversion=3)
     res.is_ok(md5='6143c98e20a44d843c1a6fbe2c19ecae')
@@ -393,7 +400,7 @@ def run_checksum_test():
     res.is_ok(md5='fa7fc9bbe032d27355b0fcf4fb4f2c53')
 
     res = compile('minimal_test.inf', glulx=True)
-    res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6')
+    res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('i7-min-6G60.inf')
     res.is_ok(md5='72f858186e126859010cbbca40602ce3')
