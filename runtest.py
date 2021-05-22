@@ -1040,43 +1040,6 @@ def run_max_static_data():
     res.is_ok()
 
 
-def run_alloc_chunk_size():
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':150})
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':300})
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':611})
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':612})
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':613})
-    res.is_ok()
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':16384})
-    res.is_ok()
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':256}, glulx=True)
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':914}, glulx=True)
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':915}, glulx=True)
-    res.is_memsetting('ALLOC_CHUNK_SIZE')
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':916}, glulx=True)
-    res.is_ok()
-
-    res = compile('static_text_test.inf', memsettings={'ALLOC_CHUNK_SIZE':32768}, glulx=True)
-    res.is_ok()
-
-    ### Many more tests should be done here.
-
-
 def run_max_num_static_strings():
     # Glulx only
 
@@ -1502,7 +1465,6 @@ test_catalog = [
     ('MAX_OBJ_PROP_COUNT', run_max_obj_prop_count),
     ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
     ('MAX_STATIC_DATA', run_max_static_data),
-    ('ALLOC_CHUNK_SIZE', run_alloc_chunk_size),
     ('MAX_NUM_STATIC_STRINGS', run_max_num_static_strings),
     ('MAX_QTEXT_SIZE', run_max_qtext_size),
     ('MAX_STATIC_STRINGS', run_max_static_strings),
