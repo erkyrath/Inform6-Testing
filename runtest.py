@@ -793,10 +793,10 @@ def run_max_objects():
 
 
 def run_max_classes():
-    res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':74})
+    res = compile('max_classes_test.inf')
     res.is_ok()
 
-    res = compile('max_classes_test.inf', memsettings={'MAX_CLASSES':74}, glulx=True)
+    res = compile('max_classes_test.inf', glulx=True)
     res.is_ok()
 
 
