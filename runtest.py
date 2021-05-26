@@ -1194,52 +1194,40 @@ def run_max_abbrevs():
     res.is_ok()
 
     res = compile('max_abbrevs_test_64.inf', memsettings={'MAX_ABBREVS':63})
-    res.is_memsetting('MAX_ABBREVS')
+    res.is_error
 
     res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':32})
     res.is_ok()
 
     res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':31})
-    res.is_memsetting('MAX_ABBREVS')
+    res.is_error()
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':96})
     res.is_ok()
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':95})
-    res.is_memsetting('MAX_ABBREVS')
+    res.is_error()
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
     res.is_ok()
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':1})
-    res.is_memsetting('MAX_ABBREVS')
+    res.is_error()
 
     res = compile('max_abbrevs_test_100.inf', memsettings={'MAX_ABBREVS':96})
     res.is_error()
 
-    res = compile('max_abbrevs_test_64.inf', glulx=True, memsettings={})
+    res = compile('max_abbrevs_test_64.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_abbrevs_test_64.inf', glulx=True, memsettings={'MAX_ABBREVS':63})
-    res.is_memsetting('MAX_ABBREVS')
-
-    res = compile('max_abbrevs_test_32.inf', glulx=True, memsettings={'MAX_ABBREVS':32})
+    res = compile('max_abbrevs_test_32.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_abbrevs_test_32.inf', glulx=True, memsettings={'MAX_ABBREVS':31})
-    res.is_memsetting('MAX_ABBREVS')
-
-    res = compile('max_abbrevs_test_96.inf', glulx=True, memsettings={'MAX_ABBREVS':96})
+    res = compile('max_abbrevs_test_96.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_abbrevs_test_96.inf', glulx=True, memsettings={'MAX_ABBREVS':95})
-    res.is_memsetting('MAX_ABBREVS')
-
-    res = compile('max_abbrevs_test_100.inf', glulx=True, memsettings={'MAX_ABBREVS':100})
+    res = compile('max_abbrevs_test_100.inf', glulx=True)
     res.is_ok()
-
-    res = compile('max_abbrevs_test_100.inf', glulx=True, memsettings={'MAX_ABBREVS':99})
-    res.is_memsetting('MAX_ABBREVS')
 
 
 def run_max_verb_word_size():
