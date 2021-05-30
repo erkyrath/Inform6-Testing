@@ -723,22 +723,10 @@ def run_max_inclusion_depth():
     
 
 def run_max_symbols():
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':4000})
-    res.is_memsetting('MAX_SYMBOLS')
-
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10035})
-    res.is_memsetting('MAX_SYMBOLS')
-
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10036})
+    res = compile('max_symbols_test.inf')
     res.is_ok()
     
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':4000}, glulx=True)
-    res.is_memsetting('MAX_SYMBOLS')
-
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10049}, glulx=True)
-    res.is_memsetting('MAX_SYMBOLS')
-
-    res = compile('max_symbols_test.inf', memsettings={'MAX_SYMBOLS':10050}, glulx=True)
+    res = compile('max_symbols_test.inf', glulx=True)
     res.is_ok()
 
 
