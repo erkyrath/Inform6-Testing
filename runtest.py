@@ -67,7 +67,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False):
+def compile(srcfile, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False, makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -84,6 +84,8 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     argls = [ opts.binary ]
     if includedir:
         argls.append('+include_path='+includedir)
+    if moduledir:
+        argls.append('+module_path='+moduledir)
     argls.append('+code_path=build')
 
     # Arguments which will be displayed in the results.
@@ -108,6 +110,10 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
         showargs.append('-e')
     if bigmem:
         showargs.append('-B')
+    if makemodule:
+        showargs.append('-M')
+    if usemodules:
+        showargs.append('-U')
         
     argls.extend(showargs)
 
@@ -134,7 +140,7 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, memsettings={}
     res = run.wait()
     stdout = run.stdout.read().decode()
     stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr, srcfile=srcfile, args=showargs, zversion=zversion, glulx=glulx)
+    res = Result(res, stdout, stderr, srcfile=srcfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
     if (opts.stdout):
@@ -160,7 +166,7 @@ class Result:
     OK = 'ok'
     ERROR = 'error'
     
-    def __init__(self, retcode, stdout, stderr, srcfile=None, args=[], zversion=None, glulx=False):
+    def __init__(self, retcode, stdout, stderr, srcfile=None, args=[], zversion=None, glulx=False, makemodule=False):
         self.srcfile = srcfile
         self.args = args
         self.glulx = glulx
@@ -173,15 +179,19 @@ class Result:
         self.memsetting = None
 
         if srcfile is not None:
-            if not srcfile.endswith('.inf'):
+            val, _, suffix = srcfile.rpartition('.')
+            if suffix != 'inf':
                 raise Exception('srcfile is not a .inf file')
-            val = srcfile[ : -4 ]
             suffix = ''
             if not glulx:
-                if zversion:
-                    suffix = '.z%d' % (zversion,)
+                if not makemodule:
+                    suffix = '.z'
                 else:
-                    suffix = '.z5'
+                    suffix = '.m'
+                if zversion:
+                    suffix += '%d' % (zversion,)
+                else:
+                    suffix += '5'
             else:
                 suffix = '.ulx'
             self.filename = os.path.join('build', val+suffix)
@@ -697,7 +707,21 @@ def run_fwconst_test():
     res = compile('fwconst_iftrue_test.inf', define={ 'FORWARD_CONSTANT_A':0, 'FORWARD_CONSTANT_B':0 }, glulx=True)
     res.is_ok()
 
+
+def run_modules_test():
+    # parserm.inf and verblibm.inf are copies of the library header files in i6lib-611. (The test framework expects them to be in the src directory.)
     
+    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
+    res.is_ok()
+    
+    res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
+    res.is_ok()
+
+    # Now build Advent using the two modules we just generated.
+    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
+    res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
+
+
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
     
@@ -1388,6 +1412,7 @@ test_catalog = [
     ('DIRECTIVES', run_directives_test),
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
+    ('MODULES', run_modules_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
