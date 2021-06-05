@@ -712,10 +712,10 @@ def run_modules_test():
     # parserm.inf and verblibm.inf are copies of the library header files in i6lib-611. (The test framework expects them to be in the src directory.)
     
     res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok()
+    res.is_ok(md5='e411c79916ae0f9cd8408df5766c5fd7')
     
     res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok()
+    res.is_ok(md5='3d381fd6590fee842d5b75f2a3abbddb')
 
     # Now build Advent using the two modules we just generated.
     res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
