@@ -67,7 +67,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False, makemodule=False, usemodules=False):
+def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False, makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -140,7 +140,7 @@ def compile(srcfile, glulx=False, zversion=None, includedir=None, moduledir=None
     res = run.wait()
     stdout = run.stdout.read().decode()
     stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr, srcfile=srcfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
+    res = Result(res, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
     if (opts.stdout):
@@ -166,7 +166,7 @@ class Result:
     OK = 'ok'
     ERROR = 'error'
     
-    def __init__(self, retcode, stdout, stderr, srcfile=None, args=[], zversion=None, glulx=False, makemodule=False):
+    def __init__(self, retcode, stdout, stderr, srcfile=None, destfile=None, args=[], zversion=None, glulx=False, makemodule=False):
         self.srcfile = srcfile
         self.args = args
         self.glulx = glulx
@@ -178,7 +178,9 @@ class Result:
         self.errors = 0
         self.memsetting = None
 
-        if srcfile is not None:
+        if destfile is not None:
+            self.filename = os.path.join('build', destfile)
+        elif srcfile is not None:
             val, _, suffix = srcfile.rpartition('.')
             if suffix != 'inf':
                 raise Exception('srcfile is not a .inf file')
@@ -644,19 +646,19 @@ def run_fwconst_test():
     res = compile('fwconst_release_test.inf', define={ 'FORWARD_CONSTANT':7 }, glulx=True)
     res.is_ok()
 
-    res = compile('fwconst_version_test.inf')
+    res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z5')
     res.is_error()
 
-    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':3 })
+    res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z3', define={ 'FORWARD_CONSTANT':3 })
     res.is_ok()
 
-    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':5 })
+    res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z5', define={ 'FORWARD_CONSTANT':5 })
     res.is_ok()
 
-    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':8 })
+    res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z8', define={ 'FORWARD_CONSTANT':8 })
     res.is_ok()
 
-    res = compile('fwconst_version_test.inf', define={ 'FORWARD_CONSTANT':9 })
+    res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z9', define={ 'FORWARD_CONSTANT':9 })
     res.is_error()
 
     res = compile('fwconst_dictionary_test.inf')
