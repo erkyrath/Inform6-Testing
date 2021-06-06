@@ -878,22 +878,7 @@ def run_max_prop_table_size():
 
 
 def run_max_indiv_prop_table_size():
-    # We include some extra MAX_INDIV_PROP_TABLE_SIZE values which triggered
-    # memory errors in I632N.
-    
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':10000})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23263})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23264})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-    
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23431})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23432})
+    res = compile('max_indiv_prop_table_size_test.inf')
     res.is_ok()
 
     # Glulx does not use this setting, so no Glulx tests.
