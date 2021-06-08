@@ -67,7 +67,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False, makemodule=False, usemodules=False):
+def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, makeabbrevs=False, bigmem=False, makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -75,11 +75,16 @@ def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None,
     If the source file has Includes, supply the include path as includedir.
     The memsettings (now a misnomer) can include any "$FOO=..." compiler
     setting.
+    The define map defines numeric constants for the source.
+    
     Other switches:
     - debug turns on DEBUG mode (-D)
     - strict=False turns off STRICT mode (-~S)
-    - economy turns on economy (abbreviation) mode (-e).
+    - economy turns on economy (abbreviation) mode (-e)
+    - makeabbrevs generates abbreviations (-u)
     - bigmem turns on large-memory (odd-even) mode for V6/7 (-B)
+    - makemodule generates a .m5 link module (-M)
+    - usemodules uses modules for verblibm/parserm (-U)
     """
     argls = [ opts.binary ]
     if includedir:
@@ -108,6 +113,8 @@ def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None,
         showargs.append('-~S')
     if economy:
         showargs.append('-e')
+    if makeabbrevs:
+        showargs.append('-u')
     if bigmem:
         showargs.append('-B')
     if makemodule:
@@ -177,6 +184,7 @@ class Result:
         self.warnings = 0
         self.errors = 0
         self.memsetting = None
+        self.abbreviations = []
 
         if destfile is not None:
             self.filename = os.path.join('build', destfile)
@@ -221,6 +229,11 @@ class Result:
             lines = stdout.split('\n')
             outlines = 0
             for ln in lines:
+
+                match = re.match(r'Abbreviate "([^"]*)";', ln)
+                if match:
+                    self.abbreviations.append(match.group(1))
+                    continue
                 
                 match = re.match(r'(?:"[^"]*", )?line (\d+): Fatal error:', ln)
                 if (match):
@@ -313,10 +326,12 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, warnings=None):
+    def is_ok(self, md5=None, abbreviations=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
+        If the abbreviations argument passed, we check that the compile
+        produced those abbreviations. (Not necessarily in the same order.)
         If the warnings argument is passed, we check that exactly that
         many warnings were generated.
         """
@@ -329,6 +344,13 @@ class Result:
                 val = self.canonical_checksum()
                 if val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
+                    print('*** TEST FAILED ***')
+                    return False
+            if abbreviations is not None:
+                s1 = set(abbreviations)
+                s2 = set(self.abbreviations)
+                if s1 != s2:
+                    error(self, 'Abbreviations list mismatch: missing %s, extra %s' % (list(s1-s2), list(s2-s1),))
                     print('*** TEST FAILED ***')
                     return False
             if warnings is not None:
