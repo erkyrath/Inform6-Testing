@@ -137,10 +137,10 @@ def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None,
     
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    res = run.wait()
-    stdout = run.stdout.read().decode()
-    stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
+    (stdout, stderr) = run.communicate()
+    stdout = stdout.decode()
+    stderr = stderr.decode()
+    res = Result(run.returncode, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
     if (opts.stdout):
