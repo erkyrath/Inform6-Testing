@@ -746,6 +746,14 @@ def run_modules_test():
     res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
 
 
+def run_make_abbreviations_test():
+    res = compile('abbrevtest.inf', makeabbrevs=True)
+    res.is_ok(abbreviations=['. ', ', ', '**]', "='@", ' the', 'tried to print (', 'string', 'objec', ' on something n', ' here', ' tha', "31'.^", 'ing', ' to ', 'tribute', '~ o', 'lass', 'ate', 'ther', 'which', 'for', ': 0', "16'", 'ave', 'loop', 'can', 'mber', 'tion', 'is n', 'cre', 'use', 'ed ', 'at ', 'or ', 'ot ', 'has', "00'", "01'", '-- ', 'est', 'er ', 'hall ', 'is ', 'in ', 'we ', 'ead', 'of ', 'out', 'rem', ' a ', 'not', 'nse', 'ove', ' de', ' to', ' it', ' wh', ' us', 'se ', 'de '])
+    
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True)
+    res.is_ok(abbreviations=['. ', ', ', 'You ', "'t ", 'ing ', '**]', 'The', 'That', 'you can', 'someth', '_to)', 'closed', 're ', 'bject', 'already ', 'But ', 's no', 'which ', ' to ', 'ing', 'can', "You'", 'ome', 'the', 'your', 'Command', 't of', 'achieve', 'Language', 'scrip', 'have', 'tion', 'ou aren', 'seem', 'nd ', 'you', 'at ', 'noth', 'see ', 'ose ', 'ed.', 'of ', 'ed ', 'ch ', 'ect', 'not ', 'Not', 'in ', 'read', 'would ', 'on ', 'You', 'ere.', 'int', 'provid', 'est', 'empt', 'lock', '~ or ', 'ight', 'is ', 've ', 'me ', 'first'])
+
+    
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
     
@@ -1437,6 +1445,7 @@ test_catalog = [
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
     ('MODULES', run_modules_test),
+    ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
