@@ -245,12 +245,6 @@ class Result:
                         self.memsetting = match.group(1)
                     continue
                 
-                match = re.match(r'Compiled with (\d+) errors?(?: \(no output\))?', ln)
-                if (match):
-                    outlines += 1
-                    self.errors = int(match.group(1))
-                    continue
-                
                 match = re.match(r'Compiled with (\d+) errors? and (\d+) suppressed warnings?(?: \(no output\))?', ln)
                 if (match):
                     outlines += 1
@@ -258,6 +252,12 @@ class Result:
                     self.warnings = int(match.group(2))
                     continue
 
+                match = re.match(r'Compiled with (\d+) errors?(?: \(no output\))?', ln)
+                if (match):
+                    outlines += 1
+                    self.errors = int(match.group(1))
+                    continue
+                
                 match = re.match(r'Compiled with (\d+) suppressed warnings?', ln)
                 if (match):
                     outlines += 1
@@ -373,11 +373,16 @@ class Result:
         print('*** TEST FAILED ***')
         return False
 
-    def is_error(self):
+    def is_error(self, warnings=None):
         """ Assert that the compile failed, but *not* with an
         "increase $SETTING" error.
         """
         if (self.status == Result.ERROR and not self.memsetting):
+            if warnings is not None:
+                if self.warnings != warnings:
+                    error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
+                    print('*** TEST FAILED ***')
+                    return False
             return True
         error(self, 'Should be error, but was: %s' % (self,))
         print('*** TEST FAILED ***')
