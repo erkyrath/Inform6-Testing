@@ -602,6 +602,27 @@ def run_directives_test():
     res.is_ok(md5='5592d67a77e3fda229465e2c799fb213')
 
 
+def run_debugflag_test():
+    res = compile('no_debug_flag_test.inf')
+    res.is_ok(warnings=0)
+
+    res = compile('no_debug_flag_test.inf', debug=True, strict=False)
+    res.is_error(warnings=1)
+
+    res = compile('no_debug_flag_test.inf', debug=True)
+    res.is_error(warnings=1)
+
+    res = compile('no_debug_flag_test.inf', glulx=True)
+    res.is_ok(warnings=0)
+
+    # This case succeeds in Glulx because there's no INFIX code in the veneer.
+    res = compile('no_debug_flag_test.inf', debug=True, strict=False, glulx=True)
+    res.is_ok(warnings=0)
+
+    res = compile('no_debug_flag_test.inf', debug=True, glulx=True)
+    res.is_error(warnings=1)
+
+    
 def run_defineopt_test():
     res = compile('defineopttest.inf')
     res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
@@ -1447,6 +1468,7 @@ test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
     ('DIRECTIVES', run_directives_test),
+    ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
     ('MODULES', run_modules_test),
