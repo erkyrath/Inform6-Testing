@@ -67,7 +67,7 @@ popt.add_option('-l', '--list',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, bigmem=False, makemodule=False, usemodules=False):
+def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, makeabbrevs=False, bigmem=False, makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
@@ -75,11 +75,16 @@ def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None,
     If the source file has Includes, supply the include path as includedir.
     The memsettings (now a misnomer) can include any "$FOO=..." compiler
     setting.
+    The define map defines numeric constants for the source.
+    
     Other switches:
     - debug turns on DEBUG mode (-D)
     - strict=False turns off STRICT mode (-~S)
-    - economy turns on economy (abbreviation) mode (-e).
+    - economy turns on economy (abbreviation) mode (-e)
+    - makeabbrevs generates abbreviations (-u)
     - bigmem turns on large-memory (odd-even) mode for V6/7 (-B)
+    - makemodule generates a .m5 link module (-M)
+    - usemodules uses modules for verblibm/parserm (-U)
     """
     argls = [ opts.binary ]
     if includedir:
@@ -108,6 +113,8 @@ def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None,
         showargs.append('-~S')
     if economy:
         showargs.append('-e')
+    if makeabbrevs:
+        showargs.append('-u')
     if bigmem:
         showargs.append('-B')
     if makemodule:
@@ -137,10 +144,10 @@ def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None,
     
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    res = run.wait()
-    stdout = run.stdout.read().decode()
-    stderr = run.stderr.read().decode()
-    res = Result(res, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
+    (stdout, stderr) = run.communicate()
+    stdout = stdout.decode()
+    stderr = stderr.decode()
+    res = Result(run.returncode, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
     if (opts.stdout):
@@ -177,6 +184,7 @@ class Result:
         self.warnings = 0
         self.errors = 0
         self.memsetting = None
+        self.abbreviations = []
 
         if destfile is not None:
             self.filename = os.path.join('build', destfile)
@@ -221,6 +229,11 @@ class Result:
             lines = stdout.split('\n')
             outlines = 0
             for ln in lines:
+
+                match = re.match(r'Abbreviate "([^"]*)";', ln)
+                if match:
+                    self.abbreviations.append(match.group(1))
+                    continue
                 
                 match = re.match(r'(?:"[^"]*", )?line (\d+): Fatal error:', ln)
                 if (match):
@@ -313,10 +326,12 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, warnings=None):
+    def is_ok(self, md5=None, abbreviations=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
+        If the abbreviations argument passed, we check that the compile
+        produced those abbreviations. (Not necessarily in the same order.)
         If the warnings argument is passed, we check that exactly that
         many warnings were generated.
         """
@@ -329,6 +344,13 @@ class Result:
                 val = self.canonical_checksum()
                 if val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
+                    print('*** TEST FAILED ***')
+                    return False
+            if abbreviations is not None:
+                s1 = set(abbreviations)
+                s2 = set(self.abbreviations)
+                if s1 != s2:
+                    error(self, 'Abbreviations list mismatch: missing %s, extra %s' % (list(s1-s2), list(s2-s1),))
                     print('*** TEST FAILED ***')
                     return False
             if warnings is not None:
@@ -724,6 +746,14 @@ def run_modules_test():
     res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
 
 
+def run_make_abbreviations_test():
+    res = compile('abbrevtest.inf', makeabbrevs=True)
+    res.is_ok(abbreviations=['. ', ', ', '**]', "='@", ' the', 'tried to print (', 'string', 'objec', ' on something n', ' here', ' tha', "31'.^", 'ing', ' to ', 'tribute', '~ o', 'lass', 'ate', 'ther', 'which', 'for', ': 0', "16'", 'ave', 'loop', 'can', 'mber', 'tion', 'is n', 'cre', 'use', 'ed ', 'at ', 'or ', 'ot ', 'has', "00'", "01'", '-- ', 'est', 'er ', 'hall ', 'is ', 'in ', 'we ', 'ead', 'of ', 'out', 'rem', ' a ', 'not', 'nse', 'ove', ' de', ' to', ' it', ' wh', ' us', 'se ', 'de '])
+    
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True)
+    res.is_ok(abbreviations=['. ', ', ', 'You ', "'t ", 'ing ', '**]', 'The', 'That', 'you can', 'someth', '_to)', 'closed', 're ', 'bject', 'already ', 'But ', 's no', 'which ', ' to ', 'ing', 'can', "You'", 'ome', 'the', 'your', 'Command', 't of', 'achieve', 'Language', 'scrip', 'have', 'tion', 'ou aren', 'seem', 'nd ', 'you', 'at ', 'noth', 'see ', 'ose ', 'ed.', 'of ', 'ed ', 'ch ', 'ect', 'not ', 'Not', 'in ', 'read', 'would ', 'on ', 'You', 'ere.', 'int', 'provid', 'est', 'empt', 'lock', '~ or ', 'ight', 'is ', 've ', 'me ', 'first'])
+
+    
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
     
@@ -1367,6 +1397,7 @@ test_catalog = [
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
     ('MODULES', run_modules_test),
+    ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
