@@ -772,6 +772,14 @@ def run_modules_test():
     res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
 
 
+def run_warnings_test():
+    res = compile('typewarningtest.inf')
+    res.is_ok(warnings=27)
+    
+    res = compile('typewarningtest.inf', glulx=True)
+    res.is_ok(warnings=29)
+    
+
 def run_make_abbreviations_test():
     res = compile('abbrevtest.inf', makeabbrevs=True)
     res.is_ok(abbreviations=['. ', ', ', '**]', "='@", ' the', 'tried to print (', 'string', 'objec', ' on something n', ' here', ' tha', "31'.^", 'ing', ' to ', 'tribute', '~ o', 'lass', 'ate', 'ther', 'which', 'for', ': 0', "16'", 'ave', 'loop', 'can', 'mber', 'tion', 'is n', 'cre', 'use', 'ed ', 'at ', 'or ', 'ot ', 'has', "00'", "01'", '-- ', 'est', 'er ', 'hall ', 'is ', 'in ', 'we ', 'ead', 'of ', 'out', 'rem', ' a ', 'not', 'nse', 'ove', ' de', ' to', ' it', ' wh', ' us', 'se ', 'de '])
@@ -1472,6 +1480,7 @@ test_catalog = [
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
     ('MODULES', run_modules_test),
+    ('WARNINGS', run_warnings_test),
     ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),

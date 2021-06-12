@@ -1,0 +1,112 @@
+[ Main val;
+	! We don't want to call the test funcs; they would just be a mess of runtime errors.
+	val = testgive;
+	val = testhas;
+];
+
+Attribute a1;
+Attribute a2;
+
+Property cprop;
+
+Object obj
+  with iprop1 [; ],
+  with iprop2 0;
+
+Global glob;
+
+Array arr --> 3;
+
+Constant zero 0;
+Constant objconst obj;
+
+[ func; ];
+
+[ testgive loc;
+	! All these statements are ok
+	give obj a1;
+	give glob a2;
+	give loc a1;
+	give obj glob;
+	give obj loc;
+	give loc loc;
+
+	! Literals do not produce a warning
+	give obj 5;
+	give obj 'word';
+	give 'word' a1;
+	! Constants do not produce a warning
+	give obj zero;
+	give zero a2;
+	! Expressions do not produce a warning
+	give obj (obj+1);
+	give (arr+1) a2;
+	
+	! Forward symbols do not produce a warning
+	give obj objlate;
+	give alate a1;
+	give obj cproplate;
+
+	! Warnings: expected Attribute
+	give obj cprop;
+	give obj iprop1;
+	give obj arr;
+	give obj obj;
+	give obj func;
+
+	! This produces a warning in Glulx only
+	give obj objconst;
+
+	! Warnings: expected Object
+	give cprop a1;
+	give iprop1 a1;
+	give arr a1;
+	give a1 a2;
+	give func a2;
+];
+
+[ testhas loc;
+	loc = (obj has a1);
+	loc = (obj hasnt a2);
+	loc = (glob has a1);
+	loc = (loc has a1);
+	loc = (obj has glob);
+	loc = (glob has loc);
+
+	! Literals do not produce a warning
+	loc = (obj has 5);
+	! Constants do not produce a warning
+	loc = (obj has zero);
+	! Expressions do not produce a warning
+	loc = (obj has arr+1);
+	
+	! Forward symbols do not produce a warning
+	loc = (obj has objlate);
+	loc = (alate has a1);
+	loc = (obj has cproplate);
+
+	! Warnings: expected Attribute
+	loc = (obj has obj);
+	loc = (obj hasnt obj);
+	loc = (obj has arr);
+	loc = (obj hasnt arr);
+	loc = (obj has cprop);
+	loc = (obj has func);
+	! iprop1 is beyond MAX_ATTRS and therefore produces an error
+
+	! This produces a warning in Glulx only
+	loc = (obj hasnt objconst);
+
+	! Warnings: expected Object
+	loc = (arr has a1);
+	loc = (arr hasnt a1);
+	loc = (a1 has a1);
+	loc = (func has a1);
+	loc = (cprop hasnt a1);
+];
+
+
+Object objlate;
+
+Attribute alate;
+Property cproplate;
