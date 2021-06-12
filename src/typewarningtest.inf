@@ -57,6 +57,7 @@ Constant objconst obj;
 	give obj arr;
 	give obj obj;
 	give obj func;
+	give obj cla;
 
 	! This produces a warning in Glulx only
 	give obj objconst;
@@ -67,6 +68,7 @@ Constant objconst obj;
 	give arr attr1;
 	give attr1 attr2;
 	give func attr2;
+	give cla attr1;
 ];
 
 [ testhas loc;
@@ -97,6 +99,7 @@ Constant objconst obj;
 	loc = (obj hasnt arr);
 	loc = (obj has cprop);
 	loc = (obj has func);
+	loc = (obj has cla);
 	! iprop1 is beyond MAX_ATTRS and therefore produces an error
 
 	! This produces a warning in Glulx only
@@ -108,6 +111,7 @@ Constant objconst obj;
 	loc = (attr1 has attr1);
 	loc = (func has attr1);
 	loc = (cprop hasnt attr1);
+	loc = (cla has attr1);
 ];
 
 [ testmove loc;
@@ -118,11 +122,13 @@ Constant objconst obj;
 	move alate to funclate;
 	move obj to 5;
 	move obj to objconst;
+	move obj to cla;
 
 	! Warnings: expected Object
 	move func to obj;
 	move obj to attr2;
 	move arr to iprop1;
+	move cla to obj;
 
 	! No warnings
 	remove glob;
@@ -136,6 +142,7 @@ Constant objconst obj;
 	remove arr;
 	remove attr1;
 	remove cprop;
+	remove cla;
 ];
 
 [ testin loc;
