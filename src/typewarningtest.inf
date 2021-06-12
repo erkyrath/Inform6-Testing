@@ -5,6 +5,7 @@
 	val = testmove;
 	val = testin;
 	val = testprovides;
+	val = testofclass;
 ];
 
 Attribute attr1;
@@ -184,6 +185,30 @@ Constant objconst obj;
 	loc = (cla provides cprop);
 	loc = (func provides cprop);
 	loc = (cprop provides cprop);
+];
+
+[ testofclass loc;
+	! No warnings
+	loc = (obj ofclass cla);
+	loc = (obj ofclass 1);
+	loc = (obj ofclass cproplate);
+	loc = (obj ofclass loc);
+	loc = (obj ofclass glob);
+	loc = (glob ofclass cla);
+	loc = (obj.iprop1 ofclass arr-->0);
+	loc = (objconst ofclass cla);
+
+	! Warnings: expected Class
+	loc = (obj ofclass func);
+	loc = (obj ofclass arr);
+	loc = (obj ofclass obj);
+	loc = (obj ofclass cprop);
+	loc = (obj ofclass attr1);
+
+	! Warnings: expected Object
+	loc = (cla ofclass cla);
+	loc = (func ofclass cla);
+	loc = (cprop ofclass cla);
 ];
 
 Object objlate;
