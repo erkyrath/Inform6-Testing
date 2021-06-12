@@ -6,12 +6,14 @@
 	val = testin;
 	val = testprovides;
 	val = testofclass;
+	val = testbareprop;
 ];
 
 Attribute attr1;
 Attribute attr2;
 
 Property cprop;
+Property n_to;  ! like a library direction property
 
 Class cla;
 
@@ -210,6 +212,20 @@ Constant objconst obj;
 	loc = (func ofclass cla);
 	loc = (cprop ofclass cla);
 ];
+
+[ testbareprop loc;
+	! Bare property warnings:
+	loc = (loc < n_to);
+	loc = (n_to <= loc);
+	loc = (loc <= cprop);
+	loc = (loc <= iprop1);
+	
+	! No warning; this is a special case for some libraries
+	loc = (loc <= n_to);
+	loc = (loc >= n_to);
+];
+
+!### to test: x.y (and .&, .#); -> and --> (second arg only?)
 
 Object objlate;
 
