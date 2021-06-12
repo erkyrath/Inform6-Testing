@@ -2,10 +2,11 @@
 	! We don't want to call the test funcs; they would just be a mess of runtime errors.
 	val = testgive;
 	val = testhas;
+	val = testmove;
 ];
 
-Attribute a1;
-Attribute a2;
+Attribute attr1;
+Attribute attr2;
 
 Property cprop;
 
@@ -24,9 +25,9 @@ Constant objconst obj;
 
 [ testgive loc;
 	! All these statements are ok
-	give obj a1;
-	give glob a2;
-	give loc a1;
+	give obj attr1;
+	give glob attr2;
+	give loc attr1;
 	give obj glob;
 	give obj loc;
 	give loc loc;
@@ -34,17 +35,17 @@ Constant objconst obj;
 	! Literals do not produce a warning
 	give obj 5;
 	give obj 'word';
-	give 'word' a1;
+	give 'word' attr1;
 	! Constants do not produce a warning
 	give obj zero;
-	give zero a2;
+	give zero attr2;
 	! Expressions do not produce a warning
 	give obj (obj+1);
-	give (arr+1) a2;
+	give (arr+1) attr2;
 	
 	! Forward symbols do not produce a warning
 	give obj objlate;
-	give alate a1;
+	give alate attr1;
 	give obj cproplate;
 
 	! Warnings: expected Attribute
@@ -58,18 +59,18 @@ Constant objconst obj;
 	give obj objconst;
 
 	! Warnings: expected Object
-	give cprop a1;
-	give iprop1 a1;
-	give arr a1;
-	give a1 a2;
-	give func a2;
+	give cprop attr1;
+	give iprop1 attr1;
+	give arr attr1;
+	give attr1 attr2;
+	give func attr2;
 ];
 
 [ testhas loc;
-	loc = (obj has a1);
-	loc = (obj hasnt a2);
-	loc = (glob has a1);
-	loc = (loc has a1);
+	loc = (obj has attr1);
+	loc = (obj hasnt attr2);
+	loc = (glob has attr1);
+	loc = (loc has attr1);
 	loc = (obj has glob);
 	loc = (glob has loc);
 
@@ -82,7 +83,7 @@ Constant objconst obj;
 	
 	! Forward symbols do not produce a warning
 	loc = (obj has objlate);
-	loc = (alate has a1);
+	loc = (alate has attr1);
 	loc = (obj has cproplate);
 
 	! Warnings: expected Attribute
@@ -98,15 +99,44 @@ Constant objconst obj;
 	loc = (obj hasnt objconst);
 
 	! Warnings: expected Object
-	loc = (arr has a1);
-	loc = (arr hasnt a1);
-	loc = (a1 has a1);
-	loc = (func has a1);
-	loc = (cprop hasnt a1);
+	loc = (arr has attr1);
+	loc = (arr hasnt attr1);
+	loc = (attr1 has attr1);
+	loc = (func has attr1);
+	loc = (cprop hasnt attr1);
 ];
 
+[ testmove loc;
+	! No warnings
+	move obj to glob;
+	move loc to obj;
+	move arr-->0 to obj.iprop1;
+	move alate to funclate;
+	move obj to 5;
+	move obj to objconst;
+
+	! Warnings: expected Object
+	move func to obj;
+	move obj to attr2;
+	move arr to iprop1;
+
+	! No warnings
+	remove glob;
+	remove loc;
+	remove alate;
+	remove 'dict';
+	remove objconst;
+	
+	! Warnings: expected Object
+	remove func;
+	remove arr;
+	remove attr1;
+	remove cprop;
+];
 
 Object objlate;
 
 Attribute alate;
 Property cproplate;
+
+[ funclate; ];
