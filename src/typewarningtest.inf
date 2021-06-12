@@ -3,12 +3,15 @@
 	val = testgive;
 	val = testhas;
 	val = testmove;
+	val = testin;
 ];
 
 Attribute attr1;
 Attribute attr2;
 
 Property cprop;
+
+Class cla;
 
 Object obj
   with iprop1 [; ],
@@ -67,6 +70,7 @@ Constant objconst obj;
 ];
 
 [ testhas loc;
+	! No warnings
 	loc = (obj has attr1);
 	loc = (obj hasnt attr2);
 	loc = (glob has attr1);
@@ -132,6 +136,22 @@ Constant objconst obj;
 	remove arr;
 	remove attr1;
 	remove cprop;
+];
+
+[ testin loc;
+	! No warnings
+	loc = (obj in obj);
+	loc = (obj in cla);
+	loc = (obj notin obj);
+	loc = (obj in glob);
+	loc = (glob notin obj);
+	loc = (obj.iprop1 in arr-->0);
+	loc = (objconst in objconst);
+
+	! Warnings: expected Object
+	loc = (obj in func);
+	loc = (obj notin arr);
+	loc = (cla in obj);
 ];
 
 Object objlate;
