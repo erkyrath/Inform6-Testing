@@ -4,6 +4,7 @@
 	val = testhas;
 	val = testmove;
 	val = testin;
+	val = testprovides;
 ];
 
 Attribute attr1;
@@ -159,6 +160,30 @@ Constant objconst obj;
 	loc = (obj in func);
 	loc = (obj notin arr);
 	loc = (cla in obj);
+];
+
+[ testprovides loc;
+	! No warnings
+	loc = (obj provides iprop1);
+	loc = (obj provides cprop);
+	loc = (obj provides cproplate);
+	loc = (obj provides loc);
+	loc = (obj provides glob);
+	loc = (glob provides cprop);
+	loc = (obj.iprop1 provides arr-->0);
+	loc = (objconst provides cprop);
+
+	! Warnings: expected Property
+	loc = (obj provides func);
+	loc = (obj provides arr);
+	loc = (obj provides obj);
+	loc = (obj provides cla);
+	loc = (obj provides attr1);
+
+	! Warnings: expected Object
+	loc = (cla provides cprop);
+	loc = (func provides cprop);
+	loc = (cprop provides cprop);
 ];
 
 Object objlate;
