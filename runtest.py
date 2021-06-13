@@ -883,81 +883,33 @@ def run_max_arrays():
 
 
 def run_max_prop_table_size():
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':10000})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23592})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23593})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23868})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':23869})
+    res = compile('max_prop_table_size_test.inf')
     res.is_ok()
 
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':20000}, glulx=True)
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52425}, glulx=True)
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52426}, glulx=True)
+    res = compile('max_prop_table_size_test.inf', glulx=True)
     res.is_ok()
 
     # Glulx uses this setting for individual properties too
 
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52425}, glulx=True)
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':52426}, glulx=True)
+    res = compile('max_indiv_prop_table_size_test.inf', glulx=True)
     res.is_ok()
 
     # A single large object can run into this setting too.
     
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':4000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':40000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
+    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
+    res.is_ok()
 
     # So can a Z-code object's shortname.
 
-    res = compile('large_object_short_name_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':500})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('large_object_short_name_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':582})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('large_object_short_name_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':583})
+    res = compile('large_object_short_name_test.inf')
     res.is_ok()
 
-    res = compile('large_object_short_name_test_2.inf', memsettings={'MAX_PROP_TABLE_SIZE':500})
-    res.is_memsetting('MAX_PROP_TABLE_SIZE')
-
-    res = compile('large_object_short_name_test_2.inf', memsettings={'MAX_PROP_TABLE_SIZE':584})
+    res = compile('large_object_short_name_test_2.inf')
     res.is_error()
 
 
 def run_max_indiv_prop_table_size():
-    # We include some extra MAX_INDIV_PROP_TABLE_SIZE values which triggered
-    # memory errors in I632N.
-    
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':10000})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23263})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23264})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-    
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23431})
-    res.is_memsetting('MAX_INDIV_PROP_TABLE_SIZE')
-
-    res = compile('max_indiv_prop_table_size_test.inf', memsettings={'MAX_INDIV_PROP_TABLE_SIZE':23432})
+    res = compile('max_indiv_prop_table_size_test.inf')
     res.is_ok()
 
     # Glulx does not use this setting, so no Glulx tests.
