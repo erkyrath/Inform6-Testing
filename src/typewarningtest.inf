@@ -207,11 +207,6 @@ Constant objconst obj;
 	loc = (obj ofclass obj);
 	loc = (obj ofclass cprop);
 	loc = (obj ofclass attr1);
-
-	! Warnings: expected Object
-	loc = (cla ofclass cla);
-	loc = (func ofclass cla);
-	loc = (cprop ofclass cla);
 ];
 
 [ testbareprop loc;
