@@ -7,6 +7,7 @@
 	val = testprovides;
 	val = testofclass;
 	val = testbareprop;
+	val = testdot;
 ];
 
 Attribute attr1;
@@ -223,6 +224,29 @@ Constant objconst obj;
 	! No warning; this is a special case for some libraries
 	loc = (loc <= n_to);
 	loc = (loc >= n_to);
+];
+
+[ testdot loc;
+	! No warnings
+	loc = obj.iprop1;
+	loc = obj.glob;
+	loc = glob.cprop;
+	loc = cla.cprop;
+	loc = cla.copy;
+	loc = cla.recreate;
+	loc = objconst.iprop1;
+	loc = objlate.iprop1;
+	loc = obj.cproplate;
+	loc = obj.3;
+	loc = obj.loc;
+	loc = obj.zero;
+
+	! Warnings: expected Property
+	loc = obj.attr1;
+	loc = obj.cla;
+	loc = obj.obj;
+	loc = obj.func;
+	loc = obj.arr;
 ];
 
 !### to test: x.y (and .&, .#); -> and --> (second arg only?)
