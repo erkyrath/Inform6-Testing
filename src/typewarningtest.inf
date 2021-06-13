@@ -247,9 +247,26 @@ Constant objconst obj;
 	loc = obj.obj;
 	loc = obj.func;
 	loc = obj.arr;
+
+	! No warnings
+	loc = obj.cprop();
+	loc = cla.create();
+	loc = obj.&cprop;
+	loc = obj.&iprop1;
+	loc = obj.#cprop;
+	loc = obj.#iprop1;
+
+	! Warnings: expected Property
+	loc = obj.attr1();
+	loc = cla.cla();
+	loc = cla.arr();
+	loc = obj.&attr2;
+	loc = cla.&arr;
+	loc = obj.#func;
+	loc = cla.#obj;
 ];
 
-!### to test: x.y (and .&, .#); -> and --> (second arg only?)
+!### to test: -> and --> (second arg only?)
 
 Object objlate;
 

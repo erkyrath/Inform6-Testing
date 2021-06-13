@@ -774,10 +774,10 @@ def run_modules_test():
 
 def run_warnings_test():
     res = compile('typewarningtest.inf')
-    res.is_ok(warnings=74)
+    res.is_ok(warnings=81)
     
     res = compile('typewarningtest.inf', glulx=True)
-    res.is_ok(warnings=76)
+    res.is_ok(warnings=83)
     
 
 def run_make_abbreviations_test():
