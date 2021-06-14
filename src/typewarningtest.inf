@@ -257,8 +257,6 @@ Constant objconst obj;
 	loc = cla.#obj;
 ];
 
-!### to test: -> and --> (second arg only?)
-
 Object objlate;
 
 Attribute alate;
