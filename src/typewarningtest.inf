@@ -176,6 +176,7 @@ Constant objconst obj;
 	loc = (glob provides cprop);
 	loc = (obj.iprop1 provides arr-->0);
 	loc = (objconst provides cprop);
+	loc = (func provides call);
 
 	! Warnings: expected Property
 	loc = (obj provides func);
@@ -183,11 +184,6 @@ Constant objconst obj;
 	loc = (obj provides obj);
 	loc = (obj provides cla);
 	loc = (obj provides attr1);
-
-	! Warnings: expected Object
-	loc = (cla provides cprop);
-	loc = (func provides cprop);
-	loc = (cprop provides cprop);
 ];
 
 [ testofclass loc;
