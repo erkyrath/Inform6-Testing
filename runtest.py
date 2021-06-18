@@ -827,6 +827,9 @@ def run_max_objects():
     res = compile('max_objects_test.inf', glulx=True)
     res.is_ok()
 
+    res = compile('max_duplicate_objects_test.inf', glulx=True)
+    res.is_ok()
+
 
 def run_max_classes():
     res = compile('max_classes_test.inf')
