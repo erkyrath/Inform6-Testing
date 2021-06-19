@@ -923,6 +923,18 @@ def run_max_obj_prop_count():
     res = compile('max_obj_prop_count_test.inf', glulx=True)
     res.is_ok()
 
+    res = compile('property_too_long.inf')
+    res.is_error()
+    
+    res = compile('property_too_long.inf', glulx=True)
+    res.is_ok()
+    
+    res = compile('property_too_long_inherit.inf')
+    res.is_error()
+    
+    res = compile('property_too_long_inherit.inf', glulx=True)
+    res.is_ok()
+    
 
 def run_max_global_variables():
     # In Z-code, at most 233 globals are available, and you can't raise the
