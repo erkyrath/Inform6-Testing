@@ -61,6 +61,9 @@ popt.add_option('--stderr',
 popt.add_option('-l', '--list',
     action='store_true', dest='listtests',
     help='display list of tests')
+popt.add_option('--vital',
+    action='store_true', dest='vital',
+    help='abort all tests on the first error')
 
 (opts, args) = popt.parse_args()
 
@@ -406,7 +409,8 @@ def error(res, msg):
         if res.args:
             label += ' ' + ' '.join(res.args)
     errorlist.append( (testname, label, msg) )
-
+    if opts.vital:
+        raise Exception('aborting after one error')
 
 # And now, the tests themselves.
 
