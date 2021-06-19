@@ -891,7 +891,7 @@ def run_max_prop_table_size():
 
     # A single large object can run into this setting too.
     
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':40000}, glulx=True)
+    res = compile('max_obj_prop_table_size_test.inf', glulx=True)
     res.is_ok()
 
     # So can a Z-code object's shortname.
@@ -911,27 +911,12 @@ def run_max_indiv_prop_table_size():
 
     
 def run_max_obj_prop_table_size():
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':4000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':4000}, glulx=True)
-    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
-
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':40000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':4000}, glulx=True)
-    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
-
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':10000}, glulx=True)
-    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
-
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':19999}, glulx=True)
-    res.is_memsetting('MAX_OBJ_PROP_TABLE_SIZE')
-
-    res = compile('max_obj_prop_table_size_test.inf', memsettings={'MAX_PROP_TABLE_SIZE':100000, 'MAX_OBJ_PROP_COUNT':110, 'MAX_OBJ_PROP_TABLE_SIZE':20000}, glulx=True)
+    res = compile('max_obj_prop_table_size_test.inf', glulx=True)
     res.is_ok()
 
 
 def run_max_obj_prop_count():
-    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':200}, glulx=True)
-    res.is_memsetting('MAX_OBJ_PROP_COUNT')
-
-    res = compile('max_obj_prop_count_test.inf', memsettings={'MAX_OBJ_PROP_COUNT':201}, glulx=True)
+    res = compile('max_obj_prop_count_test.inf', glulx=True)
     res.is_ok()
 
 
