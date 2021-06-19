@@ -792,7 +792,16 @@ def run_max_ifdef_stack():
 
     res = compile('max_ifdef_stack_33.inf')
     res.is_error();
-    
+
+def run_max_switch_case_values():
+    # Fixed limit
+
+    res = compile('max_switch_case_values.inf')
+    res.is_ok();
+
+    res = compile('max_switch_case_values.inf', define={ 'SWITCH_ERROR':0 })
+    res.is_error();
+
     
 def run_max_inclusion_depth():
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
@@ -1430,6 +1439,7 @@ test_catalog = [
     ('MODULES', run_modules_test),
     ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
+    ('MAX_SWITCH_CASE_VALUES', run_max_switch_case_values),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
