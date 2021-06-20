@@ -853,40 +853,22 @@ def run_max_classes():
 
 
 def run_max_arrays():
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':149})
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150})
+    res = compile('max_arrays_test.inf')
     res.is_ok()
 
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':149}, glulx=True)
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
+    res = compile('max_arrays_test.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':149})
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':150})
+    res = compile('max_arrays_test_2.inf')
     res.is_ok()
 
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':149}, glulx=True)
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
+    res = compile('max_arrays_test_2.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':99})
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':100})
+    res = compile('max_arrays_test_3.inf')
     res.is_ok()
 
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':99}, glulx=True)
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':100}, glulx=True)
+    res = compile('max_arrays_test_3.inf', glulx=True)
     res.is_ok()
 
 
