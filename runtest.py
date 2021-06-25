@@ -1244,7 +1244,7 @@ def run_max_verbs():
     res.is_ok()
     
     res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255})
-    res.is_memsetting('MAX_VERBS')
+    res.is_error()
     
     res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255}, glulx=True)
     res.is_memsetting('MAX_VERBS')
@@ -1256,7 +1256,7 @@ def run_max_verbs():
     res.is_ok()
     
     res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255})
-    res.is_memsetting('MAX_VERBS')
+    res.is_error()
     
     res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255}, glulx=True)
     res.is_memsetting('MAX_VERBS')
