@@ -1220,51 +1220,21 @@ def run_max_verb_synonyms():
     
 def run_max_verbs():
     res = compile('max_verbs.inf')
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':254})
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':255})
     res.is_ok()
-    
-    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256})
-    res.is_error()
     
     res = compile('max_verbs.inf', glulx=True)
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':254}, glulx=True)
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':255}, glulx=True)
     res.is_ok()
     
-    res = compile('max_verbs.inf', memsettings={'MAX_VERBS':256}, glulx=True)
-    res.is_ok()
-    
-    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255})
+    res = compile('max_verbs_2.inf')
     res.is_error()
     
-    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':255}, glulx=True)
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':259}, glulx=True)
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs_2.inf', memsettings={'MAX_VERBS':260}, glulx=True)
+    res = compile('max_verbs_2.inf', glulx=True)
     res.is_ok()
     
-    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255})
+    res = compile('max_verbs_3.inf')
     res.is_error()
     
-    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':255}, glulx=True)
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':259}, glulx=True)
-    res.is_memsetting('MAX_VERBS')
-    
-    res = compile('max_verbs_3.inf', memsettings={'MAX_VERBS':260}, glulx=True)
+    res = compile('max_verbs_3.inf', glulx=True)
     res.is_ok()
     
     
