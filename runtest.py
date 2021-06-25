@@ -1211,6 +1211,18 @@ def run_max_abbrevs():
     res = compile('abbrevtest.inf', glulx=True, economy=True)
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
+    res = compile('Advent-abbrev.inf', includedir='i6lib-611')
+    res.is_ok(md5='9733c798d3b7586da360577c3e4cce68')
+    
+    res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
+    res.is_ok(md5='a54dc803695b291ab8ad966fffd17bdf')
+    
+    res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
+    res.is_ok(md5='80c4f00fe5de32a6b7fbb09234b828ab')
+    
+    res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
+    res.is_ok(md5='cab439edba9dc0758b003321d81f5d60')
+    
     res = compile('max_abbrevs_test_64.inf', memsettings={})
     res.is_ok()
 
