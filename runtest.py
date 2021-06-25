@@ -25,7 +25,6 @@
 # MAX_SOURCE_FILES
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
-# MAX_VERBSPACE
 
 # Settings that don't result in compiler memory allocations, so they don't
 # need to be tested here:
