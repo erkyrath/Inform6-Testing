@@ -861,40 +861,22 @@ def run_max_classes():
 
 
 def run_max_arrays():
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':149})
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150})
+    res = compile('max_arrays_test.inf')
     res.is_ok()
 
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':149}, glulx=True)
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
+    res = compile('max_arrays_test.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':149})
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':150})
+    res = compile('max_arrays_test_2.inf')
     res.is_ok()
 
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':149}, glulx=True)
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_2.inf', memsettings={'MAX_ARRAYS':150}, glulx=True)
+    res = compile('max_arrays_test_2.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':99})
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':100})
+    res = compile('max_arrays_test_3.inf')
     res.is_ok()
 
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':99}, glulx=True)
-    res.is_memsetting('MAX_ARRAYS')
-
-    res = compile('max_arrays_test_3.inf', memsettings={'MAX_ARRAYS':100}, glulx=True)
+    res = compile('max_arrays_test_3.inf', glulx=True)
     res.is_ok()
 
 
@@ -973,73 +955,22 @@ def run_max_global_variables():
 
 
 def run_max_static_data():
-    # We were getting overflow errors on odd values, so we have a lot of test
-    # cases here.
-    
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':5000})
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20477})
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20478})
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20479})
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20480})
+    res = compile('max_static_data_test.inf')
     res.is_ok()
 
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':20481})
+    res = compile('max_static_data_test.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':5000}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42042}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42043}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42044}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42045}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42046}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42047}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test.inf', memsettings={'MAX_STATIC_DATA':42048}, glulx=True)
+    res = compile('max_static_data_test_2.inf')
     res.is_ok()
 
-    res = compile('max_static_data_test_2.inf', memsettings={'MAX_STATIC_DATA':19999})
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test_2.inf', memsettings={'MAX_STATIC_DATA':20000})
+    res = compile('max_static_data_test_2.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_static_data_test_2.inf', memsettings={'MAX_STATIC_DATA':39999}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test_2.inf', memsettings={'MAX_STATIC_DATA':40000}, glulx=True)
+    res = compile('max_static_data_test_3.inf')
     res.is_ok()
 
-    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':20479, 'MAX_ARRAYS':200})
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':20480, 'MAX_ARRAYS':200})
-    res.is_ok()
-
-    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':42047, 'MAX_ARRAYS':200}, glulx=True)
-    res.is_memsetting('MAX_STATIC_DATA')
-
-    res = compile('max_static_data_test_3.inf', memsettings={'MAX_STATIC_DATA':42048, 'MAX_ARRAYS':200}, glulx=True)
+    res = compile('max_static_data_test_3.inf', glulx=True)
     res.is_ok()
 
 
