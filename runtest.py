@@ -1302,6 +1302,9 @@ def run_max_adjectives():
     res = compile('max_adjectives_256.inf')
     res.is_error()
 
+    res = compile('max_adjectives_256.inf', define={ 'USE_GV2':0 })
+    res.is_ok()
+
     res = compile('max_adjectives_256.inf', glulx=True)
     res.is_ok()
 

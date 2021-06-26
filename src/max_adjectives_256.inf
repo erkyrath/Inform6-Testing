@@ -1,6 +1,10 @@
 [ Main;
 ];
 
+#ifdef USE_GV2;
+Constant Grammar__Version = 2;
+#endif; ! USE_GV2
+
 [ FooSub;
 ];
 
