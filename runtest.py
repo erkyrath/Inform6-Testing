@@ -1222,13 +1222,13 @@ def run_max_lines_per_verb():
     res = compile('max_lines_per_verb_40.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_lines_per_verb_extfirst.inf', memsettings={'MAX_ADJECTIVES':100})
+    res = compile('max_lines_per_verb_extfirst.inf')
     res.is_ok()
 
     res = compile('max_lines_per_verb_extfirst.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_lines_per_verb_extlast.inf', memsettings={'MAX_ADJECTIVES':100})
+    res = compile('max_lines_per_verb_extlast.inf')
     res.is_ok()
 
     res = compile('max_lines_per_verb_extlast.inf', glulx=True)
@@ -1287,12 +1287,6 @@ def run_max_actions():
     
 def run_max_adjectives():
     res = compile('max_adjectives.inf')
-    res.is_memsetting('MAX_ADJECTIVES')
-
-    res = compile('max_adjectives.inf', memsettings={'MAX_ADJECTIVES':99})
-    res.is_memsetting('MAX_ADJECTIVES')
-
-    res = compile('max_adjectives.inf', memsettings={'MAX_ADJECTIVES':100})
     res.is_ok()
 
     # Glulx uses Grammar__Version 2, so adjectives are not used.
@@ -1300,9 +1294,6 @@ def run_max_adjectives():
     res.is_ok()
 
     res = compile('max_adjectives_2.inf')
-    res.is_ok()
-
-    res = compile('max_adjectives_2.inf', memsettings={'MAX_ADJECTIVES':3})
     res.is_ok()
 
     res = compile('max_adjectives_2.inf', glulx=True)
