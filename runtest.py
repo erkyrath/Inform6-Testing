@@ -1210,13 +1210,29 @@ def run_max_verb_word_size():
 
 
 def run_max_lines_per_verb():
-    # Fixed limit; no memory setting to change.
-    
     res = compile('max_lines_per_verb_32.inf')
     res.is_ok()
 
     res = compile('max_lines_per_verb_33.inf')
-    res.is_error()
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_40.inf')
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_40.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_extfirst.inf', memsettings={'MAX_ADJECTIVES':100})
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_extfirst.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_extlast.inf', memsettings={'MAX_ADJECTIVES':100})
+    res.is_ok()
+
+    res = compile('max_lines_per_verb_extlast.inf', glulx=True)
+    res.is_ok()
 
     
 def run_max_verb_synonyms():
