@@ -491,13 +491,13 @@ def run_checksum_test():
     res.is_ok(md5='010d54a6ff19170a6674caabcd6fac29')
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
-    res.is_ok(md5='a378cd678a18d41308f675ec720e919e')
+    res.is_ok(md5='d65d562c8d7365a9dd45d88f6f4e8390')
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
-    res.is_ok(md5='afaa158cf037c0c8b217d762e47a936a')
+    res.is_ok(md5='96dbef2c76fdf8c3e676ec55be3b97b5')
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
-    res.is_ok(md5='44a69b2c9342a17356e54de151fb4688')
+    res.is_ok(md5='d1bd55d0198dc45255e295af69cde637')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
     res.is_ok(md5='e4c564649bc470901ddaf9c2df4ba031')
@@ -1137,7 +1137,7 @@ def run_max_abbrevs():
     res.is_ok(md5='ab49bb2007e82436816831f36658d446')
     
     res = compile('abbrevtest.inf', economy=True)
-    res.is_ok(md5='dd03eb8c46343be4991b139926a1c296')
+    res.is_ok(md5='99be12467aea61fb46ee46143d903906')
     
     res = compile('abbrevtest.inf', glulx=True, economy=True)
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
@@ -1149,7 +1149,7 @@ def run_max_abbrevs():
     res.is_ok(md5='a54dc803695b291ab8ad966fffd17bdf')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='80c4f00fe5de32a6b7fbb09234b828ab')
+    res.is_ok(md5='673e1690b8eedc7ec4e2292c85bdba01')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
     res.is_ok(md5='cab439edba9dc0758b003321d81f5d60')
