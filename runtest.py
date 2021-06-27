@@ -75,6 +75,7 @@ def compile(srcfile, destfile=None,
             memsettings={}, define={},
             debug=False, strict=True,
             economy=False, makeabbrevs=False,
+            debugfile=False,
             bigmem=False,
             makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
@@ -91,6 +92,7 @@ def compile(srcfile, destfile=None,
     - strict=False turns off STRICT mode (-~S)
     - economy turns on economy (abbreviation) mode (-e)
     - makeabbrevs generates abbreviations (-u)
+    - debugfile generates gameinfo.dbg (-k)
     - bigmem turns on large-memory (odd-even) mode for V6/7 (-B)
     - makemodule generates a .m5 link module (-M)
     - usemodules uses modules for verblibm/parserm (-U)
@@ -124,6 +126,9 @@ def compile(srcfile, destfile=None,
         showargs.append('-e')
     if makeabbrevs:
         showargs.append('-u')
+    if debugfile:
+        showargs.append('-k')
+        showargs.append('+debugging_name=build/gameinfo.dbg')
     if bigmem:
         showargs.append('-B')
     if makemodule:
@@ -782,6 +787,14 @@ def run_modules_test():
     res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
 
 
+def run_debugfile_test():
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
+    res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
+    res.is_ok(md5='e603310679dfcb3185194dfc85941a73', warnings=0)
+
+
 def run_warnings_test():
     res = compile('typewarningtest.inf')
     res.is_ok(warnings=73)
@@ -1380,6 +1393,7 @@ test_catalog = [
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
     ('MODULES', run_modules_test),
+    ('DEBUGFILE', run_debugfile_test),
     ('WARNINGS', run_warnings_test),
     ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
