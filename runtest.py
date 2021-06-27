@@ -69,7 +69,14 @@ popt.add_option('--vital',
 testname = '???'
 errorlist = []
 
-def compile(srcfile, destfile=None, glulx=False, zversion=None, includedir=None, moduledir=None, memsettings={}, define={}, debug=False, strict=True, economy=False, makeabbrevs=False, bigmem=False, makemodule=False, usemodules=False):
+def compile(srcfile, destfile=None,
+            glulx=False, zversion=None,
+            includedir=None, moduledir=None,
+            memsettings={}, define={},
+            debug=False, strict=True,
+            economy=False, makeabbrevs=False,
+            bigmem=False,
+            makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
 
     By default, this compiles to the Inform default target (z5). You
