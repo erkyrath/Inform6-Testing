@@ -1345,21 +1345,9 @@ def run_max_expression_nodes():
 
 def run_max_labels():
     res = compile('max_labels_test.inf')
-    res.is_memsetting('MAX_LABELS')
-    
-    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1099})
-    res.is_memsetting('MAX_LABELS')
-    
-    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1100})
     res.is_ok()
     
     res = compile('max_labels_test.inf', glulx=True)
-    res.is_memsetting('MAX_LABELS')
-    
-    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1099}, glulx=True)
-    res.is_memsetting('MAX_LABELS')
-    
-    res = compile('max_labels_test.inf', memsettings={'MAX_LABELS':1100}, glulx=True)
     res.is_ok()
     
 def run_max_zcode_size():
