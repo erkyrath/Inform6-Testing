@@ -842,6 +842,11 @@ def run_max_inclusion_depth():
 
     res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':6}, glulx=True)
     res.is_ok()
+
+
+def run_max_source_files():
+    res = compile('max_source_files_test.inf', includedir='src/include')
+    res.is_ok()
     
 
 def run_max_symbols():
@@ -1396,6 +1401,7 @@ test_catalog = [
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
     ('MAX_SWITCH_CASE_VALUES', run_max_switch_case_values),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
+    ('MAX_SOURCE_FILES', run_max_source_files),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
     ('MAX_OBJECTS', run_max_objects),
