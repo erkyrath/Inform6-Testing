@@ -1333,16 +1333,22 @@ def run_max_adjectives():
 
     
 def run_max_expression_nodes():
-    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42})
-    res.is_memsetting('MAX_EXPRESSION_NODES')
-    
-    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':43})
+    res = compile('max_expression_nodes_test.inf')
     res.is_ok()
 
-    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':42}, glulx=True)
-    res.is_memsetting('MAX_EXPRESSION_NODES')
-    
-    res = compile('max_expression_nodes_test.inf', memsettings={'MAX_EXPRESSION_NODES':43}, glulx=True)
+    res = compile('max_expression_nodes_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_expression_nodes_test_2.inf')
+    res.is_ok()
+
+    res = compile('max_expression_nodes_test_2.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_expression_nodes_test_3.inf')
+    res.is_ok()
+
+    res = compile('max_expression_nodes_test_3.inf', glulx=True)
     res.is_ok()
 
 
