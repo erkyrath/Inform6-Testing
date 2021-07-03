@@ -248,7 +248,7 @@ class Result:
                     self.abbreviations.append(match.group(1))
                     continue
                 
-                match = re.match(r'(?:"[^"]*", )?line (\d+): Fatal error:', ln)
+                match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
                 if (match):
                     outlines += 1
                     self.errors = 1
@@ -848,7 +848,7 @@ def run_max_source_files():
     res.is_ok()
     
     res = compile('max_origsource_direct_test.inf')
-    res.is_ok()
+    res.is_memsetting('MAX_SOURCE_FILES')
     
 
 def run_max_symbols():
