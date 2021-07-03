@@ -848,7 +848,7 @@ def run_max_source_files():
     res.is_ok()
     
     res = compile('max_origsource_direct_test.inf')
-    res.is_memsetting('MAX_SOURCE_FILES')
+    res.is_ok()
     
 
 def run_max_symbols():
