@@ -22,7 +22,6 @@
 # MAX_LINESPACE
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
-# MAX_SOURCE_FILES
 # MAX_TRANSCRIPT_SIZE
 # MAX_UNICODE_CHARS (glulx)
 
@@ -846,6 +845,9 @@ def run_max_inclusion_depth():
 
 def run_max_source_files():
     res = compile('max_source_files_test.inf', includedir='src/include')
+    res.is_ok()
+    
+    res = compile('max_origsource_direct_test.inf')
     res.is_ok()
     
 
