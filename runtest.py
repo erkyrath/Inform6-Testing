@@ -19,7 +19,6 @@
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
-# MAX_LINESPACE
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
 # MAX_TRANSCRIPT_SIZE
@@ -1259,14 +1258,17 @@ def run_max_lines_per_verb():
     res.is_ok()
 
     
-def run_max_verb_synonyms():
-    # Fixed limit; no memory setting to change.
+def run_max_linespace():
+    res = compile('max_linespace_test.inf')
+    res.is_ok()
+
     
+def run_max_verb_synonyms():
     res = compile('max_verb_synonyms_32.inf')
     res.is_ok();
 
     res = compile('max_verb_synonyms_33.inf')
-    res.is_error();
+    res.is_ok();
     
     
 def run_max_verbs():
@@ -1291,21 +1293,9 @@ def run_max_verbs():
     
 def run_max_actions():
     res = compile('max_actions.inf')
-    res.is_memsetting('MAX_ACTIONS')
-
-    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':219})
-    res.is_memsetting('MAX_ACTIONS')
-
-    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220})
     res.is_ok()
 
     res = compile('max_actions.inf', glulx=True)
-    res.is_memsetting('MAX_ACTIONS')
-
-    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':219}, glulx=True)
-    res.is_memsetting('MAX_ACTIONS')
-
-    res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220}, glulx=True)
     res.is_ok()
 
     res = compile('max_grammar_routines_test.inf')
@@ -1426,6 +1416,7 @@ test_catalog = [
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_VERB_SYNONYMS', run_max_verb_synonyms),
     ('MAX_LINES_PER_VERB', run_max_lines_per_verb),
+    ('MAX_LINESPACE', run_max_linespace),
     ('MAX_ACTIONS', run_max_actions),
     ('MAX_ADJECTIVES', run_max_adjectives),
     ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
