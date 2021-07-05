@@ -830,16 +830,10 @@ def run_max_switch_case_values():
 
     
 def run_max_inclusion_depth():
-    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5})
-    res.is_memsetting('MAX_INCLUSION_DEPTH')
-
-    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':6})
+    res = compile('max_inclusion_depth_test.inf', includedir='src/include')
     res.is_ok()
     
-    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':5}, glulx=True)
-    res.is_memsetting('MAX_INCLUSION_DEPTH')
-
-    res = compile('max_inclusion_depth_test.inf', includedir='src', memsettings={'MAX_INCLUSION_DEPTH':6}, glulx=True)
+    res = compile('max_inclusion_depth_test.inf', includedir='src/include', glulx=True)
     res.is_ok()
 
 
