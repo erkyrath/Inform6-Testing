@@ -1308,6 +1308,13 @@ def run_max_actions():
     res = compile('max_actions.inf', memsettings={'MAX_ACTIONS':220}, glulx=True)
     res.is_ok()
 
+    res = compile('max_grammar_routines_test.inf')
+    res.is_memsetting('MAX_ACTIONS')
+
+    # Glulx uses Grammar__Version 2, so the grammar_token_routine table is not used.
+    res = compile('max_grammar_routines_test.inf', glulx=True)
+    res.is_ok()
+
     
 def run_max_adjectives():
     res = compile('max_adjectives.inf')
