@@ -1309,7 +1309,7 @@ def run_max_actions():
     res.is_ok()
 
     res = compile('max_grammar_routines_test.inf')
-    res.is_memsetting('MAX_ACTIONS')
+    res.is_ok()
 
     # Glulx uses Grammar__Version 2, so the grammar_token_routine table is not used.
     res = compile('max_grammar_routines_test.inf', glulx=True)
