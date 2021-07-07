@@ -1359,18 +1359,17 @@ def run_max_labels():
     
     res = compile('max_labels_test.inf', glulx=True)
     res.is_ok()
-    
+
+
 def run_max_zcode_size():
-    res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':10000, 'MAX_QTEXT_SIZE':8001})
-    res.is_memsetting('MAX_ZCODE_SIZE')
-
-    res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':21336, 'MAX_QTEXT_SIZE':8001})
-    res.is_memsetting('MAX_ZCODE_SIZE')
-
-    res = compile('large_opcode_text_test.inf', memsettings={'MAX_ZCODE_SIZE':21337, 'MAX_QTEXT_SIZE':8001})
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':8001})
     res.is_ok()
 
-    ### Many more tests should be done here.
+    res = compile('max_zcode_size_test.inf')
+    res.is_ok()
+
+    res = compile('max_zcode_size_test.inf', glulx=True)
+    res.is_ok()
 
 
 def run_omit_unused_routines():
