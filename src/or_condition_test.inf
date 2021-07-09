@@ -82,6 +82,7 @@ Global failures;
 
 [ RunTest;
 	test_equality();
+	test_ordering();
 	test_in();
 	test_has();
 	
@@ -151,6 +152,80 @@ Global failures;
 	}
 
 	if (~~(val ~= arg1 or arg2)) {
+		res = false;
+	}
+	else {
+		res = true;
+	}
+	if (wanted ~= res) {
+		failures++;
+		print " (neg ERROR)";
+	}
+	
+	new_line;
+];
+
+[ test_ordering;
+	compare_lt(3, 4, 8, true);
+	compare_lt(4, 4, 8, true);
+	compare_lt(6, 4, 8, true);
+	compare_lt(8, 4, 8, false);
+	compare_lt(9, 4, 8, false);
+
+	compare_gt(3, 4, 8, false);
+	compare_gt(4, 4, 8, false);
+	compare_gt(6, 4, 8, true);
+	compare_gt(8, 4, 8, true);
+	compare_gt(9, 4, 8, true);
+];
+
+[ compare_lt val arg1 arg2 wanted  res;
+	print val, " < ", arg1, " or ", arg2, ": ";
+	
+	if (val < arg1 or arg2) {
+		res = true;
+		print "true";
+	}
+	else {
+		res = false;
+		print "false";
+	}
+	if (wanted ~= res) {
+		failures++;
+		print " (ERROR)";
+	}
+
+	if (~~(val < arg1 or arg2)) {
+		res = false;
+	}
+	else {
+		res = true;
+	}
+	if (wanted ~= res) {
+		failures++;
+		print " (neg ERROR)";
+	}
+	
+	new_line;
+];
+
+[ compare_gt val arg1 arg2 wanted  res;
+	print val, " > ", arg1, " or ", arg2, ": ";
+	
+	if (val > arg1 or arg2) {
+		res = true;
+		print "true";
+	}
+	else {
+		res = false;
+		print "false";
+	}
+	if (wanted ~= res) {
+		failures++;
+		print " (ERROR)";
+	}
+
+	if (~~(val > arg1 or arg2)) {
 		res = false;
 	}
 	else {
