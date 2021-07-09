@@ -996,10 +996,7 @@ def run_max_static_data():
 def run_max_num_static_strings():
     # Glulx only
 
-    res = compile('static_text_test.inf', memsettings={'MAX_NUM_STATIC_STRINGS':271}, glulx=True)
-    res.is_memsetting('MAX_NUM_STATIC_STRINGS')
-
-    res = compile('static_text_test.inf', memsettings={'MAX_NUM_STATIC_STRINGS':272}, glulx=True)
+    res = compile('static_text_test.inf', glulx=True)
     res.is_ok()
 
     
