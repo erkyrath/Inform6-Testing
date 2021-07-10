@@ -21,7 +21,6 @@
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
 # MAX_TRANSCRIPT_SIZE
-# MAX_UNICODE_CHARS (glulx)
 
 # Settings that don't result in compiler memory allocations, so they don't
 # need to be tested here:
@@ -545,7 +544,7 @@ def run_dict_test():
     res = compile('max_dict_entries.inf', glulx=True)
     res.is_ok()
 
-    
+
 def run_directives_test():
     res = compile('staticarraytest.inf')
     res.is_ok(md5='736f5df15951398ec41b0d05e4280cce')
@@ -849,6 +848,11 @@ def run_max_source_files():
     res.is_ok()
     
 
+def run_max_unicode_chars_test():
+    res = compile('max_unicode_chars_test.inf', glulx=True)
+    res.is_ok()
+
+    
 def run_max_symbols():
     res = compile('max_symbols_test.inf')
     res.is_ok()
@@ -1396,6 +1400,7 @@ test_catalog = [
     ('MAX_SWITCH_CASE_VALUES', run_max_switch_case_values),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SOURCE_FILES', run_max_source_files),
+    ('MAX_UNICODE_CHARS', run_max_unicode_chars_test),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
     ('MAX_OBJECTS', run_max_objects),
