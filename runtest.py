@@ -15,7 +15,6 @@
 # Memory settings not yet tested:
 #
 # NUM_ATTR_BYTES
-# MAX_DICT_ENTRIES
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
@@ -540,7 +539,13 @@ def run_dict_test():
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
     res.is_ok(md5='babab7a13980537b30e01d53885e4691')
 
+    res = compile('max_dict_entries.inf')
+    res.is_ok()
 
+    res = compile('max_dict_entries.inf', glulx=True)
+    res.is_ok()
+
+    
 def run_directives_test():
     res = compile('staticarraytest.inf')
     res.is_ok(md5='736f5df15951398ec41b0d05e4280cce')
