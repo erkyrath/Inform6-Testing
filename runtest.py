@@ -804,6 +804,12 @@ def run_warnings_test():
     res = compile('typewarningtest.inf', glulx=True)
     res.is_ok(warnings=75)
     
+    res = compile('or_warnings_test.inf')
+    res.is_ok(warnings=11)
+    
+    res = compile('or_warnings_test.inf', glulx=True)
+    res.is_ok(warnings=11)
+    
     res = compile('or_condition_test.inf')
     res.is_ok(md5='04d4c51ead347b626bf34bfdb80ac81c', warnings=4)
 
