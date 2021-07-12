@@ -801,10 +801,10 @@ def run_warnings_test():
     res.is_ok(warnings=75)
     
     res = compile('or_condition_test.inf')
-    res.is_ok(md5='04d4c51ead347b626bf34bfdb80ac81c', warnings=0)
+    res.is_ok(md5='04d4c51ead347b626bf34bfdb80ac81c', warnings=4)
 
     res = compile('or_condition_test.inf', glulx=True)
-    res.is_ok(md5='97be08b47ad8b7566d9590944fd3fbdd', warnings=0)
+    res.is_ok(md5='97be08b47ad8b7566d9590944fd3fbdd', warnings=4)
 
 
 def run_make_abbreviations_test():
