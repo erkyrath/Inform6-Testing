@@ -15,14 +15,12 @@
 # Memory settings not yet tested:
 #
 # NUM_ATTR_BYTES
-# MAX_DICT_ENTRIES
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
 # MAX_LINK_DATA_SIZE
 # MAX_LOCAL_VARIABLES (glulx)
 # MAX_TRANSCRIPT_SIZE
-# MAX_UNICODE_CHARS (glulx)
 
 # Settings that don't result in compiler memory allocations, so they don't
 # need to be tested here:
@@ -540,6 +538,12 @@ def run_dict_test():
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
     res.is_ok(md5='babab7a13980537b30e01d53885e4691')
 
+    res = compile('max_dict_entries.inf')
+    res.is_ok()
+
+    res = compile('max_dict_entries.inf', glulx=True)
+    res.is_ok()
+
 
 def run_directives_test():
     res = compile('staticarraytest.inf')
@@ -850,6 +854,11 @@ def run_max_source_files():
     res.is_ok()
     
 
+def run_max_unicode_chars_test():
+    res = compile('max_unicode_chars_test.inf', glulx=True)
+    res.is_ok()
+
+    
 def run_max_symbols():
     res = compile('max_symbols_test.inf')
     res.is_ok()
@@ -1002,10 +1011,7 @@ def run_max_static_data():
 def run_max_num_static_strings():
     # Glulx only
 
-    res = compile('static_text_test.inf', memsettings={'MAX_NUM_STATIC_STRINGS':271}, glulx=True)
-    res.is_memsetting('MAX_NUM_STATIC_STRINGS')
-
-    res = compile('static_text_test.inf', memsettings={'MAX_NUM_STATIC_STRINGS':272}, glulx=True)
+    res = compile('static_text_test.inf', glulx=True)
     res.is_ok()
 
     
@@ -1400,6 +1406,7 @@ test_catalog = [
     ('MAX_SWITCH_CASE_VALUES', run_max_switch_case_values),
     ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
     ('MAX_SOURCE_FILES', run_max_source_files),
+    ('MAX_UNICODE_CHARS', run_max_unicode_chars_test),
     ('MAX_SYMBOLS', run_max_symbols),
     ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
     ('MAX_OBJECTS', run_max_objects),
