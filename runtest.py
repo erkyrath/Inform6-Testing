@@ -488,6 +488,9 @@ def run_checksum_test():
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
     res.is_ok(md5='5135238ba7ef10a868a236aa914ae7f1', warnings=0)
 
+    res = compile('box_quote_test.inf', includedir='i6lib-611')
+    res.is_ok(md5='dcb8df48532c373b40ea850fd9adfc33', warnings=0)
+
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
     res.is_ok(md5='52dc4fa45ad64e85c8a211833b083009')
 
