@@ -1165,7 +1165,7 @@ def run_max_dynamic_strings():
     res = compile('max_dynamic_strings_test_at99.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':99})
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
-    res = compile('max_dynamic_strings_test_at99.inf', glulx=True, memsettings={'MAX_DYNAMIC_STRINGS':100})
+    res = compile('max_dynamic_strings_test_at99.inf', glulx=True, memsettings={})
     res.is_ok()
 
     
