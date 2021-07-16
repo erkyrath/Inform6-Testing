@@ -987,13 +987,7 @@ def run_max_global_variables():
     res = compile('max_global_variables_test_2.inf')
     res.is_error()
     
-    res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':100}, glulx=True)
-    res.is_memsetting('MAX_GLOBAL_VARIABLES')
-
-    res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':510}, glulx=True)
-    res.is_memsetting('MAX_GLOBAL_VARIABLES')
-
-    res = compile('max_global_variables_test_2.inf', memsettings={'MAX_GLOBAL_VARIABLES':511}, glulx=True)
+    res = compile('max_global_variables_test_2.inf', glulx=True)
     res.is_ok()
 
 
