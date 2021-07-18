@@ -1045,38 +1045,17 @@ def run_max_static_strings():
     # The compiler ensures that MAX_STATIC_STRINGS is (at least) twice
     # MAX_QTEXT_SIZE.
     
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':16002})
-    res.is_memsetting('MAX_STATIC_STRINGS')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':21333})
-    res.is_memsetting('MAX_STATIC_STRINGS')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':21335})
-    res.is_memsetting('MAX_STATIC_STRINGS')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':21336})
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001})
     res.is_ok()
 
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':16002}, glulx=True)
-    res.is_memsetting('MAX_STATIC_STRINGS')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':48000}, glulx=True)
-    res.is_memsetting('MAX_STATIC_STRINGS')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001, 'MAX_STATIC_STRINGS':48001}, glulx=True)
+    res = compile('max_static_strings_test.inf', memsettings={'MAX_QTEXT_SIZE':8001}, glulx=True)
     res.is_ok()
 
 
 def run_max_low_strings():
     # Only meaningful for Z-code.
     
-    res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':1000})
-    res.is_memsetting('MAX_LOW_STRINGS')
-
-    res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':3439})
-    res.is_memsetting('MAX_LOW_STRINGS')
-
-    res = compile('max_low_strings_test.inf', memsettings={'MAX_LOW_STRINGS':3440})
+    res = compile('max_low_strings_test.inf')
     res.is_ok()
 
     
@@ -1374,10 +1353,7 @@ def run_max_labels():
 
 
 def run_max_zcode_size():
-    res = compile('large_opcode_text_test.inf', memsettings={'MAX_STATIC_STRINGS':21333, 'MAX_QTEXT_SIZE':8001})
-    res.is_memsetting('MAX_STATIC_STRINGS')
-
-    res = compile('large_opcode_text_test.inf', memsettings={'MAX_STATIC_STRINGS':21334, 'MAX_QTEXT_SIZE':8001})
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_QTEXT_SIZE':8001})
     res.is_ok()
 
     res = compile('max_zcode_size_test.inf')
