@@ -1374,7 +1374,10 @@ def run_max_labels():
 
 
 def run_max_zcode_size():
-    res = compile('large_opcode_text_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':8001})
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_STATIC_STRINGS':21333, 'MAX_QTEXT_SIZE':8001})
+    res.is_memsetting('MAX_STATIC_STRINGS')
+
+    res = compile('large_opcode_text_test.inf', memsettings={'MAX_STATIC_STRINGS':21334, 'MAX_QTEXT_SIZE':8001})
     res.is_ok()
 
     res = compile('max_zcode_size_test.inf')
