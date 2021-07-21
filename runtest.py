@@ -548,6 +548,11 @@ def run_dict_test():
     res.is_ok()
 
 
+def run_lexer_test():
+    res = compile('long_identifier_test.inf')
+    res.is_error()
+
+
 def run_directives_test():
     res = compile('staticarraytest.inf')
     res.is_ok(md5='736f5df15951398ec41b0d05e4280cce')
@@ -1376,6 +1381,7 @@ def run_omit_unused_routines():
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
+    ('LEXER', run_lexer_test),
     ('DIRECTIVES', run_directives_test),
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
