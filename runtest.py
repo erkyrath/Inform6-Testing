@@ -1016,6 +1016,9 @@ def run_max_local_variables():
     res = compile('max_local_variables_test_32.inf', memsettings={'MAX_LOCAL_VARIABLES':33}, glulx=True)
     res.is_ok()
 
+    res = compile('max_local_variables_test_118.inf', memsettings={'MAX_LOCAL_VARIABLES':119}, glulx=True)
+    res.is_ok()
+
     
 def run_max_static_data():
     res = compile('max_static_data_test.inf')
