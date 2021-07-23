@@ -19,7 +19,6 @@
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
 # MAX_LINK_DATA_SIZE
-# MAX_LOCAL_VARIABLES (glulx)
 # MAX_TRANSCRIPT_SIZE
 
 # Settings that don't result in compiler memory allocations, so they don't
@@ -996,6 +995,28 @@ def run_max_global_variables():
     res.is_ok()
 
 
+def run_max_local_variables():
+    # In Z-code, at most 15 locals are available, and you can't raise the
+    # limit.
+    res = compile('max_local_variables_test_15.inf')
+    res.is_ok()
+    
+    res = compile('max_local_variables_test_16.inf')
+    res.is_error()
+
+    res = compile('max_local_variables_test_16.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_local_variables_test_31.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_local_variables_test_32.inf', glulx=True)
+    res.is_error()
+
+    res = compile('max_local_variables_test_32.inf', memsettings={'MAX_LOCAL_VARIABLES':33}, glulx=True)
+    res.is_ok()
+
+    
 def run_max_static_data():
     res = compile('max_static_data_test.inf')
     res.is_ok()
@@ -1405,6 +1426,7 @@ test_catalog = [
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
     ('MAX_OBJ_PROP_COUNT', run_max_obj_prop_count),
     ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
+    ('MAX_LOCAL_VARIABLES', run_max_local_variables),
     ('MAX_STATIC_DATA', run_max_static_data),
     ('MAX_NUM_STATIC_STRINGS', run_max_num_static_strings),
     ('MAX_QTEXT_SIZE', run_max_qtext_size),
