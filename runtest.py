@@ -1010,7 +1010,7 @@ def run_max_local_variables():
     res = compile('max_local_variables_test_31.inf', glulx=True)
     res.is_ok()
 
-    res = compile('max_local_variables_test_32.inf', glulx=True)
+    res = compile('max_local_variables_test_32.inf', memsettings={'MAX_LOCAL_VARIABLES':32}, glulx=True)
     res.is_error()
 
     res = compile('max_local_variables_test_32.inf', memsettings={'MAX_LOCAL_VARIABLES':33}, glulx=True)
