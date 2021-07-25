@@ -451,6 +451,9 @@ def run_checksum_test():
     res = compile('minimal_test.inf', glulx=True)
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
+    res = compile('glulxercise.inf', glulx=True)
+    res.is_ok(md5='8fc237733e094a69370e699f8bfe817c', warnings=0)
+    
     res = compile('i7-min-6G60.inf')
     res.is_ok(md5='72f858186e126859010cbbca40602ce3')
 
@@ -458,13 +461,13 @@ def run_checksum_test():
     res.is_ok(md5='5feea90b2cf68a270d33795245008383')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='e9d3046de7a45028812aad9d5a132d32')
+    res.is_ok(md5='1a19f400c9cf5901148af7f7503cc745')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='5d684cd1f5028c923ec16fe4761ed5c9')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='ccb67fdaf4a272dfd4b829cc4f2202f6')
+    res.is_ok(md5='522f498a76e2cdd8f27553f76c6445ac')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
@@ -1399,7 +1402,7 @@ def run_omit_unused_routines():
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='b4754e75f23e1d6bf922e0fa6f236177')
+    res.is_ok(md5='691e2c5d7c15f4b49fdcefdae6f28aae')
 
 
 test_catalog = [
