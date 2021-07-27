@@ -610,7 +610,7 @@ def run_directives_test():
     res.is_ok(md5='6dc016b201b6591501911ccac02e152c')
 
     res = compile('classcopytest.inf', glulx=True)
-    res.is_ok(md5='aef9bdc052d269b239a6ddbd81f62160')
+    res.is_ok(md5='22577a69f64377b8e4577a76eca578af')
 
     res = compile('forwardproptest.inf')
     res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6')
@@ -800,7 +800,7 @@ def run_debugfile_test():
     res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='e603310679dfcb3185194dfc85941a73', warnings=0)
+    res.is_ok(md5='f6e7cdf51555055301b24ea6cd68eb69', warnings=0)
 
 
 def run_warnings_test():
