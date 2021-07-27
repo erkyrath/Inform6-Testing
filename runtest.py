@@ -1162,13 +1162,13 @@ def run_max_abbrevs():
     res.is_ok(md5='9733c798d3b7586da360577c3e4cce68')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='a54dc803695b291ab8ad966fffd17bdf')
+    res.is_ok(md5='11f0fa65db5bb7209b39d335f8ed63b2')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
     res.is_ok(md5='673e1690b8eedc7ec4e2292c85bdba01')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='cab439edba9dc0758b003321d81f5d60')
+    res.is_ok(md5='c9ed61aef696d0357e6f4f36d4b70f7f')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
     res.is_ok(md5='78202693832c234224f6fe09479243bd')
@@ -1373,7 +1373,7 @@ def run_omit_unused_routines():
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='691e2c5d7c15f4b49fdcefdae6f28aae')
+    res.is_ok(md5='2bc421510db11c1e7f8f08dc9b2ddb0f')
 
 
 test_catalog = [
