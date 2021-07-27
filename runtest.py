@@ -453,7 +453,7 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='8fc237733e094a69370e699f8bfe817c', warnings=0)
+    res.is_ok(md5='7d010c0e3a61dbac195b3ece7822d41f', warnings=0)
     
     res = compile('i7-min-6G60.inf')
     res.is_ok(md5='72f858186e126859010cbbca40602ce3')
@@ -462,13 +462,13 @@ def run_checksum_test():
     res.is_ok(md5='5feea90b2cf68a270d33795245008383')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='1a19f400c9cf5901148af7f7503cc745')
+    res.is_ok(md5='28d47b71c39d38d021406c5c9d38a1e1')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='5d684cd1f5028c923ec16fe4761ed5c9')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='522f498a76e2cdd8f27553f76c6445ac')
+    res.is_ok(md5='78e5b0ced2e53564cad899df915c65b2')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
@@ -477,19 +477,19 @@ def run_checksum_test():
     res.is_ok(md5='04c6ff040938ad7e410da6f0c0bbf093', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='e603310679dfcb3185194dfc85941a73', warnings=0)
+    res.is_ok(md5='f6e7cdf51555055301b24ea6cd68eb69', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
     res.is_ok(md5='c51d3a8c451bf7c296e4445fdb5f75c3', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='94ba670fc39d1ab92bfdc73a3b50fe90', warnings=0)
+    res.is_ok(md5='45abb20b8ee4d85f2c8aae3ebca1e3c6', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
     res.is_ok(md5='01cfbb8f2ba5266aed0e7f0b5e20455a', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='5135238ba7ef10a868a236aa914ae7f1', warnings=0)
+    res.is_ok(md5='73314bab714f8b57a93df6989399970e', warnings=0)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
     res.is_ok(md5='dcb8df48532c373b40ea850fd9adfc33', warnings=0)
