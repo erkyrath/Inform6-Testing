@@ -1000,7 +1000,8 @@ def run_max_global_variables():
 
 def run_max_local_variables():
     # In Z-code, at most 15 locals are available, and you can't raise the
-    # limit.
+    # limit. In Glulx, at most 118.
+    
     res = compile('max_local_variables_test_15.inf')
     res.is_ok()
     
@@ -1018,6 +1019,9 @@ def run_max_local_variables():
 
     res = compile('max_local_variables_test_118.inf', glulx=True)
     res.is_ok()
+
+    res = compile('max_local_variables_test_119.inf', glulx=True)
+    res.is_error()
 
     
 def run_max_static_data():
