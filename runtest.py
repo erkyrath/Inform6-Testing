@@ -1052,25 +1052,10 @@ def run_max_num_static_strings():
 
     
 def run_max_qtext_size():
-    # Push MAX_STATIC_STRINGS high so that we don't run into it. That's
-    # a different test.
-    
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':2000})
-    res.is_memsetting('MAX_QTEXT_SIZE')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':8000})
-    res.is_memsetting('MAX_QTEXT_SIZE')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':30000, 'MAX_QTEXT_SIZE':8001})
+    res = compile('max_static_strings_test.inf')
     res.is_ok()
 
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':60000, 'MAX_QTEXT_SIZE':2000}, glulx=True)
-    res.is_memsetting('MAX_QTEXT_SIZE')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':60000, 'MAX_QTEXT_SIZE':8000}, glulx=True)
-    res.is_memsetting('MAX_QTEXT_SIZE')
-
-    res = compile('max_static_strings_test.inf', memsettings={'MAX_STATIC_STRINGS':60000, 'MAX_QTEXT_SIZE':8001}, glulx=True)
+    res = compile('max_static_strings_test.inf', glulx=True)
     res.is_ok()
 
     
