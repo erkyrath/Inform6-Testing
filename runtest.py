@@ -864,7 +864,7 @@ def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
     
     res = compile('max_ifdef_stack_32.inf')
-    res.is_ok();
+    res.is_ok()
 
     res = compile('max_ifdef_stack_33.inf')
     res.is_memsetting('MAX_IFDEF_STACK')
@@ -873,7 +873,7 @@ def run_max_switch_case_values():
     # Fixed limit
 
     res = compile('max_switch_case_values.inf')
-    res.is_ok();
+    res.is_ok()
 
     res = compile('max_switch_case_values.inf', define={ 'SWITCH_ERROR':0 })
     res.is_memsetting('MAX_SPEC_STACK')
@@ -1302,10 +1302,10 @@ def run_max_linespace():
     
 def run_max_verb_synonyms():
     res = compile('max_verb_synonyms_32.inf')
-    res.is_ok();
+    res.is_ok()
 
     res = compile('max_verb_synonyms_33.inf')
-    res.is_ok();
+    res.is_ok()
     
     
 def run_max_verbs():
