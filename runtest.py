@@ -246,7 +246,8 @@ class Result:
                 
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Error:', ln)
                 if (match):
-                    # errors are counted from the "Compiled" line
+                    # Errors are counted from the "Compiled" line, not here
+                    # Check for a recognized error
                     err = ln[ match.end() : ].strip()
                     if err.startswith('Only dynamic strings @00 to @'):
                         if self.memsetting is None:
@@ -386,8 +387,10 @@ class Result:
         return False
 
     def is_memsetting(self, val):
-        """ Assert that the compile ended with an "increase $SETTING"
-        error (recognizable by I7).
+        """ Assert that the compile threw a recognized error.
+        This checks the *first* error recognized; see above.
+        (This also checks the fatal "increase $SETTING" errors that
+        Inform used to throw.)
         """
         if (self.status == Result.ERROR and self.memsetting == val):
             return True
