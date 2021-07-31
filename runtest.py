@@ -264,6 +264,15 @@ class Result:
                     if err.startswith('Short name of object'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_SHORT_NAME_LENGTH'
+                    if err.startswith('Grammar version 1 cannot support more than 255 prepositions'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_PREPOSITIONS_GV1'
+                    if err.startswith('Z-code is limited to 255 verbs'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_VERBS_ZCODE'
+                    if err.startswith('Verb word is too long'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_VERB_WORD_SIZE'
                     continue
                     
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
@@ -1260,13 +1269,13 @@ def run_max_verb_word_size():
     res.is_ok()
 
     res = compile('max_verb_word_size_2.inf')
-    res.is_error()
+    res.is_memsetting('MAX_VERB_WORD_SIZE')
     
     res = compile('max_verb_word_size.inf', glulx=True)
     res.is_ok()
 
     res = compile('max_verb_word_size_2.inf', glulx=True)
-    res.is_error()
+    res.is_memsetting('MAX_VERB_WORD_SIZE')
 
 
 def run_max_lines_per_verb():
@@ -1316,13 +1325,13 @@ def run_max_verbs():
     res.is_ok()
     
     res = compile('max_verbs_2.inf')
-    res.is_error()
+    res.is_memsetting('MAX_VERBS_ZCODE')
     
     res = compile('max_verbs_2.inf', glulx=True)
     res.is_ok()
     
     res = compile('max_verbs_3.inf')
-    res.is_error()
+    res.is_memsetting('MAX_VERBS_ZCODE')
     
     res = compile('max_verbs_3.inf', glulx=True)
     res.is_ok()
@@ -1358,7 +1367,7 @@ def run_max_adjectives():
     res.is_ok()
 
     res = compile('max_adjectives_256.inf')
-    res.is_error()
+    res.is_memsetting('MAX_PREPOSITIONS_GV1')
 
     res = compile('max_adjectives_256.inf', define={ 'USE_GV2':0 })
     res.is_ok()
