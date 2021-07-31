@@ -244,6 +244,18 @@ class Result:
                     self.abbreviations.append(match.group(1))
                     continue
                 
+                match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Error:', ln)
+                if (match):
+                    # errors are counted from the "Compiled" line
+                    err = ln[ match.end() : ].strip()
+                    if err.startswith('Only dynamic strings @00 to @'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_DYNAMIC_STRINGS'
+                    if err.startswith('Name exceeds the maximum length'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_IDENTIFIER_LENGTH'
+                    continue
+                    
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
                 if (match):
                     outlines += 1
@@ -251,6 +263,7 @@ class Result:
                     ln = ln[ match.end() : ].strip()
                     match = re.match('The memory setting (\S+)', ln)
                     if (match):
+                        # This no longer occurs in Inform. We keep the check for testing older releases.
                         self.memsetting = match.group(1)
                     continue
                 
@@ -552,7 +565,7 @@ def run_dict_test():
 
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
-    res.is_error()
+    res.is_memsetting('MAX_IDENTIFIER_LENGTH')
 
 
 def run_directives_test():
