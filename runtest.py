@@ -255,6 +255,12 @@ class Result:
                     if err.startswith('Name exceeds the maximum length'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IDENTIFIER_LENGTH'
+                    if err.startswith('\'If\' directives nested too deeply'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_IFDEF_STACK'
+                    if err.startswith('At most 32 values can be given in a single \'switch\' case'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_SPEC_STACK'
                     continue
                     
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
@@ -858,7 +864,7 @@ def run_max_ifdef_stack():
     res.is_ok();
 
     res = compile('max_ifdef_stack_33.inf')
-    res.is_error();
+    res.is_memsetting('MAX_IFDEF_STACK')
 
 def run_max_switch_case_values():
     # Fixed limit
@@ -867,7 +873,7 @@ def run_max_switch_case_values():
     res.is_ok();
 
     res = compile('max_switch_case_values.inf', define={ 'SWITCH_ERROR':0 })
-    res.is_error();
+    res.is_memsetting('MAX_SPEC_STACK')
 
     
 def run_max_inclusion_depth():
