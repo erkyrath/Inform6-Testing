@@ -261,6 +261,9 @@ class Result:
                     if err.startswith('At most 32 values can be given in a single \'switch\' case'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_SPEC_STACK'
+                    if err.startswith('Short name of object'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_SHORT_NAME_LENGTH'
                     continue
                     
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
@@ -975,7 +978,7 @@ def run_max_prop_table_size():
     res.is_ok()
 
     res = compile('large_object_short_name_test_2.inf')
-    res.is_error()
+    res.is_memsetting('MAX_SHORT_NAME_LENGTH')
 
 
 def run_max_indiv_prop_table_size():
