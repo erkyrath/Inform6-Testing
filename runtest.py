@@ -264,6 +264,9 @@ class Result:
                     if err.startswith('Name exceeds the maximum length'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IDENTIFIER_LENGTH'
+                    if err.startswith('An additive property has inherited so many values') or err.startswith('Limit (of 32 values) exceeded for property'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_PROP_LENGTH_ZCODE'
                     if err.startswith('\'If\' directives nested too deeply'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IFDEF_STACK'
@@ -1016,13 +1019,13 @@ def run_max_obj_prop_count():
     res.is_ok()
 
     res = compile('property_too_long.inf')
-    res.is_error()
+    res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
     
     res = compile('property_too_long.inf', glulx=True)
     res.is_ok()
     
     res = compile('property_too_long_inherit.inf')
-    res.is_error()
+    res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
     
     res = compile('property_too_long_inherit.inf', glulx=True)
     res.is_ok()
