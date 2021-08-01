@@ -249,6 +249,12 @@ class Result:
                     # Errors are counted from the "Compiled" line, not here
                     # Check for a recognized error
                     err = ln[ match.end() : ].strip()
+                    if err.startswith('Too many local variables for a routine'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_LOCAL_VARIABLES'
+                    if err.startswith('All 233 global variables'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_GLOBAL_VARIABLES'
                     if err.startswith('Only dynamic strings @00 to @'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_DYNAMIC_STRINGS'
@@ -1029,7 +1035,7 @@ def run_max_global_variables():
     res.is_ok()
     
     res = compile('max_global_variables_test_2.inf')
-    res.is_error()
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
     
     res = compile('max_global_variables_test_2.inf', glulx=True)
     res.is_ok()
@@ -1043,7 +1049,7 @@ def run_max_local_variables():
     res.is_ok()
     
     res = compile('max_local_variables_test_16.inf')
-    res.is_error()
+    res.is_memsetting('MAX_LOCAL_VARIABLES')
 
     res = compile('max_local_variables_test_16.inf', glulx=True)
     res.is_ok()
@@ -1058,7 +1064,7 @@ def run_max_local_variables():
     res.is_ok()
 
     res = compile('max_local_variables_test_119.inf', glulx=True)
-    res.is_error()
+    res.is_memsetting('MAX_LOCAL_VARIABLES')
 
     
 def run_max_static_data():
