@@ -252,6 +252,9 @@ class Result:
                     if err.startswith('Only dynamic strings @00 to @'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_DYNAMIC_STRINGS'
+                    if err.startswith('The number of abbreviations has exceeded'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_ABBREVS'
                     if err.startswith('Name exceeds the maximum length'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IDENTIFIER_LENGTH'
@@ -1226,28 +1229,28 @@ def run_max_abbrevs():
     res.is_ok()
 
     res = compile('max_abbrevs_test_64.inf', memsettings={'MAX_ABBREVS':63})
-    res.is_error
+    res.is_memsetting('MAX_ABBREVS')
 
     res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':32})
     res.is_ok()
 
     res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':31})
-    res.is_error()
+    res.is_memsetting('MAX_ABBREVS')
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':96})
     res.is_ok()
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':95})
-    res.is_error()
+    res.is_memsetting('MAX_ABBREVS')
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
     res.is_ok()
 
     res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':1})
-    res.is_error()
+    res.is_memsetting('MAX_ABBREVS')
 
     res = compile('max_abbrevs_test_100.inf', memsettings={'MAX_ABBREVS':96})
-    res.is_error()
+    res.is_memsetting('MAX_ABBREVS')
 
     res = compile('max_abbrevs_test_64.inf', glulx=True)
     res.is_ok()
