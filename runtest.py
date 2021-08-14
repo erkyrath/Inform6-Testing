@@ -270,6 +270,9 @@ class Result:
                     if re.match('^All [0-9]+ properties already declared', err):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_COMMON_PROPS_ZCODE'
+                    if err.startswith('All properties already declared'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_COMMON_PROPS_GLULX'
                     if err.startswith('\'If\' directives nested too deeply'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IFDEF_STACK'
@@ -1013,6 +1016,15 @@ def run_max_common_prop_count():
     res.is_memsetting('MAX_COMMON_PROPS_ZCODE')
 
     res = compile('max_common_props_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_common_props_test_280.inf', glulx=True)
+    res.is_memsetting('MAX_COMMON_PROPS_GLULX')
+
+    res = compile('max_common_props_test_280.inf', memsettings={'INDIV_PROP_START':283}, glulx=True)
+    res.is_memsetting('MAX_COMMON_PROPS_GLULX')
+
+    res = compile('max_common_props_test_280.inf', memsettings={'INDIV_PROP_START':284}, glulx=True)
     res.is_ok()
 
     
