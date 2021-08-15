@@ -704,6 +704,18 @@ def run_directives_test():
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None}, glulx=True)
     res.is_ok(md5='a63e3ffd63691e9684b59fec6e01fdcf')
 
+    res = compile('indivproptest_2.inf')
+    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=0)
+
+    res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None})
+    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=1)
+
+    res = compile('indivproptest_2.inf', glulx=True)
+    res.is_ok(md5='7e0d5177b921138ddd71e55fa2f71112', warnings=0)
+
+    res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None}, glulx=True)
+    res.is_ok(md5='7e0d5177b921138ddd71e55fa2f71112', warnings=1)
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
