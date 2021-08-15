@@ -680,6 +680,30 @@ def run_directives_test():
     res = compile('forwardproptest.inf', glulx=True, strict=False)
     res.is_ok(md5='5592d67a77e3fda229465e2c799fb213')
 
+    res = compile('indivproptest.inf')
+    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f')
+
+    res = compile('indivproptest.inf', define={'DEF_INDIV1':None})
+    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f')
+
+    res = compile('indivproptest.inf', define={'DEF_INDIV2':None})
+    res.is_ok(md5='3d4a3fdc6ff5ca44599c7b62f155c614')
+
+    res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None})
+    res.is_ok(md5='cde12cbf22e618d63a345a8995199686')
+
+    res = compile('indivproptest.inf', glulx=True)
+    res.is_ok(md5='4410158e75332c7439fc1e4e8b5d2b84')
+
+    res = compile('indivproptest.inf', define={'DEF_INDIV1':None}, glulx=True)
+    res.is_ok(md5='4410158e75332c7439fc1e4e8b5d2b84')
+
+    res = compile('indivproptest.inf', define={'DEF_INDIV2':None}, glulx=True)
+    res.is_ok(md5='19455e811e4744c90567dd59b22f2de4')
+
+    res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None}, glulx=True)
+    res.is_ok(md5='a63e3ffd63691e9684b59fec6e01fdcf')
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
