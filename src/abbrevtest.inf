@@ -18,7 +18,7 @@ Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
 
 !Global failures;
 
-! This list has 96 abbreviations, but the Z-machine only handles 64. The other 32 are commented out.
+! This list has 96 abbreviations, but Inform only handles 64 by default. The other 32 are commented out.
 
 Abbreviate "--";
 !Abbreviate "above";
