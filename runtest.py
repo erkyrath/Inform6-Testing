@@ -1075,7 +1075,13 @@ def run_max_common_prop_count():
     res = compile('max_common_props_test_280.inf', memsettings={'INDIV_PROP_START':284}, glulx=True)
     res.is_ok()
 
-    
+    res = compile('common_props_plus_test.inf')
+    res.is_ok()
+
+    res = compile('common_props_plus_test.inf', define={ 'TOOMANY':0 })
+    res.is_memsetting('MAX_COMMON_PROPS')
+
+
 def run_max_indiv_prop_table_size():
     res = compile('max_indiv_prop_table_size_test.inf')
     res.is_ok()
