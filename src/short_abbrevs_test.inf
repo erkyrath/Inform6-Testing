@@ -1,0 +1,23 @@
+[ Main; ];
+
+! Len 1 -- warning
+Abbreviate "x";
+
+! Len 2 -- warning
+Abbreviate "yz";
+
+! Len 3
+Abbreviate "abc";
+
+! Len 4
+Abbreviate "{";
+
+! Len 2 -- warning
+Abbreviate "5";
+
+! Len 2 -- warning
+Abbreviate "G";
+
+! Len 3
+Abbreviate "2f";
+
