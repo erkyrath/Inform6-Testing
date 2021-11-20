@@ -261,6 +261,9 @@ class Result:
                     if err.startswith('The number of abbreviations has exceeded'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_ABBREVS'
+                    if err.startswith('Abbreviation too long'):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_ABBREV_LENGTH'
                     if err.startswith('Name exceeds the maximum length'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IDENTIFIER_LENGTH'
@@ -934,6 +937,8 @@ def run_make_abbreviations_test():
     res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, memsettings={'MAX_ABBREVS':96})
     res.is_ok(abbreviations=['. ', ', ', 'You ', '\'t ', 'ing ', '**]', 'The', 'That', 'you can', 'someth', '_to)', 're ', 'closed', 'bject', 'But ', 's no', 'already ', 'which ', 'Command', 'script', ' to ', 'ing', 'can', 'You\'', 'ome', 'tion', 'the', 'your', 't of', 'achieve', 'Language', 'have', 'ou aren', 'Those', 'ou wan', 'this', 'provid', 'would', 'ter', 'unexpected', 'lock', 'nd ', 'you', 'at ', 'noth', 'of ', 'ed.', 'ed ', 'se ', 'ch ', 'is ', 'Not', 'not ', 'in ', 'seem', 'read', 'on ', 'You', 'ere.', 'est', 'er ', '~ or ', 'ight', 'first', 'int', 've ', 'see ', 'as ', 'ly ', 'ide ', 'ect', 'put ', 'en ', 'an ', 'lass ', 'ns ', 'record', 'It ', 'ent', '\'s ', 'off ', 'get ', 'nce ', 'I d', 'ort', 'le.', 'be ', 'wit', 'le ', 'ious ', 'gam', 'n\'t', 'off.', 'on.', ' th', ' on'])
 
+    res = compile('max_abbrev_len_test.inf', makeabbrevs=True)
+    res.is_memsetting('MAX_ABBREV_LENGTH')
     
 def run_max_ifdef_stack():
     # Fixed limit; no memory setting to change.
