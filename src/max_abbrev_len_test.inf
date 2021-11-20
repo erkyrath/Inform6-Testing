@@ -1,8 +1,8 @@
 [ Main; ];
 
-Abbreviate "y";
+Abbreviate "yyy";
 
 ! 64-character abbreviation
 Abbreviate "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-Abbreviate "z";
+Abbreviate "zzz";
