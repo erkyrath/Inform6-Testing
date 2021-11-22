@@ -1,4 +1,6 @@
-[ Main; ];
+[ Main;
+	func();
+];
 
 ! Len 1 -- warning
 Abbreviate "x";
@@ -21,3 +23,7 @@ Abbreviate "G";
 ! Len 3
 Abbreviate "2f";
 
+[ func;
+	print "The magic word is xyzzy. Not abc {or whatever}.^";
+	print "ABCDEFGHI 0123456789.^";
+];
