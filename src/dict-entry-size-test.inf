@@ -1,0 +1,14 @@
+#ifdef EARLYDEF;
+Version 3;
+#endif;
+
+[ Main wd1 wd2;
+	wd1 = 'hello';
+	wd2 = 'there';
+	print "DICT_ENTRY_BYTE_LENGTH is ", DICT_ENTRY_BYTES, "^";
+	print (address) wd1, " ", (address) wd2, "^";
+];
+
+#ifdef LATEDEF;
+Version 3;
+#endif;

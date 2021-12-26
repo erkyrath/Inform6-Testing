@@ -608,7 +608,29 @@ def run_dict_test():
     res = compile('max_dict_entries.inf', glulx=True)
     res.is_ok()
 
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False)
+    res.is_ok(md5='ebb473013c5e137fe28660f15789a426')
 
+    # The checksum here is different because the "Version 3" directive doesn't work perfectly
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'EARLYDEF':None}, versiondirective=True)
+    res.is_ok(md5='5166bc1780a8523e99aa1838258e6769')
+
+    # Cannot put Version directive at the end
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'LATEDEF':None}, versiondirective=True)
+    res.is_error()
+
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, memsettings={'ZCODE_LESS_DICT_DATA':1})
+    res.is_ok(md5='5517a9819309e5812c255e46db12c199')
+
+    res = compile('dict-entry-size-test.inf', zversion=5)
+    res.is_ok(md5='170a513d6b237b44612bf039f27e11a6')
+
+    res = compile('dict-entry-size-test.inf', zversion=5, memsettings={'ZCODE_LESS_DICT_DATA':1})
+    res.is_ok(md5='6576bac38754f153d61912ce6b86420c')
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
+    res.is_ok(md5='b63eda6a53830520822d271355965226', warnings=0)
+    
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
     res.is_memsetting('MAX_IDENTIFIER_LENGTH')
@@ -820,13 +842,13 @@ def run_fwconst_test():
     res.is_error()
 
     res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z3', define={ 'FORWARD_CONSTANT':3 })
-    res.is_ok()
+    res.is_ok(md5='e8b044eaef2b489db9ab0a1cc0f2bc5f')
 
     res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z5', define={ 'FORWARD_CONSTANT':5 })
-    res.is_ok()
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
 
     res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z8', define={ 'FORWARD_CONSTANT':8 })
-    res.is_ok()
+    res.is_ok(md5='fa7fc9bbe032d27355b0fcf4fb4f2c53')
 
     res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z9', define={ 'FORWARD_CONSTANT':9 })
     res.is_error()
