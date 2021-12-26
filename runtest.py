@@ -619,6 +619,24 @@ def run_dict_test():
     res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'LATEDEF':None}, versiondirective=True)
     res.is_error()
 
+    # Warning about "Dictionary 'w' x y" directive
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, memsettings={'ZCODE_LESS_DICT_DATA':1}, define={'TRYDICT3':None})
+    res.is_ok(warnings=1)
+
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'TRYVERB':None})
+    res.is_ok()
+
+    # Cannot use GV1 with ZCODE_LESS_DICT_DATA
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, memsettings={'ZCODE_LESS_DICT_DATA':1}, define={'TRYVERB':None})
+    res.is_error()
+
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'TRYPAR3':None})
+    res.is_ok()
+
+    # Cannot use #dict_par3 with ZCODE_LESS_DICT_DATA
+    res = compile('dict-entry-size-test.inf', zversion=3, strict=False, memsettings={'ZCODE_LESS_DICT_DATA':1}, define={'TRYPAR3':None})
+    res.is_error()
+
     res = compile('dict-entry-size-test.inf', zversion=3, strict=False, memsettings={'ZCODE_LESS_DICT_DATA':1})
     res.is_ok(md5='5517a9819309e5812c255e46db12c199')
 
