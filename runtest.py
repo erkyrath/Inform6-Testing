@@ -52,6 +52,9 @@ popt.add_option('--stdout',
 popt.add_option('--stderr',
     action='store_true', dest='stderr',
     help='display stderr for every compile')
+popt.add_option('--checksum',
+    action='store_true', dest='checksum',
+    help='display checksum for every compile')
 popt.add_option('-l', '--list',
     action='store_true', dest='listtests',
     help='display list of tests')
@@ -65,7 +68,7 @@ testname = '???'
 errorlist = []
 
 def compile(srcfile, destfile=None,
-            glulx=False, zversion=None,
+            glulx=False, zversion=None, versiondirective=False,
             includedir=None, moduledir=None,
             memsettings={}, define={},
             debug=False, strict=True,
@@ -91,6 +94,8 @@ def compile(srcfile, destfile=None,
     - bigmem turns on large-memory (odd-even) mode for V6/7 (-B)
     - makemodule generates a .m5 link module (-M)
     - usemodules uses modules for verblibm/parserm (-U)
+    - versiondirective indicates that the source file has a "Version"
+        directive, so the compiler does not need the -vN switch
     """
     argls = [ opts.binary ]
     if includedir:
@@ -102,9 +107,9 @@ def compile(srcfile, destfile=None,
     # Arguments which will be displayed in the results.
     showargs = []
     
-    if (glulx):
+    if glulx:
         showargs.append('-G')
-    elif (zversion):
+    elif zversion and not versiondirective:
         showargs.append('-v%d' % (zversion,))
     for (key, val) in list(memsettings.items()):
         showargs.append('$%s=%s' % (key, val))
@@ -399,9 +404,11 @@ class Result:
                 error(self, 'Game file does not exist: %s' % (self.filename,))
                 print('*** TEST FAILED ***')
                 return False
-            if md5:
+            if md5 or opts.checksum:
                 val = self.canonical_checksum()
-                if val != md5:
+                if opts.checksum:
+                    print('--- checksum:', val)
+                if md5 and val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
                     print('*** TEST FAILED ***')
                     return False
