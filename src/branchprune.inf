@@ -142,6 +142,14 @@ Global failures;
 	check_value(TestIfZeroElse(), 4);
 	print ".^";
 
+	print "TestIfOneRTrueElse: ";
+	check_value(TestIfOneRTrueElse(), 1);
+	print ".^";
+
+	print "TestIfZeroRTrueElse: ";
+	check_value(TestIfZeroRTrueElse(), 0);
+	print ".^";
+
 	print "TestWhileZero: ";
 	check_value(TestWhileZero(), 4);
 	print ".^";
@@ -240,6 +248,24 @@ Global failures;
 		return 4;
 	}
 	return 5; ! warning: not reached?
+];
+
+[ TestIfOneRTrueElse;
+	! Should compile to:
+	!   return 1;
+	
+	if (1) rtrue;
+	else rfalse;
+	return 5;  ! warning: not reached?
+];
+
+[ TestIfZeroRTrueElse;
+	! Should compile to:
+	!   return 0;
+	
+	if (0) rtrue;
+	else rfalse;
+	return 5;  ! warning: not reached?
 ];
 
 [ TestWhileZero;
