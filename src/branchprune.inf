@@ -1,0 +1,277 @@
+Constant Story "BranchPruneTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! This is a compiler unit test for stripping dead branches from routines.
+
+
+!### test when body is rtrue, rfalse
+!### test (~~false), (~~true)
+!### test more complicated (but still collapsible) expressions
+!### test I7-like stanzas and SACK_OBJECT-like stanzas
+!### test jumping into omitted stanzas
+!### test switch statements, omitting part, all, default clause...
+
+!### no label after zero-length expression code
+!### no label after unconditional jump expression code
+!### eliminate @jump (here)
+
+!### compile text on unreachable lines?
+!### compile function-used flag on unreachable lines?
+
+!### when all is working, maybe combine the two flags
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+Global failures;
+
+[ Main;
+    #ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 0;
+    #endif; ! TARGET_GLULX
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #Endif; ! TARGET_GLULX
+];
+
+[ check_value val1 val2;
+	print val1;
+	if (val1 ~= val2) {
+		failures++;
+		print " (ERROR, should be ", val2, ")";
+	}
+];
+
+[ RunTest;
+	RunAllTests();
+
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
+];
+
+[ RunAllTests;
+	print "TestJumpCode: ";
+	check_value(TestJumpCode(), 3);
+	print ".^";
+
+	print "TestIfOneReturn: ";
+	check_value(TestIfOneReturn(), 2);
+	print ".^";
+
+	print "TestIfZeroReturn: ";
+	check_value(TestIfZeroReturn(), 3);
+	print ".^";
+
+	print "TestIfOneJump: ";
+	check_value(TestIfOneJump(), 4);
+	print ".^";
+
+	print "TestIfZeroJump: ";
+	check_value(TestIfZeroJump(), 5);
+	print ".^";
+
+	print "TestIfZeroBigBranch: ";
+	check_value(TestIfZeroBigBranch(), 7);
+	print ".^";
+
+	print "TestNestedBranch(4): ";
+	check_value(TestNestedBranch(4), 4);
+	print ".^";
+	print "TestNestedBranch(7): ";
+	check_value(TestNestedBranch(7), 100);
+	print ".^";
+
+	print "TestJumpFromLoop: ";
+	check_value(TestJumpFromLoop(), 54);
+	print ".^";
+
+];
+
+[ TestJumpCode val;
+	! Should compile to:
+	!   val = 3;
+	!   return val;
+	val = 3;
+	jump Label;
+	val++;  ! warning: not reached
+	.Label;
+	return val;
+];
+
+[ TestIfOneReturn;
+	! Should compile to:
+	!   return 2;
+	
+	if (1) {
+		return 2;
+	}
+	return 3;
+];
+
+[ TestIfZeroReturn;
+	! Should compile to:
+	!   return 3;
+	
+	if (0) {
+		return 2;
+	}
+	return 3;
+];
+
+[ TestIfOneJump val;
+	! Should compile to:
+	!   val = 4;
+	!   return val;
+	
+	val = 4;
+	if (1) {
+		jump Label;
+	}
+	val++;
+	.Label;
+	return val;
+];
+
+[ TestIfZeroJump val;
+	! Should compile to:
+	!   val = 4;
+	!   val++;
+	!   return val;
+	
+	val = 4;
+	if (0) {
+		jump Label;
+	}
+	val++;
+	.Label;
+	return val;
+];
+
+[ TestIfZeroBigBranch val;
+	! Should compile to:
+	!   return 7;
+	
+	if (0) {
+		val++;
+		if (val == 3) {
+			return;
+		}
+		val++;
+		switch (val) {
+			1: return 11;
+			2: return 22;
+			3: return 33;
+		}
+		return val;
+	}
+	return 7;
+];
+
+[ TestNestedBranch val;
+	! Should compile to:
+	!   if (val == 7) {
+	!     val = 99;
+	!     val++;
+	!   }
+	!   return val;
+	!   
+	if (val == 7) {
+		val = 99;
+		if (0) {
+			val = 0;
+			if (1) return;
+			val = 0;
+			if (val == 4) return;
+		}
+		val++;
+	}
+	return val;
+];
+
+[ TestJumpFromLoop val val2;
+	while (true) {
+		if (val == 4) jump Break1;
+		val++;
+	}
+	return;  ! warning: not reached
+	.Break1;
+
+	do {
+		if (val2 == 50) {
+			jump Break2;
+		}
+		val2 = val2 + 10;
+	} until (false);
+	return;  ! warning: not reached
+	.Break2;
+
+	return val + val2;
+];
