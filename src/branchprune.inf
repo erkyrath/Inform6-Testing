@@ -134,6 +134,14 @@ Global failures;
 	check_value(TestIfOneJump(), 4);
 	print ".^";
 
+	print "TestIfOneElse: ";
+	check_value(TestIfOneElse(), 3);
+	print ".^";
+
+	print "TestIfZeroElse: ";
+	check_value(TestIfZeroElse(), 4);
+	print ".^";
+
 	print "TestWhileZero: ";
 	check_value(TestWhileZero(), 4);
 	print ".^";
@@ -206,6 +214,32 @@ Global failures;
 	val++;
 	.Label;
 	return val;
+];
+
+[ TestIfOneElse;
+	! Should compile to:
+	!   return 3;
+	
+	if (1) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+	return 5; ! warning: not reached?
+];
+
+[ TestIfZeroElse;
+	! Should compile to:
+	!   return 4;
+	
+	if (0) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+	return 5; ! warning: not reached?
 ];
 
 [ TestWhileZero;
