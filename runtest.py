@@ -784,7 +784,15 @@ def run_debugflag_test():
     res = compile('no_debug_flag_test.inf', debug=True, glulx=True)
     res.is_error(warnings=1)
 
-    
+
+def run_prune_test():
+    res = compile('branchprune.inf')
+    res.is_ok()
+
+    res = compile('branchprune.inf', glulx=True)
+    res.is_ok()
+
+
 def run_defineopt_test():
     res = compile('defineopttest.inf')
     res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
@@ -1580,6 +1588,7 @@ test_catalog = [
     ('DICT', run_dict_test),
     ('LEXER', run_lexer_test),
     ('DIRECTIVES', run_directives_test),
+    ('PRUNE', run_prune_test),
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
