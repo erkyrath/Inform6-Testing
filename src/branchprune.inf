@@ -134,6 +134,14 @@ Global failures;
 	check_value(TestIfOneJump(), 4);
 	print ".^";
 
+	print "TestWhileZero: ";
+	check_value(TestWhileZero(), 4);
+	print ".^";
+
+	print "TestDoUntilOne: ";
+	check_value(TestDoUntilOne(), 5);
+	print ".^";
+
 	print "TestIfZeroJump: ";
 	check_value(TestIfZeroJump(), 5);
 	print ".^";
@@ -197,6 +205,29 @@ Global failures;
 	}
 	val++;
 	.Label;
+	return val;
+];
+
+[ TestWhileZero;
+	! Should compile to:
+	!   return 4;
+	
+	while (0) {
+		return 3;
+	}
+	return 4;
+];
+
+[ TestDoUntilOne val;
+	! Should compile to:
+	!   val = 4;
+	!   val++;
+	!   return val;
+	
+	val = 4;
+	do {
+		val++;
+	} until (1);
 	return val;
 ];
 
