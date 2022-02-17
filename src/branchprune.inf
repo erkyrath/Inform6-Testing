@@ -197,7 +197,7 @@ Global failures;
 	if (1) {
 		return 2;
 	}
-	return 3;
+	return 3;  ! warning: not reached
 ];
 
 [ TestIfZeroReturn;
@@ -232,9 +232,9 @@ Global failures;
 		return 3;
 	}
 	else {
-		return 4;
+		return 4;  ! warning: not reached (?suppress?)
 	}
-	return 5; ! warning: not reached?
+	return 5;  ! warning: not reached?
 ];
 
 [ TestIfZeroElse;
@@ -247,7 +247,7 @@ Global failures;
 	else {
 		return 4;
 	}
-	return 5; ! warning: not reached?
+	return 5;  ! warning: not reached?
 ];
 
 [ TestIfOneRTrueElse;
@@ -265,7 +265,7 @@ Global failures;
 	
 	if (0) rtrue;
 	else rfalse;
-	return 5;  ! warning: not reached?
+	return 5;  ! warning: not reached
 ];
 
 [ TestWhileZero;
@@ -352,7 +352,7 @@ Global failures;
 		if (val == 4) jump Break1;
 		val++;
 	}
-	return;  ! warning: not reached
+	return;  ! warning: not reached?
 	.Break1;
 
 	do {
@@ -361,7 +361,7 @@ Global failures;
 		}
 		val2 = val2 + 10;
 	} until (false);
-	return;  ! warning: not reached
+	return;  ! warning: not reached?
 	.Break2;
 
 	return val + val2;
