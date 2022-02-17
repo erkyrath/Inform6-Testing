@@ -1,3 +1,8 @@
+
+#Ifdef COMPILE_SACK;
+Constant SACK_OBJECT = sack;
+#Endif; ! COMPILE_SACK
+
 #Ifdef COMPILE_TASKS;
 
 ! Note that TASKS_PROVIDED==1 means tasks are *not* provided. (1 is the
@@ -39,8 +44,30 @@ Object -> rock "rock"
 			"You touch the rock.";
 	];
 
+Object -> pebble "pebble"
+  with
+    name 'pebble';
+
+Object -> stick "stick"
+  with
+    name 'stick';
+
+Object sack "sack"
+  with
+	name 'sack',
+	has container open openable;
+
 [ Initialise;
+	#Ifdef COMPILE_SACK;
+	print "COMPILE_SACK defined.^";
+	#Endif; ! COMPILE_SACK
+	#Ifdef COMPILE_TASKS;
+	print "COMPILE_TASKS defined.^";
+	#Endif; ! COMPILE_TASKS
+
     location = testroom;
+	player.capacity = 2;
+	move sack to player;
 ];
 
 [ PrintTaskName task;

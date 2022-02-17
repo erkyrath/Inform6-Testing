@@ -786,10 +786,35 @@ def run_debugflag_test():
 
 
 def run_prune_test():
+    ### md5 for all
     res = compile('branchprune.inf')
     res.is_ok()
 
     res = compile('branchprune.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611')
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
+    res.is_ok()
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
     res.is_ok()
 
 
