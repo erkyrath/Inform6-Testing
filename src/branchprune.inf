@@ -9,12 +9,10 @@ Release 1;
 !### test when body is rtrue, rfalse
 !### test (~~false), (~~true)
 !### test more complicated (but still collapsible) expressions
-!### test I7-like stanzas and SACK_OBJECT-like stanzas
+!### test I7-like stanzas
 !### test jumping into omitted stanzas
 !### test switch statements, omitting part, all, default clause...
 
-!### no label after zero-length expression code
-!### no label after unconditional jump expression code
 !### eliminate @jump (here)
 
 !### compile text on unreachable lines?
