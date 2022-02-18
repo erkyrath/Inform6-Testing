@@ -9,14 +9,19 @@ Release 1;
 !### test when body is rtrue, rfalse
 !### test (~~false), (~~true)
 !### test more complicated (but still collapsible) expressions
-!### test I7-like stanzas
-!### test jumping into omitted stanzas
+!### test jumping into omitted stanzas (should fail)
 !### test switch statements, omitting part, all, default clause...
+!### test stripping a complex clause with internal named labels
+!### test custom opcodes (branchy and nonreturny)
 
+!### only set the mtdt flag on "if" conditions, not do-until/while
 !### eliminate @jump (here)
+!### eliminate @jz (here) also. (But if the arg is sp, we still have to pop it.)
 
-!### compile text on unreachable lines?
+!### compile text on unreachable lines? (only skip when STRCTX_GAME)
 !### compile function-used flag on unreachable lines?
+
+!### I think we want to employ the force-reachable option only on *top-level* named labels. Jumping from live code to a deep unreachable named label will be an error. (Or, ha ha, just get rid of the force-unreachable option entirely.) (But is it safe in "if" statement specifically?)
 
 !### when all is working, maybe combine the two flags
 
@@ -116,8 +121,16 @@ Global failures;
 ];
 
 [ RunAllTests;
+	print "TestManyLabels: ";
+	check_value(TestManyLabels(0), 3);
+	print ".^";
+
 	print "TestJumpCode: ";
 	check_value(TestJumpCode(), 3);
+	print ".^";
+
+	print "TestDoubleReturn: ";
+	check_value(TestDoubleReturn(10), 11);
 	print ".^";
 
 	print "TestIfOneReturn: ";
@@ -177,6 +190,26 @@ Global failures;
 
 ];
 
+[ TestManyLabels val;
+	.Foo1;
+	.Foo2;
+	if (val == 9) {
+		.Foo3;
+		.Foo4;
+	}
+	jump EndLabel;
+	return 0;  ! warning: not reached
+	.Foo5;
+	if (val == 3) {
+		return val;
+	}
+	.Foo6;
+	.EndLabel;
+	.Foo7;
+	val++;
+	jump Foo5;
+];
+
 [ TestJumpCode val;
 	! Should compile to:
 	!   val = 3;
@@ -186,6 +219,21 @@ Global failures;
 	val++;  ! warning: not reached
 	.Label;
 	return val;
+];
+
+[ TestDoubleReturn val;
+	! (I7 generates code like this)
+	! Should compile to:
+	!   val++
+	!   return val;
+	
+	val++;
+	return val;
+	val++;  ! warning: not reached
+	return val;
+	val++;
+	return val;
+	rfalse;
 ];
 
 [ TestIfOneReturn;
@@ -217,7 +265,7 @@ Global failures;
 	if (1) {
 		jump Label;
 	}
-	val++;
+	val++;  ! warning: not reached (### shouldn't warn)
 	.Label;
 	return val;
 ];
@@ -225,19 +273,21 @@ Global failures;
 [ TestIfOneElse;
 	! Should compile to:
 	!   return 3;
+	!   return 5;  ! compiler isn't smart enough to catch this
 	
 	if (1) {
 		return 3;
 	}
 	else {
-		return 4;  ! warning: not reached (?suppress?)
+		return 4;  ! warning: not reached (### shouldn't)
 	}
-	return 5;  ! warning: not reached?
+	return 5;  ! ought to warn but doesn't
 ];
 
 [ TestIfZeroElse;
 	! Should compile to:
 	!   return 4;
+	!   return 5;  ! compiler isn't smart enough to catch this
 	
 	if (0) {
 		return 3;
@@ -245,7 +295,7 @@ Global failures;
 	else {
 		return 4;
 	}
-	return 5;  ! warning: not reached?
+	return 5;  ! ought to warn but doesn't
 ];
 
 [ TestIfOneRTrueElse;
@@ -254,7 +304,7 @@ Global failures;
 	
 	if (1) rtrue;
 	else rfalse;
-	return 5;  ! warning: not reached?
+	return 5;  ! ought to warn but doesn't
 ];
 
 [ TestIfZeroRTrueElse;
@@ -350,7 +400,7 @@ Global failures;
 		if (val == 4) jump Break1;
 		val++;
 	}
-	return;  ! warning: not reached?
+	return;  ! warning: not reached? ### should warn
 	.Break1;
 
 	do {
@@ -359,7 +409,7 @@ Global failures;
 		}
 		val2 = val2 + 10;
 	} until (false);
-	return;  ! warning: not reached?
+	return;  ! warning: not reached? ### should warn
 	.Break2;
 
 	return val + val2;
