@@ -19,6 +19,7 @@ Release 1;
 !### compile text on unreachable lines? (only skip when STRCTX_GAME)
 !### compile function-used flag on unreachable lines?
 
+!### final verification of this file
 !### when all is working, maybe combine the two flags
 
 #ifdef TARGET_ZCODE;
@@ -220,8 +221,12 @@ Global failures;
 	check_value(TestLoopJumpBreak(), 5);
 	print ".^";
 
+	print "TestForTrueInc: ";
+	check_value(TestForTrueInc(), 5);
+	print ".^";
+
 	print "TestForTrue: ";
-	check_value(TestForTrue(), 5);
+	check_value(TestForTrue(), 6);
 	print ".^";
 
 	print "TestForEmpty: ";
@@ -577,11 +582,20 @@ Global failures;
 	return 5;
 ];
 
-[ TestForTrue val;
+[ TestForTrueInc val;
 	! Should omit the 99 line
 	
 	for (val=0 : true : val++) {
 		if (val == 5) return val;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestForTrue val;
+	! Should omit the 99 line
+	
+	for (val=0 : true : val = val + 2) {
+		if (val >= 5) return val;
 	}
 	return 99;  ! warning: not reached
 ];
