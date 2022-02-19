@@ -6,7 +6,6 @@ Release 1;
 ! This is a compiler unit test for stripping dead branches from routines.
 
 
-!### test when body is rtrue, rfalse
 !### test (~~false), (~~true)
 !### test more complicated (but still collapsible) expressions
 !### test jumping into omitted stanzas (should fail)
@@ -20,8 +19,6 @@ Release 1;
 
 !### compile text on unreachable lines? (only skip when STRCTX_GAME)
 !### compile function-used flag on unreachable lines?
-
-!### I think we want to employ the force-reachable option only on *top-level* named labels. Jumping from live code to a deep unreachable named label will be an error. (Or, ha ha, just get rid of the force-unreachable option entirely.) (But is it safe in "if" statement specifically?)
 
 !### when all is working, maybe combine the two flags
 
@@ -175,6 +172,10 @@ Global failures;
 
 	print "TestIfZeroBigBranch: ";
 	check_value(TestIfZeroBigBranch(), 7);
+	print ".^";
+
+	print "TestIfZeroLabelledBranch: ";
+	check_value(TestIfZeroLabelledBranch(), 8);
 	print ".^";
 
 	print "TestNestedBranch(4): ";
@@ -374,6 +375,22 @@ Global failures;
 	return 7;
 ];
 
+[ TestIfZeroLabelledBranch val;
+	! Should compile to:
+	!   return 8;
+	
+	if (0) {
+		val = 1;
+		.InLoop;
+		val++;
+		if (val == 3) {
+			return;
+		}
+		jump InLoop;
+	}
+	return 8;
+];
+
 [ TestNestedBranch val;
 	! Should compile to:
 	!   if (val == 7) {
@@ -414,3 +431,5 @@ Global failures;
 
 	return val + val2;
 ];
+
+
