@@ -511,22 +511,22 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='75f0c4480fddfa0246b2bc81af2c6731', warnings=1)
+    res.is_ok(md5='0e4c13316b637f20a370321b371b1a54', warnings=1)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='5f78e3eaf258c56620b4f2228c4108b3')
+    res.is_ok(md5='d940f38a17c2e505f035348f15e07004')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='ddbbda632fe0305be7f2f721cb04ef6a')
+    res.is_ok(md5='39587926b2bef997717b51bde17e70da')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='e37e2152a547580bba6c575f97063e09')
+    res.is_ok(md5='2600e7a9b74cf82a8b4c66e1a71cc907')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='8fd6710b2d51e2c2d2bf0e4f7423547b')
+    res.is_ok(md5='93fc5a442c99c5a2369b8181f4a19c65')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='bd26bd0878b8c3c72fde7d3490ef588f')
+    res.is_ok(md5='d3a5d547d20b2d3bdc666b09bb80c381')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='5fb722521b20192e615cbb0ad5da904c', warnings=0)
@@ -571,10 +571,10 @@ def run_checksum_test():
     res.is_ok(md5='d1bd55d0198dc45255e295af69cde637')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='96f75068e84075287c4a04b57bc3b8a5')
+    res.is_ok(md5='37679f1f232576ff27e590118ee44567')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='88b0c29c99c9df2420875607c2ea4eab')
+    res.is_ok(md5='872143766b8f8524e87996f6958b838e')
 
 
 def run_dict_test():
@@ -1403,7 +1403,7 @@ def run_max_abbrevs():
     res.is_ok(md5='cbb6a8cfd853431969b094f8b9b57cc9')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='f9c26cf5ecafcf7116b3d19390d9edea')
+    res.is_ok(md5='39b777992e4565dff586fc83b83fb15f')
     
     res = compile('max_abbrevs_test_64.inf', memsettings={})
     res.is_ok()
@@ -1601,11 +1601,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='8f7d3d0ef4be03f230b1aa8842faa2f2')
+    res.is_ok(md5='94c086f3dc80ab647ab040bfd1f8f539')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='2cc545f6e68d108baa3deaaef77221ce')
+    res.is_ok(md5='4b6581228f7af2b57d3659e511f29752')
 
 
 test_catalog = [
