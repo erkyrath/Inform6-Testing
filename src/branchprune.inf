@@ -189,6 +189,14 @@ Global failures;
 	check_value(TestJumpFromLoop(), 54);
 	print ".^";
 
+	print "TestIfIfSequence: ";
+	check_value(TestIfIfSequence(), 0);
+	print ".^";
+
+	print "TestIfLoopSequence: ";
+	check_value(TestIfLoopSequence(), 0);
+	print ".^";
+
 ];
 
 [ TestManyLabels val;
@@ -432,4 +440,29 @@ Global failures;
 	return val + val2;
 ];
 
+[ TestIfIfSequence val;
+	! Should compile to:
+	!   return 0;
+	
+	if (1) rfalse;
+	val++;
+	if (val) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+	return 5;
+];
 
+[ TestIfLoopSequence val;
+	! Should compile to:
+	!   return 0;
+	
+	if (1) rfalse;
+	val++;
+	while (val < 5) {
+		val++;
+	}
+	return val;
+];
