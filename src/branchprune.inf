@@ -212,6 +212,14 @@ Global failures;
 	check_value(TestWhileZeroLoopBreakContinue(), 4);
 	print ".^";
 
+	print "TestLoopJumpContinue: ";
+	check_value(TestLoopJumpContinue(), 3);
+	print ".^";
+
+	print "TestLoopJumpBreak: ";
+	check_value(TestLoopJumpBreak(), 5);
+	print ".^";
+
 ];
 
 [ TestManyLabels val;
@@ -537,4 +545,28 @@ Global failures;
 		val++;
 	}
 	return 4;
+];
+
+[ TestLoopJumpContinue val;
+	while (val < 10) {
+		if (val == 0) {
+			val = 3;
+			continue;
+		}
+		return val;
+		val = 10;  ! warning: not reached
+	}
+	return 0;
+];
+
+[ TestLoopJumpBreak val;
+	while (val < 10) {
+		if (val == 0) {
+			val = 3;
+			break;
+		}
+		return val;
+		val = 10;  ! warning: not reached
+	}
+	return 5;
 ];
