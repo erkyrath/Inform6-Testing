@@ -647,7 +647,7 @@ def run_dict_test():
     res.is_ok(md5='6576bac38754f153d61912ce6b86420c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='df13dab08e7b861892401d6cb7669831', warnings=0)
+    res.is_ok(md5='cb5827aa093d3377ad92df6cee209c4b', warnings=0)
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
@@ -960,11 +960,11 @@ def run_modules_test():
     res.is_ok(md5='7231ef2df5f9870e904c64f6d792ca8f')
     
     res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='3d381fd6590fee842d5b75f2a3abbddb')
+    res.is_ok(md5='5b865aec7db35dee89bfd92934247965')
 
     # Now build Advent using the two modules we just generated.
     res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
-    res.is_ok(md5='bc559e0c276e5ad6a6abca9d7f2b88d6')
+    res.is_ok(md5='ca0b0461acd5a3af25a0d11713b86151')
 
 
 def run_debugfile_test():
@@ -1391,19 +1391,19 @@ def run_max_abbrevs():
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='ea47abcdf8e6ea2f445e145e0531ed60')
+    res.is_ok(md5='7e0161dccc2e184275c579e5d74539c0')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='520afab7220f28650f44801409bf62bb')
+    res.is_ok(md5='21621eacfb2ade225df29c1ed6bd717e')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='6173bc070373cd05587772a9e73768e0')
+    res.is_ok(md5='f7a89a85547196d3631e90fd080c9016')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='cbb6a8cfd853431969b094f8b9b57cc9')
+    res.is_ok(md5='824bba5b3fad941f99057d3c22ca1613')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='39b777992e4565dff586fc83b83fb15f')
+    res.is_ok(md5='6a7a334e60c3a386bcd0bb770c5907b7')
     
     res = compile('max_abbrevs_test_64.inf', memsettings={})
     res.is_ok()
@@ -1601,11 +1601,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='94c086f3dc80ab647ab040bfd1f8f539')
+    res.is_ok(md5='e4c4254e38cfa499ff181681088851be')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='4b6581228f7af2b57d3659e511f29752')
+    res.is_ok(md5='e0e8b748a5976730b5b8a9ff75026c3b')
 
 
 test_catalog = [
