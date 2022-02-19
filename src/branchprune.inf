@@ -150,6 +150,26 @@ Global failures;
 	check_value(TestIfZeroElse(), 4);
 	print ".^";
 
+	print "TestIfElseIfElse(1): ";
+	check_value(TestIfElseIfElse(1), 11);
+	print ".^";
+	print "TestIfElseIfElse(2): ";
+	check_value(TestIfElseIfElse(2), 22);
+	print ".^";
+	print "TestIfElseIfElse(3): ";
+	check_value(TestIfElseIfElse(3), 33);
+	print ".^";
+
+	print "TestIfElseIfOneElse(1): ";
+	check_value(TestIfElseIfOneElse(1), 11);
+	print ".^";
+	print "TestIfElseIfOneElse(2): ";
+	check_value(TestIfElseIfOneElse(2), 22);
+	print ".^";
+	print "TestIfElseIfOneElse(3): ";
+	check_value(TestIfElseIfOneElse(3), 22);
+	print ".^";
+
 	print "TestIfOneRTrueElse: ";
 	check_value(TestIfOneRTrueElse(), 1);
 	print ".^";
@@ -339,6 +359,36 @@ Global failures;
 		return 4;
 	}
 	return 5;  ! warning: not reached
+];
+
+[ TestIfElseIfElse val;
+	! Should omit the 99 line
+	
+	if (val == 1) {
+		return 11;
+	}
+	else if (val == 2) {
+		return 22;
+	}
+	else {
+		return 33;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestIfElseIfOneElse val;
+	! Should omit the 33 and 99 lines
+	
+	if (val == 1) {
+		return 11;
+	}
+	else if (1) {
+		return 22;
+	}
+	else {
+		return 33;  ! warning: not reached (### shouldn't)
+	}
+	return 99;  ! ought to warn but doesn't
 ];
 
 [ TestIfOneRTrueElse;
