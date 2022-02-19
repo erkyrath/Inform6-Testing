@@ -647,7 +647,7 @@ def run_dict_test():
     res.is_ok(md5='6576bac38754f153d61912ce6b86420c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='b63eda6a53830520822d271355965226', warnings=0)
+    res.is_ok(md5='df13dab08e7b861892401d6cb7669831', warnings=0)
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
@@ -692,7 +692,7 @@ def run_directives_test():
     res.is_ok(md5='a90ea20de4c538312842ef1c5a5ee932')
 
     res = compile('internaldirecttest.inf')
-    res.is_ok(md5='191fd5acfff6e1208b04f0d6d178f8eb')
+    res.is_ok(md5='18352c343d9d5ab3f5886d953bd17cc8')
 
     res = compile('internaldirecttest.inf', glulx=True)
     res.is_ok(md5='69666314dc31e270809d11f2ee9cebd6')
@@ -957,22 +957,22 @@ def run_modules_test():
     # parserm.inf and verblibm.inf are copies of the library header files in i6lib-611. (The test framework expects them to be in the src directory.)
     
     res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='e411c79916ae0f9cd8408df5766c5fd7')
+    res.is_ok(md5='7231ef2df5f9870e904c64f6d792ca8f')
     
     res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
     res.is_ok(md5='3d381fd6590fee842d5b75f2a3abbddb')
 
     # Now build Advent using the two modules we just generated.
     res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
-    res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
+    res.is_ok(md5='bc559e0c276e5ad6a6abca9d7f2b88d6')
 
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
+    res.is_ok(md5='5fb722521b20192e615cbb0ad5da904c', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='f6e7cdf51555055301b24ea6cd68eb69', warnings=0)
+    res.is_ok(md5='81103ee40ad32c11db3f57f47ddd3a89', warnings=0)
 
 
 def run_warnings_test():
@@ -1391,19 +1391,19 @@ def run_max_abbrevs():
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='9733c798d3b7586da360577c3e4cce68')
+    res.is_ok(md5='ea47abcdf8e6ea2f445e145e0531ed60')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='11f0fa65db5bb7209b39d335f8ed63b2')
+    res.is_ok(md5='520afab7220f28650f44801409bf62bb')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='673e1690b8eedc7ec4e2292c85bdba01')
+    res.is_ok(md5='6173bc070373cd05587772a9e73768e0')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='c9ed61aef696d0357e6f4f36d4b70f7f')
+    res.is_ok(md5='cbb6a8cfd853431969b094f8b9b57cc9')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='78202693832c234224f6fe09479243bd')
+    res.is_ok(md5='f9c26cf5ecafcf7116b3d19390d9edea')
     
     res = compile('max_abbrevs_test_64.inf', memsettings={})
     res.is_ok()
@@ -1601,11 +1601,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='6e81c775d77ca5a05917f782eb502981')
+    res.is_ok(md5='8f7d3d0ef4be03f230b1aa8842faa2f2')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='2bc421510db11c1e7f8f08dc9b2ddb0f')
+    res.is_ok(md5='2cc545f6e68d108baa3deaaef77221ce')
 
 
 test_catalog = [
