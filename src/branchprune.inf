@@ -220,6 +220,14 @@ Global failures;
 	check_value(TestLoopJumpBreak(), 5);
 	print ".^";
 
+	print "TestForTrue: ";
+	check_value(TestForTrue(), 5);
+	print ".^";
+
+	print "TestForEmpty: ";
+	check_value(TestForEmpty(), 3);
+	print ".^";
+
 ];
 
 [ TestManyLabels val;
@@ -570,3 +578,23 @@ Global failures;
 	}
 	return 5;
 ];
+
+[ TestForTrue val;
+	! Should omit the 99 line
+	
+	for (val=0 : true : val++) {
+		if (val == 5) return val;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestForEmpty val;
+	! Should omit the 99 line
+
+	for (::) {
+		val++;
+		if (val == 3) return val;
+	}
+	return 99;  ! warning: not reached
+];
+
