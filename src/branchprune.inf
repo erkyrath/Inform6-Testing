@@ -10,7 +10,6 @@ Release 1;
 !### test more complicated (but still collapsible) expressions
 !### test jumping into omitted stanzas (should fail)
 !### test switch statements, omitting part, all, default clause...
-!### test stripping a complex clause with internal named labels
 !### test custom opcodes (branchy and nonreturny)
 
 !### only set the mtdt flag on "if" conditions, not do-until/while
@@ -195,6 +194,10 @@ Global failures;
 
 	print "TestIfLoopSequence: ";
 	check_value(TestIfLoopSequence(), 0);
+	print ".^";
+
+	print "TestWhileOne: ";
+	check_value(TestWhileOne(5), 6);
 	print ".^";
 
 ];
@@ -425,7 +428,7 @@ Global failures;
 		if (val == 4) jump Break1;
 		val++;
 	}
-	return;  ! warning: not reached? ### should warn
+	return;  ! warning: not reached
 	.Break1;
 
 	do {
@@ -466,3 +469,17 @@ Global failures;
 	}
 	return val;
 ];
+
+[ TestWhileOne val;
+	! Should compile to:
+	!   val++;
+	!   return val;
+	
+	while (1) {
+		val++;
+		return val;
+	}                ! warning: not reached
+	return 5;
+];
+
+!### DoUntilZero
