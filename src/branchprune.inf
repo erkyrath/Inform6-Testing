@@ -204,6 +204,14 @@ Global failures;
 	check_value(TestIfLoopSequence(), 0);
 	print ".^";
 
+	print "TestIfZeroLoopBreakContinue: ";
+	check_value(TestIfZeroLoopBreakContinue(), 3);
+	print ".^";
+
+	print "TestWhileZeroLoopBreakContinue: ";
+	check_value(TestWhileZeroLoopBreakContinue(), 4);
+	print ".^";
+
 ];
 
 [ TestManyLabels val;
@@ -498,7 +506,35 @@ Global failures;
 	return val;
 ];
 
+[ TestIfZeroLoopBreakContinue val;
+	! Should compile to:
+	!   return 3;
+	
+	if (0) {
+		while (val) {
+			if (val == 2) break;
+			val++;
+		}
+		while (val < 10) {
+			val++;
+			if (val < 4) continue;
+			val++;
+		}
+	}
+	return 3;
+];
 
-!### break, continue in blocked loops
-!### break, continue in if (0) loops
-
+[ TestWhileZeroLoopBreakContinue val;
+	! Should compile to:
+	!   return 4;
+	
+	while (0) {
+		if (val == 2) break;
+		val++;
+	}
+	while (0) {
+		if (val == 2) continue;
+		val++;
+	}
+	return 4;
+];
