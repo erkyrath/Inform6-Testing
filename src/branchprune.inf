@@ -313,7 +313,6 @@ Global failures;
 [ TestIfOneElse;
 	! Should compile to:
 	!   return 3;
-	!   return 5;  ! compiler isn't smart enough to catch this
 	
 	if (1) {
 		return 3;
@@ -327,7 +326,6 @@ Global failures;
 [ TestIfZeroElse;
 	! Should compile to:
 	!   return 4;
-	!   return 5;  ! compiler isn't smart enough to catch this
 	
 	if (0) {
 		return 3;
@@ -335,7 +333,7 @@ Global failures;
 	else {
 		return 4;
 	}
-	return 5;  ! ought to warn but doesn't
+	return 5;  ! warning: not reached
 ];
 
 [ TestIfOneRTrueElse;
