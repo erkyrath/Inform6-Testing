@@ -969,10 +969,10 @@ def run_modules_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='f03e1bab3ed0b4a443fbc8333f9cc9c4', warnings=0)
+    res.is_ok(md5='90de5f348650d27f6670177d3bc3aa01', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='e6d69784cd1401c884be1fe26133e197', warnings=0)
+    res.is_ok(md5='39328bbc0944fc67bb65da3d5954c2a2', warnings=0)
 
 
 def run_warnings_test():
@@ -1601,11 +1601,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='e4c4254e38cfa499ff181681088851be')
+    res.is_ok(md5='14722b4d0e1a84edf90dba55eb4c8624')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='e0e8b748a5976730b5b8a9ff75026c3b')
+    res.is_ok(md5='37ef6574d00f7a0e84dfcd01f5bdc94a')
 
 
 test_catalog = [
