@@ -793,6 +793,12 @@ def run_prune_test():
     res = compile('branchprune.inf', glulx=True)
     res.is_ok()
 
+    res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
+    res.is_error()
+
+    res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, glulx=True)
+    res.is_error()
+
     res = compile('tasksacktest.inf', includedir='i6lib-611')
     res.is_ok()
 

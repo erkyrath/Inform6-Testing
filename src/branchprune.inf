@@ -323,6 +323,23 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	jump FooC;
 ];
 
+#ifdef BAD_JUMPS;
+
+! This function throws a compilation error, because the label FooC is
+! unconditionally stripped.
+[ TestBadJumps val;
+	if (0) {
+		return val;
+		.FooC;
+		val = val * 3;
+		return val;
+	}
+	val++;
+	jump FooC;  ! error: unreachable label
+];
+
+#endif; ! BAD_JUMPS
+
 [ TestJumpCode val;
 	! Should compile to:
 	!   val = 3;
