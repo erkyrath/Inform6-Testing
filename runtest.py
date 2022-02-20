@@ -1613,6 +1613,15 @@ def run_omit_unused_routines():
     res.is_ok()
     res.is_ok(md5='e9b372eac57ae75ccfb529e1ef3f2289')
 
+    res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res.is_ok()
+    res.is_ok(md5='2ca5d48032ac9fb4ab2cefce5d3a86b1')
+
+    res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
+    res.is_ok()
+    res.is_ok(md5='2c326cb8370038b03333f341a97f5379')
+
+    
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),

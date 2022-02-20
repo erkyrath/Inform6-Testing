@@ -1,0 +1,26 @@
+[ Main;
+	RunFunc();
+];
+
+! These two functions call each other, so they don't generate
+! "unused function" warnings. But they are only called from unreachable
+! lines in RunFunc(). So $OMIT_UNUSED_ROUTINES will strip them out.
+
+[ SubFunc1 val;
+	if (~~val)
+		SubFunc2(true);
+];
+
+[ SubFunc2 val;
+	if (~~val)
+		SubFunc1(true);
+];
+
+[ RunFunc val;
+	if (0) {
+		SubFunc1(val);
+	}
+	return;
+	SubFunc2(val);   ! warning: not reached
+];
+
