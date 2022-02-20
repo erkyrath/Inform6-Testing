@@ -511,70 +511,70 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='0e4c13316b637f20a370321b371b1a54', warnings=1)
+    res.is_ok(md5='3e2dfea6646803414e83c4fdb9b1ba24', warnings=1)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='5e3771e8ab43c7be27fe9e43241bd30f')
+    res.is_ok(md5='77aed431ec7443ab0bd3fa9c5ccec208')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='773454621e0999704aba49c6abf728db')
+    res.is_ok(md5='bce0f618a15da90dfe4a104228554e15')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='a2bae077142932d5f0a097ee5c7973c3')
+    res.is_ok(md5='b38c368c43864932d57a439500794812')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='71b08a5539a8dd624232ea708e21388c')
+    res.is_ok(md5='720ac4361f746341d8385611c3be8e6b')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='5092b42b53e6e8db8627749e5b97c4fa')
+    res.is_ok(md5='e8682f47df12d1f0be432b5f67914af1')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='f03e1bab3ed0b4a443fbc8333f9cc9c4', warnings=0)
+    res.is_ok(md5='90de5f348650d27f6670177d3bc3aa01', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='52239bb81a9d8de2c13876852511e544', warnings=0)
+    res.is_ok(md5='b905e46e2de27f4489c70db4b319e95e', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='e6d69784cd1401c884be1fe26133e197', warnings=0)
+    res.is_ok(md5='39328bbc0944fc67bb65da3d5954c2a2', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
-    res.is_ok(md5='009a89c5578c9809861ce9ceca495423', warnings=0)
+    res.is_ok(md5='c3bf4c31b97a194336ada7a4e1175cf1', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='756b7803c4eafdadee4c6298d753904b', warnings=0)
+    res.is_ok(md5='156b8124ce4079a82a18173a4b781647', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
-    res.is_ok(md5='a4c64ba78b336a8a3f26cc5d283728fe', warnings=0)
+    res.is_ok(md5='2409b275f5ce0e0edacb25141a9c3e99', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='af42d1d44f28fb596b0d50bc79381e87', warnings=0)
+    res.is_ok(md5='01bd57888fcdd3818dc65ba29b361cfe', warnings=0)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
-    res.is_ok(md5='aa69478b34549adaa3479213fd7026de', warnings=0)
+    res.is_ok(md5='4805d7f8a7a58db9b95a9a2347b76ca0', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
-    res.is_ok(md5='de02984b3e1a323b194c38024be184a0', warnings=1)
+    res.is_ok(md5='ababc5d859ff8e49d93bf4347b71b7da', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
-    res.is_ok(md5='4529b7982684f00bef902cc284421aaa', warnings=1)
+    res.is_ok(md5='a3d3e6fc2c79b6f8ece5c67d701a5dde', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=False)
-    res.is_ok(md5='686d86310d1174ef0ecafd645aad5af6', warnings=1)
+    res.is_ok(md5='b59a9f9e3ea8d84cbf5abde4e173d94a', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
-    res.is_ok(md5='98d38e6f1889628ca225b04086b7399c', warnings=1)
+    res.is_ok(md5='7e667b15b092dcb6307307d8ea8bba58', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
-    res.is_ok(md5='dfcf482066f2edeec18202da3c2ef358', warnings=1)
+    res.is_ok(md5='7af3df8c3b76b00c391d6d1b473d9253', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
-    res.is_ok(md5='b07c1774471377b5c0a249e4699bf9cb', warnings=1)
+    res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='32f876f4bc7a6a812c84ec59e20d749b')
+    res.is_ok(md5='0c7f1fde96836c22048bb43fce057db9')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='8f42933a418c82d2540c5f7daf6bcd1b')
+    res.is_ok(md5='8ff6eca199fe7beb4c5810463f45c59c')
 
 
 def run_dict_test():
