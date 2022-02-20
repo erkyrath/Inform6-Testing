@@ -9,7 +9,7 @@ Release 1;
 !### test (~~false), (~~true)
 !### test more complicated (but still collapsible) expressions
 !### test jumping into omitted stanzas (should fail)
-!### test switch statements, omitting part, all, default clause...
+!### test switch statements, omitting part or all; the all-return case
 !### test custom opcodes (branchy and nonreturny)
 
 !### only set the mtdt flag on "if" conditions, not do-until/while

@@ -520,13 +520,13 @@ def run_checksum_test():
     res.is_ok(md5='289960babbdd6b1aa0715d332b690b19')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='85bfafb6ecae7c9e26e34013d2525572')
+    res.is_ok(md5='b7b6f7c83dfe5613ba1396efc42332c1')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='d70d70b7ee4ac688eaa474ccb38b1ef6')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='28444eb02eb9a6ce721cb9b8ae2cee5c')
+    res.is_ok(md5='568a899c30b4d8daa406eb56f35669dc')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='768633798d882cac993d4997b70adda3', warnings=0)
@@ -571,10 +571,10 @@ def run_checksum_test():
     res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='0c7f1fde96836c22048bb43fce057db9')
+    res.is_ok(md5='a50f420a145ac096fcaf6e833c7c308c')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='8ff6eca199fe7beb4c5810463f45c59c')
+    res.is_ok(md5='da762f21b83789dc6acb7af95eec39ee')
 
 
 def run_dict_test():
