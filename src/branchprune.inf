@@ -16,7 +16,6 @@ Release 1;
 !### eliminate @jump (here)
 !### eliminate @jz (here) also. (But if the arg is sp, we still have to pop it.)
 
-!### compile text on unreachable lines? (only skip when STRCTX_GAME)
 !### compile function-used flag on unreachable lines?
 
 !### final verification of this file
@@ -108,6 +107,7 @@ Global failures;
 ];
 
 [ RunTest;
+	OmittedStringsTest();
 	RunAllTests();
 
 	new_line;
@@ -115,6 +115,24 @@ Global failures;
 		print "All passed.^";
 	else
 		print failures, " errors!^";
+];
+
+Constant stringconst = "This is a string constant, which will wind up in the static strings area.";
+
+[ OmittedStringsTest val;
+	! This just prints stuff. You have to decompile with txd to verify that
+	! the correct strings were included.
+
+	val = "This is a string.";
+	print "This is a long string, which will wind up in the static strings area.^";
+	print "Short.^";
+	if (0) {
+		val = "This should NOT appear.";
+		print "This is a long string, which will NOT wind up in the static strings area.^";
+		print "NOT short.^";
+	}
+	val = stringconst;
+	new_line;
 ];
 
 [ RunAllTests;
