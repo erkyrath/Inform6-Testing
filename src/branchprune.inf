@@ -140,6 +140,16 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	check_value(TestManyLabels(0), 3);
 	print ".^";
 
+	print "TestNestedLabels(11): ";
+	check_value(TestNestedLabels(11), 23);
+	print ".^";
+	print "TestNestedLabels(6): ";
+	check_value(TestNestedLabels(6), 6);
+	print ".^";
+	print "TestNestedLabels(1): ";
+	check_value(TestNestedLabels(1), 7);
+	print ".^";
+
 	print "TestJumpCode: ";
 	check_value(TestJumpCode(), 3);
 	print ".^";
@@ -291,6 +301,26 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	.Foo7;
 	val++;
 	jump Foo5;
+];
+
+[ TestNestedLabels val;
+	if (val >= 10) {
+		jump FooA;
+		.FooB;
+		val++;
+		return val;
+		.FooA;
+		val = val * 2;
+		jump FooB;
+	}
+	if (val >= 5) {
+		return val;
+		.FooC;
+		val = val * 3;
+		jump FooB;
+	}
+	val++;
+	jump FooC;
 ];
 
 [ TestJumpCode val;
