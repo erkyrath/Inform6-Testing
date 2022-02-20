@@ -701,7 +701,7 @@ def run_directives_test():
     res.is_ok(md5='ebdbb9f121b45bcfc54a41c71d87c029')
 
     res = compile('ifelsedirecttest.inf', glulx=True)
-    res.is_ok(md5='4f01fa9be84cfe4ee79bd5dda19a7f6c')
+    res.is_ok(md5='f920c5501f80336d480935297d5bbe69')
 
     res = compile('classordertest.inf')
     res.is_ok(md5='d065c980637c8531133e75bf040e1731')
@@ -1605,7 +1605,7 @@ def run_omit_unused_routines():
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='8d82276ef90bb42474c73d859baa7401')
+    res.is_ok(md5='e9b372eac57ae75ccfb529e1ef3f2289')
 
 
 test_catalog = [
