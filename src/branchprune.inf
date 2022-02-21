@@ -5,10 +5,6 @@ Release 1;
 
 ! This is a compiler unit test for stripping dead branches from routines.
 
-
-!### test (~~false), (~~true)
-!### test more complicated (but still collapsible) expressions
-!### test switch statements, omitting part or all; the all-return case
 !### test custom opcodes (branchy and nonreturny)
 
 !### only set the mtdt flag on "if" conditions, not do-until/while
@@ -145,6 +141,10 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	print ".^";
 	print "TestNestedLabels(1): ";
 	check_value(TestNestedLabels(1), 7);
+	print ".^";
+
+	print "TestCollapseExpr: ";
+	check_value(TestCollapseExpr(), 5);
 	print ".^";
 
 	print "TestJumpCode: ";
@@ -291,6 +291,27 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	check_value(TestSwitchAllReturn(6), 77);
 	print ".^";
 
+	print "TestSwitchJumps(1): ";
+	check_value(TestSwitchJumps(1), 11);
+	print ".^";
+	print "TestSwitchJumps(2): ";
+	check_value(TestSwitchJumps(2), 4);
+	print ".^";
+	print "TestSwitchJumps(3): ";
+	check_value(TestSwitchJumps(3), 3);
+	print ".^";
+	print "TestSwitchJumps(4): ";
+	check_value(TestSwitchJumps(4), 4);
+	print ".^";
+	print "TestSwitchJumps(5): ";
+	check_value(TestSwitchJumps(5), -15);
+	print ".^";
+	print "TestSwitchJumps(6): ";
+	check_value(TestSwitchJumps(6), 7);
+	print ".^";
+	print "TestSwitchJumps(7): ";
+	check_value(TestSwitchJumps(7), 16);
+	print ".^";
 ];
 
 [ TestManyLabels val;
@@ -349,6 +370,16 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 ];
 
 #endif; ! BAD_JUMPS
+
+[ TestCollapseExpr;
+	! Should compile to:
+	!   return 5;
+	
+	if (3*4-2*6) {
+		return 4;
+	}
+	return 5;
+];
 
 [ TestJumpCode val;
 	! Should compile to:
@@ -736,6 +767,8 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 ];
 
 [ TestSwitchAllReturn val;
+	! Should omit the 99 line
+
 	switch (val) {
 		3: return 33;
 		4: return 44;
@@ -750,4 +783,33 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		default: return 0;
 	}
 	return 99;  ! warning: not reached
+];
+
+[ TestSwitchJumps val;
+	switch (val) {
+		1:
+			return 11;
+		2:
+			val++;
+			.Foo;
+			val++;
+			return val;
+		3:
+			return val;
+			.Bar;
+			val = val * 2;
+			return val;
+		4:
+			return val;
+			val++;   ! warning: not reached
+		5:
+			val = val * 3;
+		6:
+			jump Foo;
+		default:
+			val++;
+			jump Bar;
+	}
+
+	return -val;
 ];
