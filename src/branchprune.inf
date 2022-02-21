@@ -8,15 +8,12 @@ Release 1;
 
 !### test (~~false), (~~true)
 !### test more complicated (but still collapsible) expressions
-!### test jumping into omitted stanzas (should fail)
 !### test switch statements, omitting part or all; the all-return case
 !### test custom opcodes (branchy and nonreturny)
 
 !### only set the mtdt flag on "if" conditions, not do-until/while
 !### eliminate @jump (here)
 !### eliminate @jz (here) also. (But if the arg is sp, we still have to pop it.)
-
-!### compile function-used flag on unreachable lines?
 
 !### final verification of this file
 !### when all is working, maybe combine the two flags
@@ -279,6 +276,19 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 
 	print "TestForEmpty: ";
 	check_value(TestForEmpty(), 3);
+	print ".^";
+
+	print "TestSwitchAllReturn(2): ";
+	check_value(TestSwitchAllReturn(2), 1);
+	print ".^";
+	print "TestSwitchAllReturn(4): ";
+	check_value(TestSwitchAllReturn(4), 44);
+	print ".^";
+	print "TestSwitchAllReturn(5): ";
+	check_value(TestSwitchAllReturn(5), 66);
+	print ".^";
+	print "TestSwitchAllReturn(6): ";
+	check_value(TestSwitchAllReturn(6), 77);
 	print ".^";
 
 ];
@@ -725,3 +735,19 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	return 99;  ! warning: not reached
 ];
 
+[ TestSwitchAllReturn val;
+	switch (val) {
+		3: return 33;
+		4: return 44;
+		5: break;
+		6: break;
+		default: return 1;
+	}
+	val++;
+	switch (val) {
+		6: return 66;
+		7: return 77;
+		default: return 0;
+	}
+	return 99;  ! warning: not reached
+];
