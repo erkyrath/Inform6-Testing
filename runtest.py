@@ -786,12 +786,11 @@ def run_debugflag_test():
 
 
 def run_prune_test():
-    ### md5 for all
     res = compile('branchprune.inf')
-    res.is_ok()
+    res.is_ok(md5='968b3fb3ad05700d066b0aa00d34cdca')
 
     res = compile('branchprune.inf', glulx=True)
-    res.is_ok()
+    res.is_ok(md5='9b3e0615eb642bc2a82d4d7bb933eaaa')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
     res.is_error()
@@ -800,28 +799,28 @@ def run_prune_test():
     res.is_error()
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
-    res.is_ok()
+    res.is_ok(md5='1e699f3ea055dc81472c75f25bf74359')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
-    res.is_ok()
+    res.is_ok(md5='2dc212a34c327ea07a830d02a0db724f')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
-    res.is_ok()
+    res.is_ok(md5='0602c47d233e467232bb1955eb5bb822')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
-    res.is_ok()
+    res.is_ok(md5='4aa56a0cefa7083ccc302ce0a9968077')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok()
+    res.is_ok(md5='b34a30ce9164f4e5c485700680658220')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok()
+    res.is_ok(md5='a3fc68a505d1a0b0e2bbfaee3e06fbda')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok()
+    res.is_ok(md5='d0d981c8e774c93581fd3877fcc5ccb9')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok()
+    res.is_ok(md5='f1889acf432651300e1c6267115e7ce8')
 
 
 def run_defineopt_test():
