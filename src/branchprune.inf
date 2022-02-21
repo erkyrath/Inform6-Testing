@@ -5,9 +5,6 @@ Release 1;
 
 ! This is a compiler unit test for stripping dead branches from routines.
 
-!### final verification of this file
-!### when all is working, maybe combine the two flags
-
 #ifdef TARGET_ZCODE;
 Constant HDR_GAMERELEASE      = $02;     ! word
 Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
@@ -430,7 +427,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	if (1) {
 		jump Label;
 	}
-	val++;  ! warning: not reached (### shouldn't warn)
+	val++;  ! warning: not reached
 	.Label;
 	return val;
 ];
