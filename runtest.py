@@ -647,7 +647,7 @@ def run_dict_test():
     res.is_ok(md5='6576bac38754f153d61912ce6b86420c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='303bed617c540e57664fb53133485d8f', warnings=0)
+    res.is_ok(md5='2fd52ee834906823f37a760b83950aac', warnings=0)
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
@@ -1606,19 +1606,19 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='216d39979906475e31263ac0a7f1f2e1')
+    res.is_ok(md5='8377aa4e1b25c39648f9bf525623b080')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='e9b372eac57ae75ccfb529e1ef3f2289')
+    res.is_ok(md5='1e3ff0aa9673a982da2c206d55a1ab4c')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='2ca5d48032ac9fb4ab2cefce5d3a86b1')
+    res.is_ok(md5='07bd8dcf2c8f3a8e544a53584e417ad2')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='2c326cb8370038b03333f341a97f5379')
+    res.is_ok(md5='5ebeba63f77407fc175f00055f565933')
 
     
 
