@@ -965,19 +965,19 @@ def run_modules_test():
     res.is_ok(md5='20c77826387d640c508806d4f9e2fb0e')
     
     res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='5b865aec7db35dee89bfd92934247965')
+    res.is_ok(md5='e557eb1f50620b213fcaf2a4ab8ad22a')
 
     # Now build Advent using the two modules we just generated.
     res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
-    res.is_ok(md5='668a12ea09f514e06a698e90947cd778')
+    res.is_ok(md5='3c3a2e780e8a6c5b6334bbcfd98d5abe')
 
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='768633798d882cac993d4997b70adda3', warnings=0)
+    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='800630c7566f02b1f7e629973640403a', warnings=0)
+    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff', warnings=0)
 
 
 def run_warnings_test():
@@ -1396,19 +1396,19 @@ def run_max_abbrevs():
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='cebcba3fdf90fe813abdf4f1ffc2edc8')
+    res.is_ok(md5='6f89678d15576c59e3e9d6c363e4c16d')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='ec17dbc16cb424fec9f5e08e1b6cf729')
+    res.is_ok(md5='62ae27e77478d1a7ce1722828a16e3f2')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='36b1868a777b136b06af17c5d6d2efa7')
+    res.is_ok(md5='16c89d3a4f42bb84f26c8eadb43c110e')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='5e00f832db44cc1d5c675cba394021da')
+    res.is_ok(md5='7f081314e6fdaa2612f971457f54bec5')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='88746cdd917c6b896c272e757a683b7a')
+    res.is_ok(md5='f36b9323d23607d7f5db97bc551201c0')
     
     res = compile('max_abbrevs_test_64.inf', memsettings={})
     res.is_ok()
