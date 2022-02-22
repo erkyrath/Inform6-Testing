@@ -514,43 +514,43 @@ def run_checksum_test():
     res.is_ok(md5='3e2dfea6646803414e83c4fdb9b1ba24', warnings=1)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='0dd6573f778f75df823e81be82b61b51')
+    res.is_ok(md5='0f709576e8bb4b82b375853c542c2251')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='289960babbdd6b1aa0715d332b690b19')
+    res.is_ok(md5='883f612b2ab1bbff03d410dd6572534d')
 
     res = compile('i7-min-6G60.inf', glulx=True)
     res.is_ok(md5='b7b6f7c83dfe5613ba1396efc42332c1')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='d70d70b7ee4ac688eaa474ccb38b1ef6')
+    res.is_ok(md5='99c922d52a920da759ee5215a9af6e11')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
     res.is_ok(md5='568a899c30b4d8daa406eb56f35669dc')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='768633798d882cac993d4997b70adda3', warnings=0)
+    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='c3bd59d978261ba021738873bb86787d', warnings=0)
+    res.is_ok(md5='4575981f693b7295250924ea6ec08d04', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='800630c7566f02b1f7e629973640403a', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
-    res.is_ok(md5='0e27f2ad8c4755646fcef5e2138a9dec', warnings=0)
+    res.is_ok(md5='05d1df683eacae0afe021eeeab3575d4', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
     res.is_ok(md5='9419eb2a5f84926283eddf5af9c738fa', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
-    res.is_ok(md5='f77c5ac640edfc08d5f2ff3b787b307e', warnings=0)
+    res.is_ok(md5='d9f71e15b6772c897b3091ab53dca498', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
     res.is_ok(md5='e6aaad2520412ff68b7eb1d91493558a', warnings=0)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
-    res.is_ok(md5='539a6fa1f7715007b098f23531b2556d', warnings=0)
+    res.is_ok(md5='9a51e6e4dcbdaa070462c4c5b15dd554', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
     res.is_ok(md5='ababc5d859ff8e49d93bf4347b71b7da', warnings=2)
@@ -571,10 +571,10 @@ def run_checksum_test():
     res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='a50f420a145ac096fcaf6e833c7c308c')
+    res.is_ok(md5='0cef1ce737d5d849d93de48aed1ee289')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='da762f21b83789dc6acb7af95eec39ee')
+    res.is_ok(md5='bc88b7d54273ea3313911736ddb869af')
 
 
 def run_dict_test():
@@ -787,7 +787,7 @@ def run_debugflag_test():
 
 def run_prune_test():
     res = compile('branchprune.inf')
-    res.is_ok(md5='968b3fb3ad05700d066b0aa00d34cdca')
+    res.is_ok(md5='303481b4a16c36007753c5cc19e9297d')
 
     res = compile('branchprune.inf', glulx=True)
     res.is_ok(md5='9b3e0615eb642bc2a82d4d7bb933eaaa')
@@ -799,16 +799,16 @@ def run_prune_test():
     res.is_error()
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
-    res.is_ok(md5='1e699f3ea055dc81472c75f25bf74359')
+    res.is_ok(md5='59faf1ec93ae5446155378dcc1ba27ff')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
-    res.is_ok(md5='2dc212a34c327ea07a830d02a0db724f')
+    res.is_ok(md5='315cc5042202891003f563183765b292')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
-    res.is_ok(md5='0602c47d233e467232bb1955eb5bb822')
+    res.is_ok(md5='9d73aa782649a17cf0499a139376e838')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
-    res.is_ok(md5='4aa56a0cefa7083ccc302ce0a9968077')
+    res.is_ok(md5='65e76ec9ee3deeec44f7a07391dfac87')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='b34a30ce9164f4e5c485700680658220')
