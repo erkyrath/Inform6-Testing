@@ -511,7 +511,7 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='3e2dfea6646803414e83c4fdb9b1ba24', warnings=1)
+    res.is_ok(md5='f25137b77c5eccdd5345512da345b4bf', warnings=1)
     
     res = compile('i7-min-6G60.inf')
     res.is_ok(md5='0f709576e8bb4b82b375853c542c2251')
@@ -520,13 +520,13 @@ def run_checksum_test():
     res.is_ok(md5='883f612b2ab1bbff03d410dd6572534d')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='b7b6f7c83dfe5613ba1396efc42332c1')
+    res.is_ok(md5='14f0fc72123d200cc30bfcacb07b17e0')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='99c922d52a920da759ee5215a9af6e11')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='568a899c30b4d8daa406eb56f35669dc')
+    res.is_ok(md5='fd771491440ca81e5eacffaf852a3749')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
@@ -535,19 +535,19 @@ def run_checksum_test():
     res.is_ok(md5='4575981f693b7295250924ea6ec08d04', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='800630c7566f02b1f7e629973640403a', warnings=0)
+    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
     res.is_ok(md5='05d1df683eacae0afe021eeeab3575d4', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='9419eb2a5f84926283eddf5af9c738fa', warnings=0)
+    res.is_ok(md5='8f5c09ed7e6b1709b254fddbb743d46d', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
     res.is_ok(md5='d9f71e15b6772c897b3091ab53dca498', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='e6aaad2520412ff68b7eb1d91493558a', warnings=0)
+    res.is_ok(md5='ddd599a31e2f817d54e1f47da52ab24c', warnings=0)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
     res.is_ok(md5='9a51e6e4dcbdaa070462c4c5b15dd554', warnings=0)
@@ -790,7 +790,7 @@ def run_prune_test():
     res.is_ok(md5='303481b4a16c36007753c5cc19e9297d')
 
     res = compile('branchprune.inf', glulx=True)
-    res.is_ok(md5='9b3e0615eb642bc2a82d4d7bb933eaaa')
+    res.is_ok(md5='ef13953c0b1b5bfa29503513109f7bc2')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
     res.is_error()
@@ -811,16 +811,16 @@ def run_prune_test():
     res.is_ok(md5='65e76ec9ee3deeec44f7a07391dfac87')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b34a30ce9164f4e5c485700680658220')
+    res.is_ok(md5='9913b0988aa84e87a2b3f16e359af698')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='a3fc68a505d1a0b0e2bbfaee3e06fbda')
+    res.is_ok(md5='62a59f140375aa82eaac72935e4c9462')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok(md5='d0d981c8e774c93581fd3877fcc5ccb9')
+    res.is_ok(md5='8e13deb55165b3aa5a29a1050311694e')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='f1889acf432651300e1c6267115e7ce8')
+    res.is_ok(md5='a070fcb2c433b49e4c0f8ca2259d62c6')
 
 
 def run_defineopt_test():
