@@ -138,6 +138,12 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	check_value(TestCollapseExpr(), 5);
 	print ".^";
 
+	#ifdef BAD_JUMPS;
+	print "TestBadJumps: ";
+	check_value(TestBadJumps(4), 15);
+	print ".^";
+	#endif; ! BAD_JUMPS
+
 	print "TestJumpCode: ";
 	check_value(TestJumpCode(), 3);
 	print ".^";
