@@ -355,6 +355,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 
 ! This function throws a compilation error, because the label FooC is
 ! unconditionally stripped.
+! Setting $STRIP_UNREACHABLE_LABELS=0 avoids the error.
 [ TestBadJumps val;
 	if (0) {
 		return val;
