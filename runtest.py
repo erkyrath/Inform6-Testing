@@ -70,7 +70,7 @@ errorlist = []
 def compile(srcfile, destfile=None,
             glulx=False, zversion=None, versiondirective=False,
             includedir=None, moduledir=None,
-            memsettings={}, define={},
+            memsettings={}, define={}, trace={},
             debug=False, strict=True,
             economy=False, makeabbrevs=False,
             debugfile=False,
@@ -118,6 +118,8 @@ def compile(srcfile, destfile=None,
             showargs.append('$#%s' % (key,))
         else:
             showargs.append('$#%s=%d' % (key, val))
+    for (key, val) in list(trace.items()):
+        showargs.append('$!%s=%s' % (key, val,))
     if debug:
         showargs.append('-D')
     if not strict:
@@ -962,6 +964,11 @@ def run_warnings_test():
     res.is_ok(md5='97be08b47ad8b7566d9590944fd3fbdd', warnings=4)
 
 
+def run_trace_test():
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'MEM':1 })
+    res.is_ok()
+
+
 def run_abbreviations_test():
     res = compile('max_abbrev_len_test.inf')
     res.is_memsetting('MAX_ABBREV_LENGTH')
@@ -1586,6 +1593,7 @@ test_catalog = [
     ('MODULES', run_modules_test),
     ('DEBUGFILE', run_debugfile_test),
     ('WARNINGS', run_warnings_test),
+    ('TRACE', run_trace_test),
     ('ABBREVIATIONS', run_abbreviations_test),
     ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
     ('MAX_IFDEF_STACK', run_max_ifdef_stack),
