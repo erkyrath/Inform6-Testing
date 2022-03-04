@@ -965,7 +965,70 @@ def run_warnings_test():
 
 
 def run_trace_test():
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ACTIONS':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ASM':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ASM':2 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ASM':3 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ASM':4 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'DICT':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'DICT':2 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'EXPR':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'EXPR':2 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'EXPR':3 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'MAP':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'MAP':2 })
+    res.is_ok()
+
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'MEM':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'OBJECTS':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'PROPS':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'STATS':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'SYMBOLS':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'SYMBOLS':2 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'TOKENS':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'TOKENS':2 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'TOKENS':3 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'VERBS':1 })
     res.is_ok()
 
 
