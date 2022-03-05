@@ -1004,6 +1004,33 @@ def run_trace_test():
     res = compile('abbrevtest.inf', economy=True, trace={ 'FREQ':1 })
     res.is_ok()
     
+    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':1 })
+    res.is_ok()
+    
+    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':2 })
+    res.is_ok()
+    
+    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':3 })
+    res.is_ok()
+    
+    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':4 })
+    res.is_ok()
+    
+    res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':4 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':1 })
+    res.is_ok()
+    
+    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':2 })
+    res.is_ok()
+    
+    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':3 })
+    res.is_ok()
+    
+    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':4 })
+    res.is_ok()
+    
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'MAP':1 })
     res.is_ok()
 
