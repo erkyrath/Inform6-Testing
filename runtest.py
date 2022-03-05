@@ -995,6 +995,9 @@ def run_trace_test():
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'EXPR':3 })
     res.is_ok()
 
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'FILES':1 })
+    res.is_ok()
+
     res = compile('abbrevtest.inf', makeabbrevs=True, trace={ 'FINDABBREVS':1 })
     res.is_ok()
     
