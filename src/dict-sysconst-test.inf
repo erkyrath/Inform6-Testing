@@ -1,0 +1,116 @@
+Constant Story "Dict-System-Constant Test";
+Constant Headline "Not a game.^";
+
+! Check the use of #dictionary_table, etc in Z-code.
+! (Z-code only.)
+
+Release 1;
+
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+Constant HDR_HIGHMEMORY    $04;     ! word
+Constant HDR_DICTIONARY    $08;     ! word
+Constant HDR_STATICMEMORY  $0E;     ! word
+
+Global failures;
+
+[ Main;
+	Banner();
+	new_line;
+	
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #Endif; ! TARGET_GLULX
+];
+
+[ check_value val1 val2;
+	print val1;
+	if (val1 ~= val2) {
+		failures++;
+		print " (ERROR, should be ", val2, ")";
+	}
+];
+
+[ RunTest;
+	print "#dictionary_table: ";
+	check_value(#dictionary_table, HDR_DICTIONARY-->0);
+	print ".^";
+
+	print "#grammar_table: ";
+	check_value(#grammar_table, HDR_STATICMEMORY-->0);
+	print ".^";
+
+	print "#readable_memory_offset: ";
+	check_value(#readable_memory_offset, HDR_HIGHMEMORY-->0);
+	print ".^";
+
+	print "JumpSub: ";
+	check_value(#actions_table-->(##Jump), JumpSub);
+	print ".^";
+
+	print "WaitSub: ";
+	check_value(#actions_table-->(##Wait), WaitSub);
+	print ".^";
+
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
+];
+
+[ JumpSub;
+	print_ret "Jumped.";
+];
+[ WaitSub; ];
+
+Verb 'jump' * -> Jump;
+Verb 'wait' 'z//' * -> Wait;

@@ -297,7 +297,12 @@ class Result:
                         if self.memsetting is None:
                             self.memsetting = 'MAX_VERB_WORD_SIZE'
                     continue
-                    
+
+                match = re.match(r'.*.Compiler errors. should never occur.*', ln)
+                if (match):
+                    error(self, 'Compiler error')
+                    continue
+                
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
                 if (match):
                     outlines += 1
@@ -648,6 +653,10 @@ def run_dict_test():
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
     res.is_ok(md5='2fd52ee834906823f37a760b83950aac', warnings=0)
+
+    res = compile('dict-sysconst-test.inf')
+    res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
