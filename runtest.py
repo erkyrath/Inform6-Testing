@@ -297,7 +297,12 @@ class Result:
                         if self.memsetting is None:
                             self.memsetting = 'MAX_VERB_WORD_SIZE'
                     continue
-                    
+
+                match = re.match(r'.*.Compiler errors. should never occur.*', ln)
+                if (match):
+                    error(self, 'Compiler error')
+                    continue
+                
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
                 if (match):
                     outlines += 1
