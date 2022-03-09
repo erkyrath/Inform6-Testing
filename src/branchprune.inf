@@ -209,11 +209,19 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	print ".^";
 
 	print "TestWhileOne: ";
-	check_value(TestWhileOne(5), 6);
+	check_value(TestWhileOne(), 3);
 	print ".^";
 
 	print "TestDoUntilZero: ";
-	check_value(TestDoUntilZero(8), 9);
+	check_value(TestDoUntilZero(), 3);
+	print ".^";
+
+	print "TestWhileOneReturn: ";
+	check_value(TestWhileOneReturn(5), 6);
+	print ".^";
+
+	print "TestDoUntilZeroReturn: ";
+	check_value(TestDoUntilZeroReturn(8), 9);
 	print ".^";
 
 	print "TestIfZeroJump: ";
@@ -539,16 +547,46 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 [ TestWhileOne val;
 	! Should compile to:
 	!   val++;
+	!   if (val != 3) jump L2;
+	!   return val;
+	!   .L2: jump to loop
+	
+	while (1) {
+		val++;
+		if (val == 3)
+			return val;
+	}
+	return 5;  ! warning: not reacheed
+];
+
+[ TestDoUntilZero val;
+	! Should compile to:
+	!   val++;
+	!   if (val != 3) jump L2;
+	!   return val;
+	!   .L2: jump to loop
+	
+	do {
+		val++;
+		if (val == 3)
+			return val;
+	} until (0);
+	return 5;   !### should warn
+];
+
+[ TestWhileOneReturn val;
+	! Should compile to:
+	!   val++;
 	!   return val;
 	
 	while (1) {
 		val++;
 		return val;
-	}                ! warning: not reached
+	}                ! warning: not reached (on loop jump)
 	return 5;
 ];
 
-[ TestDoUntilZero val;
+[ TestDoUntilZeroReturn val;
 	! Should compile to:
 	!   val++;
 	!   return val;
@@ -556,7 +594,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	do {
 		val++;
 		return val;
-	} until (0);  ! warning: not reached
+	} until (0);  ! warning: not reached (on loop jump)
 	return 5;
 ];
 
