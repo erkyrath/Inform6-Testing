@@ -455,9 +455,9 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		return 3;
 	}
 	else {
-		return 4;  ! warning: not reached (### shouldn't)
+		return 4;
 	}
-	return 5;  ! ought to warn but doesn't
+	return 5;  ! ### ought to warn but doesn't
 ];
 
 [ TestIfZeroElse;
@@ -498,9 +498,9 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		return 22;
 	}
 	else {
-		return 33;  ! warning: not reached (### shouldn't)
+		return 33;
 	}
-	return 99;  ! ought to warn but doesn't
+	return 99;  ! warning: not reached
 ];
 
 [ TestIfOneRTrueElse;
@@ -509,7 +509,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	
 	if (1) rtrue;
 	else rfalse;
-	return 5;  ! ought to warn but doesn't
+	return 5;  ! ### ought to warn but doesn't
 ];
 
 [ TestIfZeroRTrueElse;
@@ -556,7 +556,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		if (val == 3)
 			return val;
 	}
-	return 5;  ! warning: not reacheed
+	return 5;  ! warning: not reached
 ];
 
 [ TestDoUntilZero val;
@@ -571,7 +571,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		if (val == 3)
 			return val;
 	} until (0);
-	return 5;   !### should warn
+	return 5;   ! warning: not reached
 ];
 
 [ TestWhileOneReturn val;
@@ -595,7 +595,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		val++;
 		return val;
 	} until (0);  ! warning: not reached (on loop jump)
-	return 5;
+	return 5;  ! warning: not reached
 ];
 
 [ TestIfZeroJump val;
@@ -684,7 +684,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		}
 		val2 = val2 + 10;
 	} until (false);
-	return;  ! warning: not reached? ### should warn
+	return;  ! warning: not reached
 	.Break2;
 
 	return val + val2;
