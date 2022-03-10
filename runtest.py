@@ -772,6 +772,9 @@ def run_directives_test():
     res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None}, glulx=True)
     res.is_ok(md5='7e0d5177b921138ddd71e55fa2f71112', warnings=1)
 
+    res = compile('max_link_directive_length.inf')
+    res.is_error()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
