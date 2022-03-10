@@ -702,7 +702,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	else {
 		return 4;
 	}
-	return 5;
+	return 5;  !### ought to warn?
 ];
 
 [ TestIfLoopSequence val;
