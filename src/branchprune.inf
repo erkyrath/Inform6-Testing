@@ -180,6 +180,14 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	check_value(TestIfZeroElse(), 4);
 	print ".^";
 
+	print "TestIfOneElseDone: ";
+	check_value(TestIfOneElseDone(), 3);
+	print ".^";
+
+	print "TestIfZeroElseDone: ";
+	check_value(TestIfZeroElseDone(), 4);
+	print ".^";
+
 	print "TestIfElseIfElse(1): ";
 	check_value(TestIfElseIfElse(1), 11);
 	print ".^";
@@ -502,6 +510,32 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		return 4;
 	}
 	return 5;  ! warning: not reached
+];
+
+[ TestIfOneElseDone;
+	! Should compile to:
+	!   return 3;
+	! (no warnings)
+	
+	if (1) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+];
+
+[ TestIfZeroElseDone;
+	! Should compile to:
+	!   return 4;
+	! (no warnings)
+	
+	if (0) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
 ];
 
 [ TestIfElseIfElse val;
