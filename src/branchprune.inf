@@ -152,6 +152,14 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	check_value(TestDoubleReturn(10), 11);
 	print ".^";
 
+	print "TestIfOneRFalse: ";
+	check_value(TestIfOneRFalse(), 0);
+	print ".^";
+
+	print "TestIfZeroRFalse: ";
+	check_value(TestIfZeroRFalse(), 5);
+	print ".^";
+
 	print "TestIfOneReturn: ";
 	check_value(TestIfOneReturn(), 2);
 	print ".^";
@@ -411,6 +419,26 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	val++;
 	return val;
 	rfalse;
+];
+
+[ TestIfOneRFalse;
+	! Should compile to:
+	!   return 0;
+	! (no warning)
+	
+	if (1) rfalse;
+	
+	return 5;
+];
+
+[ TestIfZeroRFalse;
+	! Should compile to:
+	!   return 5;
+	! (no warning)
+	
+	if (0) rfalse;
+	
+	return 5;
 ];
 
 [ TestIfOneReturn;
