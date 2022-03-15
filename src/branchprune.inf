@@ -416,16 +416,18 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 [ TestIfOneReturn;
 	! Should compile to:
 	!   return 2;
+	! (no warning)
 	
 	if (1) {
 		return 2;
 	}
-	return 3;  ! warning: not reached
+	return 3;
 ];
 
 [ TestIfZeroReturn;
 	! Should compile to:
 	!   return 3;
+	! (no warning)
 	
 	if (0) {
 		return 2;
@@ -437,12 +439,13 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	! Should compile to:
 	!   val = 4;
 	!   return val;
+	! (no warning)
 	
 	val = 4;
 	if (1) {
 		jump Label;
 	}
-	val++;  ! warning: not reached
+	val++;
 	.Label;
 	return val;
 ];
@@ -457,7 +460,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	else {
 		return 4;
 	}
-	return 5;  ! ### ought to warn but doesn't
+	return 5;  ! warning: not reached
 ];
 
 [ TestIfZeroElse;
@@ -509,7 +512,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	
 	if (1) rtrue;
 	else rfalse;
-	return 5;  ! ### ought to warn but doesn't
+	return 5;  ! warning: not reached
 ];
 
 [ TestIfZeroRTrueElse;
@@ -526,7 +529,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	!   return 4;
 	
 	while (0) {
-		return 3;
+		return 3; ! warning: not reached
 	}
 	return 4;
 ];
@@ -582,8 +585,8 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	while (1) {
 		val++;
 		return val;
-	}                ! warning: not reached (on loop jump)
-	return 5;
+	}              ! warning: not reached (on loop jump)
+	return 5;      ! (no warning, already had one)
 ];
 
 [ TestDoUntilZeroReturn val;
@@ -595,7 +598,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 		val++;
 		return val;
 	} until (0);  ! warning: not reached (on loop jump)
-	return 5;  ! warning: not reached
+	return 5;     ! (no warning, already had one)
 ];
 
 [ TestIfZeroJump val;
@@ -693,6 +696,7 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 [ TestIfIfSequence val;
 	! Should compile to:
 	!   return 0;
+	! (no warnings)
 	
 	if (1) rfalse;
 	val++;
@@ -702,12 +706,13 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	else {
 		return 4;
 	}
-	return 5;  !### ought to warn?
+	return 5;
 ];
 
 [ TestIfLoopSequence val;
 	! Should compile to:
 	!   return 0;
+	! (no warnings)
 	
 	if (1) rfalse;
 	val++;
@@ -740,11 +745,11 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	!   return 4;
 	
 	while (0) {
-		if (val == 2) break;
+		if (val == 2) break;  ! warning: not reached
 		val++;
 	}
 	while (0) {
-		if (val == 2) continue;
+		if (val == 2) continue; ! warning: not reached
 		val++;
 	}
 	return 4;
