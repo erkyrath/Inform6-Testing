@@ -796,10 +796,10 @@ def run_debugflag_test():
 
 def run_prune_test():
     res = compile('branchprune.inf')
-    res.is_ok(md5='de7cbb50520be9bfd6cc9dbafbe6045b')
+    res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12')
 
     res = compile('branchprune.inf', glulx=True)
-    res.is_ok(md5='20f5d819ca34587f3af47ab28a897bc3')
+    res.is_ok(md5='fd2f416173afc0898d687ba6f68f222c')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
     res.is_error()
@@ -808,10 +808,10 @@ def run_prune_test():
     res.is_error()
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 })
-    res.is_ok(md5='9121e97067d776dd4aa9c2c8276bc2b6')
+    res.is_ok(md5='cd66fef4890d2640c9717a9d5f0afc20')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
-    res.is_ok(md5='a5e04d7b511607f21f5edce032d0fb6d')
+    res.is_ok(md5='92d1f04837095a2cb64672d7fe453927')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
     res.is_ok(md5='59faf1ec93ae5446155378dcc1ba27ff')
