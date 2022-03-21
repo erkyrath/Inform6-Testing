@@ -1,0 +1,81 @@
+
+#Ifdef COMPILE_SACK;
+Constant SACK_OBJECT = sack;
+#Endif; ! COMPILE_SACK
+
+#Ifdef COMPILE_TASKS;
+
+! Note that TASKS_PROVIDED==1 means tasks are *not* provided. (1 is the
+! default value; this statement defines it as zero.)
+Constant TASKS_PROVIDED;
+
+Constant NUMBER_TASKS = 2;
+Constant MAX_SCORE = 20;
+Array task_scores -> 5 15;
+
+#Endif; ! COMPILE_TASKS
+
+Include "Parser";
+Include "VerbLib";
+
+Object testroom "Test Room"
+  with
+    description "You are in a test room. Go south to exit.",
+	before [;
+		Jump:
+			if (TASKS_PROVIDED == 0)
+				Achieved(1);
+			"You jump about.";
+	],
+	s_to [;
+		deadflag = 2;
+		"You win!";
+	],
+  has light;
+
+Object -> rock "rock"
+  with
+    name 'rock',
+	before [;
+		Touch:
+			if (TASKS_PROVIDED == 0) {
+				Achieved(0);
+			}
+			"You touch the rock.";
+	];
+
+Object -> pebble "pebble"
+  with
+    name 'pebble';
+
+Object -> stick "stick"
+  with
+    name 'stick';
+
+Object sack "sack"
+  with
+	name 'sack',
+	has container open openable;
+
+[ Initialise;
+	#Ifdef COMPILE_SACK;
+	print "COMPILE_SACK defined.^";
+	#Endif; ! COMPILE_SACK
+	#Ifdef COMPILE_TASKS;
+	print "COMPILE_TASKS defined.^";
+	#Endif; ! COMPILE_TASKS
+
+    location = testroom;
+	player.capacity = 2;
+	move sack to player;
+];
+
+[ PrintTaskName task;
+	switch (task) {
+		0: "touching the rock";
+		1: "jumping";
+	}
+];
+
+Include "Grammar";
+

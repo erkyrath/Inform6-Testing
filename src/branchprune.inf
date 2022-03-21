@@ -1,0 +1,918 @@
+Constant Story "BranchPruneTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! This is a compiler unit test for stripping dead branches from routines.
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+Global failures;
+
+[ Main;
+    #ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 0;
+    #endif; ! TARGET_GLULX
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #Endif; ! TARGET_GLULX
+];
+
+[ check_value val1 val2;
+	print val1;
+	if (val1 ~= val2) {
+		failures++;
+		print " (ERROR, should be ", val2, ")";
+	}
+];
+
+[ RunTest;
+	OmittedStringsTest();
+	RunAllTests();
+
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
+];
+
+Constant stringconst = "This is a string constant, which will wind up in the static strings area.";
+
+[ OmittedStringsTest val;
+	! This just prints stuff. You have to decompile with txd to verify that
+	! the correct strings were included.
+
+	val = "This is a string.";
+	print "This is a long string, which will wind up in the static strings area.^";
+	print "Short.^";
+	if (0) {
+		val = "This should NOT appear.";
+		print "This is a long string, which will NOT wind up in the static strings area.^";
+		print "NOT short.^";
+	}
+	val = stringconst;
+	new_line;
+];
+
+[ RunAllTests;
+	print "TestManyLabels: ";
+	check_value(TestManyLabels(0), 3);
+	print ".^";
+
+	print "TestNestedLabels(11): ";
+	check_value(TestNestedLabels(11), 23);
+	print ".^";
+	print "TestNestedLabels(6): ";
+	check_value(TestNestedLabels(6), 6);
+	print ".^";
+	print "TestNestedLabels(1): ";
+	check_value(TestNestedLabels(1), 7);
+	print ".^";
+
+	print "TestCollapseExpr: ";
+	check_value(TestCollapseExpr(), 5);
+	print ".^";
+
+	#ifdef BAD_JUMPS;
+	print "TestBadJumps: ";
+	check_value(TestBadJumps(4), 15);
+	print ".^";
+	#endif; ! BAD_JUMPS
+
+	print "TestJumpCode: ";
+	check_value(TestJumpCode(), 3);
+	print ".^";
+
+	print "TestDoubleReturn: ";
+	check_value(TestDoubleReturn(10), 11);
+	print ".^";
+
+	print "TestIfOneRFalse: ";
+	check_value(TestIfOneRFalse(), 0);
+	print ".^";
+
+	print "TestIfZeroRFalse: ";
+	check_value(TestIfZeroRFalse(), 5);
+	print ".^";
+
+	print "TestIfOneReturn: ";
+	check_value(TestIfOneReturn(), 2);
+	print ".^";
+
+	print "TestIfZeroReturn: ";
+	check_value(TestIfZeroReturn(), 3);
+	print ".^";
+
+	print "TestIfOneJump: ";
+	check_value(TestIfOneJump(), 4);
+	print ".^";
+
+	print "TestIfOneElse: ";
+	check_value(TestIfOneElse(), 3);
+	print ".^";
+
+	print "TestIfZeroElse: ";
+	check_value(TestIfZeroElse(), 4);
+	print ".^";
+
+	print "TestIfOneElseDone: ";
+	check_value(TestIfOneElseDone(), 3);
+	print ".^";
+
+	print "TestIfZeroElseDone: ";
+	check_value(TestIfZeroElseDone(), 4);
+	print ".^";
+
+	print "TestIfElseIfElse(1): ";
+	check_value(TestIfElseIfElse(1), 11);
+	print ".^";
+	print "TestIfElseIfElse(2): ";
+	check_value(TestIfElseIfElse(2), 22);
+	print ".^";
+	print "TestIfElseIfElse(3): ";
+	check_value(TestIfElseIfElse(3), 33);
+	print ".^";
+
+	print "TestIfElseIfOneElse(1): ";
+	check_value(TestIfElseIfOneElse(1), 11);
+	print ".^";
+	print "TestIfElseIfOneElse(2): ";
+	check_value(TestIfElseIfOneElse(2), 22);
+	print ".^";
+	print "TestIfElseIfOneElse(3): ";
+	check_value(TestIfElseIfOneElse(3), 22);
+	print ".^";
+
+	print "TestIfOneRTrueElse: ";
+	check_value(TestIfOneRTrueElse(), 1);
+	print ".^";
+
+	print "TestIfZeroRTrueElse: ";
+	check_value(TestIfZeroRTrueElse(), 0);
+	print ".^";
+
+	print "TestWhileZero: ";
+	check_value(TestWhileZero(), 4);
+	print ".^";
+
+	print "TestDoUntilOne: ";
+	check_value(TestDoUntilOne(), 5);
+	print ".^";
+
+	print "TestWhileOne: ";
+	check_value(TestWhileOne(), 3);
+	print ".^";
+
+	print "TestDoUntilZero: ";
+	check_value(TestDoUntilZero(), 3);
+	print ".^";
+
+	print "TestWhileOneReturn: ";
+	check_value(TestWhileOneReturn(5), 6);
+	print ".^";
+
+	print "TestDoUntilZeroReturn: ";
+	check_value(TestDoUntilZeroReturn(8), 9);
+	print ".^";
+
+	print "TestIfZeroJump: ";
+	check_value(TestIfZeroJump(), 5);
+	print ".^";
+
+	print "TestIfZeroBigBranch: ";
+	check_value(TestIfZeroBigBranch(), 7);
+	print ".^";
+
+	print "TestIfZeroLabelledBranch: ";
+	check_value(TestIfZeroLabelledBranch(), 8);
+	print ".^";
+
+	print "TestNestedBranch(4): ";
+	check_value(TestNestedBranch(4), 4);
+	print ".^";
+	print "TestNestedBranch(7): ";
+	check_value(TestNestedBranch(7), 100);
+	print ".^";
+
+	print "TestJumpFromLoop: ";
+	check_value(TestJumpFromLoop(), 54);
+	print ".^";
+
+	print "TestIfIfSequence: ";
+	check_value(TestIfIfSequence(), 0);
+	print ".^";
+
+	print "TestIfLoopSequence: ";
+	check_value(TestIfLoopSequence(), 0);
+	print ".^";
+
+	print "TestIfZeroLoopBreakContinue: ";
+	check_value(TestIfZeroLoopBreakContinue(), 3);
+	print ".^";
+
+	print "TestWhileZeroLoopBreakContinue: ";
+	check_value(TestWhileZeroLoopBreakContinue(), 4);
+	print ".^";
+
+	print "TestLoopJumpContinue: ";
+	check_value(TestLoopJumpContinue(), 3);
+	print ".^";
+
+	print "TestLoopJumpBreak: ";
+	check_value(TestLoopJumpBreak(), 5);
+	print ".^";
+
+	print "TestForTrueInc: ";
+	check_value(TestForTrueInc(), 5);
+	print ".^";
+
+	print "TestForTrue: ";
+	check_value(TestForTrue(), 6);
+	print ".^";
+
+	print "TestForEmpty: ";
+	check_value(TestForEmpty(), 3);
+	print ".^";
+
+	print "TestSwitchAllReturn(2): ";
+	check_value(TestSwitchAllReturn(2), 1);
+	print ".^";
+	print "TestSwitchAllReturn(4): ";
+	check_value(TestSwitchAllReturn(4), 44);
+	print ".^";
+	print "TestSwitchAllReturn(5): ";
+	check_value(TestSwitchAllReturn(5), 66);
+	print ".^";
+	print "TestSwitchAllReturn(6): ";
+	check_value(TestSwitchAllReturn(6), 77);
+	print ".^";
+
+	print "TestSwitchJumps(1): ";
+	check_value(TestSwitchJumps(1), 11);
+	print ".^";
+	print "TestSwitchJumps(2): ";
+	check_value(TestSwitchJumps(2), 4);
+	print ".^";
+	print "TestSwitchJumps(3): ";
+	check_value(TestSwitchJumps(3), 3);
+	print ".^";
+	print "TestSwitchJumps(4): ";
+	check_value(TestSwitchJumps(4), 4);
+	print ".^";
+	print "TestSwitchJumps(5): ";
+	check_value(TestSwitchJumps(5), -15);
+	print ".^";
+	print "TestSwitchJumps(6): ";
+	check_value(TestSwitchJumps(6), 7);
+	print ".^";
+	print "TestSwitchJumps(7): ";
+	check_value(TestSwitchJumps(7), 16);
+	print ".^";
+];
+
+[ TestManyLabels val;
+	.Foo1;
+	.Foo2;
+	if (val == 9) {
+		.Foo3;
+		.Foo4;
+	}
+	jump EndLabel;
+	return 0;  ! warning: not reached
+	.Foo5;
+	if (val == 3) {
+		return val;
+	}
+	.Foo6;
+	.EndLabel;
+	.Foo7;
+	val++;
+	jump Foo5;
+];
+
+[ TestNestedLabels val;
+	if (val >= 10) {
+		jump FooA;
+		.FooB;
+		val++;
+		return val;
+		.FooA;
+		val = val * 2;
+		jump FooB;
+	}
+	if (val >= 5) {
+		return val;
+		.FooC;
+		val = val * 3;
+		jump FooB;
+	}
+	val++;
+	jump FooC;
+];
+
+#ifdef BAD_JUMPS;
+
+! This function throws a compilation error, because the label FooC is
+! unconditionally stripped.
+! Setting $STRIP_UNREACHABLE_LABELS=0 avoids the error.
+[ TestBadJumps val;
+	if (0) {
+		return val;
+		.FooC;
+		val = val * 3;
+		return val;
+	}
+	val++;
+	jump FooC;  ! error: unreachable label
+];
+
+#endif; ! BAD_JUMPS
+
+[ TestCollapseExpr;
+	! Should compile to:
+	!   return 5;
+	
+	if (3*4-2*6) {
+		return 4;
+	}
+	return 5;
+];
+
+[ TestJumpCode val;
+	! Should compile to:
+	!   val = 3;
+	!   return val;
+	val = 3;
+	jump Label;
+	val++;  ! warning: not reached
+	.Label;
+	return val;
+];
+
+[ TestDoubleReturn val;
+	! (I7 generates code like this)
+	! Should compile to:
+	!   val++
+	!   return val;
+	
+	val++;
+	return val;
+	val++;  ! warning: not reached
+	return val;
+	val++;
+	return val;
+	rfalse;
+];
+
+[ TestIfOneRFalse;
+	! Should compile to:
+	!   return 0;
+	! (no warning)
+	
+	if (1) rfalse;
+	
+	return 5;
+];
+
+[ TestIfZeroRFalse;
+	! Should compile to:
+	!   return 5;
+	! (no warning)
+	
+	if (0) rfalse;
+	
+	return 5;
+];
+
+[ TestIfOneReturn;
+	! Should compile to:
+	!   return 2;
+	! (no warning)
+	
+	if (1) {
+		return 2;
+	}
+	return 3;
+];
+
+[ TestIfZeroReturn;
+	! Should compile to:
+	!   return 3;
+	! (no warning)
+	
+	if (0) {
+		return 2;
+	}
+	return 3;
+];
+
+[ TestIfOneJump val;
+	! Should compile to:
+	!   val = 4;
+	!   return val;
+	! (no warning)
+	
+	val = 4;
+	if (1) {
+		jump Label;
+	}
+	val++;
+	.Label;
+	return val;
+];
+
+[ TestIfOneElse;
+	! Should compile to:
+	!   return 3;
+	
+	if (1) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+	return 5;  ! warning: not reached
+];
+
+[ TestIfZeroElse;
+	! Should compile to:
+	!   return 4;
+	
+	if (0) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+	return 5;  ! warning: not reached
+];
+
+[ TestIfOneElseDone;
+	! Should compile to:
+	!   return 3;
+	! (no warnings)
+	
+	if (1) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+];
+
+[ TestIfZeroElseDone;
+	! Should compile to:
+	!   return 4;
+	! (no warnings)
+	
+	if (0) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+];
+
+[ TestIfElseIfElse val;
+	! Should omit the 99 line
+	
+	if (val == 1) {
+		return 11;
+	}
+	else if (val == 2) {
+		return 22;
+	}
+	else {
+		return 33;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestIfElseIfOneElse val;
+	! Should omit the 33 and 99 lines
+	
+	if (val == 1) {
+		return 11;
+	}
+	else if (1) {
+		return 22;
+	}
+	else {
+		return 33;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestIfOneRTrueElse;
+	! Should compile to:
+	!   return 1;
+	
+	if (1) rtrue;
+	else rfalse;
+	return 5;  ! warning: not reached
+];
+
+[ TestIfZeroRTrueElse;
+	! Should compile to:
+	!   return 0;
+	
+	if (0) rtrue;
+	else rfalse;
+	return 5;  ! warning: not reached
+];
+
+[ TestWhileZero;
+	! Should compile to:
+	!   return 4;
+	
+	while (0) {
+		return 3; ! warning: not reached
+	}
+	return 4;
+];
+
+[ TestDoUntilOne val;
+	! Should compile to:
+	!   val = 4;
+	!   val++;
+	!   return val;
+	
+	val = 4;
+	do {
+		val++;
+	} until (1);
+	return val;
+];
+
+[ TestWhileOne val;
+	! Should compile to:
+	!   val++;
+	!   if (val != 3) jump L2;
+	!   return val;
+	!   .L2: jump to loop
+	
+	while (1) {
+		val++;
+		if (val == 3)
+			return val;
+	}
+	return 5;  ! warning: not reached
+];
+
+[ TestDoUntilZero val;
+	! Should compile to:
+	!   val++;
+	!   if (val != 3) jump L2;
+	!   return val;
+	!   .L2: jump to loop
+	
+	do {
+		val++;
+		if (val == 3)
+			return val;
+	} until (0);
+	return 5;   ! warning: not reached
+];
+
+[ TestWhileOneReturn val;
+	! Should compile to:
+	!   val++;
+	!   return val;
+	
+	while (1) {
+		val++;
+		return val;
+	}              ! warning: not reached (on loop jump)
+	return 5;      ! (no warning, already had one)
+];
+
+[ TestDoUntilZeroReturn val;
+	! Should compile to:
+	!   val++;
+	!   return val;
+	
+	do {
+		val++;
+		return val;
+	} until (0);  ! warning: not reached (on loop jump)
+	return 5;     ! (no warning, already had one)
+];
+
+[ TestIfZeroJump val;
+	! Should compile to:
+	!   val = 4;
+	!   val++;
+	!   return val;
+	
+	val = 4;
+	if (0) {
+		jump Label;
+	}
+	val++;
+	.Label;
+	return val;
+];
+
+[ TestIfZeroBigBranch val;
+	! Should compile to:
+	!   return 7;
+	
+	if (0) {
+		val++;
+		if (val == 3) {
+			return;
+		}
+		val++;
+		switch (val) {
+			1: return 11;
+			2: return 22;
+			3: return 33;
+		}
+		return val;
+	}
+	return 7;
+];
+
+[ TestIfZeroLabelledBranch val;
+	! Should compile to:
+	!   return 8;
+	
+	if (0) {
+		val = 1;
+		.InLoop;
+		val++;
+		if (val == 3) {
+			return;
+		}
+		jump InLoop;
+	}
+	return 8;
+];
+
+[ TestNestedBranch val;
+	! Should compile to:
+	!   if (val == 7) {
+	!     val = 99;
+	!     val++;
+	!   }
+	!   return val;
+	!   
+	if (val == 7) {
+		val = 99;
+		if (0) {
+			val = 0;
+			if (1) return;
+			val = 0;
+			if (val == 4) return;
+		}
+		val++;
+	}
+	return val;
+];
+
+[ TestJumpFromLoop val val2;
+	while (true) {
+		if (val == 4) jump Break1;
+		val++;
+	}
+	return;  ! warning: not reached
+	.Break1;
+
+	do {
+		if (val2 == 50) {
+			jump Break2;
+		}
+		val2 = val2 + 10;
+	} until (false);
+	return;  ! warning: not reached
+	.Break2;
+
+	return val + val2;
+];
+
+[ TestIfIfSequence val;
+	! Should compile to:
+	!   return 0;
+	! (no warnings)
+	
+	if (1) rfalse;
+	val++;
+	if (val) {
+		return 3;
+	}
+	else {
+		return 4;
+	}
+	return 5;
+];
+
+[ TestIfLoopSequence val;
+	! Should compile to:
+	!   return 0;
+	! (no warnings)
+	
+	if (1) rfalse;
+	val++;
+	while (val < 5) {
+		val++;
+	}
+	return val;
+];
+
+[ TestIfZeroLoopBreakContinue val;
+	! Should compile to:
+	!   return 3;
+	
+	if (0) {
+		while (val) {
+			if (val == 2) break;
+			val++;
+		}
+		while (val < 10) {
+			val++;
+			if (val < 4) continue;
+			val++;
+		}
+	}
+	return 3;
+];
+
+[ TestWhileZeroLoopBreakContinue val;
+	! Should compile to:
+	!   return 4;
+	
+	while (0) {
+		if (val == 2) break;  ! warning: not reached
+		val++;
+	}
+	while (0) {
+		if (val == 2) continue; ! warning: not reached
+		val++;
+	}
+	return 4;
+];
+
+[ TestLoopJumpContinue val;
+	while (val < 10) {
+		if (val == 0) {
+			val = 3;
+			continue;
+		}
+		return val;
+		val = 10;  ! warning: not reached
+	}
+	return 0;
+];
+
+[ TestLoopJumpBreak val;
+	while (val < 10) {
+		if (val == 0) {
+			val = 3;
+			break;
+		}
+		return val;
+		val = 10;  ! warning: not reached
+	}
+	return 5;
+];
+
+[ TestForTrueInc val;
+	! Should omit the 99 line
+	
+	for (val=0 : true : val++) {
+		if (val == 5) return val;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestForTrue val;
+	! Should omit the 99 line
+	
+	for (val=0 : true : val = val + 2) {
+		if (val >= 5) return val;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestForEmpty val;
+	! Should omit the 99 line
+
+	for (::) {
+		val++;
+		if (val == 3) return val;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestSwitchAllReturn val;
+	! Should omit the 99 line
+
+	switch (val) {
+		3: return 33;
+		4: return 44;
+		5: break;
+		6: break;
+		default: return 1;
+	}
+	val++;
+	switch (val) {
+		6: return 66;
+		7: return 77;
+		default: return 0;
+	}
+	return 99;  ! warning: not reached
+];
+
+[ TestSwitchJumps val;
+	switch (val) {
+		1:
+			return 11;
+		2:
+			val++;
+			.Foo;
+			val++;
+			return val;
+		3:
+			return val;
+			.Bar;
+			val = val * 2;
+			return val;
+		4:
+			return val;
+			val++;   ! warning: not reached
+		5:
+			val = val * 3;
+		6:
+			jump Foo;
+		default:
+			val++;
+			jump Bar;
+	}
+
+	return -val;
+];

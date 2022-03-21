@@ -299,7 +299,12 @@ class Result:
                         if self.memsetting is None:
                             self.memsetting = 'MAX_VERB_WORD_SIZE'
                     continue
-                    
+
+                match = re.match(r'.*.Compiler errors. should never occur.*', ln)
+                if (match):
+                    error(self, 'Compiler error')
+                    continue
+                
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
                 if (match):
                     outlines += 1
@@ -513,70 +518,70 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='7d010c0e3a61dbac195b3ece7822d41f', warnings=0)
+    res.is_ok(md5='f25137b77c5eccdd5345512da345b4bf', warnings=0)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='72f858186e126859010cbbca40602ce3')
+    res.is_ok(md5='0f709576e8bb4b82b375853c542c2251')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='5feea90b2cf68a270d33795245008383')
+    res.is_ok(md5='883f612b2ab1bbff03d410dd6572534d')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='28d47b71c39d38d021406c5c9d38a1e1')
+    res.is_ok(md5='14f0fc72123d200cc30bfcacb07b17e0')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='5d684cd1f5028c923ec16fe4761ed5c9')
+    res.is_ok(md5='99c922d52a920da759ee5215a9af6e11')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='78e5b0ced2e53564cad899df915c65b2')
+    res.is_ok(md5='fd771491440ca81e5eacffaf852a3749')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
+    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='04c6ff040938ad7e410da6f0c0bbf093', warnings=0)
+    res.is_ok(md5='4575981f693b7295250924ea6ec08d04', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='f6e7cdf51555055301b24ea6cd68eb69', warnings=0)
+    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
-    res.is_ok(md5='c51d3a8c451bf7c296e4445fdb5f75c3', warnings=0)
+    res.is_ok(md5='05d1df683eacae0afe021eeeab3575d4', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='45abb20b8ee4d85f2c8aae3ebca1e3c6', warnings=0)
+    res.is_ok(md5='8f5c09ed7e6b1709b254fddbb743d46d', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
-    res.is_ok(md5='01cfbb8f2ba5266aed0e7f0b5e20455a', warnings=0)
+    res.is_ok(md5='d9f71e15b6772c897b3091ab53dca498', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='73314bab714f8b57a93df6989399970e', warnings=0)
+    res.is_ok(md5='ddd599a31e2f817d54e1f47da52ab24c', warnings=0)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
-    res.is_ok(md5='dcb8df48532c373b40ea850fd9adfc33', warnings=0)
+    res.is_ok(md5='9a51e6e4dcbdaa070462c4c5b15dd554', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
-    res.is_ok(md5='52dc4fa45ad64e85c8a211833b083009')
+    res.is_ok(md5='ababc5d859ff8e49d93bf4347b71b7da', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
-    res.is_ok(md5='64c9fc5d9de47be75f2cacf0a1a40b36')
+    res.is_ok(md5='a3d3e6fc2c79b6f8ece5c67d701a5dde', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=False)
-    res.is_ok(md5='010d54a6ff19170a6674caabcd6fac29')
+    res.is_ok(md5='b59a9f9e3ea8d84cbf5abde4e173d94a', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
-    res.is_ok(md5='d65d562c8d7365a9dd45d88f6f4e8390')
+    res.is_ok(md5='7e667b15b092dcb6307307d8ea8bba58', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
-    res.is_ok(md5='96dbef2c76fdf8c3e676ec55be3b97b5')
+    res.is_ok(md5='7af3df8c3b76b00c391d6d1b473d9253', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
-    res.is_ok(md5='d1bd55d0198dc45255e295af69cde637')
+    res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='e4c564649bc470901ddaf9c2df4ba031')
+    res.is_ok(md5='0cef1ce737d5d849d93de48aed1ee289')
 
     res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='148e77a6c596ff59734a9e14f8edde81')
+    res.is_ok(md5='bc88b7d54273ea3313911736ddb869af')
 
 
 def run_dict_test():
@@ -649,7 +654,11 @@ def run_dict_test():
     res.is_ok(md5='6576bac38754f153d61912ce6b86420c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='b63eda6a53830520822d271355965226', warnings=0)
+    res.is_ok(md5='2fd52ee834906823f37a760b83950aac', warnings=0)
+
+    res = compile('dict-sysconst-test.inf')
+    res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
@@ -694,16 +703,16 @@ def run_directives_test():
     res.is_ok(md5='a90ea20de4c538312842ef1c5a5ee932')
 
     res = compile('internaldirecttest.inf')
-    res.is_ok(md5='191fd5acfff6e1208b04f0d6d178f8eb')
+    res.is_ok(md5='7fad50ebab77f541f12e51eb864ad594')
 
     res = compile('internaldirecttest.inf', glulx=True)
-    res.is_ok(md5='69666314dc31e270809d11f2ee9cebd6')
+    res.is_ok(md5='22cca3cefc0561f0d98bc1df0af70702')
 
     res = compile('ifelsedirecttest.inf')
-    res.is_ok(md5='33dfb4452ebb69030ae6e7c3db2f0833')
+    res.is_ok(md5='ebdbb9f121b45bcfc54a41c71d87c029')
 
     res = compile('ifelsedirecttest.inf', glulx=True)
-    res.is_ok(md5='c9f1ab6a8dfba69f4bb2746c20c3fbbb')
+    res.is_ok(md5='f920c5501f80336d480935297d5bbe69')
 
     res = compile('classordertest.inf')
     res.is_ok(md5='d065c980637c8531133e75bf040e1731')
@@ -765,6 +774,9 @@ def run_directives_test():
     res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None}, glulx=True)
     res.is_ok(md5='7e0d5177b921138ddd71e55fa2f71112', warnings=1)
 
+    res = compile('max_link_directive_length.inf')
+    res.is_error()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
@@ -786,7 +798,51 @@ def run_debugflag_test():
     res = compile('no_debug_flag_test.inf', debug=True, glulx=True)
     res.is_error(warnings=1)
 
-    
+
+def run_prune_test():
+    res = compile('branchprune.inf')
+    res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12')
+
+    res = compile('branchprune.inf', glulx=True)
+    res.is_ok(md5='fd2f416173afc0898d687ba6f68f222c')
+
+    res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
+    res.is_error()
+
+    res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, glulx=True)
+    res.is_error()
+
+    res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 })
+    res.is_ok(md5='cd66fef4890d2640c9717a9d5f0afc20')
+
+    res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
+    res.is_ok(md5='92d1f04837095a2cb64672d7fe453927')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611')
+    res.is_ok(md5='59faf1ec93ae5446155378dcc1ba27ff')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
+    res.is_ok(md5='315cc5042202891003f563183765b292')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
+    res.is_ok(md5='9d73aa782649a17cf0499a139376e838')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
+    res.is_ok(md5='65e76ec9ee3deeec44f7a07391dfac87')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
+    res.is_ok(md5='9913b0988aa84e87a2b3f16e359af698')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
+    res.is_ok(md5='62a59f140375aa82eaac72935e4c9462')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
+    res.is_ok(md5='8e13deb55165b3aa5a29a1050311694e')
+
+    res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
+    res.is_ok(md5='a070fcb2c433b49e4c0f8ca2259d62c6')
+
+
 def run_defineopt_test():
     res = compile('defineopttest.inf')
     res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
@@ -926,22 +982,22 @@ def run_modules_test():
     # parserm.inf and verblibm.inf are copies of the library header files in i6lib-611. (The test framework expects them to be in the src directory.)
     
     res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='e411c79916ae0f9cd8408df5766c5fd7')
+    res.is_ok(md5='20c77826387d640c508806d4f9e2fb0e')
     
     res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='3d381fd6590fee842d5b75f2a3abbddb')
+    res.is_ok(md5='e557eb1f50620b213fcaf2a4ab8ad22a')
 
     # Now build Advent using the two modules we just generated.
     res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
-    res.is_ok(md5='47a9cc9ac052d2bac220e617d2ff6b7c')
+    res.is_ok(md5='3c3a2e780e8a6c5b6334bbcfd98d5abe')
 
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='453977372e150037f9f3f93cdf847e35', warnings=0)
+    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='f6e7cdf51555055301b24ea6cd68eb69', warnings=0)
+    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff', warnings=0)
 
 
 def run_warnings_test():
@@ -1467,19 +1523,19 @@ def run_max_abbrevs():
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='9733c798d3b7586da360577c3e4cce68')
+    res.is_ok(md5='6f89678d15576c59e3e9d6c363e4c16d')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='11f0fa65db5bb7209b39d335f8ed63b2')
+    res.is_ok(md5='62ae27e77478d1a7ce1722828a16e3f2')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='673e1690b8eedc7ec4e2292c85bdba01')
+    res.is_ok(md5='16c89d3a4f42bb84f26c8eadb43c110e')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='c9ed61aef696d0357e6f4f36d4b70f7f')
+    res.is_ok(md5='7f081314e6fdaa2612f971457f54bec5')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='78202693832c234224f6fe09479243bd')
+    res.is_ok(md5='f36b9323d23607d7f5db97bc551201c0')
     
     res = compile('max_abbrevs_test_64.inf', memsettings={})
     res.is_ok()
@@ -1677,18 +1733,28 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='6e81c775d77ca5a05917f782eb502981')
+    res.is_ok(md5='8377aa4e1b25c39648f9bf525623b080')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='2bc421510db11c1e7f8f08dc9b2ddb0f')
+    res.is_ok(md5='1e3ff0aa9673a982da2c206d55a1ab4c')
 
+    res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res.is_ok()
+    res.is_ok(md5='07bd8dcf2c8f3a8e544a53584e417ad2')
+
+    res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
+    res.is_ok()
+    res.is_ok(md5='5ebeba63f77407fc175f00055f565933')
+
+    
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
     ('LEXER', run_lexer_test),
     ('DIRECTIVES', run_directives_test),
+    ('PRUNE', run_prune_test),
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
