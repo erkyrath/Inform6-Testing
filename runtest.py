@@ -1036,6 +1036,12 @@ def run_trace_test():
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ASM':4 })
     res.is_ok()
 
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'BPATCH':1 })
+    res.is_ok()
+
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'BPATCH':2 })
+    res.is_ok()
+
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'DICT':1 })
     res.is_ok()
 
