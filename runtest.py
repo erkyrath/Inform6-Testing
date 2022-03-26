@@ -1117,6 +1117,9 @@ def run_trace_test():
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'SYMBOLS':1 })
     res.is_ok()
 
+    res = compile('Advent.inf', includedir='i6lib-611', trace={ 'SYMDEF':1 })
+    res.is_ok()
+
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'SYMBOLS':2 })
     res.is_ok()
 
