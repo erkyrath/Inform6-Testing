@@ -168,6 +168,7 @@ Array tempbuffer -> BIGBUFSIZE;
 Constant one_const 1;
 Constant two_const 2;
 Constant thr33_const 3;
+Constant aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 10;
 Constant altone_const one_const;
 Constant twenty_const 10+10;
 
@@ -188,7 +189,7 @@ Constant twenty_const 10+10;
 	check_str("C: @(one_const)@(thr33_const)@(two_const)", "C: onethreetwo");
 	new_line;
 
-	check_str("D: @10@(ONE_CONST)", "D: tenone");
+	check_str("D: @10@(ONE_CONST)@(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)", "D: tenoneten");
 	new_line;
 
 	string 1 "ONE";
@@ -207,3 +208,20 @@ Constant twenty_const 10+10;
 	else
 		print failures, " errors!^";
 ];
+
+#ifdef BADSYNTAX;
+
+[ badfunc;
+	! Each of these lines generate a "must contain a symbol" error.
+	
+	print "-@()-";
+
+	print "@(xyz!one)";
+
+	print "@(hello";
+
+	print "@(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)";
+
+];
+
+#endif;
