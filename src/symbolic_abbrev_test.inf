@@ -211,10 +211,12 @@ Constant twenty_const 10+10;
 
 #ifdef BADSYNTAX;
 
+Object obj;
+
 [ badfunc;
 	! Each of these lines generate a "must contain a symbol" error.
 	
-	print "-@()-";
+	print "@()";
 
 	print "@(xyz!one)";
 
@@ -222,6 +224,18 @@ Constant twenty_const 10+10;
 
 	print "@(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)";
 
+	! Each of these lines generate a "expected a known constant value" error.
+	
+	print "@(unknown_const)";
+
+	print "@(forward_const)";
+
+	print "@(RunTest)";
+
+	print "@(obj)";
+
 ];
+
+Constant forward_const 0;
 
 #endif;

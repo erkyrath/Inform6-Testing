@@ -1040,10 +1040,10 @@ def run_abbreviations_test():
     res.is_ok()
 
     res = compile('symbolic_abbrev_test.inf', define={'BADSYNTAX':None})
-    res.is_error(errors=4)
+    res.is_error(errors=8)
 
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, define={'BADSYNTAX':None}, glulx=True)
-    res.is_error(errors=4)
+    res.is_error(errors=8)
 
     
 def run_make_abbreviations_test():
