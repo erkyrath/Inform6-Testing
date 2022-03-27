@@ -446,11 +446,16 @@ class Result:
         print('*** TEST FAILED ***')
         return False
 
-    def is_error(self, warnings=None):
+    def is_error(self, warnings=None, errors=None):
         """ Assert that the compile failed, but *not* with an
         "increase $SETTING" error.
         """
         if (self.status == Result.ERROR and not self.memsetting):
+            if errors is not None:
+                if self.errors != errors:
+                    error(self, 'Errors mismatch: expected %s but got %s' % (errors, self.errors,))
+                    print('*** TEST FAILED ***')
+                    return False
             if warnings is not None:
                 if self.warnings != warnings:
                     error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
