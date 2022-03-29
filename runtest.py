@@ -1039,6 +1039,12 @@ def run_abbreviations_test():
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, glulx=True)
     res.is_ok()
 
+    res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
+    res.is_error()
+
+    res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':0}, glulx=True)
+    res.is_error()
+
     res = compile('symbolic_abbrev_test.inf', define={'BADSYNTAX':None})
     res.is_error(errors=8)
 
