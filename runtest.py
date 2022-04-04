@@ -821,6 +821,12 @@ def run_prune_test():
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
     res.is_ok(md5='92d1f04837095a2cb64672d7fe453927')
 
+    res = compile('logicprune.inf')
+    res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0)
+
+    res = compile('logicprune.inf', glulx=True)
+    res.is_ok(md5='69287eea7f46a2972db0b964373128f1', warnings=0)
+
     res = compile('tasksacktest.inf', includedir='i6lib-611')
     res.is_ok(md5='59faf1ec93ae5446155378dcc1ba27ff')
 
