@@ -187,6 +187,8 @@ Constant objconst obj;
 	loc = (obj provides obj);
 	loc = (obj provides cla);
 	loc = (obj provides attr1);
+	loc = (obj provides 'dict');
+	loc = (obj provides "string");
 ];
 
 [ testofclass loc;
@@ -241,6 +243,8 @@ Constant objconst obj;
 	loc = obj.obj;
 	loc = obj.func;
 	loc = obj.arr;
+	loc = obj.'word';
+	loc = obj."string";
 
 	! No warnings
 	loc = obj.cprop();
