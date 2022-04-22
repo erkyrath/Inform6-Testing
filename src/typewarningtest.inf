@@ -48,7 +48,7 @@ Constant objconst obj;
 	give obj zero;
 	give zero attr2;
 	! Expressions do not produce a warning
-	give obj (obj+1);
+	give obj func();
 	give (arr+1) attr2;
 	
 	! Forward symbols do not produce a warning
