@@ -75,7 +75,7 @@ Constant objconst obj;
 	give func attr2;
 	give cla attr1;
 	give 'word' attr1;
-	give "word" attr1;
+	give "string" attr1;
 ];
 
 [ testhas loc;
