@@ -6,9 +6,7 @@
 	val = testdotcall;
 ];
 
-!###
 Constant str = "str";
-!###Constant word = 'word';
 
 Attribute attr;
 
@@ -46,6 +44,8 @@ Constant objconst obj;
 	cla();
 	arr();
 	indirect(obj, 1);
+	'dict'();
+	val = "string"();   ! "string"() by itself parses as a print_ret statement
 
 	! Warnings: unqualified Property *and* expected Routine
 	cprop();
@@ -64,6 +64,8 @@ Constant objconst obj;
 	val = cla.cprop;
 	val = cla.iprop1;
 	val = glob.cprop;
+	val = obj.'dict';
+	val = obj."string";
 
 	! Constants do not produce a warning
 	val = zero.cprop;
@@ -74,6 +76,8 @@ Constant objconst obj;
 	val = attr.iprop1;
 	val = arr.cprop;
 	val = cprop.iprop1;  ! two warnings
+	val = 'dict'.cprop;
+	val = "string".cprop;
 ];
 
 [ testdotequals val;
@@ -85,6 +89,8 @@ Constant objconst obj;
 	cla.cprop = val;
 	cla.iprop1 = val;
 	glob.cprop = val;
+	obj.'dict' = val;
+	obj."string" = val;
 
 	! Constants do not produce a warning
 	zero.cprop = val;
@@ -97,7 +103,7 @@ Constant objconst obj;
 	cprop.iprop1 = val;  ! three warnings
 ];
 
-[ testdotcall;
+[ testdotcall val;
 	! All these statements are ok
 	! (Maybe invalid at runtime, but not type errors)
 	obj.cprop();
@@ -108,6 +114,7 @@ Constant objconst obj;
 	! These are valid due to Inform's metaclass system
 	func.call();
 	str.print();
+	val = "str".print();   ! "str".print() by itself parses as a print_ret statement
 	cla.create();
 	
 	! Warnings: expected Object
