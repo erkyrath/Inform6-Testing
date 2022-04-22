@@ -1011,10 +1011,10 @@ def run_debugfile_test():
 
 def run_warnings_test():
     res = compile('typewarningtest.inf')
-    res.is_ok(warnings=73)
+    res.is_ok(warnings=83)
     
     res = compile('typewarningtest.inf', glulx=True)
-    res.is_ok(warnings=75)
+    res.is_ok(warnings=85)
     
     res = compile('or_warnings_test.inf')
     res.is_ok(warnings=11)
