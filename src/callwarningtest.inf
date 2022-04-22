@@ -1,7 +1,14 @@
 [ Main val;
 	! We don't want to call the test funcs; they would just be a mess of runtime errors.
 	val = testcall;
+	val = testdot;
+	val = testdotequals;
+	val = testdotcall;
 ];
+
+!###
+Constant str = "str";
+!###Constant word = 'word';
 
 Attribute attr;
 
@@ -46,4 +53,66 @@ Constant objconst obj;
 
 	! This produces a warning in Glulx only
 	objconst();
+];
+
+[ testdot val;
+	! All these statements are ok
+	! (Maybe invalid at runtime, but not type errors)
+	val = obj.cprop;
+	val = obj.iprop1;
+	val = obj.iprop2;
+	val = cla.cprop;
+	val = cla.iprop1;
+	val = glob.cprop;
+
+	! Constants do not produce a warning
+	val = zero.cprop;
+	val = zero.iprop1;
+
+	! Warnings: expected Object
+	val = attr.cprop;
+	val = attr.iprop1;
+	val = arr.cprop;
+	val = cprop.iprop1;  ! two warnings
+];
+
+[ testdotequals val;
+	! All these statements are ok
+	! (Maybe invalid at runtime, but not type errors)
+	obj.cprop = val;
+	obj.iprop1 = val;
+	obj.iprop2 = val;
+	cla.cprop = val;
+	cla.iprop1 = val;
+	glob.cprop = val;
+
+	! Constants do not produce a warning
+	zero.cprop = val;
+	zero.iprop1 = val;
+
+	! Warnings: expected Object
+	attr.cprop = val;
+	attr.iprop1 = val;
+	arr.cprop = val;
+	cprop.iprop1 = val;  ! three warnings
+];
+
+[ testdotcall;
+	! All these statements are ok
+	! (Maybe invalid at runtime, but not type errors)
+	obj.cprop();
+	obj.iprop1();
+	cla.cprop();
+	cla.iprop1();
+	
+	! These are valid due to Inform's metaclass system
+	func.call();
+	str.print();
+	cla.create();
+	
+	! Warnings: expected Object
+	attr.cprop();
+	attr.iprop1();
+	arr.cprop();
+	cprop.iprop1();  ! three warnings
 ];
