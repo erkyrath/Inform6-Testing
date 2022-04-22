@@ -580,11 +580,15 @@ def run_checksum_test():
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
     res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
-    res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
+    res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3)
     res.is_ok(md5='0cef1ce737d5d849d93de48aed1ee289')
 
-    res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok(md5='bc88b7d54273ea3313911736ddb869af')
+
+    # OMIT_UNUSED_ROUTINES is set in the source
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3)
+    res.is_ok(md5='93b454954089009c6809264df70876dd')
 
 
 def run_dict_test():
