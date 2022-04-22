@@ -78,6 +78,10 @@ Constant objconst obj;
 	val = cprop.iprop1;  ! two warnings
 	val = 'dict'.cprop;
 	val = "string".cprop;
+
+	! Warnings: expected Property
+	val = obj.'dict';
+	val = obj."string";
 ];
 
 [ testdotequals val;
@@ -89,8 +93,6 @@ Constant objconst obj;
 	cla.cprop = val;
 	cla.iprop1 = val;
 	glob.cprop = val;
-	obj.'dict' = val;
-	obj."string" = val;
 
 	! Constants do not produce a warning
 	zero.cprop = val;
@@ -101,6 +103,12 @@ Constant objconst obj;
 	attr.iprop1 = val;
 	arr.cprop = val;
 	cprop.iprop1 = val;  ! three warnings
+	'dict'.cprop = val;
+
+	! Warnings: expected Property
+	obj.attr = val;
+	obj.'dict' = val;
+	obj."string" = val;
 ];
 
 [ testdotcall val;
@@ -117,9 +125,17 @@ Constant objconst obj;
 	val = "str".print();   ! "str".print() by itself parses as a print_ret statement
 	cla.create();
 	
-	! Warnings: expected Object
+	! Warnings: expected Object/Class/Routine/String
 	attr.cprop();
 	attr.iprop1();
 	arr.cprop();
 	cprop.iprop1();  ! three warnings
+	
+	! Warnings: expected Property
+	obj.attr();
+	obj.'dict'();
+	obj."string"();
 ];
+
+!### foo.prop++, ++foo.prop
+!### .#, .&
