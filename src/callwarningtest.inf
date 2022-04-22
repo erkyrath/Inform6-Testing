@@ -1,0 +1,49 @@
+[ Main val;
+	! We don't want to call the test funcs; they would just be a mess of runtime errors.
+	val = testcall;
+];
+
+Attribute attr;
+
+Property cprop;
+
+Class cla;
+
+Object obj
+  with iprop1 [; ],
+  with iprop2 0;
+
+Global glob;
+
+Array arr --> 3;
+
+Constant zero 0;
+Constant objconst obj;
+
+[ func; ];
+
+[ testcall val;
+	! All these statements are ok
+	func();
+	val();
+	glob();
+	indirect(func, 1);
+	children(obj);
+
+	! Constants do not produce a warning
+	zero();
+
+	! Warnings: expected Routine
+	attr();
+	obj();
+	cla();
+	arr();
+	indirect(obj, 1);
+
+	! Warnings: unqualified Property *and* expected Routine
+	cprop();
+	iprop1();
+
+	! This produces a warning in Glulx only
+	objconst();
+];
