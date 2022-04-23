@@ -4,6 +4,7 @@
 	val = testdot;
 	val = testdotequals;
 	val = testdotcall;
+	val = testdotincdec;
 ];
 
 Constant str = "str";
@@ -137,5 +138,29 @@ Constant objconst obj;
 	obj."string"();
 ];
 
-!### foo.prop++, ++foo.prop
+[ testdotincdec val;
+	! All these statements are ok
+	val = obj.cprop++;
+	val = obj.iprop1--;
+	val = ++obj.cprop;
+	val = ++obj.iprop2;
+	cla.iprop1++;
+	--obj.cprop;
+	glob.cprop++;
+	--glob.iprop1;
+	
+	! Warnings: expected Object
+	attr.cprop++;
+	'dict'.iprop1--;
+	val = ++"str".cprop;
+	val = --arr.cprop;
+	
+	! Warnings: expected Property
+	obj.attr++;
+	val = obj.arr--;
+	++obj."string";
+	--obj.'dict';
+];
+
+
 !### .#, .&
