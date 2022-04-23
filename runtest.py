@@ -1021,10 +1021,10 @@ def run_warnings_test():
     res.is_ok(warnings=85)
     
     res = compile('callwarningtest.inf')
-    res.is_ok(warnings=999)
+    res.is_ok(warnings=61)
     
     res = compile('callwarningtest.inf', glulx=True)
-    res.is_ok(warnings=999)
+    res.is_ok(warnings=62)
     
     res = compile('or_warnings_test.inf')
     res.is_ok(warnings=11)

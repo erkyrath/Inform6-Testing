@@ -66,8 +66,6 @@ Constant objconst obj;
 	val = cla.cprop;
 	val = cla.iprop1;
 	val = glob.cprop;
-	val = obj.'dict';
-	val = obj."string";
 
 	! Constants do not produce a warning
 	val = zero.cprop;
