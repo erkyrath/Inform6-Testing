@@ -5,6 +5,7 @@
 	val = testdotequals;
 	val = testdotcall;
 	val = testdotincdec;
+	val = testdotaddr;
 ];
 
 Constant str = "str";
@@ -162,5 +163,33 @@ Constant objconst obj;
 	--obj.'dict';
 ];
 
+[ testdotaddr val;
+	! All these statements are ok
+	val = obj.&cprop;
+	val = obj.#cprop;
+	val = obj.&iprop1;
+	val = obj.#iprop1;
+	val = cla.&cprop;
+	val = cla.#cprop;
+	val = cla.&iprop1;
+	val = cla.#iprop1;
+	
+	! Warnings: expected Object
+	val = attr.&cprop;
+	val = attr.#cprop;
+	val = attr.&iprop1;
+	val = attr.#iprop2;
+	val = 'dict'.&cprop;
+	val = 'dict'.#cprop;
+	val = 'dict'.&iprop1;
+	val = 'dict'.#iprop2;
 
-!### .#, .&
+	! Warnings: expected Property
+	val = obj.&attr;
+	val = obj.#attr;
+	val = obj.&"string";
+	val = obj.#"string";
+	val = cla.&arr;
+	val = cla.#arr;
+];
+
