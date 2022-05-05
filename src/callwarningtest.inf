@@ -1,0 +1,193 @@
+[ Main val;
+	! We don't want to call the test funcs; they would just be a mess of runtime errors.
+	val = testcall;
+	val = testdot;
+	val = testdotequals;
+	val = testdotcall;
+	val = testdotincdec;
+	val = testdotaddr;
+];
+
+Constant str = "str";
+
+Attribute attr;
+
+Property cprop;
+
+Class cla;
+
+Object obj
+  with iprop1 [; ],
+  with iprop2 0;
+
+Global glob;
+
+Array arr --> 3;
+
+Constant zero 0;
+Constant objconst obj;
+
+[ func; ];
+
+[ testcall val;
+	! All these statements are ok
+	func();
+	val();
+	glob();
+	indirect(func, 1);
+	children(obj);
+
+	! Constants do not produce a warning
+	zero();
+
+	! Warnings: expected Routine
+	attr();
+	obj();
+	cla();
+	arr();
+	indirect(obj, 1);
+	'dict'();
+	val = "string"();   ! "string"() by itself parses as a print_ret statement
+
+	! Warnings: unqualified Property *and* expected Routine
+	cprop();
+	iprop1();
+
+	! This produces a warning in Glulx only
+	objconst();
+];
+
+[ testdot val;
+	! All these statements are ok
+	! (Maybe invalid at runtime, but not type errors)
+	val = obj.cprop;
+	val = obj.iprop1;
+	val = obj.iprop2;
+	val = cla.cprop;
+	val = cla.iprop1;
+	val = glob.cprop;
+
+	! Constants do not produce a warning
+	val = zero.cprop;
+	val = zero.iprop1;
+
+	! Warnings: expected Object
+	val = attr.cprop;
+	val = attr.iprop1;
+	val = arr.cprop;
+	val = cprop.iprop1;  ! two warnings
+	val = 'dict'.cprop;
+	val = "string".cprop;
+
+	! Warnings: expected Property
+	val = obj.'dict';
+	val = obj."string";
+];
+
+[ testdotequals val;
+	! All these statements are ok
+	! (Maybe invalid at runtime, but not type errors)
+	obj.cprop = val;
+	obj.iprop1 = val;
+	obj.iprop2 = val;
+	cla.cprop = val;
+	cla.iprop1 = val;
+	glob.cprop = val;
+
+	! Constants do not produce a warning
+	zero.cprop = val;
+	zero.iprop1 = val;
+
+	! Warnings: expected Object
+	attr.cprop = val;
+	attr.iprop1 = val;
+	arr.cprop = val;
+	cprop.iprop1 = val;  ! three warnings
+	'dict'.cprop = val;
+
+	! Warnings: expected Property
+	obj.attr = val;
+	obj.'dict' = val;
+	obj."string" = val;
+];
+
+[ testdotcall val;
+	! All these statements are ok
+	! (Maybe invalid at runtime, but not type errors)
+	obj.cprop();
+	obj.iprop1();
+	cla.cprop();
+	cla.iprop1();
+	
+	! These are valid due to Inform's metaclass system
+	func.call();
+	str.print();
+	val = "str".print();   ! "str".print() by itself parses as a print_ret statement
+	cla.create();
+	
+	! Warnings: expected Object/Class/Routine/String
+	attr.cprop();
+	attr.iprop1();
+	arr.cprop();
+	cprop.iprop1();  ! three warnings
+	
+	! Warnings: expected Property
+	obj.attr();
+	obj.'dict'();
+	obj."string"();
+];
+
+[ testdotincdec val;
+	! All these statements are ok
+	val = obj.cprop++;
+	val = obj.iprop1--;
+	val = ++obj.cprop;
+	val = ++obj.iprop2;
+	cla.iprop1++;
+	--obj.cprop;
+	glob.cprop++;
+	--glob.iprop1;
+	
+	! Warnings: expected Object
+	attr.cprop++;
+	'dict'.iprop1--;
+	val = ++"str".cprop;
+	val = --arr.cprop;
+	
+	! Warnings: expected Property
+	obj.attr++;
+	val = obj.arr--;
+	++obj."string";
+	--obj.'dict';
+];
+
+[ testdotaddr val;
+	! All these statements are ok
+	val = obj.&cprop;
+	val = obj.#cprop;
+	val = obj.&iprop1;
+	val = obj.#iprop1;
+	val = cla.&cprop;
+	val = cla.#cprop;
+	val = cla.&iprop1;
+	val = cla.#iprop1;
+	
+	! Warnings: expected Object
+	val = attr.&cprop;
+	val = attr.#cprop;
+	val = attr.&iprop1;
+	val = attr.#iprop2;
+	val = 'dict'.&cprop;
+	val = 'dict'.#cprop;
+	val = 'dict'.&iprop1;
+	val = 'dict'.#iprop2;
+
+	! Warnings: expected Property
+	val = obj.&attr;
+	val = obj.#attr;
+	val = obj.&"string";
+	val = obj.#"string";
+	val = cla.&arr;
+	val = cla.#arr;
+];
+

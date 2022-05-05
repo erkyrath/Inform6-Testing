@@ -448,11 +448,16 @@ class Result:
         print('*** TEST FAILED ***')
         return False
 
-    def is_error(self, warnings=None):
+    def is_error(self, warnings=None, errors=None):
         """ Assert that the compile failed, but *not* with an
         "increase $SETTING" error.
         """
         if (self.status == Result.ERROR and not self.memsetting):
+            if errors is not None:
+                if self.errors != errors:
+                    error(self, 'Errors mismatch: expected %s but got %s' % (errors, self.errors,))
+                    print('*** TEST FAILED ***')
+                    return False
             if warnings is not None:
                 if self.warnings != warnings:
                     error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
@@ -577,11 +582,15 @@ def run_checksum_test():
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
     res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
-    res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3)
+    res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3)
     res.is_ok(md5='0cef1ce737d5d849d93de48aed1ee289')
 
-    res = compile('library_of_horror.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok(md5='bc88b7d54273ea3313911736ddb869af')
+
+    # OMIT_UNUSED_ROUTINES is set in the source
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3)
+    res.is_ok(md5='93b454954089009c6809264df70876dd')
 
 
 def run_dict_test():
@@ -818,6 +827,12 @@ def run_prune_test():
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
     res.is_ok(md5='92d1f04837095a2cb64672d7fe453927')
 
+    res = compile('logicprune.inf')
+    res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0)
+
+    res = compile('logicprune.inf', glulx=True)
+    res.is_ok(md5='69287eea7f46a2972db0b964373128f1', warnings=0)
+
     res = compile('tasksacktest.inf', includedir='i6lib-611')
     res.is_ok(md5='59faf1ec93ae5446155378dcc1ba27ff')
 
@@ -1002,10 +1017,16 @@ def run_debugfile_test():
 
 def run_warnings_test():
     res = compile('typewarningtest.inf')
-    res.is_ok(warnings=73)
+    res.is_ok(warnings=83)
     
     res = compile('typewarningtest.inf', glulx=True)
-    res.is_ok(warnings=75)
+    res.is_ok(warnings=85)
+    
+    res = compile('callwarningtest.inf')
+    res.is_ok(warnings=61)
+    
+    res = compile('callwarningtest.inf', glulx=True)
+    res.is_ok(warnings=62)
     
     res = compile('or_warnings_test.inf')
     res.is_ok(warnings=11)
@@ -1142,6 +1163,27 @@ def run_abbreviations_test():
     
     res = compile('short_abbrevs_test.inf')
     res.is_ok(warnings=4)
+
+    res = compile('symbolic_abbrev_test.inf')
+    res.is_ok()
+
+    res = compile('symbolic_abbrev_test.inf', glulx=True)
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, glulx=True)
+    res.is_ok()
+
+    res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
+    res.is_error()
+
+    res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':0}, glulx=True)
+    res.is_error()
+
+    res = compile('symbolic_abbrev_test.inf', define={'BADSYNTAX':None})
+    res.is_error(errors=8)
+
+    res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, define={'BADSYNTAX':None}, glulx=True)
+    res.is_error(errors=8)
 
     
 def run_make_abbreviations_test():

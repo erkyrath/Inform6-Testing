@@ -1,0 +1,260 @@
+Constant Story "LogicPruneTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! This is a compiler unit test for stripping dead branches from logical expressions
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+Global failures;
+
+[ Main;
+    #ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 0;
+    #endif; ! TARGET_GLULX
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #Endif; ! TARGET_GLULX
+];
+
+[ check_value val1 val2;
+	print val1;
+	if (val1 ~= val2) {
+		failures++;
+		print " (ERROR, should be ", val2, ")";
+	}
+];
+
+[ badfunc;
+	failures++;
+];
+
+[ RunTest;
+	RunAllTests();
+
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
+];
+
+[ RunAllTests;
+	print "ShortCircuits(0): ";
+	check_value(ShortCircuits(0), 3);
+	print ".^";
+	print "ShortCircuits(1): ";
+	check_value(ShortCircuits(1), 3);
+	print ".^";
+
+	print "LongCircuits(0): ";
+	check_value(LongCircuits(0), 0);
+	print ".^";
+	print "LongCircuits(1): ";
+	check_value(LongCircuits(1), 8);
+	print ".^";
+
+	print "ShorterCircuits(): ";
+	check_value(ShorterCircuits(), 3);
+	print ".^";
+
+	print "ShortCircuitsFunc(1): ";
+	check_value(ShortCircuitsFunc(1), 16);
+	print ".^";
+
+	print "ShortCircuitAndIf(0): ";
+	check_value(ShortCircuitAndIf(0), 3);
+	print ".^";
+	print "ShortCircuitAndIf(1): ";
+	check_value(ShortCircuitAndIf(1), 3);
+	print ".^";
+
+	print "ShortCircuitOrIf(0): ";
+	check_value(ShortCircuitOrIf(0), 2);
+	print ".^";
+	print "ShortCircuitOrIf(1): ";
+	check_value(ShortCircuitOrIf(1), 2);
+	print ".^";
+
+	print "LongCircuitAndIf(0): ";
+	check_value(LongCircuitAndIf(0), 5);
+	print ".^";
+	print "LongCircuitAndIf(1): ";
+	check_value(LongCircuitAndIf(1), 4);
+	print ".^";
+
+	print "LongCircuitOrIf(0): ";
+	check_value(LongCircuitOrIf(0), 7);
+	print ".^";
+	print "LongCircuitOrIf(1): ";
+	check_value(LongCircuitOrIf(1), 6);
+	print ".^";
+
+	print "ShorterCircuitAndIf(0): ";
+	check_value(ShorterCircuitAndIf(0), 3);
+	print ".^";
+	print "ShorterCircuitAndIf(1): ";
+	check_value(ShorterCircuitAndIf(1), 3);
+	print ".^";
+
+	print "ShorterCircuitOrIf(0): ";
+	check_value(ShorterCircuitOrIf(0), 2);
+	print ".^";
+	print "ShorterCircuitOrIf(1): ";
+	check_value(ShorterCircuitOrIf(1), 2);
+	print ".^";
+
+];
+
+[ ShortCircuits val val1 val2;
+	! Should compile to:
+	!   val1 = 1;
+	!   val2 = 0;
+	
+	val1 = (1 || val);
+	val2 = (0 && val);
+	return 3*val1 + 5*val2;
+];
+
+[ LongCircuits val val1 val2;
+	val1 = (0 || val);
+	val2 = (1 && val);
+	return 3*val1 + 5*val2;
+];
+
+[ ShorterCircuits val val1 val2;
+	val1 = (val || 1 || val);
+	val2 = (val && 0 && val);
+	return 3*val1 + 5*val2;
+];
+
+[ ShortCircuitsFunc val val1 val2 val3 val4;
+	! Should not compile badfunc() calls
+	! (but they don't get "function not used" warnings either)
+	
+	val1 = (0 && badfunc());
+	val2 = (val && 0 && badfunc());
+	val3 = (1 || badfunc());
+	val4 = (val || 1 || badfunc());
+	return 3*val1 + 5*val2 + 7*val3 + 9*val4;
+];
+
+[ ShortCircuitAndIf val;
+	if (0 && val) {
+		return 2;
+	}
+	else {
+		return 3;
+	}
+];
+
+[ ShortCircuitOrIf val;
+	if (1 || val) {
+		return 2;
+	}
+	else {
+		return 3;
+	}
+];
+
+[ LongCircuitAndIf val;
+	if (1 && val) {
+		return 4;
+	}
+	else {
+		return 5;
+	}
+];
+
+[ LongCircuitOrIf val;
+	if (0 || val) {
+		return 6;
+	}
+	else {
+		return 7;
+	}
+];
+
+[ ShorterCircuitAndIf val;
+	if (val && 0 && val) {
+		return 2;
+	}
+	else {
+		return 3;
+	}
+];
+
+[ ShorterCircuitOrIf val;
+	if (val || 1 || val) {
+		return 2;
+	}
+	else {
+		return 3;
+	}
+];
+

@@ -42,13 +42,11 @@ Constant objconst obj;
 
 	! Literals do not produce a warning
 	give obj 5;
-	give obj 'word';
-	give 'word' attr1;
 	! Constants do not produce a warning
 	give obj zero;
 	give zero attr2;
 	! Expressions do not produce a warning
-	give obj (obj+1);
+	give obj func();
 	give (arr+1) attr2;
 	
 	! Forward symbols do not produce a warning
@@ -63,6 +61,8 @@ Constant objconst obj;
 	give obj obj;
 	give obj func;
 	give obj cla;
+	give obj 'dict';
+	give obj "string";
 
 	! This produces a warning in Glulx only
 	give obj objconst;
@@ -74,6 +74,8 @@ Constant objconst obj;
 	give attr1 attr2;
 	give func attr2;
 	give cla attr1;
+	give 'dict' attr1;
+	give "string" attr1;
 ];
 
 [ testhas loc;
@@ -139,7 +141,6 @@ Constant objconst obj;
 	remove glob;
 	remove loc;
 	remove alate;
-	remove 'dict';
 	remove objconst;
 	
 	! Warnings: expected Object
@@ -148,6 +149,8 @@ Constant objconst obj;
 	remove attr1;
 	remove cprop;
 	remove cla;
+	remove 'dict';
+	remove "string";
 ];
 
 [ testin loc;
@@ -184,6 +187,8 @@ Constant objconst obj;
 	loc = (obj provides obj);
 	loc = (obj provides cla);
 	loc = (obj provides attr1);
+	loc = (obj provides 'dict');
+	loc = (obj provides "string");
 ];
 
 [ testofclass loc;
@@ -238,6 +243,8 @@ Constant objconst obj;
 	loc = obj.obj;
 	loc = obj.func;
 	loc = obj.arr;
+	loc = obj.'dict';
+	loc = obj."string";
 
 	! No warnings
 	loc = obj.cprop();

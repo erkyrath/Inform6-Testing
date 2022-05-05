@@ -57,5 +57,5 @@ license, except as noted below:
 - MetroCenter '84 library and Cloak of Darkness port (cloak-metro84-v3test.inf): Artistic license
   https://github.com/ByteProject/Metrocenter84
 
-- PunyInform 1.6 (punylib-16) and Library of Horror (library_of_horror.inf): MIT license
+- PunyInform (punylib-16/36) and Library of Horror (library_of_horror-16/36.inf): MIT license
   https://github.com/johanberntsson/PunyInform
