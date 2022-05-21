@@ -262,7 +262,7 @@ class Result:
                     if err.startswith('All 233 global variables'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_GLOBAL_VARIABLES'
-                    if err.startswith('Only dynamic strings @00 to @'):
+                    if err.startswith('Only dynamic strings @'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_DYNAMIC_STRINGS'
                     if err.startswith('The number of abbreviations has exceeded'):
