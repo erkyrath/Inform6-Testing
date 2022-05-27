@@ -723,6 +723,12 @@ def run_directives_test():
     res = compile('ifelsedirecttest.inf', glulx=True)
     res.is_ok(md5='f920c5501f80336d480935297d5bbe69')
 
+    res = compile('ifdef_vn_test.inf')
+    res.is_ok(md5='45f86d7b6218cace38b16f2ca08e8d71')
+
+    res = compile('ifdef_vn_test.inf', glulx=True)
+    res.is_ok(md5='eadf882b1695121fb3d32b245c06b7bd')
+
     res = compile('classordertest.inf')
     res.is_ok(md5='d065c980637c8531133e75bf040e1731')
 
