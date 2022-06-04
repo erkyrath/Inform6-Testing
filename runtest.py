@@ -999,20 +999,6 @@ def run_fwconst_test():
     res.is_ok()
 
 
-def run_modules_test():
-    # parserm.inf and verblibm.inf are copies of the library header files in i6lib-611. (The test framework expects them to be in the src directory.)
-    
-    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='20c77826387d640c508806d4f9e2fb0e')
-    
-    res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True)
-    res.is_ok(md5='e557eb1f50620b213fcaf2a4ab8ad22a')
-
-    # Now build Advent using the two modules we just generated.
-    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True)
-    res.is_ok(md5='3c3a2e780e8a6c5b6334bbcfd98d5abe')
-
-
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
     res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
@@ -1094,33 +1080,6 @@ def run_trace_test():
     res.is_ok()
     
     res = compile('abbrevtest.inf', economy=True, trace={ 'FREQ':1 })
-    res.is_ok()
-    
-    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':1 })
-    res.is_ok()
-    
-    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':2 })
-    res.is_ok()
-    
-    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':3 })
-    res.is_ok()
-    
-    res = compile('parserm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':4 })
-    res.is_ok()
-    
-    res = compile('verblibm.inf', includedir='i6lib-611', moduledir='build', makemodule=True, trace={ 'LINKER':4 })
-    res.is_ok()
-
-    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':1 })
-    res.is_ok()
-    
-    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':2 })
-    res.is_ok()
-    
-    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':3 })
-    res.is_ok()
-    
-    res = compile('Advent.inf', includedir='i6lib-611', moduledir='build', usemodules=True, trace={ 'LINKER':4 })
     res.is_ok()
     
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'MAP':1 })
@@ -1815,7 +1774,6 @@ test_catalog = [
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
-    ('MODULES', run_modules_test),
     ('DEBUGFILE', run_debugfile_test),
     ('WARNINGS', run_warnings_test),
     ('TRACE', run_trace_test),
