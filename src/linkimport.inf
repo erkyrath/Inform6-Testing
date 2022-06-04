@@ -1,0 +1,12 @@
+[ Main; ];
+
+! Both of these directives are no longer supported.
+
+#ifdef TRY_LINK;
+Link "foo";
+#endif;
+
+#ifdef TRY_IMPORT;
+Import foo, bar;
+#endif;
+

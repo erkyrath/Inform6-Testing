@@ -792,6 +792,15 @@ def run_directives_test():
     res = compile('max_link_directive_length.inf')
     res.is_error()
 
+    res = compile('linkimport.inf')
+    res.is_ok()
+
+    res = compile('linkimport.inf', define={'TRY_LINK':None})
+    res.is_error()
+
+    res = compile('linkimport.inf', define={'TRY_IMPORT':None})
+    res.is_error()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
