@@ -523,7 +523,7 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='f25137b77c5eccdd5345512da345b4bf', warnings=0)
+    res.is_ok(md5='c9e3a124f5daafbc73f7e16f49606bde', warnings=0)
     
     res = compile('i7-min-6G60.inf')
     res.is_ok(md5='0f709576e8bb4b82b375853c542c2251')
