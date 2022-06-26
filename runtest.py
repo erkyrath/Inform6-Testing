@@ -1562,43 +1562,43 @@ def run_max_abbrevs():
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
     res.is_ok(md5='f36b9323d23607d7f5db97bc551201c0')
     
-    res = compile('max_abbrevs_test_64.inf', memsettings={})
+    res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={})
     res.is_ok()
 
-    res = compile('max_abbrevs_test_64.inf', memsettings={'MAX_ABBREVS':63})
+    res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={'MAX_ABBREVS':63})
     res.is_memsetting('MAX_ABBREVS')
 
-    res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':32})
+    res = compile('max_abbrevs_test_32.inf', economy=True, memsettings={'MAX_ABBREVS':32})
     res.is_ok()
 
-    res = compile('max_abbrevs_test_32.inf', memsettings={'MAX_ABBREVS':31})
+    res = compile('max_abbrevs_test_32.inf', economy=True, memsettings={'MAX_ABBREVS':31})
     res.is_memsetting('MAX_ABBREVS')
 
-    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':96})
+    res = compile('max_abbrevs_test_96.inf', economy=True, memsettings={'MAX_ABBREVS':96})
     res.is_ok()
 
-    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_ABBREVS':95})
+    res = compile('max_abbrevs_test_96.inf', economy=True, memsettings={'MAX_ABBREVS':95})
     res.is_memsetting('MAX_ABBREVS')
 
-    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
+    res = compile('max_abbrevs_test_96.inf', economy=True, memsettings={'MAX_DYNAMIC_STRINGS':0})
     res.is_ok()
 
-    res = compile('max_abbrevs_test_96.inf', memsettings={'MAX_DYNAMIC_STRINGS':1})
+    res = compile('max_abbrevs_test_96.inf', economy=True, memsettings={'MAX_DYNAMIC_STRINGS':1})
     res.is_memsetting('MAX_ABBREVS')
 
-    res = compile('max_abbrevs_test_100.inf', memsettings={'MAX_ABBREVS':96})
+    res = compile('max_abbrevs_test_100.inf', economy=True, memsettings={'MAX_ABBREVS':96})
     res.is_memsetting('MAX_ABBREVS')
 
-    res = compile('max_abbrevs_test_64.inf', glulx=True)
+    res = compile('max_abbrevs_test_64.inf', economy=True, glulx=True)
     res.is_ok()
 
-    res = compile('max_abbrevs_test_32.inf', glulx=True)
+    res = compile('max_abbrevs_test_32.inf', economy=True, glulx=True)
     res.is_ok()
 
-    res = compile('max_abbrevs_test_96.inf', glulx=True)
+    res = compile('max_abbrevs_test_96.inf', economy=True, glulx=True)
     res.is_ok()
 
-    res = compile('max_abbrevs_test_100.inf', glulx=True)
+    res = compile('max_abbrevs_test_100.inf', economy=True, glulx=True)
     res.is_ok()
 
 
