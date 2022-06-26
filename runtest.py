@@ -565,13 +565,13 @@ def run_checksum_test():
     res.is_ok(md5='9a51e6e4dcbdaa070462c4c5b15dd554', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
-    res.is_ok(md5='ababc5d859ff8e49d93bf4347b71b7da', warnings=2)
+    res.is_ok(md5='57ec30d40d938eaf4320f24cd5424575', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
-    res.is_ok(md5='a3d3e6fc2c79b6f8ece5c67d701a5dde', warnings=2)
+    res.is_ok(md5='1a56f7edbdeeb802422e9e2bfdd1f1bb', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=False)
-    res.is_ok(md5='b59a9f9e3ea8d84cbf5abde4e173d94a', warnings=2)
+    res.is_ok(md5='f10b8a21f2b4e3ceeda8719144a04ec8', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
     res.is_ok(md5='7e667b15b092dcb6307307d8ea8bba58', warnings=2)
@@ -583,14 +583,14 @@ def run_checksum_test():
     res.is_ok(md5='084961232c71f60705343cdd1385febe', warnings=2)
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='0cef1ce737d5d849d93de48aed1ee289')
+    res.is_ok(md5='761ef600fa370bbacdf8b755e986c320')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='bc88b7d54273ea3313911736ddb869af')
+    res.is_ok(md5='d7198d8ca725f060684090f0a51b1a52')
 
     # OMIT_UNUSED_ROUTINES is set in the source
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3)
-    res.is_ok(md5='93b454954089009c6809264df70876dd')
+    res.is_ok(md5='88fb9a0721a976ca46e441306f01b14d')
 
 
 def run_dict_test():
