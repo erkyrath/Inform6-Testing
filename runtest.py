@@ -1135,7 +1135,7 @@ def run_abbreviations_test():
     res = compile('max_abbrev_len_test.inf')
     res.is_memsetting('MAX_ABBREV_LENGTH')
     
-    res = compile('short_abbrevs_test.inf')
+    res = compile('short_abbrevs_test.inf', economy=True)
     res.is_ok(warnings=4)
 
     res = compile('symbolic_abbrev_test.inf')
@@ -1161,25 +1161,25 @@ def run_abbreviations_test():
 
     
 def run_make_abbreviations_test():
-    res = compile('abbrevtest.inf', makeabbrevs=True)
+    res = compile('abbrevtest.inf', makeabbrevs=True, economy=True)
     res.is_ok(abbreviations=['. ', ', ', '**]', "='@", ' the', 'tried to print (', 'string', 'objec', ' on something n', ' here', ' tha', "31'.^", 'ing', ' to ', 'tribute', '~ o', 'lass', 'ate', 'ther', 'which', 'for', ': 0', "16'", 'ave', 'loop', 'can', 'mber', 'tion', 'is n', 'cre', 'use', 'ed ', 'at ', 'or ', 'ot ', 'has', "00'", "01'", '-- ', 'est', 'er ', 'hall ', 'is ', 'in ', 'we ', 'ead', 'of ', 'out', 'rem', ' a ', 'not', 'nse', 'ove', ' de', ' to', ' it', ' wh', ' us', 'se ', 'de '], warnings=11)
 
-    res = compile('long_abbrevtest.inf', makeabbrevs=True)
+    res = compile('long_abbrevtest.inf', makeabbrevs=True, economy=True)
     res.is_ok(abbreviations=['. ', ', ', 'tring the likes of which may not have been seen in the text -- ', 'This is a long s'])
 
-    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True)
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, economy=True)
     res.is_ok(abbreviations=['. ', ', ', 'You ', "'t ", 'ing ', '**]', 'The', 'That', 'you can', 'someth', '_to)', 'closed', 're ', 'bject', 'already ', 'But ', 's no', 'which ', ' to ', 'ing', 'can', "You'", 'ome', 'the', 'your', 'Command', 't of', 'achieve', 'Language', 'scrip', 'have', 'tion', 'ou aren', 'seem', 'nd ', 'you', 'at ', 'noth', 'see ', 'ose ', 'ed.', 'of ', 'ed ', 'ch ', 'ect', 'not ', 'Not', 'in ', 'read', 'would ', 'on ', 'You', 'ere.', 'int', 'provid', 'est', 'empt', 'lock', '~ or ', 'ight', 'is ', 've ', 'me ', 'first'])
 
-    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, memsettings={'MAX_ABBREVS':2})
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, economy=True, memsettings={'MAX_ABBREVS':2})
     res.is_ok(abbreviations=['. ', ', '])
 
-    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, memsettings={'MAX_ABBREVS':10})
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, economy=True, memsettings={'MAX_ABBREVS':10})
     res.is_ok(abbreviations=['. ', ', ', 'You ', "'t ", 'ing ', '**]', ' th', 'ou can', 'The', 'That'])
 
-    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, memsettings={'MAX_ABBREVS':20})
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, economy=True, memsettings={'MAX_ABBREVS':20})
     res.is_ok(abbreviations=['. ', ', ', 'You ', '\'t ', 'ing ', '**]', 'The', 'That', 'you can', 'someth', ' th', ' you', ' on', 'ing', 'can', ' not', ' ha', ' of', ' seem', 'You\''])
 
-    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, memsettings={'MAX_ABBREVS':96})
+    res = compile('include_english.inf', includedir='i6lib-611', makeabbrevs=True, economy=True, memsettings={'MAX_ABBREVS':96})
     res.is_ok(abbreviations=['. ', ', ', 'You ', '\'t ', 'ing ', '**]', 'The', 'That', 'you can', 'someth', '_to)', 're ', 'closed', 'bject', 'But ', 's no', 'already ', 'which ', 'Command', 'script', ' to ', 'ing', 'can', 'You\'', 'ome', 'tion', 'the', 'your', 't of', 'achieve', 'Language', 'have', 'ou aren', 'Those', 'ou wan', 'this', 'provid', 'would', 'ter', 'unexpected', 'lock', 'nd ', 'you', 'at ', 'noth', 'of ', 'ed.', 'ed ', 'se ', 'ch ', 'is ', 'Not', 'not ', 'in ', 'seem', 'read', 'on ', 'You', 'ere.', 'est', 'er ', '~ or ', 'ight', 'first', 'int', 've ', 'see ', 'as ', 'ly ', 'ide ', 'ect', 'put ', 'en ', 'an ', 'lass ', 'ns ', 'record', 'It ', 'ent', '\'s ', 'off ', 'get ', 'nce ', 'I d', 'ort', 'le.', 'be ', 'wit', 'le ', 'ious ', 'gam', 'n\'t', 'off.', 'on.', ' th', ' on'])
 
     
@@ -1536,10 +1536,10 @@ def run_max_dynamic_strings():
     
 def run_max_abbrevs():
     res = compile('abbrevtest.inf')
-    res.is_ok(md5='037c643cd38396fc3870119bf49b69f6')
+    res.is_ok(md5='870285d50c252cde8bbd0ef2bc977a56')
     
     res = compile('abbrevtest.inf', glulx=True)
-    res.is_ok(md5='ab49bb2007e82436816831f36658d446')
+    res.is_ok(md5='2f2c8c7872559387cbd0fe115f370e2c')
     
     res = compile('abbrevtest.inf', economy=True)
     res.is_ok(md5='99be12467aea61fb46ee46143d903906')
@@ -1548,10 +1548,10 @@ def run_max_abbrevs():
     res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='6f89678d15576c59e3e9d6c363e4c16d')
+    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='62ae27e77478d1a7ce1722828a16e3f2')
+    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
     res.is_ok(md5='16c89d3a4f42bb84f26c8eadb43c110e')
