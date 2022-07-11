@@ -1,0 +1,73 @@
+! Test various valid and invalid uses of the Global and Array directives.
+
+[ Main;
+];
+
+#ifdef USE_GLOBAL_BEFORE_DEF;
+
+[ Func1;
+	return glob1;
+];
+
+! Error:  Variable must be defined before use
+Global glob1;
+
+#endif; ! USE_GLOBAL_BEFORE_DEF
+
+
+[ Func2;
+	return array1;
+];
+
+! It's okay to define an array after use
+Array array1 --> 2;
+
+
+#ifdef DEFINE_GLOBAL_TWICE;
+Global glob2;
+! ...is a name already in use and may not be used as a new global variable name
+Global glob2;
+#endif; ! DEFINE_GLOBAL_TWICE
+
+#ifdef DEFINE_GLOBAL_NONSYMBOL;
+! Expected new global variable name but found...
+Global 3;
+#endif; ! DEFINE_GLOBAL_NONSYMBOL
+
+#ifdef DEFINE_GLOBAL_STATIC;
+! Global variables cannot be static
+Global glob3 static;
+#endif; ! DEFINE_GLOBAL_STATIC
+
+
+! It's okay to redefine built-in globals
+Global self;
+Global temp__global2;
+
+
+#ifdef DEFINE_GLOBAL_EXTRA;
+! Expected '=' or ';' but found...
+Global glob4 foo;
+#endif; ! DEFINE_GLOBAL_EXTRA
+
+
+#ifdef DEFINE_GLOBAL_ARRAY;
+! use 'Array' to define arrays, not 'Global'
+Global glob4 --> 4;
+#endif; ! DEFINE_GLOBAL_ARRAY
+
+
+#ifdef DEFINE_ARRAY_NO_DEF;
+! Expected array definition but found ;
+Array array2;
+#endif; ! DEFINE_ARRAY_NO_DEF
+
+
+#ifdef DEFINE_ARRAY_EXTRA;
+! Expected '->', '-->', 'string', 'table' or 'buffer' but found...
+Array array3 foo;
+#endif; ! DEFINE_ARRAY_EXTRA
+
+
+!### real test: Global/Constant with/without =.
+!### real test: Global temp__global3 with initial value.

@@ -801,6 +801,33 @@ def run_directives_test():
     res = compile('linkimport.inf', define={'TRY_IMPORT':None})
     res.is_error()
 
+    res = compile('globalarray.inf')
+    res.is_ok()
+
+    res = compile('globalarray.inf', define={'USE_GLOBAL_BEFORE_DEF':None})
+    res.is_error()
+
+    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_TWICE':None})
+    res.is_error()
+    
+    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_NONSYMBOL':None})
+    res.is_error()
+    
+    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_STATIC':None})
+    res.is_error()
+    
+    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_EXTRA':None})
+    res.is_error()
+    
+    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_ARRAY':None})
+    res.is_error()
+    
+    res = compile('globalarray.inf', define={'DEFINE_ARRAY_NO_DEF':None})
+    res.is_error()
+    
+    res = compile('globalarray.inf', define={'DEFINE_ARRAY_EXTRA':None})
+    res.is_error()
+    
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
