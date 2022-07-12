@@ -1,0 +1,4 @@
+[ Main;
+];
+
+Global self = 99;

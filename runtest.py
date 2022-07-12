@@ -834,6 +834,9 @@ def run_directives_test():
     res = compile('globalarray.inf', define={'DEFINE_ARRAY_EXTRA':None})
     res.is_error()
     
+    res = compile('globalredef.inf')
+    res.is_ok()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')

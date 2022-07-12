@@ -73,6 +73,9 @@ Global glob3 static;
 Global self;
 Global temp__global2;
 
+! And even to give one a new initial value
+Global temp__global1 = 99;
+
 
 #ifdef DEFINE_GLOBAL_EXTRA;
 ! No such constant as...
