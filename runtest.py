@@ -819,6 +819,9 @@ def run_directives_test():
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_STATIC':None})
     res.is_error()
     
+    res = compile('globalarray.inf', define={'DEFINE_TEMPGLOB':None})
+    res.is_error()
+    
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_EXTRA':None})
     res.is_error()
     

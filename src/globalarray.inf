@@ -77,6 +77,13 @@ Global temp__global2;
 Global temp__global1 = 99;
 
 
+#ifdef DEFINE_TEMPGLOB;
+! While sys__glob0 is a built-in global, it's not one that can be redefined.
+! ...is a name already in use...
+Global sys__glob0;
+#endif; ! DEFINE_TEMPGLOB
+
+
 #ifdef DEFINE_GLOBAL_EXTRA;
 ! No such constant as...
 Global glob4 foof;
