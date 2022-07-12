@@ -837,6 +837,9 @@ def run_directives_test():
     res = compile('globalredef.inf')
     res.is_ok()
 
+    res = compile('globalredef.inf', glulx=True)
+    res.is_ok()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')

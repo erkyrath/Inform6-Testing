@@ -2,3 +2,6 @@
 ];
 
 Global self = 99;
+
+Global temp_global = 98;
+Global sw__var = 97;
