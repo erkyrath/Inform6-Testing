@@ -1,7 +1,36 @@
 ! Test various valid and invalid uses of the Global and Array directives.
 
 [ Main;
+	Func();
+	
+	Func2(); ! no effect, just suppressing a warning
 ];
+
+! The equals sign is now optional for both Constant and Global.
+
+Constant c1 11;
+Constant c2 = 22;
+Global g1 33;
+Global g2 = 44;
+
+[ Func;
+	print "c1=", c1, " (11)^";
+	print "c2=", c2, " (22)^";
+	print "g1=", g1, " (33)^";
+	print "g2=", g2, " (44)^";
+
+	g1 = 333;
+	g2 = 444;
+	print "g1=", g1, " (333)^";
+	print "g2=", g2, " (443)^";
+
+	print "arr-->0=", arr-->0, " (12)^";
+	print "arr-->1=", arr-->1, " (13)^";
+	print "arr-->2=", arr-->2, " (14)^";
+	print "arr-->3=", arr-->3, " (15)^";
+];
+
+Array arr --> 12 13 14 15;
 
 #ifdef USE_GLOBAL_BEFORE_DEF;
 
@@ -46,8 +75,8 @@ Global temp__global2;
 
 
 #ifdef DEFINE_GLOBAL_EXTRA;
-! Expected '=' or ';' but found...
-Global glob4 foo;
+! No such constant as...
+Global glob4 foof;
 #endif; ! DEFINE_GLOBAL_EXTRA
 
 
@@ -69,5 +98,3 @@ Array array3 foo;
 #endif; ! DEFINE_ARRAY_EXTRA
 
 
-!### real test: Global/Constant with/without =.
-!### real test: Global temp__global3 with initial value.

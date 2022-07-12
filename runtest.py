@@ -804,6 +804,9 @@ def run_directives_test():
     res = compile('globalarray.inf')
     res.is_ok()
 
+    res = compile('globalarray.inf', glulx=True)
+    res.is_ok()
+
     res = compile('globalarray.inf', define={'USE_GLOBAL_BEFORE_DEF':None})
     res.is_error()
 
