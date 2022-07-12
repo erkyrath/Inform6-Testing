@@ -80,6 +80,12 @@ Global glob4 foof;
 #endif; ! DEFINE_GLOBAL_EXTRA
 
 
+#ifdef DEFINE_GLOBAL_NOVALUE;
+! Expected expression but found ;
+Global glob4 = ;
+#endif; ! DEFINE_GLOBAL_NOVALUE
+
+
 #ifdef DEFINE_GLOBAL_ARRAY;
 ! use 'Array' to define arrays, not 'Global'
 Global glob4 --> 4;
