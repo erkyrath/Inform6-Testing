@@ -140,7 +140,7 @@ Global failures;
 	if (val < 10) jump FooA;
 	
 	if (0) {
-		val++;
+		val++;  ! (no warning)
 		return val;
 		.FooA;
 		val = val * 3;
