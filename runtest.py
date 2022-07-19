@@ -884,6 +884,12 @@ def run_prune_test():
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
     res.is_ok(md5='92d1f04837095a2cb64672d7fe453927')
 
+    res = compile('branchprune-fwd.inf')
+    res.is_ok(md5='e8330c0fc42a9c459f3e3b9baf284e8e', warnings=1)
+
+    res = compile('branchprune-fwd.inf', glulx=True)
+    res.is_ok(md5='42b7ff7e726bfcacb00071457e9e45f7', warnings=1)
+
     res = compile('logicprune.inf')
     res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0)
 
