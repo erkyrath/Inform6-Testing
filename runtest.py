@@ -562,7 +562,7 @@ def run_checksum_test():
     res.is_ok(md5='ddd599a31e2f817d54e1f47da52ab24c', warnings=0)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
-    res.is_ok(md5='9a51e6e4dcbdaa070462c4c5b15dd554', warnings=0)
+    res.is_ok(md5='a9d6cb534a1258017c0340d0661aa8c7', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
     res.is_ok(md5='57ec30d40d938eaf4320f24cd5424575', warnings=2)

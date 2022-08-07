@@ -11,6 +11,12 @@ Object Start "Starting Point"
 				"of the box quotation"
 				"      feature.";
 			"Boing.";
+		WaveHands:
+			box
+				"                         This is a test"
+				"of the box quotation feature with an extremely wide box to test"
+				"                         narrow screens.";
+			"Flip.";
 	],
             has light;
 
