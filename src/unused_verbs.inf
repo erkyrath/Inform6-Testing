@@ -1,0 +1,45 @@
+[ Main; ];
+
+[ FooSub; ];
+
+[ BarSub; ];
+
+Verb 'foo' 'foox'
+	* -> Foo;
+
+Verb 'bar'
+	* -> Bar;
+
+Extend 'bar' replace
+	* 'to' -> Bar;
+
+#ifdef ONLYFOO;
+Extend only 'foo'
+	* noun -> Bar;
+#endif;  ! ONLYFOO
+
+#ifdef ONLYFOOX;
+Extend only 'foox'
+	* noun -> Bar;
+#endif;  ! ONLYFOOX
+
+
+[ ZogSub; ];
+
+Verb 'zog' 'zoga'
+	* -> Zog;
+
+Extend 'zog'
+	* 'also' -> Zog;
+
+#ifdef ONLYZOG;
+Extend only 'zog'
+	* noun -> Bar;
+#endif;  ! ONLYZOG
+
+#ifdef ONLYZOGA;
+Extend only 'zoga'
+	* noun -> Foo;
+#endif;  ! ONLYZOGA
+
+

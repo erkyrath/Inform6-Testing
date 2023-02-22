@@ -1725,6 +1725,26 @@ def run_max_verbs():
     res.is_ok()
     
     
+def run_unused_verbs():
+    res = compile('unused_verbs.inf')
+    res.is_ok(warnings=0)
+    
+    res = compile('unused_verbs.inf', define={ 'ONLYFOO':0 })
+    res.is_ok(warnings=0)
+    
+    res = compile('unused_verbs.inf', define={ 'ONLYFOOX':0 })
+    res.is_ok(warnings=0)
+    
+    res = compile('unused_verbs.inf', define={ 'ONLYFOO':0, 'ONLYFOOX':0 })
+    res.is_ok(warnings=1)
+    
+    res = compile('unused_verbs.inf', define={ 'ONLYFOO':0, 'ONLYZOGA':0 })
+    res.is_ok(warnings=0)
+    
+    res = compile('unused_verbs.inf', define={ 'ONLYZOG':0, 'ONLYZOGA':0 })
+    res.is_ok(warnings=1)
+    
+    
 def run_max_actions():
     res = compile('max_actions.inf')
     res.is_ok()
@@ -1820,7 +1840,7 @@ def run_omit_unused_routines():
     res.is_ok()
     res.is_ok(md5='5ebeba63f77407fc175f00055f565933')
 
-    
+
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
@@ -1861,6 +1881,7 @@ test_catalog = [
     ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
     ('MAX_ABBREVS', run_max_abbrevs),
     ('MAX_VERBS', run_max_verbs),
+    ('UNUSED_VERBS', run_unused_verbs),
     ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
     ('MAX_VERB_SYNONYMS', run_max_verb_synonyms),
     ('MAX_LINES_PER_VERB', run_max_lines_per_verb),
