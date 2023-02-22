@@ -1,0 +1,25 @@
+Include "Parser";
+Include "VerbLib";
+
+Object testroom "Test Room"
+  with
+    description "You are in a test room.",
+  has light;
+
+Object -> rock "rock"
+  with
+	name 'rock';
+
+[ Initialise;
+    location = testroom;
+];
+
+Include "Grammar";
+
+Extend only 'blow' replace
+	* -> Jump;
+
+Extend only 'enter' replace
+	* -> Jump;
+Extend only 'cross' replace
+	* -> Fill;

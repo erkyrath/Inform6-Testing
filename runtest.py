@@ -1738,11 +1738,23 @@ def run_unused_verbs():
     res = compile('unused_verbs.inf', define={ 'ONLYFOO':0, 'ONLYFOOX':0 })
     res.is_ok(warnings=1)
     
+    res = compile('unused_verbs.inf', glulx=True)
+    res.is_ok(warnings=0)
+    
+    res = compile('unused_verbs.inf', define={ 'ONLYFOO':0, 'ONLYFOOX':0 }, glulx=True)
+    res.is_ok(warnings=1)
+    
     res = compile('unused_verbs.inf', define={ 'ONLYFOO':0, 'ONLYZOGA':0 })
     res.is_ok(warnings=0)
     
     res = compile('unused_verbs.inf', define={ 'ONLYZOG':0, 'ONLYZOGA':0 })
     res.is_ok(warnings=1)
+    
+    res = compile('unused_verbs_lib.inf', includedir='i6lib-611')
+    res.is_ok(md5='0b050c6608f4c318deb71d298f147a49', warnings=2)
+    
+    res = compile('unused_verbs_lib.inf', includedir='i6lib-611', glulx=True)
+    res.is_ok(md5='394a03b9a898122d109a0ba25b2c8118', warnings=2)
     
     
 def run_max_actions():
