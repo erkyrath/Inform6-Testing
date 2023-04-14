@@ -82,3 +82,184 @@ Object obj8
 
 #endif; ! TOOBIG_ADDITIVE_PROP_V3
 
+
+#ifdef MAX_CLASSES;
+
+Class cla9_0;
+Class cla9_1;
+Class cla9_2;
+Class cla9_3;
+Class cla9_4;
+Class cla9_5;
+Class cla9_6;
+Class cla9_7;
+Class cla9_8;
+Class cla9_9;
+Class cla9_10;
+Class cla9_11;
+Class cla9_12;
+Class cla9_13;
+Class cla9_14;
+Class cla9_15;
+Class cla9_16;
+Class cla9_17;
+Class cla9_18;
+Class cla9_19;
+Class cla9_20;
+Class cla9_21;
+Class cla9_22;
+Class cla9_23;
+Class cla9_24;
+Class cla9_25;
+Class cla9_26;
+Class cla9_27;
+Class cla9_28;
+Class cla9_29;
+Class cla9_30;
+Class cla9_31;
+
+Object obj9
+	class cla9_0,
+	class cla9_1,
+	class cla9_2,
+	class cla9_3,
+	class cla9_4,
+	class cla9_5,
+	class cla9_6,
+	class cla9_7,
+	class cla9_8,
+	class cla9_9,
+	class cla9_10,
+	class cla9_11,
+	class cla9_12,
+	class cla9_13,
+	class cla9_14,
+	class cla9_15,
+	class cla9_16,
+	class cla9_17,
+	class cla9_18,
+	class cla9_19,
+	class cla9_20,
+	class cla9_21,
+	class cla9_22,
+	class cla9_23,
+	class cla9_24,
+	class cla9_25,
+	class cla9_26,
+	class cla9_27,
+	class cla9_28,
+	class cla9_29,
+	class cla9_30,
+	class cla9_31;
+
+#endif; ! MAX_CLASSES
+
+
+#ifdef TOOBIG_CLASSES;
+
+Class cla9_0;
+Class cla9_1;
+Class cla9_2;
+Class cla9_3;
+Class cla9_4;
+Class cla9_5;
+Class cla9_6;
+Class cla9_7;
+Class cla9_8;
+Class cla9_9;
+Class cla9_10;
+Class cla9_11;
+Class cla9_12;
+Class cla9_13;
+Class cla9_14;
+Class cla9_15;
+Class cla9_16;
+Class cla9_17;
+Class cla9_18;
+Class cla9_19;
+Class cla9_20;
+Class cla9_21;
+Class cla9_22;
+Class cla9_23;
+Class cla9_24;
+Class cla9_25;
+Class cla9_26;
+Class cla9_27;
+Class cla9_28;
+Class cla9_29;
+Class cla9_30;
+Class cla9_31;
+Class cla9_32;
+
+Object obj9
+	class cla9_0,
+	class cla9_1,
+	class cla9_2,
+	class cla9_3,
+	class cla9_4,
+	class cla9_5,
+	class cla9_6,
+	class cla9_7,
+	class cla9_8,
+	class cla9_9,
+	class cla9_10,
+	class cla9_11,
+	class cla9_12,
+	class cla9_13,
+	class cla9_14,
+	class cla9_15,
+	class cla9_16,
+	class cla9_17,
+	class cla9_18,
+	class cla9_19,
+	class cla9_20,
+	class cla9_21,
+	class cla9_22,
+	class cla9_23,
+	class cla9_24,
+	class cla9_25,
+	class cla9_26,
+	class cla9_27,
+	class cla9_28,
+	class cla9_29,
+	class cla9_30,
+	class cla9_31,
+	class cla9_32;
+
+#endif; ! TOOBIG_CLASSES
+
+
+#ifdef MAX_CLASSES_V3;
+
+Class cla9_0;
+Class cla9_1;
+Class cla9_2;
+Class cla9_3;
+
+Object obj9
+	class cla9_0,
+	class cla9_1,
+	class cla9_2,
+	class cla9_3;
+
+#endif; ! MAX_CLASSES_V3
+
+
+#ifdef TOOBIG_CLASSES_V3;
+
+Class cla9_0;
+Class cla9_1;
+Class cla9_2;
+Class cla9_3;
+Class cla9_4;
+
+Object obj9
+	class cla9_0,
+	class cla9_1,
+	class cla9_2,
+	class cla9_3,
+	class cla9_4;
+
+#endif; ! TOOBIG_CLASSES_V3
+
+
