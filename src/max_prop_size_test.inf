@@ -1,0 +1,44 @@
+[ Main; ];
+
+Property prop;
+Property additive addprop;
+
+#ifdef MAX_COMMON_PROP;
+
+Object obj1
+	with prop 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31;
+
+#endif; ! MAX_COMMON_PROP
+
+
+#ifdef TOOBIG_COMMON_PROP;
+
+Object obj2
+	with prop 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32;
+
+#endif; ! TOOBIG_COMMON_PROP
+
+
+#ifdef MAX_ADDITIVE_PROP;
+
+Class cla3
+	with addprop 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
+
+Object obj3
+	class cla3
+	with addprop 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31;
+
+#endif; ! MAX_ADDITIVE_PROP
+
+
+#ifdef TOOBIG_ADDITIVE_PROP;
+
+Class cla4
+	with addprop 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
+
+Object obj4
+	class cla4
+	with addprop 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32;
+
+#endif; ! TOOBIG_ADDITIVE_PROP
+

@@ -274,7 +274,7 @@ class Result:
                     if err.startswith('Name exceeds the maximum length'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IDENTIFIER_LENGTH'
-                    if err.startswith('An additive property has inherited so many values') or err.startswith('Limit (of 32 values) exceeded for property'):
+                    if err.startswith('An additive property has inherited so many values') or re.match('^Limit [(]of [0-9]+ values[)] exceeded for property', err):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_PROP_LENGTH_ZCODE'
                     if re.match('^All [0-9]+ properties already declared', err):
@@ -1378,6 +1378,20 @@ def run_max_common_prop_count():
     res.is_memsetting('MAX_COMMON_PROPS')
 
 
+def run_max_common_prop_size():
+    res = compile('max_prop_size_test.inf', define={ 'MAX_COMMON_PROP':0 })
+    res.is_ok()
+    
+    res = compile('max_prop_size_test.inf', define={ 'TOOBIG_COMMON_PROP':0 })
+    res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
+    
+    res = compile('max_prop_size_test.inf', define={ 'MAX_ADDITIVE_PROP':0 })
+    res.is_ok()
+    
+    res = compile('max_prop_size_test.inf', define={ 'TOOBIG_ADDITIVE_PROP':0 })
+    res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
+    
+    
 def run_max_indiv_prop_table_size():
     res = compile('max_indiv_prop_table_size_test.inf')
     res.is_ok()
@@ -1880,6 +1894,7 @@ test_catalog = [
     ('MAX_ARRAYS', run_max_arrays),
     ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ('MAX_COMMON_PROP_COUNT', run_max_common_prop_count),
+    ('MAX_COMMON_PROP_SIZE', run_max_common_prop_size),
     ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
     ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
     ('MAX_OBJ_PROP_COUNT', run_max_obj_prop_count),
