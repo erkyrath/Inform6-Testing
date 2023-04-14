@@ -1391,6 +1391,18 @@ def run_max_common_prop_size():
     res = compile('max_prop_size_test.inf', define={ 'TOOBIG_ADDITIVE_PROP':0 })
     res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
     
+    res = compile('max_prop_size_test.inf', zversion=3, define={ 'MAX_COMMON_PROP_V3':0 })
+    res.is_ok()
+    
+    res = compile('max_prop_size_test.inf', zversion=3, define={ 'TOOBIG_COMMON_PROP_V3':0 })
+    res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
+    
+    res = compile('max_prop_size_test.inf', zversion=3, define={ 'MAX_ADDITIVE_PROP_V3':0 })
+    res.is_ok()
+    
+    res = compile('max_prop_size_test.inf', zversion=3, define={ 'TOOBIG_ADDITIVE_PROP_V3':0 })
+    res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
+    
     
 def run_max_indiv_prop_table_size():
     res = compile('max_indiv_prop_table_size_test.inf')

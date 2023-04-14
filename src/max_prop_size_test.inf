@@ -42,3 +42,43 @@ Object obj4
 
 #endif; ! TOOBIG_ADDITIVE_PROP
 
+
+#ifdef MAX_COMMON_PROP_V3;
+
+Object obj5
+	with prop 0 1 2 3;
+
+#endif; ! MAX_COMMON_PROP_V3
+
+
+#ifdef TOOBIG_COMMON_PROP_V3;
+
+Object obj6
+	with prop 0 1 2 3 4;
+
+#endif; ! TOOBIG_COMMON_PROP_V3
+
+
+#ifdef MAX_ADDITIVE_PROP_V3;
+
+Class cla7
+	with addprop 0 1;
+
+Object obj7
+	class cla7
+	with addprop 2 3;
+
+#endif; ! MAX_ADDITIVE_PROP_V3
+
+
+#ifdef TOOBIG_ADDITIVE_PROP_V3;
+
+Class cla8
+	with addprop 0 1;
+
+Object obj8
+	class cla8
+	with addprop 2 3 4;
+
+#endif; ! TOOBIG_ADDITIVE_PROP_V3
+
