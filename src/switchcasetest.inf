@@ -283,3 +283,19 @@ Object pebble;
 
 #endif; ! LOC_VAR_CASE
 
+
+#ifdef FUNC_CALL_CASE;
+
+[ LocVarCase val locvar;
+	switch (val) {
+		(0):
+			new_line;
+		(FrotzSub()):
+			new_line;
+		(1):
+			new_line;
+	}
+];
+
+#endif; ! FUNC_CALL_CASE
+

@@ -875,6 +875,9 @@ def run_statements_test():
     res = compile('switchcasetest.inf', define={'LOC_VAR_CASE':None})
     res.is_error()
 
+    res = compile('switchcasetest.inf', define={'FUNC_CALL_CASE':None})
+    res.is_error()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
