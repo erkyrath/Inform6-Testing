@@ -251,3 +251,35 @@ Object pebble;
 
 #endif; ! DEFAULT_BEFORE_CASE
 
+
+#ifdef GLOB_VAR_CASE;
+
+[ GlobVarCase val;
+	switch (val) {
+		(0):
+			new_line;
+		(failures):
+			new_line;
+		(1):
+			new_line;
+	}
+];
+
+#endif; ! GLOB_VAR_CASE
+
+
+#ifdef LOC_VAR_CASE;
+
+[ LocVarCase val locvar;
+	switch (val) {
+		(0):
+			new_line;
+		(locvar):
+			new_line;
+		(1):
+			new_line;
+	}
+];
+
+#endif; ! LOC_VAR_CASE
+
