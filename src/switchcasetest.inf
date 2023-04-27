@@ -177,6 +177,7 @@ Object pebble;
 
 #endif; ! TOO_MANY_VALS_1
 
+
 #ifdef TOO_MANY_VALS_2;
 
 [ TooManyVals2 val;
@@ -187,3 +188,20 @@ Object pebble;
 ];
 
 #endif; ! TOO_MANY_VALS_2
+
+
+#ifdef DEFAULT_BEFORE_CASE;
+
+[ DefaultBeforeCase val;
+	switch (val) {
+		(0):
+			new_line;
+		default:
+			new_line;
+		(1):
+			new_line;
+	}
+];
+
+#endif; ! DEFAULT_BEFORE_CASE
+
