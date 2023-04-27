@@ -851,7 +851,19 @@ def run_statements_test():
     res = compile('switchcasetest.inf', glulx=True)
     res.is_ok()
     
+    res = compile('switchcasetest.inf', define={'TOO_MANY_VALS_1':None})
+    res.is_memsetting('MAX_SPEC_STACK')
 
+    res = compile('switchcasetest.inf', define={'TOO_MANY_VALS_2':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    res = compile('switchcasetest.inf', glulx=True, define={'TOO_MANY_VALS_1':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    res = compile('switchcasetest.inf', glulx=True, define={'TOO_MANY_VALS_2':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
     res.is_ok(warnings=0)
