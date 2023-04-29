@@ -1885,6 +1885,15 @@ def run_max_zcode_size():
     res = compile('max_zcode_size_test.inf', glulx=True)
     res.is_ok()
 
+    res = compile('zcode_v3_overflow.inf', zversion=3)
+    res.is_error()
+
+    res = compile('zcode_v3_overflow.inf')
+    res.is_ok()
+
+    res = compile('zcode_v3_overflow.inf', glulx=True)
+    res.is_ok()
+
 
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
