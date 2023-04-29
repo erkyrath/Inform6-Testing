@@ -14,7 +14,6 @@
 #
 # Memory settings not yet tested:
 #
-# NUM_ATTR_BYTES
 # DICT_WORD_SIZE
 # DICT_CHAR_SIZE (glulx)
 # HASH_TAB_SIZE
@@ -280,6 +279,9 @@ class Result:
                     if re.match('^All [0-9]+ properties already declared', err):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_COMMON_PROPS'
+                    if re.match('^All[0-9 ]*attributes already declared', err):
+                        if self.memsetting is None:
+                            self.memsetting = 'MAX_ATTRIBUTES'
                     if err.startswith('\'If\' directives nested too deeply'):
                         if self.memsetting is None:
                             self.memsetting = 'MAX_IFDEF_STACK'
@@ -1326,6 +1328,17 @@ def run_max_arrays():
     res.is_ok()
 
 
+def run_max_attr_bytes():
+    res = compile('max_attributes.inf')
+    res.is_memsetting('MAX_ATTRIBUTES')
+    
+    res = compile('max_attributes.inf', glulx=True)
+    res.is_memsetting('MAX_ATTRIBUTES')
+    
+    res = compile('max_attributes.inf', glulx=True, memsettings={'NUM_ATTR_BYTES':11})
+    res.is_ok()
+    
+
 def run_max_prop_table_size():
     res = compile('max_prop_table_size_test.inf')
     res.is_ok()
@@ -1916,6 +1929,7 @@ test_catalog = [
     ('MAX_OBJECTS', run_max_objects),
     ('MAX_CLASSES', run_max_classes),
     ('MAX_ARRAYS', run_max_arrays),
+    ('MAX_ATTR_BYTES', run_max_attr_bytes),
     ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
     ('MAX_COMMON_PROP_COUNT', run_max_common_prop_count),
     ('MAX_COMMON_PROP_SIZE', run_max_common_prop_size),
