@@ -846,6 +846,41 @@ def run_directives_test():
     res.is_ok()
 
 
+def run_statements_test():
+    res = compile('switchcasetest.inf')
+    res.is_ok()
+
+    res = compile('switchcasetest.inf', glulx=True)
+    res.is_ok()
+    
+    res = compile('switchcasetest.inf', define={'TOO_MANY_VALS_1':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    res = compile('switchcasetest.inf', define={'TOO_MANY_VALS_2':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    res = compile('switchcasetest.inf', glulx=True, define={'TOO_MANY_VALS_1':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    res = compile('switchcasetest.inf', glulx=True, define={'TOO_MANY_VALS_2':None})
+    res.is_memsetting('MAX_SPEC_STACK')
+
+    res = compile('switchcasetest.inf', define={'DEFAULT_BEFORE_CASE':None})
+    res.is_error()
+
+    res = compile('switchcasetest.inf', glulx=True, define={'DEFAULT_BEFORE_CASE':None})
+    res.is_error()
+
+    res = compile('switchcasetest.inf', define={'GLOB_VAR_CASE':None})
+    res.is_error()
+
+    res = compile('switchcasetest.inf', define={'LOC_VAR_CASE':None})
+    res.is_error()
+
+    res = compile('switchcasetest.inf', define={'FUNC_CALL_CASE':None})
+    res.is_error()
+
+
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
     res.is_ok(warnings=0)
@@ -1919,6 +1954,7 @@ test_catalog = [
     ('DICT', run_dict_test),
     ('LEXER', run_lexer_test),
     ('DIRECTIVES', run_directives_test),
+    ('STATEMENTS', run_statements_test),
     ('PRUNE', run_prune_test),
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
