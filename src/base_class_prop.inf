@@ -3,19 +3,27 @@ Include "puny";
 
 ! Should display:
 !   Start:
-!   Instance val.
-!   Base val.
+!   Bar.prop1 = 22
+!   Bar.Cla::prop1 = 11
+!   Bar.prop2() = Instance val.
+!   Bar.Cla::prop2() = Base val.
 
-Property myprop;
 
-Class Foo
- with myprop [; "Base val."; ];
+Property prop1;
+Property prop2;
 
-Foo Bar
-  with myprop [; "Instance val."; ];
+Class Cla
+  with prop1 11,
+  with prop2 [; "Base val."; ];
+
+Cla Obj
+  with prop1 22,
+  with prop2 [; "Instance val."; ];
 
 [ Initialise;
 	print "Start:^";
-	Bar.myprop();
-	Bar.Foo::myprop();
+	print "Obj.prop1 = ", Obj.prop1, "^";
+	print "Obj.Cla::prop1 = ", Obj.Cla::prop1, "^";
+	print "Obj.prop2() = "; Obj.prop2();
+	print "Obj.Cla::prop2() = "; Obj.Cla::prop2();
 ];
