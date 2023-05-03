@@ -1,0 +1,21 @@
+Include "globals";
+Include "puny";
+
+! Should display:
+!   Start:
+!   Instance val.
+!   Base val.
+
+Property myprop;
+
+Class Foo
+ with myprop [; "Base val."; ];
+
+Foo Bar
+  with myprop [; "Instance val."; ];
+
+[ Initialise;
+	print "Start:^";
+	Bar.myprop();
+	Bar.Foo::myprop();
+];

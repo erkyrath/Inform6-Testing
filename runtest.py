@@ -855,6 +855,9 @@ def run_veneer_test():
     
     res = compile('obj_prop_call.inf', zversion=3, define={'REPLACE_TWO':None})
     res.is_ok()
+
+    res = compile('base_class_prop.inf', zversion=3, includedir='punylib-36')
+    res.is_ok(md5='fc6782bc5c4d613c966709dde48bb73b')
     
 
 def run_statements_test():
