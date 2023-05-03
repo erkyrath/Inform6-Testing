@@ -1,0 +1,9 @@
+[ Main; ];
+
+! Dict word too long error.
+! Note that this is different from the DICT_WORD_SIZE setting.
+! It's a header constant (MAX_DICT_WORD_SIZE) and applies to both
+! Z-code and Glulx.
+
+Constant word = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
