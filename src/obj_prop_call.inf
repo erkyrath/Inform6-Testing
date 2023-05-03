@@ -1,0 +1,17 @@
+[ Main;
+	func();
+];
+
+Object obj;
+Property prop;
+
+[ func;
+	return obj.prop();
+];
+
+#ifdef REPLACE_TWO;
+
+[ CA__Pr; ];
+[ Cl__Ms; ];
+
+#endif; ! REPLACE_TWO

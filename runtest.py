@@ -846,6 +846,17 @@ def run_directives_test():
     res.is_ok()
 
 
+def run_veneer_test():
+    res = compile('obj_prop_call.inf')
+    res.is_ok()
+    
+    res = compile('obj_prop_call.inf', zversion=3)
+    res.is_error()
+    
+    res = compile('obj_prop_call.inf', zversion=3, define={'REPLACE_TWO':None})
+    res.is_ok()
+    
+
 def run_statements_test():
     res = compile('switchcasetest.inf')
     res.is_ok()
@@ -1953,6 +1964,7 @@ test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
     ('LEXER', run_lexer_test),
+    ('VENEER', run_veneer_test),
     ('DIRECTIVES', run_directives_test),
     ('STATEMENTS', run_statements_test),
     ('PRUNE', run_prune_test),
