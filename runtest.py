@@ -860,10 +860,13 @@ def run_veneer_test():
     res.is_ok(md5='9a4967a017066abef8ae1db06a07126a')
     
     res = compile('obj_prop_test.inf')
-    res.is_ok()
+    res.is_ok(md5='0e5305d3d7f18d6959e70dfbcb004272')
+    
+    res = compile('obj_prop_test.inf', zversion=3)
+    res.is_ok(md5='x')
     
     res = compile('obj_prop_test.inf', glulx=True)
-    res.is_ok()
+    res.is_ok(md5='8ef9e7c20e0f34540a79ae68f73b3b09')
     
 
 def run_statements_test():
