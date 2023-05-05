@@ -859,6 +859,12 @@ def run_veneer_test():
     res = compile('base_class_prop.inf', zversion=3, includedir='punylib-36')
     res.is_ok(md5='9a4967a017066abef8ae1db06a07126a')
     
+    res = compile('obj_prop_test.inf')
+    res.is_ok()
+    
+    res = compile('obj_prop_test.inf', glulx=True)
+    res.is_ok()
+    
 
 def run_statements_test():
     res = compile('switchcasetest.inf')
