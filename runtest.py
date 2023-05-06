@@ -868,6 +868,15 @@ def run_veneer_test():
     res = compile('base_class_prop.inf', zversion=3, includedir='punylib-36')
     res.is_ok(md5='3fcceb09b15468dc5a762b102056b3de')
     
+    res = compile('base_class_prop.inf', zversion=5, includedir='punylib-36')
+    res.is_ok(md5='8c1b849fbb7488126bd2a24b1adc8b6f')
+    
+    res = compile('base_class_prop_2.inf', zversion=3, includedir='punylib-36')
+    res.is_ok(md5='ae0b881d95eca517c7904bc0141b2d12')
+    
+    res = compile('base_class_prop_2.inf', zversion=5, includedir='punylib-36')
+    res.is_ok(md5='772f1f2b9aa366cbb1e57755443f81b0')
+    
     res = compile('obj_prop_test.inf')
     res.is_ok(md5='0e5305d3d7f18d6959e70dfbcb004272')
     

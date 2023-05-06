@@ -1,0 +1,67 @@
+Include "globals";
+Include "puny";
+
+! Should display:
+!   Start:
+!   prop_a: 2
+!   prop_b: 4
+!   iprop_c: 2
+!   iprop_d: 4
+!   Foo::description: 6
+!   Foo::prop_a: 8
+!   Foo::prop_b: 6
+!   Foo::iprop_c: 8
+!   Foo::iprop_d: 6
+
+Property prop_a;
+Property prop_b;
+Property individual iprop_c;
+Property individual iprop_d;
+
+Class Foo
+	with
+		description "hello 1" "hello 2" "hello 3",
+		prop_a 1 2 3 4,
+		prop_b 5 6 7,
+		iprop_c 10000 2 3 4,
+		iprop_d 5 6 7;
+
+Foo Bar
+	with
+		description "hello x" "hello y",
+		prop_a 1,
+		prop_b 3 4,
+		iprop_c 1,
+		iprop_d 3 4;
+
+[ Initialise val;
+	print "Start:^";
+	
+	val = Bar.#prop_a;
+	print "prop_a: ", val, "^";
+	
+	val = Bar.#prop_b;
+	print "prop_b: ", val, "^";
+	
+	val = Bar.#iprop_c;
+	print "iprop_c: ", val, "^";
+	
+	val = Bar.#iprop_d;
+	print "iprop_d: ", val, "^";
+	
+	val = Bar.#Foo::description;
+	print "Foo::description: ", val, "^";
+	
+	val = Bar.#Foo::prop_a;
+	print "Foo::prop_a: ", val, "^";
+	
+	val = Bar.#Foo::prop_b;
+	print "Foo::prop_b: ", val, "^";
+	
+	val = Bar.#Foo::iprop_c;
+	print "Foo::iprop_c: ", val, "^";
+	
+	val = Bar.#Foo::iprop_d;
+	print "Foo::iprop_d: ", val, "^";
+];
+
