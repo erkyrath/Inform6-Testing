@@ -39,6 +39,9 @@ popt = optparse.OptionParser(usage='runtest.py [options] [tests...]')
 popt.add_option('-b', '--binary',
     action='store', dest='binary', default='./inform',
     help='path to Inform binary (default: ./inform)')
+popt.add_option('--nolibgmalloc',
+    action='store_false', dest='libgmalloc', default=True,
+    help='skip using the libgmalloc library')
 popt.add_option('--underflow',
     action='store_true', dest='underflow',
     help='guard against array underflow (rather than overflow)')
@@ -145,17 +148,19 @@ def compile(srcfile, destfile=None,
     print('Running:', ' '.join(argls))
 
     env = dict(os.environ)
-    env['DYLD_INSERT_LIBRARIES'] = '/usr/lib/libgmalloc.dylib'
     
-    if opts.alignment == 4:
-        env['MALLOC_WORD_SIZE'] = '1'
-    elif opts.alignment == 16:
-        env['MALLOC_VECTOR_SIZE'] = '1'
-    else:
-        env['MALLOC_STRICT_SIZE'] = '1'
-        
-    if (opts.underflow):
-        env['MALLOC_PROTECT_BEFORE'] = '1'
+    if opts.libgmalloc:
+        env['DYLD_INSERT_LIBRARIES'] = '/usr/lib/libgmalloc.dylib'
+    
+        if opts.alignment == 4:
+            env['MALLOC_WORD_SIZE'] = '1'
+        elif opts.alignment == 16:
+            env['MALLOC_VECTOR_SIZE'] = '1'
+        else:
+            env['MALLOC_STRICT_SIZE'] = '1'
+            
+        if (opts.underflow):
+            env['MALLOC_PROTECT_BEFORE'] = '1'
     
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
