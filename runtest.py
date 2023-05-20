@@ -681,7 +681,7 @@ def run_lexer_test():
     res.is_memsetting('MAX_IDENTIFIER_LENGTH')
 
     res = compile('long_dictword_test.inf')
-    res.is_error()
+    res.is_ok()
 
     res = compile('unclosed_double_quote.inf')
     res.is_error()
