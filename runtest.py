@@ -686,6 +686,13 @@ def run_lexer_test():
     res = compile('long_identifiers_2.inf', glulx=True)
     res.is_ok()
 
+    # Object short names are over 765 Z-chars
+    res = compile('long_identifiers_3.inf')
+    res.is_memsetting('MAX_SHORT_NAME_LENGTH')
+
+    res = compile('long_identifiers_3.inf', glulx=True)
+    res.is_ok()
+
     res = compile('long_dictword_test.inf')
     res.is_ok()
 
@@ -694,11 +701,6 @@ def run_lexer_test():
 
     res = compile('unclosed_single_quote.inf')
     res.is_error()
-
-    ### long symbol in @()
-    ### long symbol as local var
-    ### long symbol as global var
-    ### long symbol as action name
 
 
 def run_directives_test():
