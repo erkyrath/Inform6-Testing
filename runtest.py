@@ -105,6 +105,7 @@ def compile(srcfile, destfile=None,
     if moduledir:
         argls.append('+module_path='+moduledir)
     argls.append('+code_path=build')
+    argls.append('-E0')
 
     # Arguments which will be displayed in the results.
     showargs = []
