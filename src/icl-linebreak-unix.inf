@@ -1,0 +1,11 @@
+!% $DICT_WORD_SIZE=11
+!% $DICT_CHAR_SIZE=4
+!% -Cu
+!% $MAX_DYNAMIC_STRINGS=101
+
+! This file will not compile if the ICL headers above are not accepted.
+
+[ Main val;
+	val = 'αβγδε';
+	print "@(100)^";
+];

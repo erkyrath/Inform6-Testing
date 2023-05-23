@@ -698,6 +698,16 @@ def run_lexer_test():
     res = compile('linebreak-dos.inf')
     res.is_ok(md5='c6141b8c15f81e3d1db728e5aaf1303b', warnings=1)
 
+    res = compile('icl-linebreak-unix.inf', glulx=True)
+    res.is_ok(md5='3067f025bcc31115e5ec7397761e2f41')
+
+    res = compile('icl-linebreak-dos.inf', glulx=True)
+    res.is_ok(md5='3067f025bcc31115e5ec7397761e2f41')
+
+    res = compile('icl-linebreak-oldmac.inf', glulx=True)
+    res.is_memsetting('MAX_DYNAMIC_STRINGS')
+
+    
 def run_directives_test():
     res = compile('staticarraytest.inf')
     res.is_ok(md5='736f5df15951398ec41b0d05e4280cce')
