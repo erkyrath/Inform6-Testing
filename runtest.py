@@ -689,6 +689,14 @@ def run_lexer_test():
     res = compile('unclosed_single_quote.inf')
     res.is_error()
 
+    res = compile('linebreak-unix.inf')
+    res.is_ok(md5='c6141b8c15f81e3d1db728e5aaf1303b', warnings=1)
+
+    res = compile('linebreak-oldmac.inf')
+    res.is_ok(md5='c6141b8c15f81e3d1db728e5aaf1303b', warnings=1)
+
+    res = compile('linebreak-dos.inf')
+    res.is_ok(md5='c6141b8c15f81e3d1db728e5aaf1303b', warnings=1)
 
 def run_directives_test():
     res = compile('staticarraytest.inf')

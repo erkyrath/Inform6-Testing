@@ -1,0 +1,1 @@
+[ Main; Func();] ;[ Func;	print "Hello. ";	print "This sho\uld be a single linewith no extra	spaces.^";];! CommentObject obj;#Message warning "Compile message on line 15.";
