@@ -1,6 +1,6 @@
 [ Main; ];
 
-! Identifier too long error
+! Long identifier is no longer an error.
 Global xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyzzy = 0;
 
 

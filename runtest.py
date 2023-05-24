@@ -679,10 +679,23 @@ def run_dict_test():
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
-    res.is_memsetting('MAX_IDENTIFIER_LENGTH')
+    res.is_ok()
+
+    res = compile('long_identifiers_2.inf')
+    res.is_ok()
+
+    res = compile('long_identifiers_2.inf', glulx=True)
+    res.is_ok()
+
+    # Object short names are over 765 Z-chars
+    res = compile('long_identifiers_3.inf')
+    res.is_memsetting('MAX_SHORT_NAME_LENGTH')
+
+    res = compile('long_identifiers_3.inf', glulx=True)
+    res.is_ok()
 
     res = compile('long_dictword_test.inf')
-    res.is_error()
+    res.is_ok()
 
     res = compile('unclosed_double_quote.inf')
     res.is_error()
