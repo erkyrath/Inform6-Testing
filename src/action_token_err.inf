@@ -1,0 +1,28 @@
+[ Main; ];
+
+[ LookSub; ];
+
+[ func val;
+
+	! These cases all generate at least one error.
+
+#ifdef NUMBER_ACTION;
+	<123>;
+#endif;
+
+#ifdef STRING_ACTION;
+	<"hello">;
+#endif;
+
+#ifdef UNKNOWN_SYMBOL_ACTION;
+	<frotz>;
+#endif;
+
+	! But this should work.
+
+	switch(val) {
+		0: <Look>;
+		1: return;
+		2: if (true) <Look>;
+	}
+];

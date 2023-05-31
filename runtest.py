@@ -964,6 +964,18 @@ def run_statements_test():
     res = compile('switchcasetest.inf', define={'FUNC_CALL_CASE':None})
     res.is_error()
 
+    res = compile('action_token_err.inf')
+    res.is_ok()
+
+    res = compile('action_token_err.inf', define={'NUMBER_ACTION':None})
+    res.is_error()
+
+    res = compile('action_token_err.inf', define={'STRING_ACTION':None})
+    res.is_error()
+
+    res = compile('action_token_err.inf', define={'UNKNOWN_SYMBOL_ACTION':None})
+    res.is_error()
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
