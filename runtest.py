@@ -749,6 +749,18 @@ def run_directives_test():
 
     res = compile('no-main.inf', define={'WRONGMAIN':None})
     res.is_error()
+    
+    res = compile('no-main.inf', define={'FORWARDMAIN':None})
+    res.is_error()
+    
+    res = compile('no-main.inf', glulx=True)
+    res.is_error()
+
+    res = compile('no-main.inf', glulx=True, define={'WRONGMAIN':None})
+    res.is_error()
+
+    res = compile('no-main.inf', glulx=True, define={'FORWARDMAIN':None})
+    res.is_error()
 
     res = compile('replacerenametest.inf', includedir='src')
     res.is_ok(md5='20f77c3bc7002792f218a345f547b91c')

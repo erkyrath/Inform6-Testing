@@ -4,3 +4,12 @@
 Constant Main = 0;
 
 #endif;
+
+#ifdef FORWARDMAIN;
+
+[ func;
+	return Main;
+];
+
+#endif;
+
