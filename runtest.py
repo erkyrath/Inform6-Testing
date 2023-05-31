@@ -727,6 +727,9 @@ def run_lexer_test():
     res = compile('icl-linebreak-oldmac.inf', glulx=True)
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
+    res = compile('bad_global.inf')
+    res.is_error()
+
     
 def run_directives_test():
     res = compile('staticarraytest.inf')
