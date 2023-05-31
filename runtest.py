@@ -744,6 +744,12 @@ def run_directives_test():
     res = compile('undefdirectivetest.inf', glulx=True)
     res.is_ok(md5='cb28a5edcd681dfde63e472ac2542a95')
 
+    res = compile('no-main.inf')
+    res.is_error()
+
+    res = compile('no-main.inf', define={'WRONGMAIN':None})
+    res.is_error()
+
     res = compile('replacerenametest.inf', includedir='src')
     res.is_ok(md5='20f77c3bc7002792f218a345f547b91c')
 

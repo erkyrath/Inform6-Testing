@@ -1,0 +1,6 @@
+
+#ifdef WRONGMAIN;
+
+Constant Main = 0;
+
+#endif;
