@@ -569,6 +569,12 @@ def run_checksum_test():
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
     res.is_ok(md5='ddd599a31e2f817d54e1f47da52ab24c', warnings=0)
 
+    res = compile('Advent.inf', includedir='i6lib-6.12.6')
+    res.is_ok(md5='6289d97403326ae254c71ed946e3f14b', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-6.12.6', glulx=True)
+    res.is_ok(md5='f5b73a355fa11a418156096ce70cadcc', warnings=1)
+
     res = compile('box_quote_test.inf', includedir='i6lib-611')
     res.is_ok(md5='a9d6cb534a1258017c0340d0661aa8c7', warnings=0)
 
