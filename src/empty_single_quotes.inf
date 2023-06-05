@@ -1,0 +1,4 @@
+[ Main val;
+	! error: No text between quotation marks
+	val = '';
+];

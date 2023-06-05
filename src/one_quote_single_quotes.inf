@@ -1,0 +1,4 @@
+[ Main val;
+	! valid, evaluates to 39
+	val = ''';
+];
