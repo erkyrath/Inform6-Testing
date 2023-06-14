@@ -1095,19 +1095,19 @@ def run_prune_test():
 
 def run_defineopt_test():
     res = compile('defineopttest.inf')
-    res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
+    res.is_ok(md5='18316446546580127dfa84c75bec115d')
 
     res = compile('defineopttest.inf', debug=True)
-    res.is_ok(md5='6f23ba9a571008507addca8d474adc68')
+    res.is_ok(md5='604cd60bc7d5762b3605bbf093a1eb39')
 
     res = compile('defineopttest.inf', define={ 'DEBUG':None })
-    res.is_ok(md5='6f23ba9a571008507addca8d474adc68')
+    res.is_ok(md5='604cd60bc7d5762b3605bbf093a1eb39')
 
     res = compile('defineopttest.inf', define={ 'DEBUG':0 })
-    res.is_ok(md5='6f23ba9a571008507addca8d474adc68')
+    res.is_ok(md5='604cd60bc7d5762b3605bbf093a1eb39')
 
     res = compile('defineopttest.inf', define={ 'FOO':26, 'BAR':-923, 'BAZ':None, 'QUUX':123, 'MUM':-1, 'NERTZ':99999 })
-    res.is_ok(md5='6d114e7ba8015c04e3ccd9d9356ca12b')
+    res.is_ok(md5='6ae1d0138c4da1c7536a7fb8762cabd0')
 
     # Can't redefine a compiler constant
     res = compile('defineopttest.inf', define={ 'WORDSIZE':3 })
@@ -1130,25 +1130,25 @@ def run_defineopt_test():
 
     # Redefining a constant to the same value is ok
     res = compile('defineopttest.inf', define={ 'WORDSIZE':2 })
-    res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
+    res.is_ok(md5='18316446546580127dfa84c75bec115d')
 
     res = compile('defineopttest.inf', define={ 'XFOO':3, 'xfoo':3 })
-    res.is_ok(md5='ccb42f85b0f12fa19fc34ba46c6f91a9')
+    res.is_ok(md5='18316446546580127dfa84c75bec115d')
 
     res = compile('defineopttest.inf', glulx=True)
-    res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
+    res.is_ok(md5='333fe8a75515113435491c94d3d6e57f')
 
     res = compile('defineopttest.inf', glulx=True, debug=True)
-    res.is_ok(md5='ba60f7883b7af76f05942aa92e348d87')
+    res.is_ok(md5='e2edd7ab2c5a51cbcc998ea76a2bfcb1')
 
     res = compile('defineopttest.inf', glulx=True, define={ 'DEBUG':None })
-    res.is_ok(md5='ba60f7883b7af76f05942aa92e348d87')
+    res.is_ok(md5='e2edd7ab2c5a51cbcc998ea76a2bfcb1')
 
     res = compile('defineopttest.inf', glulx=True, define={ 'DEBUG':0 })
-    res.is_ok(md5='ba60f7883b7af76f05942aa92e348d87')
+    res.is_ok(md5='e2edd7ab2c5a51cbcc998ea76a2bfcb1')
 
     res = compile('defineopttest.inf', glulx=True, define={ 'Wordsize':4 })
-    res.is_ok(md5='a4462c91fbabdafc3999bc7128ffda5c')
+    res.is_ok(md5='333fe8a75515113435491c94d3d6e57f')
 
 
 def run_fwconst_test():
