@@ -1808,28 +1808,28 @@ def run_max_abbrevs():
     res.is_ok(md5='870285d50c252cde8bbd0ef2bc977a56')
     
     res = compile('abbrevtest.inf', glulx=True)
-    res.is_ok(md5='2f2c8c7872559387cbd0fe115f370e2c')
+    res.is_ok(md5='fa2130036715d5ec0f6b7e53a1f74e2c')
     
     res = compile('abbrevtest.inf', economy=True)
     res.is_ok(md5='99be12467aea61fb46ee46143d903906')
     
     res = compile('abbrevtest.inf', glulx=True, economy=True)
-    res.is_ok(md5='3bb3d7ef0a77294c14099e83b9770807')
+    res.is_ok(md5='774d0dd65eabbbc84a41aa1324f567c3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1')
+    res.is_ok(md5='253056d3e169c9c3d871525918260eb3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff')
+    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='16c89d3a4f42bb84f26c8eadb43c110e')
+    res.is_ok(md5='0f751cb5587657ff98e25dcfab07d874')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='7f081314e6fdaa2612f971457f54bec5')
+    res.is_ok(md5='b9b48f0d1df6b64f4389ce4351ab3f2e')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='f36b9323d23607d7f5db97bc551201c0')
+    res.is_ok(md5='eced0889b281c1385b66e98796af1a97')
     
     res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={})
     res.is_ok()
