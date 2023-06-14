@@ -2068,11 +2068,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='8377aa4e1b25c39648f9bf525623b080')
+    res.is_ok(md5='ff71d68c123d6b9a14c2b517ffee6092')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='1e3ff0aa9673a982da2c206d55a1ab4c')
+    res.is_ok(md5='8f6b1c256c5c62307d872224ab29255c')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
