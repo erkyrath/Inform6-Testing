@@ -1042,7 +1042,7 @@ def run_prune_test():
     res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12')
 
     res = compile('branchprune.inf', glulx=True)
-    res.is_ok(md5='fd2f416173afc0898d687ba6f68f222c')
+    res.is_ok(md5='acf2fe351129855c4962e3b625cde3f7')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
     res.is_error()
@@ -1054,43 +1054,43 @@ def run_prune_test():
     res.is_ok(md5='cd66fef4890d2640c9717a9d5f0afc20')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
-    res.is_ok(md5='92d1f04837095a2cb64672d7fe453927')
+    res.is_ok(md5='73f2f9dd957cb4d62b0dfaa698681c1e')
 
     res = compile('branchprune-fwd.inf')
     res.is_ok(md5='e8330c0fc42a9c459f3e3b9baf284e8e', warnings=1)
 
     res = compile('branchprune-fwd.inf', glulx=True)
-    res.is_ok(md5='42b7ff7e726bfcacb00071457e9e45f7', warnings=1)
+    res.is_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1)
 
     res = compile('logicprune.inf')
     res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0)
 
     res = compile('logicprune.inf', glulx=True)
-    res.is_ok(md5='69287eea7f46a2972db0b964373128f1', warnings=0)
+    res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0)
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
-    res.is_ok(md5='59faf1ec93ae5446155378dcc1ba27ff')
+    res.is_ok(md5='d9b4b1a788ab20554d842c278f590f86')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
-    res.is_ok(md5='315cc5042202891003f563183765b292')
+    res.is_ok(md5='70443c63b9c049ae1e5760c5e962f1fc')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
-    res.is_ok(md5='9d73aa782649a17cf0499a139376e838')
+    res.is_ok(md5='9cde2861ba066676bb5d6ed3efc760db')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
-    res.is_ok(md5='65e76ec9ee3deeec44f7a07391dfac87')
+    res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='9913b0988aa84e87a2b3f16e359af698')
+    res.is_ok(md5='ce5f6eb2f9f9e9c6ed1d65d86c5d5208')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='62a59f140375aa82eaac72935e4c9462')
+    res.is_ok(md5='5e69a22a37f058fe539a8db856ecf5eb')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok(md5='8e13deb55165b3aa5a29a1050311694e')
+    res.is_ok(md5='52e8446438b5758f458d29b647eeae1b')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='a070fcb2c433b49e4c0f8ca2259d62c6')
+    res.is_ok(md5='642a499897aefd3132022a31dc7cc830')
 
 
 def run_defineopt_test():
