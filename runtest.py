@@ -742,16 +742,16 @@ def run_lexer_test():
     
 def run_directives_test():
     res = compile('staticarraytest.inf')
-    res.is_ok(md5='736f5df15951398ec41b0d05e4280cce')
+    res.is_ok(md5='23fed66fd87f9b95586af51afd27fd00')
 
     res = compile('staticarraytest.inf', glulx=True)
-    res.is_ok(md5='45b07b21aa4ff3ba2563bdbfd134dd1a')
+    res.is_ok(md5='29abadec278f29e1c0b5eea0fd9c3495')
 
     res = compile('undefdirectivetest.inf')
     res.is_ok(md5='de2f2e32f82bf14a4178f3a992762e6b')
 
     res = compile('undefdirectivetest.inf', glulx=True)
-    res.is_ok(md5='cb28a5edcd681dfde63e472ac2542a95')
+    res.is_ok(md5='b981cf8a2508c9d56b7c4593ac336048')
 
     res = compile('no-main.inf')
     res.is_error()
@@ -775,55 +775,55 @@ def run_directives_test():
     res.is_ok(md5='20f77c3bc7002792f218a345f547b91c')
 
     res = compile('replacerenametest.inf', includedir='src', glulx=True)
-    res.is_ok(md5='3626d00770bcb1c6c9adfe476f53f943')
+    res.is_ok(md5='0a1fc0c94e71b42e406d8401517636d4')
 
     res = compile('replacerecursetest.inf')
-    res.is_ok(md5='f9abd6adec9bd6cfdd215fccb1abf22b')
+    res.is_ok(md5='9b89cd42cd723d4fb5197a6276e595c0')
 
     res = compile('replacerecursetest.inf', glulx=True)
-    res.is_ok(md5='e6ff7304a967ab9cae5b99da9e7a3df1')
+    res.is_ok(md5='2382f2a66978bdd09e42825bdeb551aa')
 
     res = compile('dictflagtest.inf')
-    res.is_ok(md5='494cc7406f0d8183e9c2621ab8c0d204')
+    res.is_ok(md5='6a9dbacc4efc4f13d07ddcea846b5f58')
 
     res = compile('dictflagtest.inf', glulx=True)
-    res.is_ok(md5='438aead86360423e32aecb2dda8e2341')
+    res.is_ok(md5='05d9526ea9c2bc9bf5fdb41c9e3024e1')
 
     res = compile('actionextension.inf')
     res.is_ok(md5='8434dd954b155675ec9a853052b5a5bc')
 
     res = compile('actionextension.inf', glulx=True)
-    res.is_ok(md5='a90ea20de4c538312842ef1c5a5ee932')
+    res.is_ok(md5='7d4bc338e99a777534f03d1a80388e58')
 
     res = compile('internaldirecttest.inf')
     res.is_ok(md5='7fad50ebab77f541f12e51eb864ad594')
 
     res = compile('internaldirecttest.inf', glulx=True)
-    res.is_ok(md5='22cca3cefc0561f0d98bc1df0af70702')
+    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66')
 
     res = compile('ifelsedirecttest.inf')
     res.is_ok(md5='ebdbb9f121b45bcfc54a41c71d87c029')
 
     res = compile('ifelsedirecttest.inf', glulx=True)
-    res.is_ok(md5='f920c5501f80336d480935297d5bbe69')
+    res.is_ok(md5='c0724fca3f6783e10f7188ca4dbb1d3d')
 
     res = compile('ifdef_vn_test.inf')
     res.is_ok(md5='45f86d7b6218cace38b16f2ca08e8d71')
 
     res = compile('ifdef_vn_test.inf', glulx=True)
-    res.is_ok(md5='eadf882b1695121fb3d32b245c06b7bd')
+    res.is_ok(md5='5ad58c728862dce11b17d7a93adaaa51')
 
     res = compile('classordertest.inf')
-    res.is_ok(md5='d065c980637c8531133e75bf040e1731')
+    res.is_ok(md5='334ef7ef87df98ed6f3b1dd99829deeb')
 
     res = compile('classordertest.inf', glulx=True)
-    res.is_ok(md5='2844efeeff5ff0842b7185a56e80f6dd')
+    res.is_ok(md5='4025856ed2133af211feda4aa187d1fe')
 
     res = compile('classcopytest.inf')
-    res.is_ok(md5='6dc016b201b6591501911ccac02e152c')
+    res.is_ok(md5='4c53497c6c9a93e3163db0b619d9e1f6')
 
     res = compile('classcopytest.inf', glulx=True)
-    res.is_ok(md5='22577a69f64377b8e4577a76eca578af')
+    res.is_ok(md5='9f6c50b53599e2a3dec440715759877d')
 
     res = compile('forwardproptest.inf')
     res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6')
@@ -832,10 +832,10 @@ def run_directives_test():
     res.is_ok(md5='b181a2d7edd1d8188e0575767f53a886')
 
     res = compile('forwardproptest.inf', glulx=True)
-    res.is_ok(md5='665d237c43611454965e1b680f12d596')
+    res.is_ok(md5='95095b05c3e5d9765822da3b725a108d')
 
     res = compile('forwardproptest.inf', glulx=True, strict=False)
-    res.is_ok(md5='5592d67a77e3fda229465e2c799fb213')
+    res.is_ok(md5='82029b0f66f3536734d46ea80c1dab6c')
 
     res = compile('indivproptest.inf')
     res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f')
@@ -850,16 +850,16 @@ def run_directives_test():
     res.is_ok(md5='cde12cbf22e618d63a345a8995199686')
 
     res = compile('indivproptest.inf', glulx=True)
-    res.is_ok(md5='4410158e75332c7439fc1e4e8b5d2b84')
+    res.is_ok(md5='fe01898bcf2f6b7639be92c213706252')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None}, glulx=True)
-    res.is_ok(md5='4410158e75332c7439fc1e4e8b5d2b84')
+    res.is_ok(md5='fe01898bcf2f6b7639be92c213706252')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV2':None}, glulx=True)
-    res.is_ok(md5='19455e811e4744c90567dd59b22f2de4')
+    res.is_ok(md5='3e61c800eaeebbe7fc668acda9bf1be9')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None}, glulx=True)
-    res.is_ok(md5='a63e3ffd63691e9684b59fec6e01fdcf')
+    res.is_ok(md5='bda9d7dcc34ea1d463b336852a6d515b')
 
     res = compile('indivproptest_2.inf')
     res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=0)
@@ -868,10 +868,10 @@ def run_directives_test():
     res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=1)
 
     res = compile('indivproptest_2.inf', glulx=True)
-    res.is_ok(md5='7e0d5177b921138ddd71e55fa2f71112', warnings=0)
+    res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=0)
 
     res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None}, glulx=True)
-    res.is_ok(md5='7e0d5177b921138ddd71e55fa2f71112', warnings=1)
+    res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=1)
 
     res = compile('max_link_directive_length.inf')
     res.is_error()
