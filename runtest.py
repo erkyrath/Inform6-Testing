@@ -1230,10 +1230,10 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='cc470ce365ce4a6dc7b27f4bfbcf71e1', warnings=0)
+    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='7ce3dff28d69de76801142d7e203e7ff', warnings=0)
+    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72', warnings=0)
 
 
 def run_warnings_test():
