@@ -146,7 +146,10 @@ def compile(srcfile, destfile=None,
     # Final arguments.
     argls.append('-w')
     argls.append(os.path.join('src', srcfile))
-    print('Running:', ' '.join(argls))
+
+    # Quote some arguments for display purposes only.
+    printargls = [ "'"+val+"'" if '$' in val else val for val in argls ]
+    print('Running:', ' '.join(printargls))
 
     env = dict(os.environ)
     
