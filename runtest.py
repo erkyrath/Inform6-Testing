@@ -612,28 +612,28 @@ def run_checksum_test():
 
 def run_dict_test():
     res = compile('dict-size-v3test.inf', zversion=3)
-    res.is_ok(md5='1be758056fc55b2c67f4dd1ce69e6dce')
+    res.is_ok(md5='f75ed33c64fbba8a53a1a02a1cbeea2b')
 
     res = compile('dict-size-v3test.inf', zversion=5)
-    res.is_ok(md5='09300a2de87d8f8fee3d5a79d151aff4')
+    res.is_ok(md5='58fe6d80014bb250362990e21fef40c5')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=3)
-    res.is_ok(md5='a1e1de6b77a08070f474e5175f86be44')
+    res.is_ok(md5='4f32fb4f78295fe33bcfe1396b2a5e98')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=4)
-    res.is_ok(md5='24d79e2b61cd0303aefee138d4ac7072')
+    res.is_ok(md5='e5bf355441d5e5f36c8994f733bb8a8a')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=5)
-    res.is_ok(md5='8ef389de3680e6959ac19ae4abcee86f')
+    res.is_ok(md5='06625ab421e9c4b6915658f5fdfbc80d')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=4)
-    res.is_ok(md5='96b7be57a011a6357149c29cf840de32')
+    res.is_ok(md5='d09f4ce77d4a4d197c3b553ef62d7d46')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=5)
-    res.is_ok(md5='7f00da7b281c32d2a2bf514eda1b7c39')
+    res.is_ok(md5='9a3b2476db96afe36f46a7360db3150d')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
-    res.is_ok(md5='babab7a13980537b30e01d53885e4691')
+    res.is_ok(md5='a7bbc5992810c2321a3d8273c8a9d02d')
 
     res = compile('max_dict_entries.inf')
     res.is_ok()
@@ -642,11 +642,11 @@ def run_dict_test():
     res.is_ok()
 
     res = compile('dict-entry-size-test.inf', zversion=3, strict=False)
-    res.is_ok(md5='ebb473013c5e137fe28660f15789a426')
+    res.is_ok(md5='015b14adf6ed2653cc61f1c57eadbcbc')
 
     # The checksum here is different because the "Version 3" directive doesn't work perfectly
     res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'EARLYDEF':None}, versiondirective=True)
-    res.is_ok(md5='5166bc1780a8523e99aa1838258e6769')
+    res.is_ok(md5='5df7a75b03a530d06397fbc51a58133c')
 
     # Cannot put Version directive at the end
     res = compile('dict-entry-size-test.inf', zversion=3, strict=False, define={'LATEDEF':None}, versiondirective=True)
@@ -671,16 +671,16 @@ def run_dict_test():
     res.is_error()
 
     res = compile('dict-entry-size-test.inf', zversion=3, strict=False, memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='5517a9819309e5812c255e46db12c199')
+    res.is_ok(md5='ff7005f93c1ff23adb38eb83e47df385')
 
     res = compile('dict-entry-size-test.inf', zversion=5)
-    res.is_ok(md5='170a513d6b237b44612bf039f27e11a6')
+    res.is_ok(md5='83fe325758d4c092f0046f29eb224f5e')
 
     res = compile('dict-entry-size-test.inf', zversion=5, memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='6576bac38754f153d61912ce6b86420c')
+    res.is_ok(md5='ae0d2c46bd7e1986d37359e748e4596c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='2fd52ee834906823f37a760b83950aac', warnings=0)
+    res.is_ok(md5='3579ad9300d2414a6b60343fe254b4b9', warnings=0)
 
     res = compile('dict-sysconst-test.inf')
     res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
