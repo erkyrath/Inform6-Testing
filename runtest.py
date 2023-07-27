@@ -2090,6 +2090,11 @@ def run_omit_symbol_table():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='5a35b0365818ec605bab1b4d989456a9', warnings=0)
 
+    res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
+    res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)
+
+    res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
+    res.is_ok(md5='c674e8217a693124dfd0404fbe9b36dc', warnings=0)
 
 
 test_catalog = [
