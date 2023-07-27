@@ -2083,6 +2083,14 @@ def run_omit_unused_routines():
     res.is_ok(md5='5ebeba63f77407fc175f00055f565933')
 
 
+def run_omit_symbol_table():
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOLTABLE':1})
+    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOLTABLE':1}, glulx=True)
+    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72', warnings=0)
+
+
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
@@ -2138,6 +2146,7 @@ test_catalog = [
     ('MAX_LABELS', run_max_labels),
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
+    ('OMIT_SYMBOL_TABLE', run_omit_symbol_table),
     ]
 
 test_map = dict(test_catalog)
