@@ -2084,11 +2084,11 @@ def run_omit_unused_routines():
 
 
 def run_omit_symbol_table():
-    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOLTABLE':1})
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1})
+    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0)
 
-    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOLTABLE':1}, glulx=True)
-    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72', warnings=0)
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
+    res.is_ok(md5='5a35b0365818ec605bab1b4d989456a9', warnings=0)
 
 
 
