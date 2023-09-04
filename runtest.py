@@ -1813,6 +1813,15 @@ def run_max_inline_string():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':10000})
     res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0)
 
+    res = compile('max_inline_string_test.inf')
+    res.is_ok(warnings=0)
+
+    res = compile('max_inline_string_test.inf', memsettings={'ZCODE_MAX_INLINE_STRING':999})
+    res.is_ok(warnings=0)
+
+    res = compile('max_inline_string_test.inf', memsettings={'ZCODE_MAX_INLINE_STRING':1000})
+    res.is_error()
+
     
     
 def run_max_abbrevs():
