@@ -98,6 +98,7 @@ Global failures;
 	print "SimpleBytesFuncZ(): "; check_value(SimpleBytesFuncZ(), $1234); print "^";
 	print "SimpleWordsFuncZ(): "; check_value(SimpleWordsFuncZ(), $1235); print "^";
 	print "DictWordSymbolFuncZ(): "; check_value(DictWordSymbolFuncZ(), 'dictword'); print "^";
+	print "SkipAssemFunc(): "; check_value(SkipAssemFunc(), 5); print "^";
 	
 	new_line;
 	if (failures == 0)
@@ -126,6 +127,16 @@ Global failures;
 	@ --> $e83f 'dictword';
 	@ret_popped;
 ];
+
+[ SkipAssemFunc;
+	if (0) {
+		! This array is illegal but we never compile it.
+		@ -> 1 2 3 'dict' RunTest "hello";
+		return 23;
+	}
+	return 5;
+];
+
 
 #ifdef BADFUNC_1;
 [ BadFunc val;
