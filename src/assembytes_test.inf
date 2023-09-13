@@ -106,6 +106,7 @@ Global failures;
 
 	print "SimpleBytesFuncG(): "; check_value(SimpleBytesFuncG(), $12345678); print "^";
 	print "SimpleWordsFuncG(): "; check_value(SimpleWordsFuncG(), $12345679); print "^";
+	print "DictWordSymbolFuncG(): "; check_value(DictWordSymbolFuncG(), 'dictword'); print "^";
 	
 #endif; ! TARGET_ZCODE
 
@@ -160,7 +161,12 @@ Global failures;
 	@return sp;
 ];
 
-
+[ DictWordSymbolFuncG;
+	! @nop; @nop;
+	! @push 'dictword';
+	@ --> $00004083 'dictword';
+	@return sp;
+];
 
 #endif; ! TARGET_ZCODE
 
