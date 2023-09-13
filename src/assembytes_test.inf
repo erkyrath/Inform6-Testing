@@ -95,9 +95,20 @@ Global failures;
 ];
 
 [ RunTest;
+
+#ifdef TARGET_ZCODE;
+
 	print "SimpleBytesFuncZ(): "; check_value(SimpleBytesFuncZ(), $1234); print "^";
 	print "SimpleWordsFuncZ(): "; check_value(SimpleWordsFuncZ(), $1235); print "^";
 	print "DictWordSymbolFuncZ(): "; check_value(DictWordSymbolFuncZ(), 'dictword'); print "^";
+	
+#ifnot; ! TARGET_ZCODE
+
+	print "SimpleBytesFuncG(): "; check_value(SimpleBytesFuncG(), $12345678); print "^";
+	print "SimpleWordsFuncG(): "; check_value(SimpleWordsFuncG(), $12345679); print "^";
+	
+#endif; ! TARGET_ZCODE
+
 	print "SkipAssemFunc(): "; check_value(SkipAssemFunc(), 5); print "^";
 	
 	new_line;
@@ -106,6 +117,8 @@ Global failures;
 	else
 		print failures, " errors!^";
 ];
+
+#ifdef TARGET_ZCODE;
 
 [ SimpleBytesFuncZ val;
 	!val = $123;
@@ -127,6 +140,29 @@ Global failures;
 	@ --> $e83f 'dictword';
 	@ret_popped;
 ];
+
+#ifnot; ! TARGET_ZCODE
+
+[ SimpleBytesFuncG val;
+	!val = $1234567;
+	!return val * 16 + 8;
+	! (produces a warning because Inform doesn't know that "val" is used.)
+	@ -> $40 $93 $01 $23 $45 $67 $00  $12 $19 $08 $00 $10;
+	@ -> $10 $18 $08 $08  $31 $08;
+];
+
+[ SimpleWordsFuncG val;
+	!val = $1234567;
+	!return val * 16 + 9;
+	! (produces a warning because Inform doesn't know that "val" is used.)
+	@ --> $40930123 $45670012 $19080010;
+	@ --> $10180809;
+	@return sp;
+];
+
+
+
+#endif; ! TARGET_ZCODE
 
 [ SkipAssemFunc;
 	! This test can't be checked by running. Inspect the compiled game file
