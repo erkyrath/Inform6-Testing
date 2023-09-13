@@ -129,9 +129,10 @@ Global failures;
 ];
 
 [ SkipAssemFunc;
+	! This test can't be checked by running. Inspect the compiled game file
+	! (or --trace asm=2) and observer that the dead code is stripped.
 	if (0) {
-		! This array is illegal but we never compile it.
-		@ -> 1 2 3 'dict' RunTest "hello";
+		@ -> 1 2 3 4 5;
 		return 23;
 	}
 	return 5;
