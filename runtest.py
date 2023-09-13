@@ -1050,6 +1050,18 @@ def run_assembytes_test():
     res = compile('assembytes_test.inf', define={ 'BADFUNC_3':None })
     res.is_error()
 
+    res = compile('assembytes_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_1':None }, glulx=True)
+    res.is_error()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_2':None }, glulx=True)
+    res.is_error()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_3':None }, glulx=True)
+    res.is_error()
+    
     
 def run_prune_test():
     res = compile('branchprune.inf')
