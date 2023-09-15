@@ -930,6 +930,9 @@ def run_directives_test():
     res = compile('globalredef.inf', glulx=True)
     res.is_ok()
 
+    res = compile('unterm-array-test.inf')
+    res.is_error()
+
 
 def run_veneer_test():
     res = compile('obj_prop_call.inf')
