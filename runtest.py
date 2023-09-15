@@ -320,6 +320,9 @@ class Result:
                 if (match):
                     outlines += 1
                     self.errors = 1
+                    if 'Too many errors' in ln:
+                        # not really 9999, but it gets the idea across
+                        self.errors = 9999
                     ln = ln[ match.end() : ].strip()
                     match = re.match('The memory setting (\S+)', ln)
                     if (match):
@@ -931,7 +934,7 @@ def run_directives_test():
     res.is_ok()
 
     res = compile('unterm-array-test.inf')
-    res.is_error()
+    res.is_error(errors=2)
 
 
 def run_veneer_test():
