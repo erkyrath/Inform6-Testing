@@ -1809,6 +1809,27 @@ def run_max_dynamic_strings():
     res.is_ok()
 
     
+def run_max_inline_string():
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64})
+    res.is_ok(md5='e3a3596dc96cb0831ba6479a454c15c9', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':800})
+    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':10000})
+    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0)
+
+    res = compile('max_inline_string_test.inf')
+    res.is_ok(warnings=0)
+
+    res = compile('max_inline_string_test.inf', memsettings={'ZCODE_MAX_INLINE_STRING':999})
+    res.is_ok(warnings=0)
+
+    res = compile('max_inline_string_test.inf', memsettings={'ZCODE_MAX_INLINE_STRING':1000})
+    res.is_error()
+
+    
+    
 def run_max_abbrevs():
     res = compile('abbrevtest.inf')
     res.is_ok(md5='870285d50c252cde8bbd0ef2bc977a56')
@@ -2144,6 +2165,7 @@ test_catalog = [
     ('MAX_STATIC_STRINGS', run_max_static_strings),
     ('MAX_LOW_STRINGS', run_max_low_strings),
     ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
+    ('MAX_INLINE_STRING', run_max_inline_string),
     ('MAX_ABBREVS', run_max_abbrevs),
     ('MAX_VERBS', run_max_verbs),
     ('UNUSED_VERBS', run_unused_verbs),
