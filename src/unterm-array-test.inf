@@ -1,0 +1,4 @@
+[ Main; ];
+
+! This array trails off with no closing semicolon.
+Array arr --> 1 2 3
