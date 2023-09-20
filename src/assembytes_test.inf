@@ -202,8 +202,3 @@ Global failures;
 ];
 #endif; ! BADFUNC_3
 
-!###
-!byte and word
-!without and with markers
-!Z and G
-!deadstripped or not
