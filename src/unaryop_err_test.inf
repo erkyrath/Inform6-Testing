@@ -96,6 +96,7 @@ Global failures;
 
 [ RunTest;
 	GoodExprs();
+	BadExprs();
 	
 	new_line;
 	if (failures == 0)
@@ -166,5 +167,27 @@ Constant dtilde = "@@126@@126";
 	val = (++x)-1;
 	print "(++x)-1: x="; check_value(x, 6);
 	print ", val="; check_value(val, 5); print "^";
+];
+
+
+
+[ BadExprs val;
+	val = 0;
+	! Each of these expressions is an error, but not an internal compiler error.
+	#ifdef BAD_EXPR_1;
+	val = 1 ~ 2;
+	#endif; ! BAD_EXPR_1
+
+	#ifdef BAD_EXPR_2;
+	val = (1 ~ 2);
+	#endif; ! BAD_EXPR_2
+
+	#ifdef BAD_EXPR_3;
+	val = (1) ~ 2;
+	#endif; ! BAD_EXPR_3
+
+	#ifdef BAD_EXPR_4;
+	val = 1 ~ (2);
+	#endif; ! BAD_EXPR_4
 ];
 
