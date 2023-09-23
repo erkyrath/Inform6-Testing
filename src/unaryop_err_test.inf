@@ -140,5 +140,16 @@ Constant tilde = "@@126";
 	print "(x++)-1: x="; check_value(x, 8);
 	print ", val="; check_value(val, 6); print "^";
 	! TODO: (x++-1) currently throws a compiler error! x++-1 throws a non-compiler error.
+
+	x = 3;
+	val = ++x-1;
+	print "++x-1: x="; check_value(x, 4);
+	print ", val="; check_value(val, 3); print "^";
+	val = (++x-1);
+	print "(++x-1): x="; check_value(x, 5);
+	print ", val="; check_value(val, 4); print "^";
+	val = (++x)-1;
+	print "(++x)-1: x="; check_value(x, 6);
+	print ", val="; check_value(val, 5); print "^";
 ];
 
