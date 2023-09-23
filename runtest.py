@@ -1024,10 +1024,10 @@ def run_statements_test():
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')
-    res.is_ok(md5='a54455077f27631faf53d282b73f8dec')
+    res.is_ok(md5='d17086ac4f2c4ec5ffc0fed838d6394f')
 
     res = compile('unaryop_err_test.inf', glulx=True)
-    res.is_ok(md5='d06d92e6df85109940687892549a8836')
+    res.is_ok(md5='82e4a5a059e03a48db80800bf211d0ea')
 
 
 def run_debugflag_test():
