@@ -1029,6 +1029,42 @@ def run_expressions_test():
     res = compile('unaryop_err_test.inf', glulx=True)
     res.is_ok(md5='82e4a5a059e03a48db80800bf211d0ea')
 
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_0':None})
+    res.is_error(errors=1)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_1':None})
+    res.is_error(errors=2)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_2':None})
+    res.is_error(errors=1)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_3':None})
+    res.is_error(errors=2)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_4':None})
+    res.is_error(errors=2)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_5':None})
+    res.is_error(errors=1)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_6':None})
+    res.is_error(errors=1)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_7':None})
+    res.is_error(errors=1)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_8':None})
+    res.is_error(errors=2)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_9':None})
+    res.is_error(errors=2)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_10':None})
+    res.is_error(errors=2)
+    
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_11':None})
+    res.is_error(errors=2)
+    
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
