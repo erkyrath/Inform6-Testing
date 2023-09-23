@@ -1022,6 +1022,14 @@ def run_statements_test():
     res.is_error()
 
 
+def run_expressions_test():
+    res = compile('unaryop_err_test.inf')
+    res.is_ok(md5='a54455077f27631faf53d282b73f8dec')
+
+    res = compile('unaryop_err_test.inf', glulx=True)
+    res.is_ok(md5='d06d92e6df85109940687892549a8836')
+
+
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
     res.is_ok(warnings=0)
@@ -2131,6 +2139,7 @@ test_catalog = [
     ('VENEER', run_veneer_test),
     ('DIRECTIVES', run_directives_test),
     ('STATEMENTS', run_statements_test),
+    ('EXPRESSIONS', run_expressions_test),
     ('PRUNE', run_prune_test),
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
