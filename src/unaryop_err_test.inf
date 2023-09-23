@@ -106,7 +106,7 @@ Global failures;
 
 Constant tilde = "@@126";
 
-[ GoodExprs val;
+[ GoodExprs val x;
 	val = ~1;
 	print (string) tilde, "1: "; check_value(val, -2); print "^";
 	val = ~(2);
@@ -121,5 +121,24 @@ Constant tilde = "@@126";
 	print "1-", (string) tilde, "4: "; check_value(val, 6); print "^";
 	val = (1-~5);
 	print "(1-", (string) tilde, "5): "; check_value(val, 7); print "^";
+	new_line;
+
+	x = 3;
+	val = x++;
+	print "x++: x="; check_value(x, 4);
+	print ", val="; check_value(val, 3); print "^";
+	val = ++x;
+	print "++x: x="; check_value(x, 5);
+	print ", val="; check_value(val, 5); print "^";
+	val = (1-++x);
+	print "(1-++x): x="; check_value(x, 6);
+	print ", val="; check_value(val, -5); print "^";
+	val = 1+(++x);
+	print "1+(++x): x="; check_value(x, 7);
+	print ", val="; check_value(val, 8); print "^";
+	val = (x++)-1;
+	print "(x++)-1: x="; check_value(x, 8);
+	print ", val="; check_value(val, 6); print "^";
+	! TODO: (x++-1) currently throws a compiler error! x++-1 throws a non-compiler error.
 ];
 
