@@ -228,5 +228,13 @@ Constant dtilde = "@@126@@126";
 	val = (1 ++ (2));
 	#endif; ! BAD_EXPR_11
 
+	#ifdef BAD_EXPR_12;
+	val = (1++ --2);
+	#endif; ! BAD_EXPR_12
+
+	#ifdef BAD_EXPR_13;
+	val = (1++ ~2);
+	#endif; ! BAD_EXPR_13
+
 ];
 
