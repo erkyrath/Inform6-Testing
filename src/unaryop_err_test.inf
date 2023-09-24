@@ -179,7 +179,8 @@ Constant dtilde = "@@126@@126";
 
 [ BadExprs val;
 	val = 0;
-	! Each of these expressions is an error, but not an internal compiler error.
+	! Each of these expressions is an error, but should not be an internal compiler error.
+	
 	#ifdef BAD_EXPR_0;
 	val = (1 2);
 	#endif; ! BAD_EXPR_0
@@ -237,7 +238,7 @@ Constant dtilde = "@@126@@126";
 	#endif; ! BAD_EXPR_13
 
 	#ifdef BAD_EXPR_14;
-	! This one should probably be recognized as valid, but the compiler thinks the "-" is a unary minus. Not worrying about this now.
+	! This one should probably be valid, but the compiler thinks the "-" is a unary minus so it's not.
 	val = (1++ -2);
 	#endif; ! BAD_EXPR_14
 
