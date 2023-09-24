@@ -236,5 +236,10 @@ Constant dtilde = "@@126@@126";
 	val = (1++ ~2);
 	#endif; ! BAD_EXPR_13
 
+	#ifdef BAD_EXPR_14;
+	! This one should probably be recognized as valid, but the compiler thinks the "-" is a unary minus. Not worrying about this now.
+	val = (1++ -2);
+	#endif; ! BAD_EXPR_14
+
 ];
 

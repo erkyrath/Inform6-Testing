@@ -1071,6 +1071,9 @@ def run_expressions_test():
     res = compile('unaryop_err_test.inf', define={'BAD_EXPR_13':None})
     res.is_error(errors=2)
     
+    res = compile('unaryop_err_test.inf', define={'BAD_EXPR_14':None})
+    res.is_error(errors=2)
+    
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
