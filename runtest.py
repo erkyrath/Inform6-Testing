@@ -1024,10 +1024,10 @@ def run_statements_test():
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')
-    res.is_ok(md5='d17086ac4f2c4ec5ffc0fed838d6394f')
+    res.is_ok(md5='255de4bef4c60f886d9d86074a259b6b')
 
     res = compile('unaryop_err_test.inf', glulx=True)
-    res.is_ok(md5='82e4a5a059e03a48db80800bf211d0ea')
+    res.is_ok(md5='92cf289c108ffb48be16e3aa69be9956')
 
     res = compile('unaryop_err_test.inf', define={'BAD_EXPR_0':None})
     res.is_error(errors=1)

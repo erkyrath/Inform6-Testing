@@ -155,7 +155,13 @@ Constant dtilde = "@@126@@126";
 	val = (x++)-1;
 	print "(x++)-1: x="; check_value(x, 8);
 	print ", val="; check_value(val, 6); print "^";
-	! TODO: (x++-1) currently throws a compiler error! x++-1 throws a non-compiler error.
+	val = (x++*2);
+	print "(x++*2): x="; check_value(x, 9);
+	print ", val="; check_value(val, 16); print "^";
+	val = (x++ + ++x);
+	print "(x++ + ++x): x="; check_value(x, 11);
+	print ", val="; check_value(val, 20); print "^";
+	new_line;
 
 	x = 3;
 	val = ++x-1;
