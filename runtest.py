@@ -1096,6 +1096,32 @@ def run_debugflag_test():
     res.is_error(warnings=1)
 
 
+def run_assembytes_test():
+    res = compile('assembytes_test.inf')
+    res.is_ok()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_1':None })
+    res.is_error()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_2':None })
+    res.is_error()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_3':None })
+    res.is_error()
+
+    res = compile('assembytes_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_1':None }, glulx=True)
+    res.is_error()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_2':None }, glulx=True)
+    res.is_error()
+
+    res = compile('assembytes_test.inf', define={ 'BADFUNC_3':None }, glulx=True)
+    res.is_error()
+    
+    
 def run_prune_test():
     res = compile('branchprune.inf')
     res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12')
@@ -2185,6 +2211,7 @@ test_catalog = [
     ('DIRECTIVES', run_directives_test),
     ('STATEMENTS', run_statements_test),
     ('EXPRESSIONS', run_expressions_test),
+    ('ASSEMBYTES', run_assembytes_test),
     ('PRUNE', run_prune_test),
     ('DEBUGFLAG', run_debugflag_test),
     ('DEFINEOPT', run_defineopt_test),
