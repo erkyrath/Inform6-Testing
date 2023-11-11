@@ -125,6 +125,10 @@ Global maxval;
 	print ", maxval="; check_value(maxval, 3); print "^";
 ];
 
+! Because of random numbers, there is a tiny chance that one of these
+! range tests will fail even if nothing is wrong. Run it again to be
+! sure.
+
 [ randomrange arg val ix;
 	maxval = -9999;
 	minval = 9999;
