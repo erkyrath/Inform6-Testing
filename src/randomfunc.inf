@@ -96,6 +96,7 @@ Global failures;
 
 [ RunTest;
 	TestRanges();
+	TestDeterm();
 	
 	new_line;
 	if (failures == 0)
@@ -176,3 +177,41 @@ Global maxval;
 	}
 ];
 
+Constant SIZE = 16;
+
+Array run1 --> SIZE;
+Array run2 --> SIZE;
+
+[ TestDeterm ix val;
+	random(-5);
+	for (ix=0 : ix<SIZE : ix++) {
+		run1-->ix = random(100);
+	}
+
+	#ifdef TARGET_ZCODE;
+
+	@random -5 val;
+	for (ix=0 : ix<SIZE : ix++) {
+		@random 100 val;
+		run2-->ix = val;
+	}
+
+	#ifnot; ! TARGET_GLULX;
+	
+	@setrandom 5;
+	for (ix=0 : ix<SIZE : ix++) {
+		@random 100 val;
+		run2-->ix = val + 1;
+	}
+
+	#endif;
+
+	for (ix=0 : ix<SIZE : ix++) {
+		print ix, "="; check_value(run1-->ix, run2-->ix); print ", ";
+		if (run1-->ix < 1 || run1-->ix > 100) {
+			print "(ERROR, out of range)";
+			failures++;
+		}
+	}
+	new_line;
+];
