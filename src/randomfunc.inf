@@ -107,7 +107,7 @@ Global failures;
 Global minval;
 Global maxval;
 
-[ TestRanges;
+[ TestRanges val;
 	randomrange(1);
 	print "randomrange(1): minval="; check_value(minval, 1);
 	print ", maxval="; check_value(maxval, 1); print "^";
@@ -123,6 +123,31 @@ Global maxval;
 	randomrange3();
 	print "randomrange3(): minval="; check_value(minval, 1);
 	print ", maxval="; check_value(maxval, 3); print "^";
+
+	! "true" randomness
+	val = random(0);
+	print "random(0)="; check_value(val, 0); print "^";
+
+	randomrange(4);
+	print "randomrange(4): minval="; check_value(minval, 1);
+	print ", maxval="; check_value(maxval, 4); print "^";
+
+	randomrange3();
+	print "randomrange3(): minval="; check_value(minval, 1);
+	print ", maxval="; check_value(maxval, 3); print "^";
+
+	! deterministic "randomness"
+	val = random(-10);
+	print "random(-10)="; check_value(val, 0); print "^";
+
+	randomrange(4);
+	print "randomrange(4): minval="; check_value(minval, 1);
+	print ", maxval="; check_value(maxval, 4); print "^";
+
+	randomrange3();
+	print "randomrange3(): minval="; check_value(minval, 1);
+	print ", maxval="; check_value(maxval, 3); print "^";
+
 ];
 
 ! Because of random numbers, there is a tiny chance that one of these
