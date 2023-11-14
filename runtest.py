@@ -1324,7 +1324,7 @@ def run_debugfile_test():
     res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72', warnings=0)
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
 
 
 def run_warnings_test():
@@ -1932,13 +1932,13 @@ def run_max_abbrevs():
     res.is_ok(md5='253056d3e169c9c3d871525918260eb3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72')
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
     res.is_ok(md5='0f751cb5587657ff98e25dcfab07d874')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='b9b48f0d1df6b64f4389ce4351ab3f2e')
+    res.is_ok(md5='9d24eb5f77a07a03c83993ae3c503801')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
     res.is_ok(md5='eced0889b281c1385b66e98796af1a97')
@@ -2087,7 +2087,7 @@ def run_unused_verbs():
     res.is_ok(md5='f94c7a7bc1f91993e9af839d23406375', warnings=2)
     
     res = compile('unused_verbs_lib.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='ab5527cb8a95c638df1aec12b8a28760', warnings=2)
+    res.is_ok(md5='05be572921b1a2d3ae9ee71314ebaf97', warnings=2)
     
     
 def run_max_actions():
