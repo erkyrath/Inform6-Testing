@@ -1172,16 +1172,16 @@ def run_prune_test():
     res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='ce5f6eb2f9f9e9c6ed1d65d86c5d5208')
+    res.is_ok(md5='268e2f8851d5aa6bd986c20734ff0932')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='5e69a22a37f058fe539a8db856ecf5eb')
+    res.is_ok(md5='3294f6066418e864a9368ad67ef69455')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok(md5='52e8446438b5758f458d29b647eeae1b')
+    res.is_ok(md5='d269bcee381dfe11afac8bbf335023e6')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='642a499897aefd3132022a31dc7cc830')
+    res.is_ok(md5='d442688ba330916028fc2ec362458796')
 
 
 def run_defineopt_test():
@@ -2184,7 +2184,7 @@ def run_omit_unused_routines():
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='8f6b1c256c5c62307d872224ab29255c')
+    res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
@@ -2200,7 +2200,7 @@ def run_omit_symbol_table():
     res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
-    res.is_ok(md5='5a35b0365818ec605bab1b4d989456a9', warnings=0)
+    res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0)
 
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
     res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)
