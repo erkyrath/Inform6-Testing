@@ -126,6 +126,10 @@ Global maxval;
 	print "randomrange3(): minval="; check_value(minval, 1);
 	print ", maxval="; check_value(maxval, 3); print "^";
 
+	randommultiarg();
+	print "randommultiarg(): minval="; check_value(minval, 5);
+	print ", maxval="; check_value(maxval, 11); print "^";
+
 	! "true" randomness
 	val = random(0);
 	print "random(0)="; check_value(val, 0); print "^";
@@ -175,6 +179,21 @@ Global maxval;
 		val = random(3);
 		if (maxval < val) maxval = val;
 		if (minval > val) minval = val;
+	}
+];
+
+[ randommultiarg val ix;
+	maxval = -9999;
+	minval = 9999;
+
+	for (ix=0 : ix < 100 : ix++) {
+		val = random(5, 7, 9, 11);
+		if (maxval < val) maxval = val;
+		if (minval > val) minval = val;
+		if (val % 2 == 0) {
+			print "(ERROR, even number)";
+			failures++;
+		}
 	}
 ];
 
