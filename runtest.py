@@ -1075,10 +1075,10 @@ def run_expressions_test():
     res.is_error(errors=2)
     
     res = compile('randomfunc.inf')
-    res.is_ok(md5='x')
+    res.is_ok(md5='510e588cb95e8f5f7e9b045bda4cea17')
 
     res = compile('randomfunc.inf', glulx=True)
-    res.is_ok(md5='x')
+    res.is_ok(md5='43f55e05312150d4239181c13b827a7f')
 
 
 def run_debugflag_test():

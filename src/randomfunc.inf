@@ -4,6 +4,7 @@ Constant Headline "Not a game.^";
 Release 1;
 
 ! This is a compiler unit test for the random() function.
+! (Not the @random opcode! That's a different layer.)
 
 #ifdef TARGET_ZCODE;
 Constant HDR_GAMERELEASE      = $02;     ! word
