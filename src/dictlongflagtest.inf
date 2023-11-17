@@ -1,0 +1,22 @@
+[ Main;
+	func();
+];
+
+[ func val;
+	val = 'z//';
+	
+	! All the following words should be marked plural.
+	val = 'foo//p';
+	val = 'bar//ppp';
+	val = 'directions//p';
+	val = 'axxxxxxx//p';
+	val = 'bxxxxxxxx//p';
+	val = 'cxxxxxxxxx//p';
+	val = 'dxxxxxxxxxx//p';
+	val = 'exxxxxxxxxxx//p';
+	val = 'fxxxxxxxxxxxx//p';
+
+	#ifdef BADFLAG;
+	val = 'indirection//x';
+	#endif; ! BADFLAG
+];

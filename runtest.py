@@ -688,7 +688,25 @@ def run_dict_test():
     res = compile('dict-sysconst-test.inf')
     res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
 
+    res = compile('dictlongflagtest.inf')
+    res.is_ok(md5='7c7ef0506b467dd94b6615c6da88fcff')
+
+    res = compile('dictlongflagtest.inf', glulx=True)
+    res.is_ok(md5='d38418d3900bd545dfb5bab3eebd222e')
+
+    res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':10})
+    res.is_ok(md5='794b616e86813b0d396b4e8e845b120f')
+
+    res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':11})
+    res.is_ok(md5='70ddb5e68b3a28aaf9b68a424b891a98')
+
+    res = compile('dictlongflagtest.inf', define={'BADFLAG':None})
+    res.is_error()
     
+    res = compile('dictlongflagtest.inf', glulx=True, define={'BADFLAG':None})
+    res.is_error()
+
+
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
     res.is_ok()
