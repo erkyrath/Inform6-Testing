@@ -703,6 +703,9 @@ def run_dict_test():
     res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':11})
     res.is_ok(md5='70ddb5e68b3a28aaf9b68a424b891a98')
 
+    res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='c0e051373b7affadd68e50001faabc8c')
+
     res = compile('dictlongflagtest.inf', define={'BADFLAG':None})
     res.is_error()
     
