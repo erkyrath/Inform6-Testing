@@ -691,6 +691,9 @@ def run_dict_test():
     res = compile('dictlongflagtest.inf')
     res.is_ok(md5='7c7ef0506b467dd94b6615c6da88fcff')
 
+    res = compile('dictlongflagtest.inf', zversion=3)
+    res.is_ok(md5='1bfad5368945e03d4c71d2a34eea9912')
+
     res = compile('dictlongflagtest.inf', glulx=True)
     res.is_ok(md5='d38418d3900bd545dfb5bab3eebd222e')
 
