@@ -1444,7 +1444,7 @@ def run_trace_test():
 
 def run_abbreviations_test():
     res = compile('max_abbrev_len_test.inf')
-    res.is_memsetting('MAX_ABBREV_LENGTH')
+    res.is_ok(warnings=0)
     
     res = compile('short_abbrevs_test.inf', economy=True)
     res.is_ok(warnings=4)
