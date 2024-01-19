@@ -546,13 +546,13 @@ def run_checksum_test():
     res.is_ok(md5='16d41aba696f3b6ea4810782bba9528e')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='de5acd9f6e6c8c5dc4fbdf8592481dac')
+    res.is_ok(md5='e9735da155ab0c720e73f6be3b83bf48')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='7ec56a1fd21c2e0d0e47a16af1459c4d')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='9fa6c5b32c595e8803e460a00f546ce2')
+    res.is_ok(md5='83e7089561cde53a16e1c09e9fcdb2dc')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
@@ -561,25 +561,25 @@ def run_checksum_test():
     res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72', warnings=0)
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
     res.is_ok(md5='869493d777aa62e75d34692f61ba18c0', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='368978c7dffc1738334c417a9cf7f8ca', warnings=0)
+    res.is_ok(md5='5e17c8d40fdf2af1c48fed04018f8808', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
     res.is_ok(md5='a09b6553f002d932839edf68061c941e', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='8a5b331face72780cc67728bc97ad947', warnings=0)
+    res.is_ok(md5='c2582674fc423437c922a4873f123d2b', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6')
     res.is_ok(md5='21074a2a0b2f5edc46b2c651cf68fa8f', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6', glulx=True)
-    res.is_ok(md5='c1f6f551454bfee266a9bfbc92bc2ca8', warnings=1)
+    res.is_ok(md5='744f86ec3f3587a037720906b49cdcb4', warnings=1)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
     res.is_ok(md5='074dbc09049827fc021885cf256c7616', warnings=0)
@@ -1098,6 +1098,12 @@ def run_expressions_test():
     res = compile('unaryop_err_test.inf', define={'BAD_EXPR_14':None})
     res.is_error(errors=2)
     
+    res = compile('randomfunc.inf')
+    res.is_ok(md5='a1ad53866c6fa2838b3a001e460b9aa5')
+
+    res = compile('randomfunc.inf', glulx=True)
+    res.is_ok(md5='de075fc5d37611be364d0772ee082ec5')
+
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
@@ -1190,16 +1196,16 @@ def run_prune_test():
     res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='ce5f6eb2f9f9e9c6ed1d65d86c5d5208')
+    res.is_ok(md5='268e2f8851d5aa6bd986c20734ff0932')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='5e69a22a37f058fe539a8db856ecf5eb')
+    res.is_ok(md5='3294f6066418e864a9368ad67ef69455')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok(md5='52e8446438b5758f458d29b647eeae1b')
+    res.is_ok(md5='d269bcee381dfe11afac8bbf335023e6')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='642a499897aefd3132022a31dc7cc830')
+    res.is_ok(md5='d442688ba330916028fc2ec362458796')
 
 
 def run_defineopt_test():
@@ -1342,7 +1348,7 @@ def run_debugfile_test():
     res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72', warnings=0)
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
 
 
 def run_warnings_test():
@@ -1462,7 +1468,7 @@ def run_trace_test():
 
 def run_abbreviations_test():
     res = compile('max_abbrev_len_test.inf')
-    res.is_memsetting('MAX_ABBREV_LENGTH')
+    res.is_ok(warnings=0)
     
     res = compile('short_abbrevs_test.inf', economy=True)
     res.is_ok(warnings=4)
@@ -1950,13 +1956,13 @@ def run_max_abbrevs():
     res.is_ok(md5='253056d3e169c9c3d871525918260eb3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b18bf883f0ca119640bb8dd3dfbdea72')
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
     res.is_ok(md5='0f751cb5587657ff98e25dcfab07d874')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='b9b48f0d1df6b64f4389ce4351ab3f2e')
+    res.is_ok(md5='9d24eb5f77a07a03c83993ae3c503801')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
     res.is_ok(md5='eced0889b281c1385b66e98796af1a97')
@@ -2105,7 +2111,7 @@ def run_unused_verbs():
     res.is_ok(md5='f94c7a7bc1f91993e9af839d23406375', warnings=2)
     
     res = compile('unused_verbs_lib.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='ab5527cb8a95c638df1aec12b8a28760', warnings=2)
+    res.is_ok(md5='05be572921b1a2d3ae9ee71314ebaf97', warnings=2)
     
     
 def run_max_actions():
@@ -2202,7 +2208,7 @@ def run_omit_unused_routines():
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='8f6b1c256c5c62307d872224ab29255c')
+    res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
@@ -2218,7 +2224,7 @@ def run_omit_symbol_table():
     res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
-    res.is_ok(md5='5a35b0365818ec605bab1b4d989456a9', warnings=0)
+    res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0)
 
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
     res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)
