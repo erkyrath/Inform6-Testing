@@ -742,6 +742,12 @@ def run_dict_test():
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
     res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72')
 
+    res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611')
+    res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611', glulx=True)
+    res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0)
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
