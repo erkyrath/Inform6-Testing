@@ -742,6 +742,30 @@ def run_dict_test():
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
     res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72')
 
+    res = compile('dictnewflagtest.inf')
+    res.is_ok(md5='0603548df7e37283364c61d66a19161d')
+    
+    res = compile('dictnewflagtest.inf', glulx=True)
+    res.is_ok(md5='31aec45b18d75add2f0eac03462bd51e')
+    
+    res = compile('dictnewflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0})
+    res.is_ok(md5='0d709337a33f7557951261fb4bc0ff65')
+    
+    res = compile('dictnewflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
+    res.is_ok(md5='9cf6b9d9a214e66ebfe964716863e92d')
+    
+    res = compile('dictnewflagtest.inf', define={'BADFLAG1':None})
+    res.is_error()
+    
+    res = compile('dictnewflagtest.inf', define={'BADFLAG2':None})
+    res.is_error()
+    
+    res = compile('dictnewflagtest.inf', glulx=True, define={'BADFLAG1':None})
+    res.is_error()
+    
+    res = compile('dictnewflagtest.inf', glulx=True, define={'BADFLAG2':None})
+    res.is_error()
+    
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611')
     res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0)
 

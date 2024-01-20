@@ -1,0 +1,32 @@
+[ Main;
+];
+
+Constant oneletter = 'a//';      ! noun
+Constant base = 'foo';           ! noun
+Constant plural = 'bars//p';     ! noun p
+Constant noplural = 'bar//~p';   ! noun
+Constant noun = 'noun//n';       ! noun
+Constant antinoun = 'anoun//~n'; ! --
+
+Array bothp1 --> 'barx//~p' 'barx//p';  ! noun p
+Array bothp2 --> 'bary//p' 'bary//~p';  ! noun p
+Array bothn1 --> 'bukx//~n' 'bukx//n';  ! noun
+Array bothn2 --> 'buky//n' 'buky//~n';  ! noun
+Array bothnp --> 'bez//~~n' 'bez//p';   ! noun p
+
+Constant mix1 = 't1//pn';        ! noun p
+Constant mix2 = 't2//p~n';       ! p
+Constant mix3 = 't3//~pn';       ! noun
+Constant mix4 = 't4//~p~n';      ! --
+Constant mix5 = 't5//~~p~~~n';   ! p
+
+Constant longp = 'directions//p';  ! noun p (if BUG=0)
+Constant longn = 'directives//~n'; ! -- (if BUG=0)
+
+#ifdef BADFLAG1;
+Constant bad1 = 'error//x';
+#endif; ! BADFLAG1
+
+#ifdef BADFLAG2;
+Constant bad2 = 'error//~';
+#endif; ! BADFLAG2
