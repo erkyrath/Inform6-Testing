@@ -5,7 +5,8 @@
 [ func val;
 	val = 'z//';
 	
-	! All the following words should be marked plural.
+	! If LONG_DICT_FLAG_BUG=0, all the following words will be marked plural.
+	! If LONG_DICT_FLAG_BUG=1, "c"-"f" will not be.
 	val = 'foo//p';
 	val = 'bar//ppp';
 	val = 'directions//p';
@@ -16,6 +17,7 @@
 	val = 'exxxxxxxxxxx//p';
 	val = 'fxxxxxxxxxxxx//p';
 
+	! This error won't be noticed if BUG=1.
 	#ifdef BADFLAG;
 	val = 'indirection//x';
 	#endif; ! BADFLAG
