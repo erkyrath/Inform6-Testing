@@ -736,6 +736,12 @@ def run_dict_test():
     res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True, define={'BADFLAG':None})
     res.is_error()
 
+    res = compile('i7-min-6M62-z.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=8)
+    res.is_ok(md5='1d5f5aebf09a10ea18983fa9446dea97')
+
+    res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
+    res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72')
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
