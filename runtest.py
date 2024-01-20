@@ -689,30 +689,54 @@ def run_dict_test():
     res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
 
     res = compile('dictlongflagtest.inf')
-    res.is_ok(md5='7c7ef0506b467dd94b6615c6da88fcff')
+    res.is_ok(md5='0d78b9f9117afe5be3047a911b0a0952')
 
     res = compile('dictlongflagtest.inf', zversion=3)
-    res.is_ok(md5='1bfad5368945e03d4c71d2a34eea9912')
+    res.is_ok(md5='22c158dc4fb8feb61f4cd6fc5983041c')
 
     res = compile('dictlongflagtest.inf', glulx=True)
-    res.is_ok(md5='d38418d3900bd545dfb5bab3eebd222e')
+    res.is_ok(md5='cc6c969d085fae001fde77c335973e28')
 
     res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':10})
-    res.is_ok(md5='794b616e86813b0d396b4e8e845b120f')
+    res.is_ok(md5='fd13c0fbcf994af91342ea3d6d65a0ff')
 
     res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':11})
-    res.is_ok(md5='70ddb5e68b3a28aaf9b68a424b891a98')
+    res.is_ok(md5='a55c2608cfbd93eedbeaec99c24d85bd')
 
     res = compile('dictlongflagtest.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='c0e051373b7affadd68e50001faabc8c')
+    res.is_ok(md5='eec2db33148b1f95660823a5b9e97482')
 
     res = compile('dictlongflagtest.inf', define={'BADFLAG':None})
-    res.is_error()
+    res.is_ok(md5='ca030580d46f2caf4f572c059540aab8')
     
     res = compile('dictlongflagtest.inf', glulx=True, define={'BADFLAG':None})
+    res.is_ok(md5='3b79154a39bb1e11e6d21b40b158110b')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0})
+    res.is_ok(md5='7c7ef0506b467dd94b6615c6da88fcff')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=3)
+    res.is_ok(md5='1bfad5368945e03d4c71d2a34eea9912')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
+    res.is_ok(md5='d38418d3900bd545dfb5bab3eebd222e')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0, 'DICT_WORD_SIZE':10}, glulx=True)
+    res.is_ok(md5='794b616e86813b0d396b4e8e845b120f')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0, 'DICT_WORD_SIZE':11}, glulx=True)
+    res.is_ok(md5='70ddb5e68b3a28aaf9b68a424b891a98')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0, 'DICT_CHAR_SIZE':4}, glulx=True)
+    res.is_ok(md5='c0e051373b7affadd68e50001faabc8c')
+
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, define={'BADFLAG':None})
+    res.is_error()
+    
+    res = compile('dictlongflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True, define={'BADFLAG':None})
     res.is_error()
 
-
+    
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
     res.is_ok()
