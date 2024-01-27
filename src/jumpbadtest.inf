@@ -1,0 +1,8 @@
+[ Main;
+	! Jump to a nonexistent label.
+	#ifdef TARGET_ZCODE;
+	@jump xxxx;
+	#ifnot;
+	@jump ?xxxx;
+	#endif;
+];

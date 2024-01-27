@@ -1117,6 +1117,12 @@ def run_statements_test():
     res = compile('jumpopcodetest.inf', glulx=True, define={'OPFORM':None})
     res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94')
 
+    res = compile('jumpbadtest.inf');
+    res.is_error()
+
+    res = compile('jumpbadtest.inf', glulx=True);
+    res.is_error()
+
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')
