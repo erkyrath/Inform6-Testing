@@ -1105,6 +1105,18 @@ def run_statements_test():
     res = compile('action_token_err.inf', define={'UNKNOWN_SYMBOL_ACTION':None})
     res.is_error()
 
+    res = compile('jumpopcodetest.inf')
+    res.is_ok(md5='85052b512ed6aba4ab2e5a07ef8116f2')
+
+    res = compile('jumpopcodetest.inf', define={'OPFORM':None})
+    res.is_ok(md5='85052b512ed6aba4ab2e5a07ef8116f2')
+
+    res = compile('jumpopcodetest.inf', glulx=True)
+    res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94')
+
+    res = compile('jumpopcodetest.inf', glulx=True, define={'OPFORM':None})
+    res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94')
+
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')
