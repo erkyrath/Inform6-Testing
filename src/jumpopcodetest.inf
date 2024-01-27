@@ -108,16 +108,37 @@ Global failures;
 
 [ JumpLooper val;
 	! This tests backwards and forwards jumps.
+	! If OPFORM is defined, this uses @jump opcodes. (Which differ slightly
+	! in syntax between Z/G, but behave the same.) If OPFORM is not defined,
+	! this uses jump *statements*. The function should compile to exactly
+	! the same code either way.
+	
 	val = val + 1;
 
 	if (val > 10) {
+		#ifdef OPFORM;
+		#ifdef TARGET_ZCODE;
+		@jump end;
+		#ifnot;
+		@jump ?end;
+		#endif;
+		#ifnot;
 		jump end;
+		#endif;
 	}
 
 	.loop;
 	val = val + 2;
 	if (val <= 6) {
+		#ifdef OPFORM;
+		#ifdef TARGET_ZCODE;
+		@jump loop;
+		#ifnot;
+		@jump ?loop;
+		#endif;
+		#ifnot;
 		jump loop;
+		#endif;
 	}
 
 	.end;
