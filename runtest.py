@@ -2040,13 +2040,13 @@ def run_max_abbrevs():
     res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='0f751cb5587657ff98e25dcfab07d874')
+    res.is_ok(md5='e64e6549b6d6387f775f6d92be482cf6')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
     res.is_ok(md5='9d24eb5f77a07a03c83993ae3c503801')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='eced0889b281c1385b66e98796af1a97')
+    res.is_ok(md5='ac0ff916044088c303bb441a92378eb7')
     
     res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={})
     res.is_ok()
