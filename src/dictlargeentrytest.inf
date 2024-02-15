@@ -110,6 +110,15 @@ Global failures;
 	print "#dict_par3: ";
 	check_value(#dict_par3, DICT_ENTRY_BYTES-3+val);
 	new_line;
+
+	val = 'three';
+	print "'three' flags: ";
+	check_value(val->#dict_par1, 128);
+	new_line;
+	val = 'coins';
+	print "'coins' flags: ";
+	check_value(val->#dict_par1, 132);
+	new_line;
 	
 	new_line;
 	if (failures == 0)

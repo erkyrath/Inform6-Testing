@@ -773,28 +773,28 @@ def run_dict_test():
     res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0)
 
     res = compile('dictlargeentrytest.inf', glulx=True)
-    res.is_ok(md5='5c61f298f80dec02cc936b6b59e2b129')
+    res.is_ok(md5='aa96bddd17fc8fbe78871d9f4088df1a')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='e246e61b586ead689b39e2d94bb7dc76')
+    res.is_ok(md5='70c228f06ee6b3c5af55851480141437')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':30})
-    res.is_ok(md5='e835858f65ef893ec40197962c2772b0')
+    res.is_ok(md5='e690c593b10fde1dd87a3498007452be')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':30, 'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='36de1d19c7a5439ebb71b6d709e1e6ee')
+    res.is_ok(md5='457a3de16ef58dc96056e090c97fcabc')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':35})
-    res.is_ok(md5='ec5df20690be82dface629cd35fd66c0')
+    res.is_ok(md5='cf5c66f2e71b1660a5a78b8ad6968d5d')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':35, 'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='8b6b6435075dd8dd0d8346df49ef0ddb')
+    res.is_ok(md5='19116031757220e8fa01b1d88aadd664')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':144})
-    res.is_ok(md5='0cfd76b2c5f5bb8fd1e79d0c8d1dec23')
+    res.is_ok(md5='b19c63f5ed6e8738b84aa6889daf5d85')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':144, 'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='a6094f1d495cc5737e7e09e7440d24fd')
+    res.is_ok(md5='d42460263e3fe758098c7b975f994239')
     
     
 def run_lexer_test():
