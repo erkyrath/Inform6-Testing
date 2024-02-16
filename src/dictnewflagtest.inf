@@ -1,27 +1,33 @@
 [ Main;
 ];
 
-Constant oneletter = 'a//';      ! noun
-Constant base = 'foo';           ! noun
+Constant oneletter = 'a//';      ! noun (s)
+Constant base = 'foo';           ! noun (s)
 Constant plural = 'bars//p';     ! noun p
-Constant noplural = 'bar//~p';   ! noun
-Constant noun = 'noun//n';       ! noun
+Constant noplural = 'bar//~p';   ! noun (s)
+Constant noun = 'noun//n';       ! noun (s)
 Constant antinoun = 'anoun//~n'; ! --
 
-Array bothp1 --> 'barx//~p' 'barx//p';  ! noun p
-Array bothp2 --> 'bary//p' 'bary//~p';  ! noun p
-Array bothn1 --> 'bukx//~n' 'bukx//n';  ! noun
-Array bothn2 --> 'buky//n' 'buky//~n';  ! noun
-Array bothnp --> 'bez//~~n' 'bez//p';   ! noun p
+Array bothp1 --> 'barx//~p' 'barx//p';  ! noun p (s)
+Array bothp2 --> 'bary//p' 'bary//~p';  ! noun p (s)
+Array bothn1 --> 'bukx//~n' 'bukx//n';  ! noun (s)
+Array bothn2 --> 'buky//n' 'buky//~n';  ! noun (s)
+Array bothnp --> 'bez//~~n' 'bez//p';   ! noun p (s)
 
 Constant mix1 = 't1//pn';        ! noun p
 Constant mix2 = 't2//p~n';       ! p
-Constant mix3 = 't3//~pn';       ! noun
+Constant mix3 = 't3//~pn';       ! noun (s)
 Constant mix4 = 't4//~p~n';      ! --
 Constant mix5 = 't5//~~p~~~n';   ! p
 
 Constant longp = 'directions//p';  ! noun p (if BUG=0)
 Constant longn = 'directives//~n'; ! -- (if BUG=0)
+
+[ FooSub;
+];
+
+Verb 'verb'            ! verb
+  * 'out' -> Foo;      ! preposition
 
 #ifdef BADFLAG1;
 Constant bad1 = 'error//x';
