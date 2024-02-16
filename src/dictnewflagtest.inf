@@ -1,12 +1,16 @@
 [ Main;
 ];
 
+! (s) indicates words that have the s flag if $DICT_IMPLICIT_SINGULAR is set.
+
 Constant oneletter = 'a//';      ! noun (s)
 Constant base = 'foo';           ! noun (s)
 Constant plural = 'bars//p';     ! noun p
 Constant noplural = 'bar//~p';   ! noun (s)
 Constant noun = 'noun//n';       ! noun (s)
 Constant antinoun = 'anoun//~n'; ! --
+Constant withs = 'yess//s';      ! noun s
+Constant antis = 'nos//~s';      ! noun
 
 Array bothp1 --> 'barx//~p' 'barx//p';  ! noun p (s)
 Array bothp2 --> 'bary//p' 'bary//~p';  ! noun p (s)
