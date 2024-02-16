@@ -28,6 +28,7 @@ Constant mix5 = 't5//~~p~~~n';   ! p
 
 Constant longp = 'directions//p';  ! noun p (if BUG=0)
 Constant longn = 'directives//~n'; ! -- (if BUG=0)
+Constant longb = 'photograph';     ! noun (s) (regardless)
 
 [ FooSub;
 ];
