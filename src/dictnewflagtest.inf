@@ -11,7 +11,9 @@ Constant noun = 'noun//n';       ! noun (s)
 Constant antinoun = 'anoun//~n'; ! --
 Constant withs = 'yess//s';      ! noun s
 Constant antis = 'nos//~s';      ! noun
+Constant nounsp = 'nounsp//sp';  ! noun s p
 
+Array bothsp --> 'bip' 'bip//p';        ! noun p (s)
 Array bothp1 --> 'barx//~p' 'barx//p';  ! noun p (s)
 Array bothp2 --> 'bary//p' 'bary//~p';  ! noun p (s)
 Array bothn1 --> 'bukx//~n' 'bukx//n';  ! noun (s)
