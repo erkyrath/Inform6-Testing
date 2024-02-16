@@ -754,6 +754,18 @@ def run_dict_test():
     res = compile('dictnewflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
     res.is_ok(md5='b8b2c4ca7553a85b69ca5435a6a5cee7')
     
+    res = compile('dictnewflagtest.inf', memsettings={'DICT_IMPLICIT_SINGULAR':1})
+    res.is_ok(md5='8ce940f818408b04c8cd3e6c05119b1f')
+    
+    res = compile('dictnewflagtest.inf', memsettings={'DICT_IMPLICIT_SINGULAR':1}, glulx=True)
+    res.is_ok(md5='ee0a007647fa8f58f2358665fe93e744')
+    
+    res = compile('dictnewflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0, 'DICT_IMPLICIT_SINGULAR':1})
+    res.is_ok(md5='537f36822afb31ab7cfa8c503ea965a5')
+    
+    res = compile('dictnewflagtest.inf', memsettings={'LONG_DICT_FLAG_BUG':0, 'DICT_IMPLICIT_SINGULAR':1}, glulx=True)
+    res.is_ok(md5='2acd0a25997ca335b5ae07a9bd4e4561')
+    
     res = compile('dictnewflagtest.inf', define={'BADFLAG1':None})
     res.is_error()
     
