@@ -790,6 +790,12 @@ def run_dict_test():
     res = compile('dictnewflagtest.inf', memsettings={'DICT_TRUNCATE_FLAG':1, 'LONG_DICT_FLAG_BUG':0}, glulx=True)
     res.is_ok(md5='a5d8c864a7400e349f32e8261deba92d')
     
+    res = compile('dictnewflagtest.inf', memsettings={'DICT_TRUNCATE_FLAG':1, 'DICT_IMPLICIT_SINGULAR':1, 'LONG_DICT_FLAG_BUG':1, 'DICT_WORD_SIZE':10}, glulx=True)
+    res.is_ok(md5='d3def326e708a7848c7257696e74f518')
+    
+    res = compile('dictnewflagtest.inf', memsettings={'DICT_TRUNCATE_FLAG':1, 'DICT_IMPLICIT_SINGULAR':1, 'LONG_DICT_FLAG_BUG':0, 'DICT_WORD_SIZE':10}, glulx=True)
+    res.is_ok(md5='d3def326e708a7848c7257696e74f518')
+    
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611')
     res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0)
 
