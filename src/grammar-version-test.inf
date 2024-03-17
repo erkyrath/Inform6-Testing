@@ -1,0 +1,31 @@
+
+#ifdef EARLY_FAKE_ACTION;
+Fake_Action xyzzy;
+#endif;
+
+#ifdef SET_GV_1;
+Constant Grammar__Version = 1;
+#endif;
+
+#ifdef SET_GV_2;
+Constant Grammar__Version = 2;
+#endif;
+
+#ifdef SET_GV_3;
+Constant Grammar__Version = 3;
+#endif;
+
+[ Main;
+	print "Grammar version ", Grammar__Version, "^";
+];
+
+Verb 'take'
+  * 'inventory' -> Inv
+  * noun -> Take;
+  
+Verb 'kiss'
+  * creature -> Smooch;
+
+[ InvSub; ];
+[ TakeSub; ];
+[ SmoochSub; ];

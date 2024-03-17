@@ -826,7 +826,35 @@ def run_dict_test():
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':144, 'DICT_CHAR_SIZE':4})
     res.is_ok(md5='d42460263e3fe758098c7b975f994239')
     
+
+def run_grammar_test():
+    # File compiles the same whether the grammar version is set by Constant or compiler option
     
+    res = compile('grammar-version-test.inf')
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+
+    res = compile('grammar-version-test.inf', define={'SET_GV_1':None})
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+
+    res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':1})
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+
+    res = compile('grammar-version-test.inf', define={'SET_GV_2':None})
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+
+    res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2})
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+
+    res = compile('grammar-version-test.inf', glulx=True)
+    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398')
+
+    res = compile('grammar-version-test.inf', glulx=True, define={'SET_GV_2':None})
+    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398')
+
+    res = compile('grammar-version-test.inf', glulx=True, memsettings={'GRAMMAR_VERSION':2})
+    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398')
+
+
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
     res.is_ok()
@@ -2371,6 +2399,7 @@ def run_omit_symbol_table():
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
+    ('GRAMMAR', run_grammar_test),
     ('LEXER', run_lexer_test),
     ('VENEER', run_veneer_test),
     ('DIRECTIVES', run_directives_test),
