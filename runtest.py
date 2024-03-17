@@ -866,6 +866,10 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', glulx=True, memsettings={'GRAMMAR_VERSION':4})
     res.is_error()
 
+    # Same as i7-min-6G60.inf, except we set the grammar by option
+    res = compile('i7-min-6G60-gvopt.inf')
+    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c')
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
