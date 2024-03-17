@@ -15,6 +15,10 @@ Constant Grammar__Version = 2;
 Constant Grammar__Version = 3;
 #endif;
 
+#ifdef SET_GV_4;
+Constant Grammar__Version = 4;
+#endif;
+
 [ Main;
 	print "Grammar version ", Grammar__Version, "^";
 ];
