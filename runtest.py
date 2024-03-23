@@ -324,7 +324,7 @@ class Result:
                         # not really 9999, but it gets the idea across
                         self.errors = 9999
                     ln = ln[ match.end() : ].strip()
-                    match = re.match('The memory setting (\S+)', ln)
+                    match = re.match(r'The memory setting (\S+)', ln)
                     if (match):
                         # This no longer occurs in Inform. We keep the check for testing older releases.
                         self.memsetting = match.group(1)
