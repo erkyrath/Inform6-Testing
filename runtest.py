@@ -2411,6 +2411,18 @@ def run_omit_symbol_table():
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='c674e8217a693124dfd0404fbe9b36dc', warnings=0)
 
+    
+def run_file_end_padding():
+    res = compile('minimal_test.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
+    res.is_ok(md5='1847d28cc183ec23c50bd5bca52a1b21')
+
+    res = compile('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
+    res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99')
+
+    res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
+    res.is_ok(md5='80077189b1e682930e661cbe09e46d0a')
+
+
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
@@ -2471,6 +2483,7 @@ test_catalog = [
     ('MAX_ZCODE_SIZE', run_max_zcode_size),
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ('OMIT_SYMBOL_TABLE', run_omit_symbol_table),
+    ('ZCODE_FILE_END_PADDING', run_file_end_padding),
     ]
 
 test_map = dict(test_catalog)
