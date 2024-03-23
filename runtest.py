@@ -2419,6 +2419,9 @@ def run_file_end_padding():
     res = compile('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
     res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99')
 
+    res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
+    res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd')
+
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
     res.is_ok(md5='80077189b1e682930e661cbe09e46d0a')
 
