@@ -683,3 +683,564 @@ Extend 'foo10' * 'prep18' -> Action10_18;
 [ Action10_19Sub; ];
 Extend 'foo10' * 'prep19' -> Action10_19;
 
+
+#ifdef MAKE_400;
+
+
+[ Action11_0Sub; ];
+Verb 'foo11' * 'prep0' -> Action11_0;
+
+[ Action11_1Sub; ];
+Extend 'foo11' * 'prep1' -> Action11_1;
+
+[ Action11_2Sub; ];
+Extend 'foo11' * 'prep2' -> Action11_2;
+
+[ Action11_3Sub; ];
+Extend 'foo11' * 'prep3' -> Action11_3;
+
+[ Action11_4Sub; ];
+Extend 'foo11' * 'prep4' -> Action11_4;
+
+[ Action11_5Sub; ];
+Extend 'foo11' * 'prep5' -> Action11_5;
+
+[ Action11_6Sub; ];
+Extend 'foo11' * 'prep6' -> Action11_6;
+
+[ Action11_7Sub; ];
+Extend 'foo11' * 'prep7' -> Action11_7;
+
+[ Action11_8Sub; ];
+Extend 'foo11' * 'prep8' -> Action11_8;
+
+[ Action11_9Sub; ];
+Extend 'foo11' * 'prep9' -> Action11_9;
+
+[ Action11_10Sub; ];
+Extend 'foo11' * 'prep10' -> Action11_10;
+
+[ Action11_11Sub; ];
+Extend 'foo11' * 'prep11' -> Action11_11;
+
+[ Action11_12Sub; ];
+Extend 'foo11' * 'prep12' -> Action11_12;
+
+[ Action11_13Sub; ];
+Extend 'foo11' * 'prep13' -> Action11_13;
+
+[ Action11_14Sub; ];
+Extend 'foo11' * 'prep14' -> Action11_14;
+
+[ Action11_15Sub; ];
+Extend 'foo11' * 'prep15' -> Action11_15;
+
+[ Action11_16Sub; ];
+Extend 'foo11' * 'prep16' -> Action11_16;
+
+[ Action11_17Sub; ];
+Extend 'foo11' * 'prep17' -> Action11_17;
+
+[ Action11_18Sub; ];
+Extend 'foo11' * 'prep18' -> Action11_18;
+
+[ Action11_19Sub; ];
+Extend 'foo11' * 'prep19' -> Action11_19;
+
+! ---
+
+[ Action12_0Sub; ];
+Verb 'foo12' * 'prep0' -> Action12_0;
+
+[ Action12_1Sub; ];
+Extend 'foo12' * 'prep1' -> Action12_1;
+
+[ Action12_2Sub; ];
+Extend 'foo12' * 'prep2' -> Action12_2;
+
+[ Action12_3Sub; ];
+Extend 'foo12' * 'prep3' -> Action12_3;
+
+[ Action12_4Sub; ];
+Extend 'foo12' * 'prep4' -> Action12_4;
+
+[ Action12_5Sub; ];
+Extend 'foo12' * 'prep5' -> Action12_5;
+
+[ Action12_6Sub; ];
+Extend 'foo12' * 'prep6' -> Action12_6;
+
+[ Action12_7Sub; ];
+Extend 'foo12' * 'prep7' -> Action12_7;
+
+[ Action12_8Sub; ];
+Extend 'foo12' * 'prep8' -> Action12_8;
+
+[ Action12_9Sub; ];
+Extend 'foo12' * 'prep9' -> Action12_9;
+
+[ Action12_10Sub; ];
+Extend 'foo12' * 'prep10' -> Action12_10;
+
+[ Action12_11Sub; ];
+Extend 'foo12' * 'prep11' -> Action12_11;
+
+[ Action12_12Sub; ];
+Extend 'foo12' * 'prep12' -> Action12_12;
+
+[ Action12_13Sub; ];
+Extend 'foo12' * 'prep13' -> Action12_13;
+
+[ Action12_14Sub; ];
+Extend 'foo12' * 'prep14' -> Action12_14;
+
+[ Action12_15Sub; ];
+Extend 'foo12' * 'prep15' -> Action12_15;
+
+[ Action12_16Sub; ];
+Extend 'foo12' * 'prep16' -> Action12_16;
+
+[ Action12_17Sub; ];
+Extend 'foo12' * 'prep17' -> Action12_17;
+
+[ Action12_18Sub; ];
+Extend 'foo12' * 'prep18' -> Action12_18;
+
+[ Action12_19Sub; ];
+Extend 'foo12' * 'prep19' -> Action12_19;
+
+! ---
+
+[ Action13_0Sub; ];
+Verb 'foo13' * 'prep0' -> Action13_0;
+
+[ Action13_1Sub; ];
+Extend 'foo13' * 'prep1' -> Action13_1;
+
+[ Action13_2Sub; ];
+Extend 'foo13' * 'prep2' -> Action13_2;
+
+[ Action13_3Sub; ];
+Extend 'foo13' * 'prep3' -> Action13_3;
+
+[ Action13_4Sub; ];
+Extend 'foo13' * 'prep4' -> Action13_4;
+
+[ Action13_5Sub; ];
+Extend 'foo13' * 'prep5' -> Action13_5;
+
+[ Action13_6Sub; ];
+Extend 'foo13' * 'prep6' -> Action13_6;
+
+[ Action13_7Sub; ];
+Extend 'foo13' * 'prep7' -> Action13_7;
+
+[ Action13_8Sub; ];
+Extend 'foo13' * 'prep8' -> Action13_8;
+
+[ Action13_9Sub; ];
+Extend 'foo13' * 'prep9' -> Action13_9;
+
+[ Action13_10Sub; ];
+Extend 'foo13' * 'prep10' -> Action13_10;
+
+[ Action13_11Sub; ];
+Extend 'foo13' * 'prep11' -> Action13_11;
+
+[ Action13_12Sub; ];
+Extend 'foo13' * 'prep12' -> Action13_12;
+
+[ Action13_13Sub; ];
+Extend 'foo13' * 'prep13' -> Action13_13;
+
+[ Action13_14Sub; ];
+Extend 'foo13' * 'prep14' -> Action13_14;
+
+[ Action13_15Sub; ];
+Extend 'foo13' * 'prep15' -> Action13_15;
+
+[ Action13_16Sub; ];
+Extend 'foo13' * 'prep16' -> Action13_16;
+
+[ Action13_17Sub; ];
+Extend 'foo13' * 'prep17' -> Action13_17;
+
+[ Action13_18Sub; ];
+Extend 'foo13' * 'prep18' -> Action13_18;
+
+[ Action13_19Sub; ];
+Extend 'foo13' * 'prep19' -> Action13_19;
+
+! ---
+
+[ Action14_0Sub; ];
+Verb 'foo14' * 'prep0' -> Action14_0;
+
+[ Action14_1Sub; ];
+Extend 'foo14' * 'prep1' -> Action14_1;
+
+[ Action14_2Sub; ];
+Extend 'foo14' * 'prep2' -> Action14_2;
+
+[ Action14_3Sub; ];
+Extend 'foo14' * 'prep3' -> Action14_3;
+
+[ Action14_4Sub; ];
+Extend 'foo14' * 'prep4' -> Action14_4;
+
+[ Action14_5Sub; ];
+Extend 'foo14' * 'prep5' -> Action14_5;
+
+[ Action14_6Sub; ];
+Extend 'foo14' * 'prep6' -> Action14_6;
+
+[ Action14_7Sub; ];
+Extend 'foo14' * 'prep7' -> Action14_7;
+
+[ Action14_8Sub; ];
+Extend 'foo14' * 'prep8' -> Action14_8;
+
+[ Action14_9Sub; ];
+Extend 'foo14' * 'prep9' -> Action14_9;
+
+[ Action14_10Sub; ];
+Extend 'foo14' * 'prep10' -> Action14_10;
+
+[ Action14_11Sub; ];
+Extend 'foo14' * 'prep11' -> Action14_11;
+
+[ Action14_12Sub; ];
+Extend 'foo14' * 'prep12' -> Action14_12;
+
+[ Action14_13Sub; ];
+Extend 'foo14' * 'prep13' -> Action14_13;
+
+[ Action14_14Sub; ];
+Extend 'foo14' * 'prep14' -> Action14_14;
+
+[ Action14_15Sub; ];
+Extend 'foo14' * 'prep15' -> Action14_15;
+
+[ Action14_16Sub; ];
+Extend 'foo14' * 'prep16' -> Action14_16;
+
+[ Action14_17Sub; ];
+Extend 'foo14' * 'prep17' -> Action14_17;
+
+[ Action14_18Sub; ];
+Extend 'foo14' * 'prep18' -> Action14_18;
+
+[ Action14_19Sub; ];
+Extend 'foo14' * 'prep19' -> Action14_19;
+
+! ---
+
+[ Action15_0Sub; ];
+Verb 'foo15' * 'prep0' -> Action15_0;
+
+[ Action15_1Sub; ];
+Extend 'foo15' * 'prep1' -> Action15_1;
+
+[ Action15_2Sub; ];
+Extend 'foo15' * 'prep2' -> Action15_2;
+
+[ Action15_3Sub; ];
+Extend 'foo15' * 'prep3' -> Action15_3;
+
+[ Action15_4Sub; ];
+Extend 'foo15' * 'prep4' -> Action15_4;
+
+[ Action15_5Sub; ];
+Extend 'foo15' * 'prep5' -> Action15_5;
+
+[ Action15_6Sub; ];
+Extend 'foo15' * 'prep6' -> Action15_6;
+
+[ Action15_7Sub; ];
+Extend 'foo15' * 'prep7' -> Action15_7;
+
+[ Action15_8Sub; ];
+Extend 'foo15' * 'prep8' -> Action15_8;
+
+[ Action15_9Sub; ];
+Extend 'foo15' * 'prep9' -> Action15_9;
+
+[ Action15_10Sub; ];
+Extend 'foo15' * 'prep10' -> Action15_10;
+
+[ Action15_11Sub; ];
+Extend 'foo15' * 'prep11' -> Action15_11;
+
+[ Action15_12Sub; ];
+Extend 'foo15' * 'prep12' -> Action15_12;
+
+[ Action15_13Sub; ];
+Extend 'foo15' * 'prep13' -> Action15_13;
+
+[ Action15_14Sub; ];
+Extend 'foo15' * 'prep14' -> Action15_14;
+
+[ Action15_15Sub; ];
+Extend 'foo15' * 'prep15' -> Action15_15;
+
+[ Action15_16Sub; ];
+Extend 'foo15' * 'prep16' -> Action15_16;
+
+[ Action15_17Sub; ];
+Extend 'foo15' * 'prep17' -> Action15_17;
+
+[ Action15_18Sub; ];
+Extend 'foo15' * 'prep18' -> Action15_18;
+
+[ Action15_19Sub; ];
+Extend 'foo15' * 'prep19' -> Action15_19;
+
+! ---
+
+[ Action16_0Sub; ];
+Verb 'foo16' * 'prep0' -> Action16_0;
+
+[ Action16_1Sub; ];
+Extend 'foo16' * 'prep1' -> Action16_1;
+
+[ Action16_2Sub; ];
+Extend 'foo16' * 'prep2' -> Action16_2;
+
+[ Action16_3Sub; ];
+Extend 'foo16' * 'prep3' -> Action16_3;
+
+[ Action16_4Sub; ];
+Extend 'foo16' * 'prep4' -> Action16_4;
+
+[ Action16_5Sub; ];
+Extend 'foo16' * 'prep5' -> Action16_5;
+
+[ Action16_6Sub; ];
+Extend 'foo16' * 'prep6' -> Action16_6;
+
+[ Action16_7Sub; ];
+Extend 'foo16' * 'prep7' -> Action16_7;
+
+[ Action16_8Sub; ];
+Extend 'foo16' * 'prep8' -> Action16_8;
+
+[ Action16_9Sub; ];
+Extend 'foo16' * 'prep9' -> Action16_9;
+
+[ Action16_10Sub; ];
+Extend 'foo16' * 'prep10' -> Action16_10;
+
+[ Action16_11Sub; ];
+Extend 'foo16' * 'prep11' -> Action16_11;
+
+[ Action16_12Sub; ];
+Extend 'foo16' * 'prep12' -> Action16_12;
+
+[ Action16_13Sub; ];
+Extend 'foo16' * 'prep13' -> Action16_13;
+
+[ Action16_14Sub; ];
+Extend 'foo16' * 'prep14' -> Action16_14;
+
+[ Action16_15Sub; ];
+Extend 'foo16' * 'prep15' -> Action16_15;
+
+[ Action16_16Sub; ];
+Extend 'foo16' * 'prep16' -> Action16_16;
+
+[ Action16_17Sub; ];
+Extend 'foo16' * 'prep17' -> Action16_17;
+
+[ Action16_18Sub; ];
+Extend 'foo16' * 'prep18' -> Action16_18;
+
+[ Action16_19Sub; ];
+Extend 'foo16' * 'prep19' -> Action16_19;
+
+! ---
+
+[ Action17_0Sub; ];
+Verb 'foo17' * 'prep0' -> Action17_0;
+
+[ Action17_1Sub; ];
+Extend 'foo17' * 'prep1' -> Action17_1;
+
+[ Action17_2Sub; ];
+Extend 'foo17' * 'prep2' -> Action17_2;
+
+[ Action17_3Sub; ];
+Extend 'foo17' * 'prep3' -> Action17_3;
+
+[ Action17_4Sub; ];
+Extend 'foo17' * 'prep4' -> Action17_4;
+
+[ Action17_5Sub; ];
+Extend 'foo17' * 'prep5' -> Action17_5;
+
+[ Action17_6Sub; ];
+Extend 'foo17' * 'prep6' -> Action17_6;
+
+[ Action17_7Sub; ];
+Extend 'foo17' * 'prep7' -> Action17_7;
+
+[ Action17_8Sub; ];
+Extend 'foo17' * 'prep8' -> Action17_8;
+
+[ Action17_9Sub; ];
+Extend 'foo17' * 'prep9' -> Action17_9;
+
+[ Action17_10Sub; ];
+Extend 'foo17' * 'prep10' -> Action17_10;
+
+[ Action17_11Sub; ];
+Extend 'foo17' * 'prep11' -> Action17_11;
+
+[ Action17_12Sub; ];
+Extend 'foo17' * 'prep12' -> Action17_12;
+
+[ Action17_13Sub; ];
+Extend 'foo17' * 'prep13' -> Action17_13;
+
+[ Action17_14Sub; ];
+Extend 'foo17' * 'prep14' -> Action17_14;
+
+[ Action17_15Sub; ];
+Extend 'foo17' * 'prep15' -> Action17_15;
+
+[ Action17_16Sub; ];
+Extend 'foo17' * 'prep16' -> Action17_16;
+
+[ Action17_17Sub; ];
+Extend 'foo17' * 'prep17' -> Action17_17;
+
+[ Action17_18Sub; ];
+Extend 'foo17' * 'prep18' -> Action17_18;
+
+[ Action17_19Sub; ];
+Extend 'foo17' * 'prep19' -> Action17_19;
+
+! ---
+
+[ Action18_0Sub; ];
+Verb 'foo18' * 'prep0' -> Action18_0;
+
+[ Action18_1Sub; ];
+Extend 'foo18' * 'prep1' -> Action18_1;
+
+[ Action18_2Sub; ];
+Extend 'foo18' * 'prep2' -> Action18_2;
+
+[ Action18_3Sub; ];
+Extend 'foo18' * 'prep3' -> Action18_3;
+
+[ Action18_4Sub; ];
+Extend 'foo18' * 'prep4' -> Action18_4;
+
+[ Action18_5Sub; ];
+Extend 'foo18' * 'prep5' -> Action18_5;
+
+[ Action18_6Sub; ];
+Extend 'foo18' * 'prep6' -> Action18_6;
+
+[ Action18_7Sub; ];
+Extend 'foo18' * 'prep7' -> Action18_7;
+
+[ Action18_8Sub; ];
+Extend 'foo18' * 'prep8' -> Action18_8;
+
+[ Action18_9Sub; ];
+Extend 'foo18' * 'prep9' -> Action18_9;
+
+[ Action18_10Sub; ];
+Extend 'foo18' * 'prep10' -> Action18_10;
+
+[ Action18_11Sub; ];
+Extend 'foo18' * 'prep11' -> Action18_11;
+
+[ Action18_12Sub; ];
+Extend 'foo18' * 'prep12' -> Action18_12;
+
+[ Action18_13Sub; ];
+Extend 'foo18' * 'prep13' -> Action18_13;
+
+[ Action18_14Sub; ];
+Extend 'foo18' * 'prep14' -> Action18_14;
+
+[ Action18_15Sub; ];
+Extend 'foo18' * 'prep15' -> Action18_15;
+
+[ Action18_16Sub; ];
+Extend 'foo18' * 'prep16' -> Action18_16;
+
+[ Action18_17Sub; ];
+Extend 'foo18' * 'prep17' -> Action18_17;
+
+[ Action18_18Sub; ];
+Extend 'foo18' * 'prep18' -> Action18_18;
+
+[ Action18_19Sub; ];
+Extend 'foo18' * 'prep19' -> Action18_19;
+
+! ---
+
+[ Action19_0Sub; ];
+Verb 'foo19' * 'prep0' -> Action19_0;
+
+[ Action19_1Sub; ];
+Extend 'foo19' * 'prep1' -> Action19_1;
+
+[ Action19_2Sub; ];
+Extend 'foo19' * 'prep2' -> Action19_2;
+
+[ Action19_3Sub; ];
+Extend 'foo19' * 'prep3' -> Action19_3;
+
+[ Action19_4Sub; ];
+Extend 'foo19' * 'prep4' -> Action19_4;
+
+[ Action19_5Sub; ];
+Extend 'foo19' * 'prep5' -> Action19_5;
+
+[ Action19_6Sub; ];
+Extend 'foo19' * 'prep6' -> Action19_6;
+
+[ Action19_7Sub; ];
+Extend 'foo19' * 'prep7' -> Action19_7;
+
+[ Action19_8Sub; ];
+Extend 'foo19' * 'prep8' -> Action19_8;
+
+[ Action19_9Sub; ];
+Extend 'foo19' * 'prep9' -> Action19_9;
+
+[ Action19_10Sub; ];
+Extend 'foo19' * 'prep10' -> Action19_10;
+
+[ Action19_11Sub; ];
+Extend 'foo19' * 'prep11' -> Action19_11;
+
+[ Action19_12Sub; ];
+Extend 'foo19' * 'prep12' -> Action19_12;
+
+[ Action19_13Sub; ];
+Extend 'foo19' * 'prep13' -> Action19_13;
+
+[ Action19_14Sub; ];
+Extend 'foo19' * 'prep14' -> Action19_14;
+
+[ Action19_15Sub; ];
+Extend 'foo19' * 'prep15' -> Action19_15;
+
+[ Action19_16Sub; ];
+Extend 'foo19' * 'prep16' -> Action19_16;
+
+[ Action19_17Sub; ];
+Extend 'foo19' * 'prep17' -> Action19_17;
+
+[ Action19_18Sub; ];
+Extend 'foo19' * 'prep18' -> Action19_18;
+
+[ Action19_19Sub; ];
+Extend 'foo19' * 'prep19' -> Action19_19;
+
+#endif; ! MAKE_400
