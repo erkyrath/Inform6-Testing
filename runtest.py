@@ -2300,6 +2300,7 @@ def run_max_actions():
     res = compile('max_actions.inf', glulx=True)
     res.is_ok()
 
+    # Can't handle 400 actions in grammar version 1
     res = compile('max_actions.inf', define={ 'MAKE_400':0 })
     res.is_error()
 
