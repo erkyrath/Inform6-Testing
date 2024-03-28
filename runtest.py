@@ -2300,6 +2300,18 @@ def run_max_actions():
     res = compile('max_actions.inf', glulx=True)
     res.is_ok()
 
+    res = compile('max_actions.inf', define={ 'MAKE_400':0 })
+    res.is_error()
+
+    res = compile('max_actions.inf', define={ 'MAKE_400':0 }, memsettings={ 'GRAMMAR_VERSION':2 })
+    res.is_ok()
+
+    res = compile('max_actions.inf', glulx=True, define={ 'MAKE_400':0 })
+    res.is_ok()
+
+    res = compile('max_actions.inf', glulx=True)
+    res.is_ok()
+
     res = compile('max_grammar_routines_test.inf')
     res.is_ok()
 
