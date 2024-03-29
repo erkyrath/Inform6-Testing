@@ -870,6 +870,14 @@ def run_grammar_test():
     res = compile('i7-min-6G60-gvopt.inf')
     res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c')
 
+    # Advent with GRAMMAR_META_FLAG should run correctly
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0)
+
+    res = compile('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0)
+
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
