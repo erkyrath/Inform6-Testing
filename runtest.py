@@ -877,6 +877,12 @@ def run_grammar_test():
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1})
     res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0)
 
+    # Requires GRAMMAR_META_FLAG
+    res = compile('grammar-metaflag-test.inf')
+    res.is_error()
+
+    res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok()
 
     
 def run_lexer_test():
