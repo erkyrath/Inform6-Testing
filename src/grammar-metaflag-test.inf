@@ -97,7 +97,7 @@ Global failures;
 ! Fake_action has to be defined before use; possibly that's a bug.
 Fake_action Xyzzy;
 
-[ RunTest val;
+[ RunTest val val2;
 	val = #highest_meta_action_number;
 	print "#highest_meta_action_number="; check_value(val, 5);
 	new_line;
@@ -105,9 +105,15 @@ Fake_action Xyzzy;
 	print "GRAMMAR_META_FLAG="; check_value(val, 0);
 	new_line;
 	val = ##Xyzzy;
-	print "##Xyzzy="; check_value(val, 256);
+	if (Grammar__Version == 1)
+		val2 = 256;
+	else
+		val2 = 4096;
+	print "##Xyzzy="; check_value(val, val2);
 	new_line;
 
+	new_line;
+	
 	for (val=0 : val <= #highest_action_number : val++) {
 		print val, ": ", (string) #action_names_array-->val;
 		if (val <= #highest_meta_action_number)
@@ -119,6 +125,12 @@ Fake_action Xyzzy;
 		print val, ": ", (string) #fake_action_names_array-->(val-#lowest_fake_action_number), " (fake)";
 		new_line;
 	}
+	
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
 ];
 
 Verb 'wait' 'z//' * -> Wait;

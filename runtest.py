@@ -884,6 +884,12 @@ def run_grammar_test():
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
     res.is_ok()
 
+    res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1, 'GRAMMAR_VERSION':2})
+    res.is_ok()
+
+    res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok()
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
