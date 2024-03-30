@@ -890,6 +890,13 @@ def run_grammar_test():
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612')
 
+    # Compile with the modified parser; meta verbs should be meta.
+    res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
+    res.is_ok(md5='5b8b91439c15a69083fa3e99b14567c4', warnings=0)
+    
+    res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True)
+    res.is_ok(md5='7b727879c043c5a18e189c8a6091e1d8', warnings=0)
+
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
