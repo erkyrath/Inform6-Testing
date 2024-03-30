@@ -1411,6 +1411,7 @@ Object  InformParser "(Inform Parser)"
             results-->0 = action;
             results-->1 = noun;
             results-->2 = second;
+            meta = (results-->0 <= #highest_meta_action_number);
             rtrue;
         }
         if (i ~= 0) { verb_word = i; wn--; verb_wordnum--; }
@@ -1452,6 +1453,7 @@ Object  InformParser "(Inform Parser)"
         if (l ~= 0) {
             results-->0 = ##Go;
             action_to_be = ##Go;
+            meta = FALSE;
             results-->1 = 1;
             results-->2 = l;
             jump LookForMore;
@@ -1850,7 +1852,7 @@ Object  InformParser "(Inform Parser)"
 
                 if (parameters >= 1 && results-->2 == 0) {
                     l = ReviseMulti(results-->3);
-                    if (l ~= 0) { etype = l; results-->0 = action_to_be; break; }
+                    if (l ~= 0) { etype = l; results-->0 = action_to_be; meta = (results-->0 <= #highest_meta_action_number); break; }
                 }
                 if (parameters >= 2 && results-->3 == 0) {
                     l = ReviseMulti(results-->2);
@@ -1882,6 +1884,7 @@ Object  InformParser "(Inform Parser)"
                 ! ...copy the action number, and the number of parameters...
 
                 results-->0 = action_to_be;
+                meta = (results-->0 <= #highest_meta_action_number);
                 results-->1 = parameters;
 
                 ! ...reverse first and second parameters if need be...
@@ -1921,6 +1924,7 @@ Object  InformParser "(Inform Parser)"
                         notheld_mode = 1;
                         for (i=0 : i<8 : i++) kept_results-->i = results-->i;
                         results-->0 = ##Take;
+                        meta = FALSE;
                         results-->1 = 1;
                         results-->2 = not_holding;
                     }
@@ -1984,6 +1988,7 @@ Object  InformParser "(Inform Parser)"
         }
         special_number = TryNumber(verb_wordnum);
         results-->0 = ##NotUnderstood;
+        meta = FALSE;
         results-->1 = 2;
         results-->2 = 1; special_number1 = special_word;
         results-->3 = actor;

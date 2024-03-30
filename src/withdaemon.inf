@@ -12,7 +12,7 @@ Include "VerbLib";
 
 Object   Kitchen "Kitchen"
   with description "You're in the kitchen.",
-  with daemon "^Tick.",
+  with daemon "^(Non-meta action.)",
   has  light;
 
 Object -> rock "rock"
@@ -20,3 +20,5 @@ Object -> rock "rock"
 
 Include "Grammar";
 
+! Score is a meta action, even though the verb 'take' is not.
+Extend 'take' first * 'score' -> Score;
