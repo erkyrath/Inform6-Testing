@@ -14,6 +14,10 @@
 !   English.
 ! ==============================================================================
 
+    ! TESTING: This version of English.h adds the "//~n" flag
+    ! to dict words which are known to be used in a verb context.
+    ! (That is, they should not receive the default "noun" flag.)
+
 System_file;
 
 ! ------------------------------------------------------------------------------
