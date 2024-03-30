@@ -46,6 +46,9 @@
 
     ! TESTING: This version of parserm.h relies on the GRAMMAR_META_FLAG
     ! structure rather than dict word flags.
+    ! This is *not* a verified implementation! It's a snap hack that I
+    ! threw together for testing. A real implementation will need much
+    ! closer attention.
 
 System_file;
 
