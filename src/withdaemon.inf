@@ -1,0 +1,22 @@
+Constant Story "Test";
+Constant Headline "^A test^";
+Release 1;
+
+Include "Parser";
+Include "VerbLib";
+
+[ Initialise;
+	location = Kitchen;
+	StartDaemon(Kitchen);
+];
+
+Object   Kitchen "Kitchen"
+  with description "You're in the kitchen.",
+  with daemon "^Tick.",
+  has  light;
+
+Object -> rock "rock"
+  with  name 'rock';
+
+Include "Grammar";
+
