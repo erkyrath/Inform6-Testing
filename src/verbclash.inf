@@ -43,4 +43,12 @@ Verb 'stockpile' * -> Ding;
 Verb 'stockpilexx' * -> Ding;
 #endif;
 
+#ifdef NOVERBS;
+Verb * -> Ding;
+#endif;
+
+#ifdef NOTAVERB;
+Verb 123 * -> Ding;
+#endif;
+
 Verb 'ding' * -> Ding;
