@@ -2220,13 +2220,13 @@ def run_max_verb_word_size():
     res.is_ok()
 
     res = compile('max_verb_word_size_2.inf')
-    res.is_memsetting('MAX_VERB_WORD_SIZE')
+    res.is_ok()
     
     res = compile('max_verb_word_size.inf', glulx=True)
     res.is_ok()
 
     res = compile('max_verb_word_size_2.inf', glulx=True)
-    res.is_memsetting('MAX_VERB_WORD_SIZE')
+    res.is_ok()
 
 
 def run_max_lines_per_verb():
