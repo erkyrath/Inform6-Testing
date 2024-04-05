@@ -1,0 +1,46 @@
+Constant Story "Test";
+Constant Headline "^A test^";
+Release 1;
+
+Include "Parser";
+Include "VerbLib";
+
+[ Initialise;
+	location = Kitchen;
+];
+
+Object   Kitchen "Kitchen"
+  with description "The kitchen.",
+  has  light;
+
+
+Include "Grammar";
+
+
+[ PopSub;
+	print "Pop.^";
+];
+
+[ DingSub;
+	print "Ding.^";
+];
+
+
+Verb 'pop' * -> Pop;
+
+#ifdef EXACTSAME;
+Verb 'stockpile' * -> Ding;
+Verb 'stockpile' * -> Ding;
+#endif;
+
+#ifdef CASESAME;
+Verb 'stockpile' * -> Ding;
+Verb 'stockPILE' * -> Ding;
+#endif;
+
+#ifdef TRUNCSAME;
+Verb 'stockpile' * -> Ding;
+Verb 'stockpilexx' * -> Ding;
+#endif;
+
+Verb 'ding' * -> Ding;
