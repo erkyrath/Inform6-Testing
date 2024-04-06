@@ -51,4 +51,12 @@ Verb * -> Ding;
 Verb 123 * -> Ding;
 #endif;
 
+#ifdef BADEQUALS;
+Verb 'zorp' = 123;
+#endif;
+
+#ifdef BADEQUALS2;
+Verb 'zorp' = 'nonexist';
+#endif;
+
 Verb 'ding' * -> Ding;
