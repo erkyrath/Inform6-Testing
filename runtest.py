@@ -900,6 +900,12 @@ def run_grammar_test():
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
     res.is_error()
     
+    res = compile('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None})
+    res.is_error()
+    
+    res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
+    res.is_error()
+    
     res = compile('verbclash.inf', includedir='i6lib-611', define={'NOVERBS':None})
     res.is_error()
     
