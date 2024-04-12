@@ -913,6 +913,10 @@ def run_grammar_test():
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True)
     res.is_ok(md5='7b727879c043c5a18e189c8a6091e1d8', warnings=0)
 
+    # All of the following should compile the same.
+    res = compile('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None})
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
+    
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
     res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
     

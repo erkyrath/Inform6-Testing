@@ -28,6 +28,11 @@ Include "Grammar";
 
 Verb 'pop' * -> Pop;
 
+#ifdef EXTENDLAST;
+Verb 'stockpile' * -> Ding;
+Extend 'stockpile' last * -> Ding;
+#endif;
+
 #ifdef EXACTSAME;
 Verb 'stockpile' * -> Ding;
 Verb 'stockpile' * -> Ding;
