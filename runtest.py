@@ -914,13 +914,13 @@ def run_grammar_test():
     res.is_ok(md5='7b727879c043c5a18e189c8a6091e1d8', warnings=0)
 
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
-    res.is_error()
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None})
-    res.is_error()
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
-    res.is_error()
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'NOVERBS':None})
     res.is_error()
