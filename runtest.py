@@ -870,6 +870,10 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', define={'EARLY_FAKE_ACTION':None, 'SET_GV_2':None})
     res.is_error()
 
+    # Real action before Grammar__Version 2
+    res = compile('grammar-version-test.inf', define={'EARLY_ACTION_VERB':None, 'SET_GV_2':None})
+    res.is_error()
+
     # ##Action before Grammar__Version 2
     res = compile('grammar-version-test.inf', define={'EARLY_ACTION_CONST':None, 'SET_GV_2':None})
     res.is_ok()

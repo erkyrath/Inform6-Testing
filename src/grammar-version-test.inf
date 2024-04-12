@@ -1,4 +1,8 @@
 
+#ifdef EARLY_ACTION_VERB;
+Verb 'whatever' * -> Inv;
+#endif;
+
 #ifdef EARLY_FAKE_ACTION;
 Fake_Action xyzzy;
 #endif;
