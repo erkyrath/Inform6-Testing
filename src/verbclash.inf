@@ -48,6 +48,21 @@ Verb 'stockpile' * -> Ding;
 Verb 'stockpilexx' * -> Ding;
 #endif;
 
+#ifdef DIFFERENTVERBS1;
+Verb 'stockpile' * -> Ding;
+Verb 'stockpile' 'pop' * -> Ding;
+#endif;
+
+#ifdef DIFFERENTVERBS2;
+Verb 'stockpile' * -> Ding;
+Verb 'pop' 'stockpile' * -> Ding;
+#endif;
+
+#ifdef DIFFERENTVERBS3;
+Verb 'stockpile' * -> Ding;
+Verb 'stockpile' 'floop' * -> Ding;
+#endif;
+
 #ifdef NOVERBS;
 Verb * -> Ding;
 #endif;

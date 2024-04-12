@@ -926,6 +926,15 @@ def run_grammar_test():
     res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
     res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
     
+    res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS1':None})
+    res.is_error()
+    
+    res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS2':None})
+    res.is_error()
+    
+    res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS3':None})
+    res.is_error()
+    
     res = compile('verbclash.inf', includedir='i6lib-611', define={'NOVERBS':None})
     res.is_error()
     
