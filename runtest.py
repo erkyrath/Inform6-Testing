@@ -915,16 +915,16 @@ def run_grammar_test():
 
     # All of the following should compile the same.
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=0)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51')
+    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS1':None})
     res.is_error()
