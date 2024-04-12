@@ -866,6 +866,18 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', glulx=True, memsettings={'GRAMMAR_VERSION':4})
     res.is_error()
 
+    # Fake_Action before Grammar__Version 2
+    res = compile('grammar-version-test.inf', define={'EARLY_FAKE_ACTION':None, 'SET_GV_2':None})
+    res.is_error()
+
+    # ##Action before Grammar__Version 2
+    res = compile('grammar-version-test.inf', define={'EARLY_ACTION_CONST':None, 'SET_GV_2':None})
+    res.is_ok()
+
+    # action-case before Grammar__Version 2
+    res = compile('grammar-version-test.inf', define={'EARLY_ACTION_CASE':None, 'SET_GV_2':None})
+    res.is_ok()
+
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
     res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c')
