@@ -854,6 +854,18 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', glulx=True, memsettings={'GRAMMAR_VERSION':2})
     res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398')
 
+    res = compile('grammar-version-test.inf', define={'SET_GV_3':None})
+    res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
+
+    res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':3})
+    res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
+
+    res = compile('grammar-version-test.inf', glulx=True, define={'SET_GV_3':None})
+    res.is_error()
+
+    res = compile('grammar-version-test.inf', glulx=True, memsettings={'GRAMMAR_VERSION':3})
+    res.is_error()
+
     res = compile('grammar-version-test.inf', define={'SET_GV_4':None})
     res.is_error()
 
