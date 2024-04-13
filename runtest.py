@@ -918,6 +918,10 @@ def run_grammar_test():
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612')
 
+    # Compile with the GV3 parser.
+    res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
+    res.is_ok(md5='653e053b87a32c36c286b14a021cff05', warnings=0)
+
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
     res.is_ok(md5='5b8b91439c15a69083fa3e99b14567c4', warnings=0)
