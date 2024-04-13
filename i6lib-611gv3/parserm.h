@@ -679,7 +679,41 @@ Constant ENDIT_TOKEN        = 15;   ! Value used to mean "end of grammar line"
 
 #Iftrue (Grammar__Version == 3);
 
-Message "GV3";
+! TESTING: GV3
+[ UnpackGrammarLine line_address i count;
+    for (i=0 : i<32 : i++) {
+        line_token-->i = ENDIT_TOKEN;
+        line_ttype-->i = ELEMENTARY_TT;
+        line_tdata-->i = ENDIT_TOKEN;
+    }
+    action_to_be = 256*(line_address->0) + line_address->1;
+    count = action_to_be & $f800;
+    @log_shift count (-11) -> count;
+    action_reversed = ((action_to_be & $400) ~= 0);
+    action_to_be = action_to_be & $3ff;
+    params_wanted = 0;
+    for (i=0 : i<count : i++) {
+        line_address = line_address + 2;
+        line_token-->i = line_address;
+        AnalyseToken(line_address);
+        if (found_ttype ~= PREPOSITION_TT) params_wanted++;
+        line_ttype-->i = found_ttype;
+        line_tdata-->i = found_tdata;
+    }
+    return line_address+2;
+];
+
+! TESTING: GV3
+[ AnalyseToken token;
+    found_ttype = (token->0) & $$1111;
+    found_tdata = (token->1);
+    if (found_ttype == ROUTINE_FILTER_TT or SCOPE_TT or GPR_TT) {
+        found_tdata = #preactions_table-->found_tdata;
+    }
+    else if (found_ttype == PREPOSITION_TT) {
+        found_tdata = #adjectives_table-->found_tdata;
+    }
+];
 
 #Ifnot; ! Grammar__Version == 2
 
