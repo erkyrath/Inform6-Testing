@@ -1,0 +1,212 @@
+Constant Story "SerialTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! This is a compiler unit test for setting the serial number.
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+Global failures;
+
+[ Main loc;
+    #Ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 loc;
+    #Endif; ! TARGET_
+
+	loc = 0;
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #ifnot;
+    print "Game file format ", 0->0, ".^";
+    #Endif; ! TARGET_GLULX
+];
+
+[ RunTest;
+	! Compare the CHECK values with our actual serial number.
+	! This test will fail with the default compiler options, because
+	! the serial number defaults to today's date.
+	check_serial();
+	
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
+];
+
+#ifdef SETFIXEDSERIAL;
+Serial "123456";
+#endif;
+
+#ifdef SETBADSERIAL1;
+Serial "12345Q";
+#endif;
+
+#ifdef SETBADSERIAL2;
+Serial "1234567";
+#endif;
+
+! Values to check against the real serial number. (This is divided into
+! three two-digit parts because of Z-code's 16-bit word size.)
+Default CHECKYEAR  = 0;
+Default CHECKMONTH = 0;
+Default CHECKDAY   = 0;
+
+! Print a number from 0 to 99, zero-padded on the left.
+[ print_lpad val;
+	if (val < 10) print "0";
+	print val;
+];
+
+[ print_check_value;
+    print_lpad(CHECKYEAR);
+    print_lpad(CHECKMONTH);
+    print_lpad(CHECKDAY);
+];
+
+Array PrintStore -> 8;
+
+#Ifdef TARGET_ZCODE;
+
+[ check_serial ix;
+	if (CHECKYEAR == 0 && CHECKMONTH == 0 && CHECKDAY == 0) {
+		print "ERROR: CHECK values not set.^";
+		failures++;
+		return;
+	}
+	
+	@output_stream 3 PrintStore;
+	print_check_value();
+	@output_stream -3;
+
+	if ((PrintStore+0)-->0 ~= 6) {
+		print "ERROR: CHECK values were not six characters.^";
+		failures++;
+		return;
+	}
+
+    for (ix=0 : ix<6 : ix++) {
+		if ((PrintStore+2)->ix ~= HDR_GAMESERIAL->ix) {
+			print "ERROR: Serial number is not ";
+			print_check_value();
+			print ".^";
+			failures++;
+			return;
+		}
+	}
+	
+	print "Serial number is ";
+	print_check_value();
+	print ".^";
+];
+
+#Ifnot;
+	
+[ check_serial ix oldstr str len;
+	if (CHECKYEAR == 0 && CHECKMONTH == 0 && CHECKDAY == 0) {
+		print "ERROR: CHECK values not set.^";
+		failures++;
+		return;
+	}
+	
+    oldstr = glk($0048); ! stream_get_current
+    str = glk($0043, PrintStore, 8, 1, 0); ! stream_open_memory
+    if (str == 0) return 0;
+
+    glk($0047, str); ! stream_set_current
+	print_check_value();
+    glk($0047, oldstr); ! stream_set_current
+    @copy $ffffffff sp;
+    @copy str sp;
+    @glk $0044 2 0; ! stream_close
+    @copy sp len;
+    @copy sp 0;
+
+	if (len ~= 6) {
+		print "ERROR: CHECK values were not six characters.^";
+		failures++;
+		return;
+	}
+	
+    for (ix=0 : ix<6 : ix++) {
+		if ((PrintStore+0)->ix ~= ROM_GAMESERIAL->ix) {
+			print "ERROR: Serial number is not ";
+			print_check_value();
+			print ".^";
+			failures++;
+			return;
+		}
+	}
+	
+	print "Serial number is ";
+	print_check_value();
+	print ".^";
+];
+
+#Endif;
+

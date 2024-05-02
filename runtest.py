@@ -1022,6 +1022,26 @@ def run_lexer_test():
 
     
 def run_directives_test():
+    # md5 checks for serial.inf are useless because the checksummer ignores the serial number. Run the compiled file to check it.
+    
+    res = compile('serial.inf', define={'SETFIXEDSERIAL':None, 'CHECKYEAR':12, 'CHECKMONTH':34, 'CHECKDAY':56})
+    res.is_ok()
+    
+    res = compile('serial.inf', define={'SETFIXEDSERIAL':None, 'CHECKYEAR':12, 'CHECKMONTH':34, 'CHECKDAY':56}, glulx=True)
+    res.is_ok()
+    
+    res = compile('serial.inf', memsettings={'SERIAL':234567}, define={'CHECKYEAR':23, 'CHECKMONTH':45, 'CHECKDAY':67})
+    res.is_ok()
+    
+    res = compile('serial.inf', memsettings={'SERIAL':234567}, define={'CHECKYEAR':23, 'CHECKMONTH':45, 'CHECKDAY':67}, glulx=True)
+    res.is_ok()
+    
+    res = compile('serial.inf', define={'SETBADSERIAL1':None})
+    res.is_error()
+    
+    res = compile('serial.inf', define={'SETBADSERIAL2':None})
+    res.is_error()
+    
     res = compile('staticarraytest.inf')
     res.is_ok(md5='23fed66fd87f9b95586af51afd27fd00')
 
