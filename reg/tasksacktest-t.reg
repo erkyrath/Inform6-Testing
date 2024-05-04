@@ -1,0 +1,36 @@
+* test
+
+Test Room
+
+> full
+You have so far scored 0 out of a possible 20, in 0 turns.
+
+> jump
+You jump about.
+Your score has just gone up by fifteen points.
+
+> full
+You have so far scored 15 out of a possible 20, in 1 turn.
+The score is made up as follows:
+15 jumping
+15 total (out of 20)
+
+> touch rock
+You touch the rock.
+Your score has just gone up by five points.
+
+> get all
+rock: Taken.
+pebble: You're carrying too many things already.
+stick: You're carrying too many things already.
+
+> s
+You win!
+
+> full
+In that game you scored 20 out of a possible 20, in 4 turns.
+The score was made up as follows:
+5 touching the rock
+15 jumping
+20 total (out of 20)
+

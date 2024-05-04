@@ -1,0 +1,26 @@
+* test
+
+Test Room
+
+> full
+You have so far scored 0 out of a possible 0, in 0 turns.
+
+> jump
+You jump about.
+
+> full
+You have so far scored 0 out of a possible 0, in 1 turn.
+
+> touch rock
+You touch the rock.
+
+> get all
+rock: Taken.
+pebble: You're carrying too many things already.
+stick: You're carrying too many things already.
+
+> s
+You win!
+
+> full
+Please give one of the answers above.

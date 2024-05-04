@@ -1515,28 +1515,28 @@ def run_prune_test():
     res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0, reg='allpass.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
-    res.is_ok(md5='d9b4b1a788ab20554d842c278f590f86')
+    res.is_ok(md5='d9b4b1a788ab20554d842c278f590f86', reg='tasksacktest.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
-    res.is_ok(md5='70443c63b9c049ae1e5760c5e962f1fc')
+    res.is_ok(md5='70443c63b9c049ae1e5760c5e962f1fc', reg='tasksacktest-t.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
-    res.is_ok(md5='9cde2861ba066676bb5d6ed3efc760db')
+    res.is_ok(md5='9cde2861ba066676bb5d6ed3efc760db', reg='tasksacktest-s.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
-    res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab')
+    res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab', reg='tasksacktest-st.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='268e2f8851d5aa6bd986c20734ff0932')
+    res.is_ok(md5='268e2f8851d5aa6bd986c20734ff0932', reg='tasksacktest.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='3294f6066418e864a9368ad67ef69455')
+    res.is_ok(md5='3294f6066418e864a9368ad67ef69455', reg='tasksacktest-t.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok(md5='d269bcee381dfe11afac8bbf335023e6')
+    res.is_ok(md5='d269bcee381dfe11afac8bbf335023e6', reg='tasksacktest-s.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='d442688ba330916028fc2ec362458796')
+    res.is_ok(md5='d442688ba330916028fc2ec362458796', reg='tasksacktest-st.reg')
 
 
 def run_defineopt_test():
