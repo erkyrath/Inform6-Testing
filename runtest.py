@@ -501,7 +501,9 @@ class Result:
         if not os.path.exists(regfile):
             error(self, 'Regression test file does not exist: %s' % (regfile,))
             return False
-        argls = [ opts.regtest, '--interpreter', 'bocfelr', '--rem', '--game', self.filename, regfile ]
+        # Oughta add options for the remterp selection...
+        remterp = 'glulxer' if self.glulx else 'bocfelr'
+        argls = [ opts.regtest, '--interpreter', remterp, '--rem', '--game', self.filename, regfile ]
         try:
             subprocess.run(argls, check=True, capture_output=True, encoding='utf8')
         except subprocess.CalledProcessError as ex:
@@ -1056,7 +1058,7 @@ def run_directives_test():
     res.is_ok(reg='serial-1.reg')
     
     res = compile('serial.inf', define={'SETFIXEDSERIAL':None, 'CHECKYEAR':12, 'CHECKMONTH':34, 'CHECKDAY':56}, glulx=True)
-    res.is_ok()
+    res.is_ok(reg='serial-1.reg')
     
     res = compile('serial.inf', memsettings={'SERIAL':234567}, define={'CHECKYEAR':23, 'CHECKMONTH':45, 'CHECKDAY':67})
     res.is_ok()
