@@ -431,6 +431,8 @@ class Result:
                 error(self, 'Game file does not exist: %s' % (self.filename,))
                 print('*** TEST FAILED ***')
                 return False
+            # Any or all of the following could fail.
+            isok = True
             if md5 or opts.checksum:
                 val = self.canonical_checksum()
                 if opts.checksum:
@@ -438,19 +440,19 @@ class Result:
                 if md5 and val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
                     print('*** TEST FAILED ***')
-                    return False
+                    isok = False
             if abbreviations is not None:
                 s1 = set(abbreviations)
                 s2 = set(self.abbreviations)
                 if s1 != s2:
                     error(self, 'Abbreviations list mismatch: missing %s, extra %s' % (list(s1-s2), list(s2-s1),))
                     print('*** TEST FAILED ***')
-                    return False
+                    isok = False
             if warnings is not None:
                 if self.warnings != warnings:
                     error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
                     print('*** TEST FAILED ***')
-                    return False
+                    isok = False
             if reg is not None:
                 if type(reg) is str:
                     regls = [ reg ]
@@ -458,8 +460,8 @@ class Result:
                     regls = reg
                 for reg in regls:
                     if not self.run_regtest(reg):
-                        return False
-            return True
+                        isok = False
+            return isok
         error(self, 'Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
         return False
