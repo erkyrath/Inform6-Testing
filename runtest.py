@@ -1497,6 +1497,24 @@ def run_prune_test():
     res.is_ok(md5='d442688ba330916028fc2ec362458796')
 
 
+def run_compileopt_test():
+    # Can't change DICT_WORD_SIZE in Z-code
+    res = compile('optprectest.inf')
+    res.is_error()
+    
+    res = compile('optprectest.inf', glulx=True)
+    res.is_ok(md5='7831b6cb6074561cebdc77e53b8af245')
+    
+    res = compile('optprectest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':12})
+    res.is_ok(md5='a29eaf8cad45a33c9753236944f229b1')
+    
+    res = compile('optprectest.inf', glulx=True, memsettings={'NUM_ATTR_BYTES':19})
+    res.is_ok(md5='6e13e68df5b9d02b0d1200bf8df301a0')
+    
+    res = compile('optprectest.inf', glulx=True, memsettings={'NUM_ATTR_BYTES':19, 'DICT_WORD_SIZE':12})
+    res.is_ok(md5='08f73f6698bc2c4329d5c1b1f472b93a')
+    
+    
 def run_defineopt_test():
     res = compile('defineopttest.inf')
     res.is_ok(md5='18316446546580127dfa84c75bec115d')
@@ -2565,6 +2583,7 @@ test_catalog = [
     ('ASSEMBYTES', run_assembytes_test),
     ('PRUNE', run_prune_test),
     ('DEBUGFLAG', run_debugflag_test),
+    ('COMPILEOPT', run_compileopt_test),
     ('DEFINEOPT', run_defineopt_test),
     ('FWCONST', run_fwconst_test),
     ('DEBUGFILE', run_debugfile_test),
