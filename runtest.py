@@ -39,6 +39,9 @@ popt = optparse.OptionParser(usage='runtest.py [options] [tests...]')
 popt.add_option('-b', '--binary',
     action='store', dest='binary', default='./inform',
     help='path to Inform binary (default: ./inform)')
+popt.add_option('--regtest',
+    action='store', dest='regtest', default='./regtest',
+    help='path to regtest script (default: ./regtest)')
 popt.add_option('--nolibgmalloc',
     action='store_false', dest='libgmalloc', default=True,
     help='skip using the libgmalloc library')
@@ -411,7 +414,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, abbreviations=None, warnings=None):
+    def is_ok(self, md5=None, reg=None, abbreviations=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -419,6 +422,9 @@ class Result:
         produced those abbreviations. (Not necessarily in the same order.)
         If the warnings argument is passed, we check that exactly that
         many warnings were generated.
+        If the reg argument is passed, we run the specified regression
+        test(s) and make sure *they* pass. (May be a string or list of
+        strings.)
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
@@ -445,6 +451,14 @@ class Result:
                     error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
                     print('*** TEST FAILED ***')
                     return False
+            if reg is not None:
+                if type(reg) is str:
+                    regls = [ reg ]
+                else:
+                    regls = reg
+                for reg in regls:
+                    if not self.run_regtest(reg):
+                        return False
             return True
         error(self, 'Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
@@ -481,6 +495,20 @@ class Result:
         error(self, 'Should be error, but was: %s' % (self,))
         print('*** TEST FAILED ***')
         return False
+
+    def run_regtest(self, reg):
+        regfile = os.path.join('regs', reg)
+        if not os.path.exists(regfile):
+            error(self, 'Regression test file does not exist: %s' % (regfile,))
+            return False
+        argls = [ opts.regtest, '--interpreter', 'bocfelr', '--rem', '--game', self.filename, regfile ]
+        try:
+            subprocess.run(argls, check=True, capture_output=True, encoding='utf8')
+        except subprocess.CalledProcessError as ex:
+            errtext = '...'+ex.stdout.replace('\n', '\n...')
+            error(self, 'Regression test failed: %s\n%s' % (regfile, errtext))
+            return False
+        return True
 
 def set_testname(val):
     """Set the current test name. (Used for error output.)
@@ -1025,7 +1053,7 @@ def run_directives_test():
     # md5 checks for serial.inf are useless because the checksummer ignores the serial number. Run the compiled file to check it.
     
     res = compile('serial.inf', define={'SETFIXEDSERIAL':None, 'CHECKYEAR':12, 'CHECKMONTH':34, 'CHECKDAY':56})
-    res.is_ok()
+    res.is_ok(reg='serial-1.reg')
     
     res = compile('serial.inf', define={'SETFIXEDSERIAL':None, 'CHECKYEAR':12, 'CHECKMONTH':34, 'CHECKDAY':56}, glulx=True)
     res.is_ok()
