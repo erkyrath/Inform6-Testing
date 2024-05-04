@@ -506,6 +506,8 @@ class Result:
         argls = [ opts.regtest, '--interpreter', remterp, '--rem', '--game', self.filename, regfile ]
         if opts.stdout:
             argls.append('--verbose')
+        printargls = [ "'"+val+"'" if ' ' in val else val for val in argls ]
+        print('...then:', ' '.join(printargls))
         try:
             subprocess.run(argls, check=True, capture_output=True, encoding='utf8')
         except subprocess.CalledProcessError as ex:
