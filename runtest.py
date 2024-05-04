@@ -507,7 +507,10 @@ class Result:
             error(self, 'Regression test file does not exist: %s' % (regfile,))
             return False
         # Oughta add options for the remterp selection...
-        remterp = 'glulxer' if self.glulx else 'bocfelr'
+        if self.glulx:
+            remterp = 'glulxer --rngseed 1'
+        else:
+            remterp = 'bocfelr -z 1'
         argls = [ opts.regtest, '--interpreter', remterp, '--rem', '--game', self.filename, regfile ]
         if opts.stdout:
             argls.append('--verbose')
@@ -600,7 +603,7 @@ def run_checksum_test():
     res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
     res.is_ok(md5='869493d777aa62e75d34692f61ba18c0', warnings=0)
