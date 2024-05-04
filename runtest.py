@@ -1157,64 +1157,64 @@ def run_directives_test():
     res.is_ok(md5='5ad58c728862dce11b17d7a93adaaa51')
 
     res = compile('classordertest.inf')
-    res.is_ok(md5='334ef7ef87df98ed6f3b1dd99829deeb')
+    res.is_ok(md5='334ef7ef87df98ed6f3b1dd99829deeb', reg='allpass.reg')
 
     res = compile('classordertest.inf', glulx=True)
-    res.is_ok(md5='4025856ed2133af211feda4aa187d1fe')
+    res.is_ok(md5='4025856ed2133af211feda4aa187d1fe', reg='allpass.reg')
 
     res = compile('classcopytest.inf')
-    res.is_ok(md5='4c53497c6c9a93e3163db0b619d9e1f6')
+    res.is_ok(md5='4c53497c6c9a93e3163db0b619d9e1f6', reg='allpass.reg')
 
     res = compile('classcopytest.inf', glulx=True)
-    res.is_ok(md5='9f6c50b53599e2a3dec440715759877d')
+    res.is_ok(md5='9f6c50b53599e2a3dec440715759877d', reg='allpass.reg')
 
     res = compile('forwardproptest.inf')
-    res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6')
+    res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6', reg='allpass.reg')
 
     res = compile('forwardproptest.inf', strict=False)
-    res.is_ok(md5='b181a2d7edd1d8188e0575767f53a886')
+    res.is_ok(md5='b181a2d7edd1d8188e0575767f53a886', reg='allpass.reg')
 
     res = compile('forwardproptest.inf', glulx=True)
-    res.is_ok(md5='95095b05c3e5d9765822da3b725a108d')
+    res.is_ok(md5='95095b05c3e5d9765822da3b725a108d', reg='allpass.reg')
 
     res = compile('forwardproptest.inf', glulx=True, strict=False)
-    res.is_ok(md5='82029b0f66f3536734d46ea80c1dab6c')
+    res.is_ok(md5='82029b0f66f3536734d46ea80c1dab6c', reg='allpass.reg')
 
     res = compile('indivproptest.inf')
-    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f')
+    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None})
-    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f')
+    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV2':None})
-    res.is_ok(md5='3d4a3fdc6ff5ca44599c7b62f155c614')
+    res.is_ok(md5='3d4a3fdc6ff5ca44599c7b62f155c614', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None})
-    res.is_ok(md5='cde12cbf22e618d63a345a8995199686')
+    res.is_ok(md5='cde12cbf22e618d63a345a8995199686', reg='allpass.reg')
 
     res = compile('indivproptest.inf', glulx=True)
-    res.is_ok(md5='fe01898bcf2f6b7639be92c213706252')
+    res.is_ok(md5='fe01898bcf2f6b7639be92c213706252', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None}, glulx=True)
-    res.is_ok(md5='fe01898bcf2f6b7639be92c213706252')
+    res.is_ok(md5='fe01898bcf2f6b7639be92c213706252', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV2':None}, glulx=True)
-    res.is_ok(md5='3e61c800eaeebbe7fc668acda9bf1be9')
+    res.is_ok(md5='3e61c800eaeebbe7fc668acda9bf1be9', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None}, glulx=True)
-    res.is_ok(md5='bda9d7dcc34ea1d463b336852a6d515b')
+    res.is_ok(md5='bda9d7dcc34ea1d463b336852a6d515b', reg='allpass.reg')
 
     res = compile('indivproptest_2.inf')
-    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=0)
+    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=0, reg='allpass.reg')
 
     res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None})
-    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=1)
+    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=1, reg='allpass.reg')
 
     res = compile('indivproptest_2.inf', glulx=True)
-    res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=0)
+    res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=0, reg='allpass.reg')
 
     res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None}, glulx=True)
-    res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=1)
+    res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=1, reg='allpass.reg')
 
     res = compile('max_link_directive_length.inf')
     res.is_error()
