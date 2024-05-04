@@ -1485,10 +1485,10 @@ def run_assembytes_test():
     
 def run_prune_test():
     res = compile('branchprune.inf')
-    res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12')
+    res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12', reg='allpass.reg')
 
     res = compile('branchprune.inf', glulx=True)
-    res.is_ok(md5='acf2fe351129855c4962e3b625cde3f7')
+    res.is_ok(md5='acf2fe351129855c4962e3b625cde3f7', reg='allpass.reg')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None })
     res.is_error()
@@ -1497,22 +1497,22 @@ def run_prune_test():
     res.is_error()
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 })
-    res.is_ok(md5='cd66fef4890d2640c9717a9d5f0afc20')
+    res.is_ok(md5='cd66fef4890d2640c9717a9d5f0afc20', reg='allpass.reg')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
-    res.is_ok(md5='73f2f9dd957cb4d62b0dfaa698681c1e')
+    res.is_ok(md5='73f2f9dd957cb4d62b0dfaa698681c1e', reg='allpass.reg')
 
     res = compile('branchprune-fwd.inf')
-    res.is_ok(md5='e8330c0fc42a9c459f3e3b9baf284e8e', warnings=1)
+    res.is_ok(md5='e8330c0fc42a9c459f3e3b9baf284e8e', warnings=1, reg='allpass.reg')
 
     res = compile('branchprune-fwd.inf', glulx=True)
-    res.is_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1)
+    res.is_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1, reg='allpass.reg')
 
     res = compile('logicprune.inf')
-    res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0)
+    res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0, reg='allpass.reg')
 
     res = compile('logicprune.inf', glulx=True)
-    res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0)
+    res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0, reg='allpass.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
     res.is_ok(md5='d9b4b1a788ab20554d842c278f590f86')
