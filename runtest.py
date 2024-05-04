@@ -630,19 +630,19 @@ def run_checksum_test():
     res.is_ok(md5='cc592023294af1d6a62c42db6e9533d8', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
-    res.is_ok(md5='ee15a03257a469e92b8d56aa70dc17f3', warnings=2)
+    res.is_ok(md5='ee15a03257a469e92b8d56aa70dc17f3', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=False)
-    res.is_ok(md5='dac502dd34a5d650db461b42112b7d37', warnings=2)
+    res.is_ok(md5='dac502dd34a5d650db461b42112b7d37', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
     res.is_ok(md5='2d82da285726122670136030447e9b68', warnings=2)
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
-    res.is_ok(md5='3a6c60e98e34f98dfd9b821881a8cbca', warnings=2)
+    res.is_ok(md5='3a6c60e98e34f98dfd9b821881a8cbca', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
-    res.is_ok(md5='33fc9aa736d5fb97dd6adde04b8689a0', warnings=2)
+    res.is_ok(md5='33fc9aa736d5fb97dd6adde04b8689a0', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3)
     res.is_ok(md5='3ebaded1f6f33f0ec3e82bcd8b8e858c')
