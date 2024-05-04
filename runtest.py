@@ -773,10 +773,10 @@ def run_dict_test():
     res.is_error()
 
     res = compile('i7-min-6M62-z.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=8)
-    res.is_ok(md5='1d5f5aebf09a10ea18983fa9446dea97')
+    res.is_ok(md5='1d5f5aebf09a10ea18983fa9446dea97', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
-    res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72')
+    res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72', reg='i7-min-6M62.reg')
 
     res = compile('dictnewflagtest.inf')
     res.is_ok(md5='6a46be13dad0cb7ea0bb3b055427615a')
@@ -932,7 +932,7 @@ def run_grammar_test():
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
-    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c')
+    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c', reg='i7-min-6G60.reg')
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
@@ -2293,7 +2293,7 @@ def run_max_abbrevs():
     res.is_ok(md5='9d24eb5f77a07a03c83993ae3c503801')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='ac0ff916044088c303bb441a92378eb7')
+    res.is_ok(md5='ac0ff916044088c303bb441a92378eb7', reg='i7-min-6G60.reg')
     
     res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={})
     res.is_ok()
@@ -2545,11 +2545,11 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='ff71d68c123d6b9a14c2b517ffee6092')
+    res.is_ok(md5='ff71d68c123d6b9a14c2b517ffee6092', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38')
+    res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38', reg='i7-min-6G60.reg')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
@@ -2579,7 +2579,7 @@ def run_file_end_padding():
     res.is_ok(md5='1847d28cc183ec23c50bd5bca52a1b21')
 
     res = compile('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
-    res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99')
+    res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
     res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd')
