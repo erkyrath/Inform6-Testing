@@ -725,7 +725,7 @@ def run_dict_test():
     res.is_ok(md5='ae0d2c46bd7e1986d37359e748e4596c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='3579ad9300d2414a6b60343fe254b4b9', warnings=0)
+    res.is_ok(md5='3579ad9300d2414a6b60343fe254b4b9', warnings=0, reg='Advent-z.reg')
 
     res = compile('dict-sysconst-test.inf')
     res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
@@ -839,7 +839,7 @@ def run_dict_test():
     res.is_ok(md5='d3def326e708a7848c7257696e74f518')
     
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611')
-    res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0)
+    res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611', glulx=True)
     res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0, reg='Advent-g.reg')
@@ -942,7 +942,7 @@ def run_grammar_test():
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0)
+    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1})
     res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0, reg='Advent-g.reg')
@@ -962,7 +962,7 @@ def run_grammar_test():
 
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
-    res.is_ok(md5='653e053b87a32c36c286b14a021cff05', warnings=0)
+    res.is_ok(md5='653e053b87a32c36c286b14a021cff05', warnings=0, reg='Advent-z.reg')
 
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
@@ -2254,13 +2254,13 @@ def run_max_dynamic_strings():
     
 def run_max_inline_string():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64})
-    res.is_ok(md5='e3a3596dc96cb0831ba6479a454c15c9', warnings=0)
+    res.is_ok(md5='e3a3596dc96cb0831ba6479a454c15c9', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':800})
-    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0)
+    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':10000})
-    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0)
+    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0, reg='Advent-z.reg')
 
     res = compile('max_inline_string_test.inf')
     res.is_ok(warnings=0)
@@ -2568,7 +2568,7 @@ def run_omit_unused_routines():
 
 def run_omit_symbol_table():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0)
+    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0, reg='Advent-g.reg')
@@ -2588,7 +2588,7 @@ def run_file_end_padding():
     res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd')
+    res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd', reg='Advent-z.reg')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
     res.is_ok(md5='80077189b1e682930e661cbe09e46d0a')
