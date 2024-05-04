@@ -504,6 +504,8 @@ class Result:
         # Oughta add options for the remterp selection...
         remterp = 'glulxer' if self.glulx else 'bocfelr'
         argls = [ opts.regtest, '--interpreter', remterp, '--rem', '--game', self.filename, regfile ]
+        if opts.stdout:
+            argls.append('--verbose')
         try:
             subprocess.run(argls, check=True, capture_output=True, encoding='utf8')
         except subprocess.CalledProcessError as ex:
@@ -1061,10 +1063,10 @@ def run_directives_test():
     res.is_ok(reg='serial-1.reg')
     
     res = compile('serial.inf', memsettings={'SERIAL':234567}, define={'CHECKYEAR':23, 'CHECKMONTH':45, 'CHECKDAY':67})
-    res.is_ok()
+    res.is_ok(reg='serial-2.reg')
     
     res = compile('serial.inf', memsettings={'SERIAL':234567}, define={'CHECKYEAR':23, 'CHECKMONTH':45, 'CHECKDAY':67}, glulx=True)
-    res.is_ok()
+    res.is_ok(reg='serial-2.reg')
     
     res = compile('serial.inf', define={'SETBADSERIAL1':None})
     res.is_error()
