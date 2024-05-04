@@ -842,7 +842,7 @@ def run_dict_test():
     res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611', glulx=True)
-    res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0)
+    res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0, reg='Advent-g.reg')
 
     res = compile('dictlargeentrytest.inf', glulx=True)
     res.is_ok(md5='aa96bddd17fc8fbe78871d9f4088df1a')
@@ -945,7 +945,7 @@ def run_grammar_test():
     res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0)
+    res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0, reg='Advent-g.reg')
 
     # Requires GRAMMAR_META_FLAG
     res = compile('grammar-metaflag-test.inf')
@@ -2571,7 +2571,7 @@ def run_omit_symbol_table():
     res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
-    res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0)
+    res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0, reg='Advent-g.reg')
 
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
     res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)

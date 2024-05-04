@@ -1,5 +1,6 @@
 
-# This is a transcript of Adventure running under Glulxe 0.6.1.
+# This is a transcript of Adventure running under Glulxe 0.6.1 and
+# library 6/11.
 #
 # (Glulx 0.6.0 and earlier, not to mention Z-code interpreters, had
 # a different RNG implementation. They therefore need a different
