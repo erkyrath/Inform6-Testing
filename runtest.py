@@ -508,10 +508,18 @@ class Result:
             return False
         # Oughta add options for the remterp selection...
         if self.glulx:
-            remterp = 'glulxer --rngseed 1'
+            rterp = 'glulxer --rngseed 1'
+            userem = True
         else:
-            remterp = 'bocfelr -z 1'
-        argls = [ opts.regtest, '--interpreter', remterp, '--rem', '--game', self.filename, regfile ]
+            if self.zversion and self.zversion == 3:
+                rterp = 'bocfelc -z 1'
+                userem = False
+            else:
+                rterp = 'bocfelr -z 1'
+                userem = True
+        argls = [ opts.regtest, '--interpreter', rterp, '--game', self.filename, regfile ]
+        if userem:
+            argls.insert(1, '--rem')
         if opts.stdout:
             argls.append('--verbose')
         printargls = [ "'"+val+"'" if ' ' in val else val for val in argls ]
@@ -627,7 +635,7 @@ def run_checksum_test():
     res.is_ok(md5='074dbc09049827fc021885cf256c7616', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
-    res.is_ok(md5='cc592023294af1d6a62c42db6e9533d8', warnings=2)
+    res.is_ok(md5='cc592023294af1d6a62c42db6e9533d8', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
     res.is_ok(md5='ee15a03257a469e92b8d56aa70dc17f3', warnings=2, reg='cloak-metro84.reg')
@@ -636,7 +644,7 @@ def run_checksum_test():
     res.is_ok(md5='dac502dd34a5d650db461b42112b7d37', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
-    res.is_ok(md5='2d82da285726122670136030447e9b68', warnings=2)
+    res.is_ok(md5='2d82da285726122670136030447e9b68', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
     res.is_ok(md5='3a6c60e98e34f98dfd9b821881a8cbca', warnings=2, reg='cloak-metro84.reg')
