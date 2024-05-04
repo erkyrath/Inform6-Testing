@@ -39,6 +39,9 @@ popt = optparse.OptionParser(usage='runtest.py [options] [tests...]')
 popt.add_option('-b', '--binary',
     action='store', dest='binary', default='./inform',
     help='path to Inform binary (default: ./inform)')
+popt.add_option('--reg',
+    action='store_true', dest='runreg',
+    help='run the compiled games using regtest (where supplied)')
 popt.add_option('--regtest',
     action='store', dest='regtest', default='./regtest',
     help='path to regtest script (default: ./regtest)')
@@ -453,7 +456,7 @@ class Result:
                     error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
                     print('*** TEST FAILED ***')
                     isok = False
-            if reg is not None:
+            if opts.runreg and reg is not None:
                 if type(reg) is str:
                     regls = [ reg ]
                 else:
