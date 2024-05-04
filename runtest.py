@@ -2565,6 +2565,12 @@ def run_omit_unused_routines():
     res.is_ok()
     res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38', reg='i7-min-6G60.reg')
 
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1})
+    res.is_ok(md5='14a490c75ad8817fb6816648f1078475', warnings=0, reg='Advent-z.reg')
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
+    res.is_ok(md5='413afb10dc9d7f0a6f177c6b645262cd', warnings=0, reg='Advent-g.reg')
+
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
     res.is_ok(md5='07bd8dcf2c8f3a8e544a53584e417ad2')
