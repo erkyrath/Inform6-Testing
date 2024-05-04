@@ -497,7 +497,7 @@ class Result:
         return False
 
     def run_regtest(self, reg):
-        regfile = os.path.join('regs', reg)
+        regfile = os.path.join('reg', reg)
         if not os.path.exists(regfile):
             error(self, 'Regression test file does not exist: %s' % (regfile,))
             return False
