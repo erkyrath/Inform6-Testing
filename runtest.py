@@ -576,19 +576,19 @@ def run_checksum_test():
     res.is_ok(md5='6a90d7ed9f172551f88950dc91412d5a', warnings=0)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c')
+    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='16d41aba696f3b6ea4810782bba9528e')
+    res.is_ok(md5='16d41aba696f3b6ea4810782bba9528e', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='e9735da155ab0c720e73f6be3b83bf48')
+    res.is_ok(md5='e9735da155ab0c720e73f6be3b83bf48', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='7ec56a1fd21c2e0d0e47a16af1459c4d')
+    res.is_ok(md5='7ec56a1fd21c2e0d0e47a16af1459c4d', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='83e7089561cde53a16e1c09e9fcdb2dc')
+    res.is_ok(md5='83e7089561cde53a16e1c09e9fcdb2dc', reg='i7-min-6M62.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
