@@ -656,7 +656,7 @@ def run_checksum_test():
 
     # OMIT_UNUSED_ROUTINES is set in the source
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3)
-    res.is_ok(md5='eb4ef5320f716e2fa14fd8a4a061950a')
+    res.is_ok(md5='eb4ef5320f716e2fa14fd8a4a061950a', reg='library_of_horror.reg')
 
 
 def run_dict_test():
