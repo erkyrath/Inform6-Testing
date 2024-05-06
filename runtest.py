@@ -511,12 +511,8 @@ class Result:
             rterp = 'glulxer --rngseed 1'
             userem = True
         else:
-            if self.zversion and self.zversion == 3:
-                rterp = 'bocfelc -z 1'
-                userem = False
-            else:
-                rterp = 'bocfelr -z 1'
-                userem = True
+            rterp = 'bocfelr -z 1'
+            userem = True
         argls = [ opts.regtest, '--interpreter', rterp, '--game', self.filename, regfile ]
         if userem:
             argls.insert(1, '--rem')
