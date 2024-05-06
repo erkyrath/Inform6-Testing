@@ -2606,6 +2606,9 @@ def run_file_end_padding():
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
     res.is_ok(md5='80077189b1e682930e661cbe09e46d0a')
 
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'ZCODE_FILE_END_PADDING':0}, zversion=3)
+    res.is_ok(md5='7b512bfccbb332c6b90be25c2a786b8a', reg='library_of_horror.reg')
+    
 
 
 test_catalog = [
