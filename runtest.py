@@ -850,28 +850,28 @@ def run_dict_test():
     res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0, reg='Advent-g.reg')
 
     res = compile('dictlargeentrytest.inf', glulx=True)
-    res.is_ok(md5='aa96bddd17fc8fbe78871d9f4088df1a')
+    res.is_ok(md5='aa96bddd17fc8fbe78871d9f4088df1a', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='70c228f06ee6b3c5af55851480141437')
+    res.is_ok(md5='70c228f06ee6b3c5af55851480141437', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':30})
-    res.is_ok(md5='e690c593b10fde1dd87a3498007452be')
+    res.is_ok(md5='e690c593b10fde1dd87a3498007452be', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':30, 'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='457a3de16ef58dc96056e090c97fcabc')
+    res.is_ok(md5='457a3de16ef58dc96056e090c97fcabc', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':35})
-    res.is_ok(md5='cf5c66f2e71b1660a5a78b8ad6968d5d')
+    res.is_ok(md5='cf5c66f2e71b1660a5a78b8ad6968d5d', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':35, 'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='19116031757220e8fa01b1d88aadd664')
+    res.is_ok(md5='19116031757220e8fa01b1d88aadd664', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':144})
-    res.is_ok(md5='b19c63f5ed6e8738b84aa6889daf5d85')
+    res.is_ok(md5='b19c63f5ed6e8738b84aa6889daf5d85', reg='allpass.reg')
     
     res = compile('dictlargeentrytest.inf', glulx=True, memsettings={'DICT_WORD_SIZE':144, 'DICT_CHAR_SIZE':4})
-    res.is_ok(md5='d42460263e3fe758098c7b975f994239')
+    res.is_ok(md5='d42460263e3fe758098c7b975f994239', reg='allpass.reg')
     
 
 def run_grammar_test():
