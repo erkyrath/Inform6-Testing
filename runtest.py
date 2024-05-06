@@ -957,13 +957,13 @@ def run_grammar_test():
     res.is_error()
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='0746eedd27e4d9b0d5c03e88b55cf533')
+    res.is_ok(md5='0746eedd27e4d9b0d5c03e88b55cf533', reg='allpass.reg')
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1, 'GRAMMAR_VERSION':2})
-    res.is_ok(md5='f8fa741c80cdc86af9ee2d3c987d54db')
+    res.is_ok(md5='f8fa741c80cdc86af9ee2d3c987d54db', reg='allpass.reg')
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
-    res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612')
+    res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
