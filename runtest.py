@@ -2583,6 +2583,9 @@ def run_omit_symbol_table():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0, reg='Advent-g.reg')
 
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'OMIT_SYMBOL_TABLE':1}, zversion=3)
+    res.is_ok(md5='056bbf78da27da63d3458ec48ea238c0', reg='library_of_horror.reg')
+    
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
     res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)
 
