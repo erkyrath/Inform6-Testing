@@ -661,28 +661,29 @@ def run_checksum_test():
 
 def run_dict_test():
     res = compile('dict-size-v3test.inf', zversion=3)
-    res.is_ok(md5='f75ed33c64fbba8a53a1a02a1cbeea2b')
+    res.is_ok(md5='f75ed33c64fbba8a53a1a02a1cbeea2b', reg='allpass.reg')
 
     res = compile('dict-size-v3test.inf', zversion=5)
-    res.is_ok(md5='58fe6d80014bb250362990e21fef40c5')
+    res.is_ok(md5='58fe6d80014bb250362990e21fef40c5', reg='allpass.reg')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=3)
-    res.is_ok(md5='4f32fb4f78295fe33bcfe1396b2a5e98')
+    res.is_ok(md5='4f32fb4f78295fe33bcfe1396b2a5e98', reg='allpass.reg')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=4)
-    res.is_ok(md5='e5bf355441d5e5f36c8994f733bb8a8a')
+    res.is_ok(md5='e5bf355441d5e5f36c8994f733bb8a8a', reg='allpass.reg')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=5)
-    res.is_ok(md5='06625ab421e9c4b6915658f5fdfbc80d')
+    res.is_ok(md5='06625ab421e9c4b6915658f5fdfbc80d', reg='allpass.reg')
 
+    # This messes with the alphabet, which changes the output.
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=4)
-    res.is_ok(md5='d09f4ce77d4a4d197c3b553ef62d7d46')
+    res.is_ok(md5='d09f4ce77d4a4d197c3b553ef62d7d46', reg='dict-cutoff-alttest-v4.reg')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=5)
-    res.is_ok(md5='9a3b2476db96afe36f46a7360db3150d')
+    res.is_ok(md5='9a3b2476db96afe36f46a7360db3150d', reg='allpass.reg')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
-    res.is_ok(md5='a7bbc5992810c2321a3d8273c8a9d02d')
+    res.is_ok(md5='a7bbc5992810c2321a3d8273c8a9d02d', reg='allpass.reg')
 
     res = compile('max_dict_entries.inf')
     res.is_ok()
@@ -732,7 +733,7 @@ def run_dict_test():
     res.is_ok(md5='3579ad9300d2414a6b60343fe254b4b9', warnings=0, reg='Advent-z.reg')
 
     res = compile('dict-sysconst-test.inf')
-    res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f')
+    res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f', reg='allpass.reg')
 
     res = compile('dictlongflagtest.inf')
     res.is_ok(md5='0d78b9f9117afe5be3047a911b0a0952')
