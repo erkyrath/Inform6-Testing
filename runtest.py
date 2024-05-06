@@ -1810,13 +1810,13 @@ def run_abbreviations_test():
     res.is_ok(warnings=4)
 
     res = compile('symbolic_abbrev_test.inf')
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('symbolic_abbrev_test.inf', glulx=True)
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, glulx=True)
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':0})
     res.is_error()
