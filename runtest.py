@@ -1464,7 +1464,7 @@ def run_debugflag_test():
 
 def run_assembytes_test():
     res = compile('assembytes_test.inf')
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('assembytes_test.inf', define={ 'BADFUNC_1':None })
     res.is_error()
@@ -1476,7 +1476,7 @@ def run_assembytes_test():
     res.is_error()
 
     res = compile('assembytes_test.inf', glulx=True)
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('assembytes_test.inf', define={ 'BADFUNC_1':None }, glulx=True)
     res.is_error()
