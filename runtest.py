@@ -1319,10 +1319,10 @@ def run_veneer_test():
 
 def run_statements_test():
     res = compile('switchcasetest.inf')
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('switchcasetest.inf', glulx=True)
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
     
     res = compile('switchcasetest.inf', define={'TOO_MANY_VALS_1':None})
     res.is_memsetting('MAX_SPEC_STACK')
@@ -1384,10 +1384,10 @@ def run_statements_test():
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')
-    res.is_ok(md5='255de4bef4c60f886d9d86074a259b6b')
+    res.is_ok(md5='255de4bef4c60f886d9d86074a259b6b', reg='allpass.reg')
 
     res = compile('unaryop_err_test.inf', glulx=True)
-    res.is_ok(md5='92cf289c108ffb48be16e3aa69be9956')
+    res.is_ok(md5='92cf289c108ffb48be16e3aa69be9956', reg='allpass.reg')
 
     res = compile('unaryop_err_test.inf', define={'BAD_EXPR_0':None})
     res.is_error(errors=1)
