@@ -2599,16 +2599,16 @@ def run_file_end_padding():
     res.is_ok(md5='1847d28cc183ec23c50bd5bca52a1b21')
 
     res = compile('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
-    res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99', reg='i7-min-6G60.reg')
+    res.is_ok(md5='551d586a71f72c4087ee5671e7eb0c28', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd', reg='Advent-z.reg')
+    res.is_ok(md5='75ca19ba4c8b1fe90ad8a06c6ee7308e', reg='Advent-z.reg')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
-    res.is_ok(md5='80077189b1e682930e661cbe09e46d0a')
+    res.is_ok(md5='2e816fec9c1c795be8c7c7d7533a8537')
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'ZCODE_FILE_END_PADDING':0}, zversion=3)
-    res.is_ok(md5='7b512bfccbb332c6b90be25c2a786b8a', reg='library_of_horror.reg')
+    res.is_ok(md5='87b9d3e709615f3183c07b5a9d8461ec', reg='library_of_horror.reg')
     
 
 
