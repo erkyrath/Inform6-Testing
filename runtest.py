@@ -943,11 +943,11 @@ def run_grammar_test():
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
-    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c', reg='i7-min-6G60.reg')
+    res.is_ok(md5='c4c3efb213f660fbea4da665c5a2d8e7', reg='i7-min-6G60.reg')
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='6b3ad32224d52d3117cacdcecbce44bd', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1})
     res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0, reg='Advent-g.reg')
@@ -967,27 +967,27 @@ def run_grammar_test():
 
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
-    res.is_ok(md5='653e053b87a32c36c286b14a021cff05', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='ca55d68b22534ff8ce57806285d0a9ae', warnings=0, reg='Advent-z.reg')
 
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
-    res.is_ok(md5='5b8b91439c15a69083fa3e99b14567c4', warnings=0)
+    res.is_ok(md5='2e63ff1d8a4afcd88df606483a482a67', warnings=0)
     
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True)
     res.is_ok(md5='7b727879c043c5a18e189c8a6091e1d8', warnings=0)
 
     # All of the following should compile the same.
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=0)
+    res.is_ok(md5='e77fc2f02013624e638968deb7452656', warnings=0)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
+    res.is_ok(md5='e77fc2f02013624e638968deb7452656', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
+    res.is_ok(md5='e77fc2f02013624e638968deb7452656', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
+    res.is_ok(md5='e77fc2f02013624e638968deb7452656', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS1':None})
     res.is_error()
