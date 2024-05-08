@@ -1290,25 +1290,25 @@ def run_veneer_test():
     res.is_ok()
 
     res = compile('base_class_prop.inf', zversion=3, includedir='punylib-36')
-    res.is_ok(md5='ac96ab44530c68478cec38c5a1049658')
+    res.is_ok(md5='2065b488371340fdf95e9b13ff0a9218')
     
     res = compile('base_class_prop.inf', zversion=5, includedir='punylib-36')
-    res.is_ok(md5='4bde4d78c2be61dfbb2cd90b58091955')
+    res.is_ok(md5='48de86d88a26d81b90363377ab4dd865')
     
     res = compile('base_class_prop_2.inf', zversion=3, includedir='punylib-36')
-    res.is_ok(md5='aed71b23888e763a82ff545dadba88ba')
+    res.is_ok(md5='814a4ef56d71f31ed61b1b81401d20c8')
     
     res = compile('base_class_prop_2.inf', zversion=5, includedir='punylib-36')
-    res.is_ok(md5='86a05a59183f723f31c246e070e21a05')
+    res.is_ok(md5='0bb1fec5a795cb0ea067126f12331a8f')
     
     res = compile('obj_prop_test.inf')
-    res.is_ok(md5='f3f44fe9d6d31f8f792ee8cf6a6b2dbb')
+    res.is_ok(md5='85377f4c6716be58f20f8f4df3af176f')
     
     res = compile('obj_prop_test.inf', strict=False)
-    res.is_ok(md5='d8a86fa431147b37e93ffc5c891925a3')
+    res.is_ok(md5='61d641e4b12d9faf29ca671417a989c8')
     
     res = compile('obj_prop_test.inf', zversion=3)
-    res.is_ok(md5='06f87532155ea09e49b1b1f88a89594d')
+    res.is_ok(md5='f099e883ec6927a0351f21769e8feffc')
     
     res = compile('obj_prop_test.inf', glulx=True)
     res.is_ok(md5='fa5334982d7faf56cc42ea788c8e77cc')
