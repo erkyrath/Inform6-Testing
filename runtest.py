@@ -2259,13 +2259,13 @@ def run_max_dynamic_strings():
     
 def run_max_inline_string():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64})
-    res.is_ok(md5='e3a3596dc96cb0831ba6479a454c15c9', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='29cd600b0d509dc81937901ca41dd468', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':800})
-    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='3870bad685c1db9005e6b239b1b74e31', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':10000})
-    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='3870bad685c1db9005e6b239b1b74e31', warnings=0, reg='Advent-z.reg')
 
     res = compile('max_inline_string_test.inf')
     res.is_ok(warnings=0)
@@ -2298,13 +2298,13 @@ def run_max_abbrevs():
     res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='e64e6549b6d6387f775f6d92be482cf6')
+    res.is_ok(md5='1fb9b2cc918a86e13f1a16e343ab8879')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
     res.is_ok(md5='9d24eb5f77a07a03c83993ae3c503801')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='ac0ff916044088c303bb441a92378eb7', reg='i7-min-6G60.reg')
+    res.is_ok(md5='fea298cd32fb32edca5331a7270c07b6', reg='i7-min-6G60.reg')
     
     res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={})
     res.is_ok()
