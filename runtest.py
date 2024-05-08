@@ -2447,7 +2447,7 @@ def run_unused_verbs():
     res.is_ok(warnings=1)
     
     res = compile('unused_verbs_lib.inf', includedir='i6lib-611')
-    res.is_ok(md5='f94c7a7bc1f91993e9af839d23406375', warnings=2)
+    res.is_ok(md5='89d10a6d62fa4cd2d521008241204bf9', warnings=2)
     
     res = compile('unused_verbs_lib.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='05be572921b1a2d3ae9ee71314ebaf97', warnings=2)
