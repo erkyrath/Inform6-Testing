@@ -1090,10 +1090,10 @@ def run_directives_test():
     res.is_error()
     
     res = compile('staticarraytest.inf')
-    res.is_ok(md5='330d127a82dfcf3cf8d2af804a29c68e')
+    res.is_ok(md5='330d127a82dfcf3cf8d2af804a29c68e', reg='staticarraytest-z.reg')
 
     res = compile('staticarraytest.inf', glulx=True)
-    res.is_ok(md5='29abadec278f29e1c0b5eea0fd9c3495')
+    res.is_ok(md5='29abadec278f29e1c0b5eea0fd9c3495', reg='staticarraytest-g.reg')
 
     res = compile('undefdirectivetest.inf')
     res.is_ok(md5='de2f2e32f82bf14a4178f3a992762e6b')
@@ -1144,10 +1144,10 @@ def run_directives_test():
     res.is_ok(md5='7d4bc338e99a777534f03d1a80388e58')
 
     res = compile('internaldirecttest.inf')
-    res.is_ok(md5='7fad50ebab77f541f12e51eb864ad594')
+    res.is_ok(md5='d00ea4f175ab9046bcb24b064f76a2d6', reg='internaldirecttest.reg')
 
     res = compile('internaldirecttest.inf', glulx=True)
-    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66')
+    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66', reg='internaldirecttest.reg')
 
     res = compile('ifelsedirecttest.inf')
     res.is_ok(md5='ebdbb9f121b45bcfc54a41c71d87c029')
