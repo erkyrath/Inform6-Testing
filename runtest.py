@@ -1090,7 +1090,7 @@ def run_directives_test():
     res.is_error()
     
     res = compile('staticarraytest.inf')
-    res.is_ok(md5='23fed66fd87f9b95586af51afd27fd00')
+    res.is_ok(md5='330d127a82dfcf3cf8d2af804a29c68e')
 
     res = compile('staticarraytest.inf', glulx=True)
     res.is_ok(md5='29abadec278f29e1c0b5eea0fd9c3495')
