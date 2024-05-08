@@ -1520,16 +1520,16 @@ def run_prune_test():
     res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0, reg='allpass.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
-    res.is_ok(md5='d9b4b1a788ab20554d842c278f590f86', reg='tasksacktest.reg')
+    res.is_ok(md5='fe339a5ec5361b6741d835e233591587', reg='tasksacktest.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
-    res.is_ok(md5='70443c63b9c049ae1e5760c5e962f1fc', reg='tasksacktest-t.reg')
+    res.is_ok(md5='583df47853c81ff3cf093fa5adbfc719', reg='tasksacktest-t.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
-    res.is_ok(md5='9cde2861ba066676bb5d6ed3efc760db', reg='tasksacktest-s.reg')
+    res.is_ok(md5='8fe36f657a7752035fa98e43a36ae797', reg='tasksacktest-s.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
-    res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab', reg='tasksacktest-st.reg')
+    res.is_ok(md5='f384beb9952e8cfc9d1545d9487e5605', reg='tasksacktest-st.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='268e2f8851d5aa6bd986c20734ff0932', reg='tasksacktest.reg')
@@ -1681,7 +1681,7 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
+    res.is_ok(md5='6042420eecc186c998126396c4919c70', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
     res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
@@ -2292,7 +2292,7 @@ def run_max_abbrevs():
     res.is_ok(md5='774d0dd65eabbbc84a41aa1324f567c3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3')
+    res.is_ok(md5='6042420eecc186c998126396c4919c70')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
     res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
