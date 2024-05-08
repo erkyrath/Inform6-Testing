@@ -730,7 +730,7 @@ def run_dict_test():
     res.is_ok(md5='ae0d2c46bd7e1986d37359e748e4596c')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='3579ad9300d2414a6b60343fe254b4b9', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='bf3372e31b7ebcfec1400ab04106066c', warnings=0, reg='Advent-z.reg')
 
     res = compile('dict-sysconst-test.inf')
     res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f', reg='allpass.reg')
@@ -784,7 +784,7 @@ def run_dict_test():
     res.is_error()
 
     res = compile('i7-min-6M62-z.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=8)
-    res.is_ok(md5='1d5f5aebf09a10ea18983fa9446dea97', reg='i7-min-6M62.reg')
+    res.is_ok(md5='aeaa0fadc5cf9ff84d8d38a115c64097', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
     res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72', reg='i7-min-6M62.reg')
@@ -844,7 +844,7 @@ def run_dict_test():
     res.is_ok(md5='d3def326e708a7848c7257696e74f518')
     
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611')
-    res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='094bb64110e75b9b3fc5c2606e01f750', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611', glulx=True)
     res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0, reg='Advent-g.reg')
