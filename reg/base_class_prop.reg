@@ -1,0 +1,7 @@
+* test
+
+Start:
+Obj.prop1 = 22
+Obj.Cla::prop1 = 11
+Obj.prop2() = Instance val.
+Obj.Cla::prop2() = Base val.
