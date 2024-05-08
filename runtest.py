@@ -2556,14 +2556,14 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='ff71d68c123d6b9a14c2b517ffee6092', reg='i7-min-6G60.reg')
+    res.is_ok(md5='72170fa4e3eaca96e6645b8a0aace190', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
     res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='14a490c75ad8817fb6816648f1078475', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='25279a78c32d99c2c333efb1f0418889', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok(md5='413afb10dc9d7f0a6f177c6b645262cd', warnings=0, reg='Advent-g.reg')
