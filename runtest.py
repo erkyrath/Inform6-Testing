@@ -2579,16 +2579,16 @@ def run_omit_unused_routines():
 
 def run_omit_symbol_table():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='1a9ff66201c61b03a8b94094cec87ecc', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0, reg='Advent-g.reg')
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'OMIT_SYMBOL_TABLE':1}, zversion=3)
-    res.is_ok(md5='056bbf78da27da63d3458ec48ea238c0', reg='library_of_horror.reg')
+    res.is_ok(md5='6a653be380a0e29807d44c27f2e3094f', reg='library_of_horror.reg')
     
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)
+    res.is_ok(md5='86d0a68afbd6483d547ec6008bacff3b', warnings=0)
 
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='c674e8217a693124dfd0404fbe9b36dc', warnings=0)
