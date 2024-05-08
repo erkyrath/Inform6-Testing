@@ -1162,13 +1162,13 @@ def run_directives_test():
     res.is_ok(md5='5ad58c728862dce11b17d7a93adaaa51')
 
     res = compile('classordertest.inf')
-    res.is_ok(md5='334ef7ef87df98ed6f3b1dd99829deeb', reg='allpass.reg')
+    res.is_ok(md5='1a04fa4df7b8efb12d0702b093dc8d19', reg='allpass.reg')
 
     res = compile('classordertest.inf', glulx=True)
     res.is_ok(md5='4025856ed2133af211feda4aa187d1fe', reg='allpass.reg')
 
     res = compile('classcopytest.inf')
-    res.is_ok(md5='4c53497c6c9a93e3163db0b619d9e1f6', reg='allpass.reg')
+    res.is_ok(md5='a30555978fa762f494b625a20eda72c3', reg='allpass.reg')
 
     res = compile('classcopytest.inf', glulx=True)
     res.is_ok(md5='9f6c50b53599e2a3dec440715759877d', reg='allpass.reg')
