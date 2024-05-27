@@ -583,7 +583,7 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='6a90d7ed9f172551f88950dc91412d5a', warnings=0)
+    res.is_ok(md5='edcb2b211fe5ab2afba62d50b66dad95', warnings=0)
     
     res = compile('i7-min-6G60.inf')
     res.is_ok(md5='9caaa6348d7a2a7f7cc508b8a885cea8', reg='i7-min-6G60.reg')
@@ -592,13 +592,13 @@ def run_checksum_test():
     res.is_ok(md5='d456af527bf2da31919a3c7bfbc09683', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='360a7d348675901cb94def5310f35431', reg='i7-min-6G60.reg')
+    res.is_ok(md5='749e940542a232e56a42fc2c7269f2e3', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='09ddf48fc3bfe095d2cf2df8226cd7d0', reg='i7-min-6M62.reg')
+    res.is_ok(md5='27291576e4ef8fb4dcfe6b1b7aa43865', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='242bfe17a15eafa26546f05082dd1e05', reg='i7-min-6M62.reg')
+    res.is_ok(md5='c66323aaaf736c2fa3aba017dbba9cde', reg='i7-min-6M62.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='271d94f5b25914554ab23446599cbbaa', warnings=0, reg='Advent-z.reg')
@@ -784,10 +784,10 @@ def run_dict_test():
     res.is_error()
 
     res = compile('i7-min-6M62-z.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=8)
-    res.is_ok(md5='a66cfeb52c7191de64f248aa641b3213', reg='i7-min-6M62.reg')
+    res.is_ok(md5='b4ae14429ee16373da9a67d754d2d217', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
-    res.is_ok(md5='68307fa11c6e7600d65d8c392843138e', reg='i7-min-6M62.reg')
+    res.is_ok(md5='d854df80001a6f43020b0a1a8fb6e2cc', reg='i7-min-6M62.reg')
 
     res = compile('dictnewflagtest.inf')
     res.is_ok(md5='6a46be13dad0cb7ea0bb3b055427615a')
