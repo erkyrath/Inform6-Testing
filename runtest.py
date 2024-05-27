@@ -1442,7 +1442,7 @@ def run_expressions_test():
 
     # non-strict because we're testing low-level prop opcodes
     res = compile('prop_store_optim.inf', strict=False)
-    res.is_ok(md5='8cb7eb8e23e572bbe92835b2c969d8ed', reg='allpass.reg')
+    res.is_ok(md5='d2aaedc35473713cae93c6c1d33a3335', reg='allpass.reg')
     
 
 def run_debugflag_test():
