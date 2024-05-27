@@ -592,13 +592,13 @@ def run_checksum_test():
     res.is_ok(md5='d456af527bf2da31919a3c7bfbc09683', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='e9735da155ab0c720e73f6be3b83bf48', reg='i7-min-6G60.reg')
+    res.is_ok(md5='ee56bd586050f55f522a055796e08437', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='09ddf48fc3bfe095d2cf2df8226cd7d0', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='83e7089561cde53a16e1c09e9fcdb2dc', reg='i7-min-6M62.reg')
+    res.is_ok(md5='a29b6e6208b79f8b9091960aeaf805c3', reg='i7-min-6M62.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='271d94f5b25914554ab23446599cbbaa', warnings=0, reg='Advent-z.reg')
@@ -787,7 +787,7 @@ def run_dict_test():
     res.is_ok(md5='a66cfeb52c7191de64f248aa641b3213', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
-    res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72', reg='i7-min-6M62.reg')
+    res.is_ok(md5='5669af5fc628238ef49696e1a418a04a', reg='i7-min-6M62.reg')
 
     res = compile('dictnewflagtest.inf')
     res.is_ok(md5='6a46be13dad0cb7ea0bb3b055427615a')
