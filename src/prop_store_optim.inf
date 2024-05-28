@@ -105,6 +105,7 @@ Global failures;
 
 	NoopTest();
 	StoreTest();
+	IncDecTest();
 	
 	new_line;
 	if (failures == 0)
@@ -246,4 +247,22 @@ Object obj
 	print "loc=glob/1="; check_value(loc, 11); new_line;
 	
 	new_line;
+];
+
+[ IncDecTest loc;
+	loc = 5;
+	loc = loc+1;
+	print "loc++="; check_value(loc, 6); new_line;
+	loc = 1+loc;
+	print "++loc="; check_value(loc, 7); new_line;
+	loc = loc-1;
+	print "loc--="; check_value(loc, 6); new_line;
+	
+	glob = 15;
+	glob = glob+1;
+	print "glob++="; check_value(glob, 16); new_line;
+	glob = 1+glob;
+	print "++glob="; check_value(glob, 17); new_line;
+	glob = glob-1;
+	print "glob--="; check_value(glob, 16); new_line;
 ];
