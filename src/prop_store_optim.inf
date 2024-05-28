@@ -102,6 +102,9 @@ Global failures;
 	AddrTest();
 	AddrPreExprTest();
 	AddrPostExprTest();
+
+	NoopTest();
+	StoreTest();
 	
 	new_line;
 	if (failures == 0)
@@ -189,3 +192,58 @@ Object obj
 	new_line;
 ];
 
+[ NoopTest loc;
+	loc = 7;
+	loc = loc + 0;
+	print "loc=loc+0="; check_value(loc, 7); new_line;
+	
+	loc = 9;
+	loc = 0 + loc;
+	print "loc=0+loc="; check_value(loc, 9); new_line;
+	
+	loc = 11;
+	loc = loc - 0;
+	print "loc=loc-0="; check_value(loc, 11); new_line;
+	
+	loc = 7;
+	loc = loc * 1;
+	print "loc=loc*1="; check_value(loc, 7); new_line;
+	
+	loc = 9;
+	loc = 1 * loc;
+	print "loc=1*loc="; check_value(loc, 9); new_line;
+	
+	loc = 11;
+	loc = loc / 1;
+	print "loc=loc/1="; check_value(loc, 11); new_line;
+
+	new_line;
+];
+
+[ StoreTest loc;
+	glob = 7;
+	loc = glob + 0;
+	print "loc=glob+0="; check_value(loc, 7); new_line;
+	
+	glob = 9;
+	loc = 0 + glob;
+	print "loc=0+glob="; check_value(loc, 9); new_line;
+	
+	glob = 11;
+	loc = glob - 0;
+	print "loc=glob-0="; check_value(loc, 11); new_line;
+	
+	glob = 7;
+	loc = glob * 1;
+	print "loc=glob*1="; check_value(loc, 7); new_line;
+	
+	glob = 9;
+	loc = 1 * glob;
+	print "loc=1*glob="; check_value(loc, 9); new_line;
+	
+	glob = 11;
+	loc = glob / 1;
+	print "loc=glob/1="; check_value(loc, 11); new_line;
+	
+	new_line;
+];
