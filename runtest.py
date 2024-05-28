@@ -586,49 +586,49 @@ def run_checksum_test():
     res.is_ok(md5='edcb2b211fe5ab2afba62d50b66dad95', warnings=0)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='9caaa6348d7a2a7f7cc508b8a885cea8', reg='i7-min-6G60.reg')
+    res.is_ok(md5='bddd52f0bdef07bf14caac9d5fb0d4ff', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='d456af527bf2da31919a3c7bfbc09683', reg='i7-min-6G60.reg')
+    res.is_ok(md5='edcc3c2d1a2f2aa6cdf59a8a83da49e7', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='749e940542a232e56a42fc2c7269f2e3', reg='i7-min-6G60.reg')
+    res.is_ok(md5='f5811c171bd7f5bf843dfe813ef96e2f', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='27291576e4ef8fb4dcfe6b1b7aa43865', reg='i7-min-6M62.reg')
+    res.is_ok(md5='29cd75114ea0e0716a9da9b3c76129e4', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='c66323aaaf736c2fa3aba017dbba9cde', reg='i7-min-6M62.reg')
+    res.is_ok(md5='00ef3d5fb6c9ac7c72dfab453c649843', reg='i7-min-6M62.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='271d94f5b25914554ab23446599cbbaa', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='8ba2c318b1f4c6ff0277f33c5a000c9f', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='cc86bc0e209676db70966feff6201ba8', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='2c8c30f5c1bd1b46e7533acbd0bb01c2', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
-    res.is_ok(md5='7a4ddf20e8e2c60b1546aeb687eb474b', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='99a86502115d393b1cc9392494d965a7', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='5e17c8d40fdf2af1c48fed04018f8808', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='c3bc7b1edf47b4e6afa352d074645b45', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
-    res.is_ok(md5='cc2e8fc0ec402649eba73a14987bf3c7', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='4191673a426d73703a3307bcbe28f889', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='c2582674fc423437c922a4873f123d2b', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='bb0d1f33ade0d7053ad5475b2414e311', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6')
-    res.is_ok(md5='3c5f9e97b6b5625c9082df6fd5763864', warnings=0)
+    res.is_ok(md5='6cd81540c4d900702b0d7c30db0cc9ae', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6', glulx=True)
-    res.is_ok(md5='744f86ec3f3587a037720906b49cdcb4', warnings=1)
+    res.is_ok(md5='cc4cf1f29c0a069fec6fba2803585f78', warnings=1)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
-    res.is_ok(md5='c0591e1c35dd64da1fd13a5d8a7e8120', warnings=0)
+    res.is_ok(md5='d50447c2eeca528b6bf0f6930bd39420', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
     res.is_ok(md5='bca12c8a5887e1b3d4161d44935daa83', warnings=2, reg='cloak-metro84.reg')
@@ -943,7 +943,7 @@ def run_grammar_test():
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
-    res.is_ok(md5='9caaa6348d7a2a7f7cc508b8a885cea8', reg='i7-min-6G60.reg')
+    res.is_ok(md5='bddd52f0bdef07bf14caac9d5fb0d4ff', reg='i7-min-6G60.reg')
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
@@ -1688,10 +1688,10 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='271d94f5b25914554ab23446599cbbaa', warnings=0)
+    res.is_ok(md5='8ba2c318b1f4c6ff0277f33c5a000c9f', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0)
 
 
 def run_warnings_test():
@@ -2299,10 +2299,10 @@ def run_max_abbrevs():
     res.is_ok(md5='774d0dd65eabbbc84a41aa1324f567c3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='271d94f5b25914554ab23446599cbbaa')
+    res.is_ok(md5='8ba2c318b1f4c6ff0277f33c5a000c9f')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
     res.is_ok(md5='2582012aca7ce1c05bc2cbcd2508f44c')
@@ -2609,7 +2609,7 @@ def run_file_end_padding():
     res.is_ok(md5='1182ac891a124f622c2432c126a5839e', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='cc86bc0e209676db70966feff6201ba8', reg='Advent-z.reg')
+    res.is_ok(md5='2c8c30f5c1bd1b46e7533acbd0bb01c2', reg='Advent-z.reg')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
     res.is_ok(md5='58e2c4481306d7794a64b75d46657b39')
