@@ -7,7 +7,7 @@ wordarray-->0: 10
 wordarray-->1: 5
 wordarray-->2: foo; is string:1
 wordarray-->3: 1954
-wordarray-->4: 1667
+wordarray-->4: 1666
 wordarray-->5: 14
 wordarray-->6: 6
 wordarray-->7: 1432
@@ -63,7 +63,7 @@ wordarrayst-->0: 11
 wordarrayst-->1: 7
 wordarrayst-->2: 1954
 wordarrayst-->3: foo; is string:1
-wordarrayst-->4: 1667
+wordarrayst-->4: 1666
 wordarrayst-->5: 8
 wordarrayst-->6: 1972
 wordarrayst-->7: 1990
