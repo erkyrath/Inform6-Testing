@@ -1050,9 +1050,10 @@ Verb meta ';i' ';inv' ';inventory'
     *                                           -> InfixInv;
 Verb meta ';x' ';examine'
     * InfixRvalue                               -> InfixExamine;
-Verb meta ';xo' ';examineo'
+! TESTING: The old ";examineo", ";examines" debug verbs clashed so I shortened them.
+Verb meta ';xo' ';exo'
     * InfixRvalue                               -> InfixExamineO;
-Verb meta ';xs' ';examines'
+Verb meta ';xs' ';exs'
     * InfixRvalue                               -> InfixExamineS;
 Verb meta ';<'
     * InfixActionToken                          -> InfixAction

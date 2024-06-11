@@ -79,7 +79,7 @@ def compile(srcfile, destfile=None,
             glulx=False, zversion=None, versiondirective=False,
             includedir=None, moduledir=None,
             memsettings={}, define={}, trace={},
-            debug=False, strict=True,
+            debug=False, strict=True, infix=False,
             economy=False, makeabbrevs=False,
             debugfile=False,
             bigmem=False,
@@ -96,6 +96,7 @@ def compile(srcfile, destfile=None,
     Other switches:
     - debug turns on DEBUG mode (-D)
     - strict=False turns off STRICT mode (-~S)
+    - infix turns on INFIX mode (-X)
     - economy turns on economy (abbreviation) mode (-e)
     - makeabbrevs generates abbreviations (-u)
     - debugfile generates gameinfo.dbg (-k)
@@ -133,6 +134,8 @@ def compile(srcfile, destfile=None,
         showargs.append('-D')
     if not strict:
         showargs.append('-~S')
+    if infix:
+        showargs.append('-X')
     if economy:
         showargs.append('-e')
     if makeabbrevs:
@@ -620,6 +623,9 @@ def run_checksum_test():
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
     res.is_ok(md5='bb0d1f33ade0d7053ad5475b2414e311', warnings=0, reg='Advent-g.reg')
+
+    res = compile('Advent.inf', includedir='i6lib-611', infix=True)
+    res.is_ok(md5='2d3e5c119619459877934f9211f6cabd', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6')
     res.is_ok(md5='ab956711fffdc7044a72637e7706ef63', warnings=0)
