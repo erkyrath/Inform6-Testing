@@ -1,0 +1,26 @@
+* test
+
+Test Case
+
+Kitchen
+
+> i
+You are carrying nothing.
+
+> jump
+You jump on the spot, fruitlessly.
+
+> x me
+As good-looking as ever.
+
+> east
+You can't go that way.
+
+> get all
+There are none at all available!
+
+> drop
+What do you want to drop?
+
+> me
+You lack the dexterity.

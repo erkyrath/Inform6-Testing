@@ -1,0 +1,999 @@
+
+# This is a transcript of Adventure running under Bocfel 2.1.2 and
+# library 6/11.
+#
+# (Other interpreters, including Glulx, have a different RNG
+# implementation. They therefore need a different command sequence
+# to deal with dwarf action.)
+
+* basics
+
+At End Of Road
+You are standing at the end of a road before a small brick building. Around you is a forest. A small stream flows out of the building and down a gully.
+
+> version
+ADVENTURE
+The Interactive Original
+By Will Crowther (1973) and Don Woods (1977)
+Reconstructed in three steps by:
+Donald Ekman, David M. Baggett (1993) and Graham Nelson (1994)
+[In memoriam Stephen Bishop (1820?-1857): GN]
+/Release 5 / Serial number 961209 / Inform v[0-9.]+ Library 6/11
+/Standard interpreter [0-9.()A-Z]+ [0-9.()A-Z]+ / Library serial number 040227
+
+> east
+Inside Building
+You are inside a building, a well house for a large spring.
+There are some keys on the ground here.
+There is tasty food here.
+There is a shiny brass lamp nearby.
+There is an empty bottle here.
+
+> get all
+set of keys: Taken.
+tasty food: Taken.
+brass lantern: Taken.
+small bottle: Taken.
+stream: The bottle is now full of water.
+well house: That's hardly portable.
+spring: That's hardly portable.
+pair of 1 foot diameter sewer pipes: That's hardly portable.
+
+> eat food
+Delicious!
+
+> i
+You are carrying:
+  a small bottle
+    some bottled water
+  a brass lantern
+  a set of keys
+
+> score
+You have so far scored 36 out of a possible 350, in 4 turns, earning you the rank of Adventurer.
+
+
+* help
+
+At End Of Road
+You are standing at the end of a road before a small brick building. Around you is a forest. A small stream flows out of the building and down a gully.
+
+> help
+{status} About Adventure
+{status} There is information provided on the following:
+{status} Instructions for playing 
+{status} A historical preface 
+{status} How authentic is this edition?
+
+>{char} return
+{status} Instructions
+I know of places, actions, and things. You can guide me using commands that are complete sentences. To move, try commands like "enter," "east," "west," "north," "south," "up," "down," "enter building," "climb pole," etc.
+
+I know about a few special objects, like a black rod hidden in the cave. These objects can be manipulated using some of the action words that I know. Usually you will need to give a verb followed by an object (along with descriptive adjectives when desired), but sometimes I can infer the object from the verb alone. Some objects also imply verbs; in particular, "inventory" implies "take inventory", which causes me to give you a list of what you're carrying. The objects have side effects; for instance, the rod scares the bird.
+
+Many commands have abbreviations. For example, you can type "i" in place of "inventory," "x object" instead of "examine object," etc.
+
+Usually people having trouble moving just need to try a few more words. Usually people trying unsuccessfully to manipulate an object are attempting something beyond their (or my!) capabilities and should try a completely different tack.
+
+Note that cave passages turn a lot, and that leaving a room to the north does not guarantee entering the next from the south.
+
+If you want to end your adventure early, type "quit". To suspend your adventure such that you can continue later, type "save," and to resume a saved game, type "restore." To see how well you're doing, type "score". To get full credit for a treasure, you must have left it safely in the building, though you get partial credit just for locating it. You lose points for getting killed, or for quitting, though the former costs you more. There are also points based on how much (if any) of the cave you've managed to explore; in particular, there is a large bonus just for getting in (to distinguish the beginners from the rest of the pack), and there are other ways to determine whether you've been through some of the more harrowing sections.
+
+If you think you've found all the treasures, just keep exploring for a while. If nothing interesting happens, you haven't found them all yet. If something interesting *does* happen, it means you're getting a bonus and have an opportunity to garner many more points in the master's section.
+
+Good luck!
+
+>{char} space
+{status} About Adventure
+
+>{char} n
+>{char} return
+{status} History
+Perhaps the first adventurer was a mulatto slave named Stephen Bishop, born about 1820: `slight, graceful, and very handsome'; a `quick, daring, enthusiastic' guide to the Mammoth Cave in the Kentucky karst. The story of the Cave is a curious microcosm of American history. Its discovery is a matter of legend dating back to the 1790s; it is said that a hunter, John Houchin, pursued a wounded bear to a large pit near the Green River and stumbled upon the entrance. The entrance was thick with bats and by the War of 1812 was intensively mined for guano, dissolved into nitrate vats to make saltpetre for gunpowder. After the war prices fell; but the Cave became a minor side-show when a dessicated Indian mummy was found nearby, sitting upright in a stone coffin, surrounded by talismans. In 1815, Fawn Hoof, as she was nicknamed after one of the charms, was taken away by a circus, drawing crowds across America (a tour rather reminiscent of Don McLean's song `The Legend of Andrew McCrew'). She ended up in the Smithsonian but by the 1820s the Cave was being called one of the wonders of the world, largely due to her posthumous efforts.
+
+By the early nineteenth century European caves were big tourist attractions, but hardly anyone visited the Mammoth, `wonder of the world' or not. Nor was it then especially large (the name was a leftover from the miners, who boasted of their mammoth yields of guano). In 1838, Stephen Bishop's owner bought up the Cave. Stephen, as (being a slave) he was invariably called, was by any standards a remarkable man: self-educated in Latin and Greek, he became famous as the `chief ruler' of his underground realm. He explored and named much of the layout in his spare time, doubling the known map in a year. The distinctive flavour of the Cave's names - half-homespun American, half-classical - started with Stephen: the River Styx, the Snowball Room, Little Bat Avenue, the Giant Dome. Stephen found strange blind fish, snakes, silent crickets, the remains of cave bears (savage, playful creatures, five feet long and four high, which became extinct at the end of the last Ice Age), centuries-old Indian gypsum workings and ever more cave. His 1842 map, drafted entirely from memory, was still in use forty years later.
+
+As a tourist attraction (and, since Stephen's owner was a philanthropist, briefly a sanatorium for tuberculosis, owing to a hopeless medical theory) the Cave became big business: for decades nearby caves were hotly seized and legal title endlessly challenged. The neighbouring chain, across Houchins Valley in the Flint Ridge, opened the Great Onyx Cave in 1912. By the 1920s, the Kentucky Cave Wars were in full swing. Rival owners diverted tourists with fake policemen, employed stooges to heckle each other's guided tours, burned down ticket huts, put out libellous and forged advertisements. Cave exploration became so dangerous and secretive that finally in 1941 the U.S. Government stepped in, made much of the area a National Park and effectively banned caving. The gold rush of tourists was, in any case, waning.
+
+Convinced that the Mammoth and Flint Ridge caves were all linked in a huge chain, explorers tried secret entrances for years, eventually winning official backing. Throughout the 1960s all connections from Flint Ridge - difficult and water-filled tunnels - ended frustratingly in chokes of boulders. A `reed-thin' physicist, Patricia Crowther, made the breakthrough in 1972 when she got through the Tight Spot and found a muddy passage: it was a hidden way into the Mammoth Cave.
+
+Under the terms of his owner's will, Stephen Bishop was freed in 1856, at which time the cave boasted 226 avenues, 47 domes, 23 pits and 8 waterfalls. He died a year later, before he could buy his wife and son. In the 1970s, Crowther's muddy passage was found on his map.
+
+The Mammoth Cave is huge, its full extent still a matter of speculation (estimates vary from 300 to 500 miles). Although this game has often been called "Colossal Cave", it is actually a simulation of the Bedquilt Cave region. Here is Will Crowther's story of how it came about:
+
+"I had been involved in a non-computer role-playing game called Dungeons and Dragons at the time, and also I had been actively exploring in caves - Mammoth Cave in Kentucky in particular. Suddenly, I got involved in a divorce, and that left me a bit pulled apart in various ways. In particular I was missing my kids. Also the caving had stopped, because that had become awkward, so I decided I would fool around and write a program that was a re-creation in fantasy of my caving, and also would be a game for the kids, and perhaps some aspects of the Dungeons and Dragons that I had been playing.
+
+"My idea was that it would be a computer game that would not be intimidating to non-computer people, and that was one of the reasons why I made it so that the player directs the game with natural language input, instead of more standardized commands. My kids thought it was a lot of fun."  [Quoted in "Genesis II: Creation and Recreation with Computers", Dale Peterson (1983).]
+
+Crowther's original FORTRAN program had five or so treasures, but no formal scoring. The challenge was really to explore, though there was opposition from for instance the snake. Like the real Bedquilt region, Crowther's simulation has a map on about four levels of depth and is rich in geological detail. A good example is the orange column which descends to the Orange River Rock room (where the bird lives): the real column is of orange travertine, a beautiful mineral found in wet limestone.
+
+The game's language is loaded with references to caving, to `domes' and `crawls'. A `slab room', for instance, is a very old cave whose roof has begun to break away into sharp flakes which litter the floor in a crazy heap. The program's use of the word `room' for all manner of caves and places seems slightly sloppy in everyday English, but is widespread in American caving and goes back as far as Stephen Bishop: so the Adventure-games usage of the word `room' to mean `place' may even be bequeathed from him.
+
+The game took its decisive step toward puzzle-solving when Don Woods, a student at Stanford, debugged and expanded it. He tripled the number of treasures and added the non-geological zones: everything from the Troll Bridge onward, together with most of the antechambers on the Bedquilt level. All of the many imitations and extensions of the original Adventure are essentially based on Woods's 350-point edition. (Many bloated, corrupted or enhanced - it depends how you see it - versions of the game are in Internet circulation, and the most useful way to identify them is by the maximum attainable score. Many versions exist scoring up to around the 400s and 500s, and one up to 1000. Woods himself continues to release new versions of his game; most of the other extenders haven't his talent.)
+
+Although the game has veered away from pure simulation, a good deal of it remains realistic. Cavers do turn back when their carbide lamps flicker; there are indeed mysterious markings and initials on the cave walls, some left by the miners, some by Bishop, some by 1920s explorers. Of course there isn't an active volcano in central Kentucky, nor are there dragons and dwarves. But even these embellishments are, in a sense, derived from tradition: like most of the early role-playing games, `Adventure' owes much to J. R. R. Tolkien's `The Hobbit', and the passage through the mountains and Moria of `The Lord of the Rings' (arguably its most dramatic and atmospheric passage). Tolkien himself, the most successful myth-maker of the twentieth century, worked from the example of Icelandic, Finnish and Welsh sagas.
+
+By 1977 tapes of `Adventure' were being circulated widely, by the Digital user group DECUS, amongst others: taking over lunchtimes and weekends wherever it went... but that's another story. (Tracy Kidder's fascinating book `The Soul of a New Machine', a journalist's-eye-view of a mainframe computer development group, catches it well.)
+
+This is a copy at third or fourth hand: from Will Crowther's original to Donald Woods's 350-point edition to Donald Ekman's PC port to David M. Baggett's excellent TADS version (1993), to this.
+
+>{char} space
+{status} About Adventure
+
+>{char} n
+>{char} return
+
+{status} Authenticity
+This port is fairly close to the original. The puzzles, items and places of Woods's original 350-point version are exactly those here.
+
+I have added a few helpful messages, such as "This is a dead end.", here and there: and restored some "initial position" messages from objects, such as the (rather lame)
+
+There is tasty food here.
+
+from source files which are certainly early but of doubtful provenance. They seem to sit well with the rest of the text.
+
+The scoring system is the original, except that you no longer lose 4 points for quitting (since you don't get the score if you quit an Inform game, this makes no difference) and, controversially, I award 5 points for currently carrying a treasure, as some early 1980s ports did. The rank names are tidied up a little. The only significant rule change is that one cannot use magic words until their destinations have been visited.
+
+The dwarves are simpler in their movements, but on the other hand I have added a very few messages to make them interact better with the rest of the game. The probabilities are as in the original game.
+
+In the original one could type the name of a room to visit it: for the sake of keeping the code small, I have omitted this feature, but with some regrets.
+
+The text itself is almost everywhere preserved intact, but I've corrected some spelling and grammatical mistakes (and altered a couple of utterly misleading and gnomic remarks). The instructions have been slightly altered (for obvious reasons) but are basically as written.
+
+A good source for details is David Baggett's source code, which is circulated on the Internet.
+
+>{char} space
+{status} About Adventure
+
+>{char} q
+At End Of Road
+You are standing at the end of a road before a small brick building.
+
+
+* win
+
+Welcome to Adventure!
+ADVENTURE
+At End Of Road
+
+> e
+Inside Building
+
+> get all
+Taken
+
+> w
+At End Of Road
+
+> s
+In A Valley
+
+> s
+At Slit In Streambed
+
+> s
+Outside Grate
+
+> unlock grate with key
+You unlock the steel grate.
+
+> d
+first opening the grate
+Below the Grate
+
+> w
+In Cobble Crawl
+
+> get cage
+Taken.
+
+> w
+It is pitch dark, and you can't see a thing.
+
+> turn on lamp
+You switch the brass lantern on.
+In Debris Room
+A note on the wall says, "Magic word XYZZY."
+A three foot black rod with a rusty star on one end lies nearby.
+
+> get rod
+Taken
+
+> w
+Sloping E/W Canyon
+
+> w
+Orange River Chamber
+
+> get bird
+The bird was unafraid when you entered, but as you approach it becomes disturbed and you cannot catch it.
+
+> drop rod
+Dropped.
+
+> get bird
+You catch the bird in the wicker cage.
+
+> get rod
+Taken.
+
+> w
+At Top of Small Pit
+Rough stone steps lead down the pit.
+
+> d
+In Hall of Mists
+Rough stone steps lead up the dome.
+Your score has just gone up by twenty-five points.
+
+#> save
+#>{fileref_prompt} adv-hallofmists
+
+> s
+Low Room
+
+> get gold
+Taken!
+Your score has just gone up by seven points.
+
+> n
+In Hall of Mists
+
+> u
+The dome is unclimbable.
+
+> w
+On East Bank of Fissure
+
+> wave rod
+A crystal bridge now spans the fissure.
+
+> drop rod
+Dropped.
+
+> w
+West Side of Fissure
+
+> get diamonds
+Taken!
+Your score has just gone up by seven points.
+
+> e
+A threatening little dwarf comes out of the shadows!
+
+> e
+The dwarf stalks after you...
+The dwarf throws a nasty little axe at you, misses, curses, and runs away.
+
+> n
+Hall of the Mountain King
+
+> open cage
+releasing the little bird
+The little bird attacks the green snake, and in an astounding flurry drives the snake away.
+
+> drop cage
+Dropped.
+
+> n
+Low N/S Passage
+
+> get silver
+Taken!
+Your score has just gone up by seven points.
+
+> n
+At "Y2"
+
+> plugh
+Inside Building
+
+> drop silver, diamonds, nugget
+bars of silver: Safely deposited.
+diamonds: Safely deposited.
+large gold nugget: Safely deposited.
+Your score has just gone up by fifteen points.
+
+#> save
+#>{fileref_prompt} adv-3treasures
+
+> plugh
+At "Y2"
+
+> e
+Jumble of Rock
+
+> u
+In Hall of Mists
+
+> get axe
+Taken.
+
+> w
+On East Bank of Fissure
+A threatening little dwarf comes out of the shadows!
+
+> w
+West Side of Fissure
+The dwarf stalks after you...
+The dwarf throws a nasty little knife at you, but misses!
+
+> throw axe at dwarf
+You killed a little dwarf! The body vanishes in a cloud of greasy black smoke.
+
+> get axe
+Taken.
+There are faint rustling noises from the darkness behind you. As you turn toward them, you spot a bearded pirate. He is carrying a large chest.
+"Shiver me timbers!" he cries, "I've been spotted! I'd best hie meself off to the maze to hide me chest!"
+With that, he vanishes into the gloom.
+
+> w
+At West End of Hall of Mists
+
+> s
+Maze
+You are in a maze of twisty little passages, all alike.
+
+> e
+Maze
+
+> s
+Maze
+
+> s
+Maze
+
+> s
+Maze
+
+> n
+Maze
+
+> e
+At Brink of Pit
+A threatening little dwarf comes out of the shadows!
+
+> throw axe at dwarf
+You killed a little dwarf! The body vanishes in a cloud of greasy black smoke.
+
+> get axe
+Taken.
+
+> e
+Maze
+
+> nw
+You've found the pirate's treasure chest!
+Dead End
+This is the pirate's dead end.
+The pirate's treasure chest is here!
+
+> get chest
+Taken!
+Your score has just gone up by seven points.
+
+> se
+Maze
+
+> n
+At Brink of Pit
+
+> d
+Orange River Chamber
+
+> e
+Sloping E/W Canyon
+
+> e
+In Debris Room
+
+> xyzzy
+
+> drop chest
+Safely deposited.
+Your score has just gone up by seven points.
+
+#> save
+#>{fileref_prompt} adv-4treasures
+
+> drop food, keys
+Dropped.
+
+> plugh
+
+> s
+> s
+> sw
+> w
+Secret Canyon
+
+A huge green fierce dragon bars the way!
+The dragon is sprawled out on the Persian rug!
+
+> kill dragon
+With what? Your bare hands?
+
+> yes
+Congratulations! You have just vanquished a dragon with your bare hands! (Unbelievable, isn't it?)
+
+> get rug
+Taken!
+Your score has just gone up by seven points.
+
+> n
+Secret N/S Canyon
+
+> d
+Slab Room
+
+> s
+At West End of Twopit Room
+
+> d
+In West Pit
+There is a tiny little plant in the pit, murmuring "Water, water, ..."
+
+> water plant
+The plant spurts into furious growth for a few seconds.
+There is a 12-foot-tall beanstalk stretching up out of the pit, bellowing "Water!! Water!!"
+
+> u
+At West End of Twopit Room
+
+> e
+At East End of Twopit Room
+
+> e
+In Swiss Cheese Room
+
+> e
+In Soft Room
+
+> get pillow
+Taken.
+
+> w
+In Swiss Cheese Room
+
+> i
+
+> nw
+Oriental Room
+
+> n
+Misty Cavern
+
+> w
+Alcove
+
+> drop all
+Dropped.
+
+> e
+Plover Room
+
+> get emerald
+Taken!
+Your score has just gone up by seven points.
+
+> w
+Alcove
+
+> get all
+Taken.
+Persian rug: Taken!
+
+> nw
+Misty Cavern
+
+> s
+Oriental Room
+
+> get vase
+Taken!
+Your score has just gone up by seven points.
+
+> se
+> ne
+> e
+> u
+In Dusty Rock Room
+
+> e
+> u
+> n
+At "Y2"
+
+> plugh
+Inside Building
+
+> drop pillow, vase, rug, emerald
+velvet pillow: Dropped.
+ming vase: (coming to rest, delicately, on the velvet pillow)
+Safely deposited.
+Persian rug: Safely deposited.
+emerald the size of a plover's egg: Safely deposited.
+Your score has just gone up by twenty-seven points.
+
+> plugh
+At "Y2"
+
+> plover
+Plover Room
+
+> ne
+The Dark Room
+A massive stone tablet imbedded in the wall reads: "Congratulations on bringing light into the dark-room!"
+
+> get pyramid
+Taken!
+Your score has just gone up by seven points.
+
+> s
+Plover Room
+
+> plover
+At "Y2"
+
+> plugh
+Inside Building
+
+> drop pyramid
+Safely deposited.
+Your score has just gone up by nine points.
+
+#> save
+#>{fileref_prompt} adv-8treasures
+
+> get food, keys, water
+Taken.
+stream: The bottle is now full of water.
+
+> plugh
+At "Y2"
+
+> s
+> s
+> sw
+> w
+> n
+> d
+Slab Room
+
+> s
+
+> d
+In West Pit
+
+> water plant
+The plant grows explosively, almost filling the bottom of the pit.
+There is a gigantic beanstalk stretching all the way up to the hole.
+
+> u
+
+> e
+
+> d
+In East Pit
+
+> get oil
+The bottle is now full of oil.
+
+> u
+
+> w
+
+> climb beanstalk
+You clamber up the plant and scurry through the hole at the top.
+In Narrow Corridor
+
+> w
+Giant Room
+
+> get eggs
+Taken!
+Your score has just gone up by seven points.
+
+> n
+Immense N/S Passage
+
+> oil door
+The oil has freed up the hinges so that the door will now move, although it requires some effort.
+
+> drop bottle
+Dropped.
+
+> n
+first wrenching the door open
+In Cavern With Waterfall
+
+> get trident
+Taken!
+Your score has just gone up by seven points.
+
+> w
+Steep Incline Above Large Room
+
+> d
+Large Low Room
+
+> sw
+Sloping Corridor
+
+> u
+On SW Side of Chasm
+A sign posted on the bridge reads, "Stop! Pay troll!"
+The troll is nowhere to be seen.
+
+> ne
+The troll steps out from beneath the bridge and blocks your way.
+
+> give eggs to troll
+The troll catches your treasure and scurries away out of sight.
+Your score has just gone down by five points.
+
+> ne
+On NE Side of Chasm
+The troll is nowhere to be seen.
+
+> ne
+In Corridor
+
+> e
+At Fork in Path
+
+> ne
+At Junction With Warm Walls
+
+> e
+In Chamber of Boulders
+
+> get spices
+Taken!
+Your score has just gone up by seven points.
+
+> w
+
+> s
+At Fork in Path
+
+> se
+In Limestone Passage
+
+> s
+In Front of Barren Room
+
+> e
+In Barren Room
+There is a ferocious cave bear eyeing you from the far end of the room!
+The bear is held back by a solid gold chain.
+
+> give food to bear
+The bear eagerly wolfs down your food, after which he seems to calm down considerably and even becomes rather friendly.
+
+> unlock chain with keys
+You unlock the chain, and set the tame bear free.
+
+> get chain
+Taken!
+Your score has just gone up by seven points.
+
+> get bear
+Ok, the bear's now following you around.
+
+> w
+In Front of Barren Room
+
+> u
+In Limestone Passage
+
+> n
+At Fork in Path
+
+> w
+In Corridor
+
+> w
+On NE Side of Chasm
+
+> sw
+The troll steps out from beneath the bridge and blocks your way.
+
+> drop bear
+The bear lumbers toward the troll, who lets out a startled shriek and scurries away. The bear soon gives up the pursuit and wanders back.
+
+> sw
+On SW Side of Chasm
+The troll is nowhere to be seen.
+
+> sw
+
+> d
+Large Low Room
+
+> se
+Oriental Room
+
+> se
+In Swiss Cheese Room
+
+> w
+
+> w
+
+> climb beanstalk
+In Narrow Corridor
+
+> w
+Giant Room
+
+> fee
+Ok.
+
+> fie
+Ok.
+
+> foe
+Ok.
+
+> foo
+Done!
+A large nest full of golden eggs suddenly appears out of nowhere!
+
+> get eggs
+Taken!
+Your score has just gone up by five points.
+
+> s
+In Narrow Corridor
+
+> throw axe at dwarf
+You killed a little dwarf! The body vanishes in a cloud of greasy black smoke.
+A threatening little dwarf comes out of the shadows!
+
+> throw axe at dwarf
+first taking the dwarvish axe
+You killed a little dwarf! The body vanishes in a cloud of greasy black smoke.
+
+> get axe
+Taken.
+
+> e
+In West Pit
+
+> u
+At West End of Twopit Room
+
+> e
+At East End of Twopit Room
+
+> e
+In Swiss Cheese Room
+
+> ne
+Bedquilt
+
+> e
+At Complex Junction
+
+> drop keys
+
+> e
+In Anteroom
+There are a few recent issues of "Spelunker Today" magazine here.
+
+> get magazine
+Taken.
+
+> e
+At Witt's End
+
+> drop magazine
+You really are at wit's end.
+Your score has just gone up by one point.
+
+> w
+In Anteroom
+
+> u
+
+> n
+Shell Room
+There is an enormous clam here with its shell tightly closed.
+
+> open clam with trident
+A glistening pearl falls out of the clam and rolls away. Goodness, this must really be an oyster. (I never was very good at identifying bivalves.)
+Whatever it is, it has now snapped shut again.
+
+> d
+Ragged Corridor
+
+> d
+Cul-de-Sac
+Off to one side lies a glistening pearl!
+
+> get pearl
+Taken!
+Your score has just gone up by seven points.
+
+> u
+Ragged Corridor
+
+> u
+There is an enormous oyster here with its shell tightly closed.
+
+> s
+At Complex Junction
+
+> u
+In Dusty Rock Room
+
+> e
+Dirty Passage
+
+> u
+Low N/S Passage
+
+> n
+
+> plugh
+Inside Building
+
+> drop pearl, eggs, chain, spices, trident
+glistening pearl: Safely deposited.
+nest of golden eggs: Safely deposited.
+golden chain: Safely deposited.
+rare spices: Safely deposited.
+jeweled trident: Safely deposited.
+Your score has just gone up by forty-five points.
+
+#> save
+#>{fileref_prompt} adv-13treasures
+
+> plugh
+
+> s
+
+> s
+Hall of the Mountain King
+
+> s
+In South Side Chamber
+
+> get jewelry
+Taken!
+Your score has just gone up by seven points.
+
+> n
+Hall of the Mountain King
+
+> w
+In West Side Chamber
+There are many coins here!
+
+> get coins
+Taken!
+A sepulchral voice reverberating through the cave says, "Cave closing soon. All adventurers exit immediately through main office."
+Your score has just gone up by thirty-two points.
+
+> e
+Hall of the Mountain King
+
+> n
+Low N/S Passage
+
+> n
+At "Y2"
+
+> plugh
+Inside Building
+
+> drop coins, jewelry
+rare coins: Safely deposited.
+precious jewelry: Safely deposited.
+Your score has just gone up by ten points.
+
+> score
+You have so far scored 305 out of a possible 350, in 228 turns, earning you the rank of Master, second class.
+
+#> save
+#>{fileref_prompt} adv-15treasures
+
+> xyzzy
+
+> w
+
+> w
+
+> w
+
+> d
+In Hall of Mists
+
+> n
+Hall of the Mountain King
+
+> z.z.z.z.z
+> z.z.z.z.z
+> z.z.z.z.z
+
+The sepulchral voice intones, "The cave is now closed." As the echoes fade, there is a blinding flash of light (and a small puff of orange smoke). . .
+As your eyes refocus, you look around...
+
+NE End of Repository
+You are at the northeast end of an immense room, even larger than the giant room. It appears to be a repository for the "Adventure" program. Massive torches far overhead bathe the room with smoky yellow light. Scattered about you can be seen a pile of bottles (all of them empty), a nursery of young beanstalks murmuring quietly, a bed of oysters, a bundle of black rods with rusty stars on their ends, and a collection of brass lanterns. Off to one side a great many dwarves are sleeping on the floor, snoring loudly. A sign nearby reads: "Do not disturb the dwarves!"
+An immense mirror is hanging against one wall, and stretches to the other end of the room, where various other sundry objects can be glimpsed dimly in the distance.
+Your lamp is here, gleaming brightly.
+There is an enormous oyster here with its shell tightly closed.
+You can also see a black rod with a rusty star on the end and a small bottle (which is empty) here.
+Your score has just gone up by ten points.
+
+> blast
+There is a loud explosion, and a twenty-foot hole appears in the far wall, burying the snakes in the rubble. A river of molten lava pours in through the hole, destroying everything in its path, including you!
+It looks as though you're dead. Well, seeing as how it's so close to closing time anyway, I think we'll just call it a day.
+
+> undo
+NE End of Repository
+Previous turn undone.
+
+> sw
+SW End of Repository
+You are at the southwest end of the repository. To one side is a pit full of fierce green snakes. On the other side is a row of small wicker cages, each of which contains a little sulking bird. In one corner is a bundle of black rods with rusty marks on their ends. A large number of velvet pillows are scattered about on the floor. A vast mirror stretches off to the northeast. At your feet is a large steel grate, next to which is a sign which reads, "TREASURE VAULT. Keys in main office."
+An immense mirror is hanging against one wall, and stretches to the other end of the room, where various other sundry objects can be glimpsed dimly in the distance.
+A cheerful little bird is sitting here singing.
+The grate is closed.
+A three foot black rod with a rusty mark on one end lies nearby.
+You can also see a velvet pillow here.
+
+> get rod
+Taken.
+
+> ne
+NE End of Repository
+
+> blast
+There is a loud explosion, and you are suddenly splashed across the walls of the room.
+
+> undo
+NE End of Repository
+Previous turn undone.
+
+> drop rod
+Dropped.
+
+> sw
+SW End of Repository
+
+> blast
+There is a loud explosion, and a twenty-foot hole appears in the far wall, burying the dwarves in the rubble. You march through the hole and find yourself in the main office, where a cheering band of friendly elves carry the conquering adventurer off into the sunset.
+You have won
+In that game you scored 350 out of a possible 350, in 255 turns, earning you the rank of Grandmaster Adventurer!
+Would you like to RESTART, RESTORE a saved game, see some suggestions for AMUSING things to do or QUIT?
+
+> amusing
+{status} Did you know...
+
+>{char} p
+>{char} return
+Did you know that...
+
+The five dwarves have a 96% chance of following you, except into light, down pits or when admiring themselves: and the nasty little knives are 9.5% accurate.
+
+Dragons burn up dwarves (perhaps because dwarves eat only coal).
+
+The bear (who likes the volcano) is too heavy for the bridge... and you can go back to the scene after being resurrected.
+
+You can slip past the snake into the secret E/W canyon, 35% of the time at any rate. And walking about in the dark is not all that gruesome: it carries only a 25% risk of falling down a pit.
+
+The vase does not like being immersed.
+
+Shadowy figures can wave to each other.
+
+Watering the hinges of the door rusts them up again.
+
+When the cave closes, the grate is locked and the keys are thrown away, creatures run off and the crystal bridge vanishes...
+
+...and a completely useless hint is written on the giant oyster's shell in the end game.
+
+The last lousy point can be won by... but no. That would be telling.
+

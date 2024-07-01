@@ -1,0 +1,279 @@
+
+* safe
+
+The Library Of Horror
+A PunyInform demo game, by Pablo Martinez and Fredrik Ramsberg.
+/Release 7 / Serial number 210920 / Inform v[0-9.]+ PunyInform v3.6
+
+Gloomy Street
+
+> north
+Your work is to the south, though you are tempted to go home and forget all about it.
+
+> south
+The Library
+The manager of the library is here, deeply concentrated on the arrangement of one of the shelves. Perhaps you should talk to him and ask him about the job.
+
+> x manager
+Although at first glance he looks like a normal middle-aged man, something is unsettling about this person.
+
+> e
+Staircase Leading Down
+
+> d
+You have no business running around in the basement. Better go talk to the library manager instead, to find out where you're needed.
+
+> w
+The Library
+
+> ask manager about job
+He looks up from the shelf in surprise. When he sees you, he smiles (there is something unsettling about his smile)
+Did he mention... a robot?
+The score has just gone up by 10 points.
+
+> ask manager about job
+"Can't you see I'm busy? I can't waste my time with nonsense! Ask Frank for help!" 
+Once again, he directs his attention to the fascinating shelf.
+
+> e
+Staircase Leading Down
+
+> d
+
+It is by going down into the abyss
+Joseph Campbell
+
+> {char} space
+Basement, Near Staircase
+Frank the Robot is standing here, all dark and quiet.
+
+> e
+Hallway
+Frank enters from the west.
+
+> s
+Storage Room
+Frank enters from the north.
+
+> w
+Repair Shop
+You can see a cardboard box (which contains a small book) here.
+"Oh, here it is, sir! The book that the master asked for! Right inside that cardboard box!"
+
+> get book
+Taken.
+
+> e
+Storage Room
+Frank enters from the west.
+
+> n
+Hallway
+
+> w
+Basement, Near Staircase
+
+> up
+Staircase Leading Down
+
+> w
+The Library
+The manager of the library is here, deeply concentrated on the arrangement of one of the shelves.
+
+> give book to manager
+"Great! You've done exactly what I asked!" 
+In confidence, he adds: "I'm glad you didn't waste your time with things that are none of your business. It makes me trust you more." 
+The score has just gone up by 20 points.
+
+> north
+Oh well. Maybe it's better to forget about it and enjoy a quiet afternoon in your flat.
+The score has just gone up by 20 points.
+
+You have won
+In that game you scored 50 out of a possible 100, in 21 turns, earning you the rank of Trustworthy.
+
+
+* demons
+
+> south
+The Library
+The manager of the library is here, deeply concentrated on the arrangement of one of the shelves. Perhaps you should talk to him and ask him about the job.
+
+> ask manager about job
+He looks up from the shelf in surprise. When he sees you, he smiles (there is something unsettling about his smile)
+Did he mention... a robot?
+The score has just gone up by 10 points.
+
+> e
+Staircase Leading Down
+
+> d
+
+It is by going down into the abyss
+Joseph Campbell
+
+> {char} space
+Basement, Near Staircase
+Frank the Robot is standing here, all dark and quiet.
+
+> e
+Hallway
+Frank enters from the west.
+
+> s
+Storage Room
+Frank enters from the north.
+
+> w
+Repair Shop
+You can see a cardboard box (which contains a small book) here.
+"Oh, here it is, sir! The book that the master asked for! Right inside that cardboard box!"
+
+> get book
+Taken.
+
+> get box
+Taken.
+
+> put box on robot
+You take advantage of a moment when Frank doesn't look in your direction and quickly place the box on it.
+Frank's going around like crazy trying to get free in vain.
+The score has just gone up by 20 points.
+
+> east
+Storage Room
+
+> east
+Light thinks it travels faster than
+Terry Pratchett
+
+> {char} space
+Dark chamber
+Upon entering the room, two candles on a table light up spontaneously, as if by magic.
+From some other room, you hear the sound of the cardboard box falling to the floor and then what sounds like a quick burst of fire.
+
+> x book
+Do you mean the small book or the red book?
+
+> red
+You take an uneasy glance at the thick, heavy book bound in red leather.
+
+> open red book
+You open the red book.
+
+> x red book
+It is now open, revealing pages richly written in meticulous calligraphy. A few words seem to stand out from the rest.
+
+> read words
+After a few seconds of struggling with the ancient calligraphy, you can make out the words and read them out loud: "KLAATU BARADA NIKTO"
+You have summoned demons set to destroy the world
+In that game you scored 30 out of a possible 100, in 16 turns, earning you the rank of Promising.
+
+
+* fire
+
+> south
+The Library
+The manager of the library is here, deeply concentrated on the arrangement of one of the shelves. Perhaps you should talk to him and ask him about the job.
+
+> ask manager about job
+He looks up from the shelf in surprise. When he sees you, he smiles (there is something unsettling about his smile)
+Did he mention... a robot?
+The score has just gone up by 10 points.
+
+> e
+Staircase Leading Down
+
+> d
+
+It is by going down into the abyss
+Joseph Campbell
+
+> {char} space
+Basement, Near Staircase
+Frank the Robot is standing here, all dark and quiet.
+
+> e
+Hallway
+Frank enters from the west.
+
+> s
+Storage Room
+Frank enters from the north.
+
+> w
+Repair Shop
+You can see a cardboard box (which contains a small book) here.
+"Oh, here it is, sir! The book that the master asked for! Right inside that cardboard box!"
+
+> get book
+Taken.
+
+> get box
+Taken.
+
+> put box on robot
+You take advantage of a moment when Frank doesn't look in your direction and quickly place the box on it.
+Frank's going around like crazy trying to get free in vain.
+The score has just gone up by 20 points.
+
+> east
+Storage Room
+
+> east
+Light thinks it travels faster than
+Terry Pratchett
+
+> {char} space
+Dark chamber
+Upon entering the room, two candles on a table light up spontaneously, as if by magic.
+From some other room, you hear the sound of the cardboard box falling to the floor and then what sounds like a quick burst of fire.
+
+> burn small book
+That seems dangerous and pointless.
+
+> burn red book
+Without a moment's hesitation, you tear out one of the pages and burn it in a candle. With the page burning, you set fire to the rest of the book. 
+The score has just gone up by 50 points.
+
+> west
+Storage Room
+The fire has arrived to the storage room as well, turning the cobwebs and dust to ash. 
+Frank enters from the west.
+The sound of the fire in the dark chamber suddenly gets more intense.
+
+> north
+Hallway
+The walls of the corridor burn fiercely, from the stairs to the west to the room to the south. The heat is suffocating.
+Frank enters from the south.
+
+> west
+Basement, Near Staircase
+The walls of the corridor burn fiercely, from the stairs going up to the room to the east. The heat is suffocating.
+Frank enters from the east.
+
+> up
+Staircase Leading Down
+The fire has reached the dusty little room!
+
+> west
+The Library
+You watch in horror as the flames reach the books, climbing the shelves and turning each volume into a fireball.
+
+> north
+Gloomy Street
+You managed to escape the burning building just in time!
+e more careful about the jobs you choose.
+The score has just gone up by 20 points.
+You have won
+In that game you scored 100 out of a possible 100, in 20 turns, earning you the rank of Hero.
+
+> full
+The score was made up as follows:
+    10 talking to the manager
+    20 obstructing the robot
+    50 burning the evil book
+    20 leaving the library
+
+   100 total (out of 100)
+

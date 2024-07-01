@@ -1,0 +1,70 @@
+* test
+
+Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera House.
+
+Cloak of Darkness
+A basic IF demonstration.
+/Release 1 / Serial number 200212 / Inform v[0-9.R]+ with Metrocenter84 v1.0
+/Standard interpreter [0-9.]+
+
+Opera House Foyer
+You are standing in a spacious hall
+
+> n
+You've only just arrived, and besides, the weather outside seems to be getting worse.
+
+> s
+Foyer bar
+It's pitch black in here, you can't see.
+
+> n
+Opera House Foyer
+You are standing in a spacious hall
+
+> w
+Cloakroom
+The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east.
+
+> x hook
+It's just a small brass hook, screwed to the wall.
+
+> i
+You are carrying:
+a velvet cloak (being worn)
+
+> drop cloak
+first taking the velvet cloak off
+You take off the velvet cloak.
+Dropped.
+
+> get cloak
+Taken.
+
+> wear cloak
+You put on the velvet cloak.
+
+> put cloak on hook
+first taking it off
+You take off the velvet cloak.
+You put the velvet cloak on the small brass hook.
+Your score has just gone up by 1
+
+> l
+On the small brass hook is a velvet cloak.
+
+> x hook
+It's just a small brass hook, with a cloak hanging on it.
+
+> e
+Opera House Foyer
+
+> s
+Foyer bar
+The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
+
+> read message
+The message, neatly marked in the sawdust, reads...
+You have won
+You have scored 2 out of 2, in 15 turns.
+Restart, Restore or Quit?
+
