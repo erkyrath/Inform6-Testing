@@ -1,4 +1,6 @@
 
+# Note that this test file is UTF8, even though it's testing a game compiled with Latin-7 source.
+
 * test
 
 Greek alphabet (ISO 8859-7):
