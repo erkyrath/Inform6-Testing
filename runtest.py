@@ -178,8 +178,18 @@ def compile(srcfile, destfile=None,
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = run.communicate()
-    stdout = stdout.decode()
-    stderr = stderr.decode()
+    
+    try:
+        stdout = stdout.decode()
+    except UnicodeDecodeError:
+        # Fallback in case of bad output
+        stdout = stdout.decode('latin-1')
+    try:
+        stderr = stderr.decode()
+    except UnicodeDecodeError:
+        # Fallback in case of bad output
+        stderr = stderr.decode('latin-1')
+        
     res = Result(run.returncode, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
