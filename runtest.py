@@ -1019,7 +1019,7 @@ def run_grammar_test():
     
 def run_encoding_test():
     res = compile('unisourcetest.inf', glulx=True)
-    res.is_ok(reg='unisourcetest.reg')
+    res.is_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg')
     
     res = compile('source-encoding-7.inf')
     res.is_ok(md5='1cb7e8a3450969b44c8183b87f474b5d', reg='source-encoding-7.reg')
