@@ -1045,6 +1045,13 @@ def run_encoding_test():
     res = compile('source-encoding-7.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
     res.is_ok(md5='175f2b60c6347197eec2225e85702e75')
     
+    res = compile('source-encoding-u.inf')
+    res.is_ok(md5='8c71355a98f3c55af71dce45e6182e06', reg='source-encoding-u.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47')
+    
     
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
