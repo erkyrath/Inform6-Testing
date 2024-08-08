@@ -1017,6 +1017,11 @@ def run_grammar_test():
     res.is_error()
     
     
+def run_encoding_test():
+    res = compile('unisourcetest.inf', glulx=True)
+    res.is_ok(reg='unisourcetest.reg')
+    
+    
 def run_lexer_test():
     res = compile('long_identifier_test.inf')
     res.is_ok()
@@ -2622,6 +2627,7 @@ test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
     ('GRAMMAR', run_grammar_test),
+    ('ENCODING', run_encoding_test),
     ('LEXER', run_lexer_test),
     ('VENEER', run_veneer_test),
     ('DIRECTIVES', run_directives_test),
