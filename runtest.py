@@ -1031,6 +1031,13 @@ def run_encoding_test():
     res = compile('unisourcetest.inf', glulx=True)
     res.is_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg')
     
+    res = compile('source-encoding-1.inf')
+    res.is_ok(md5='9f9db0d51ec24308cb4e19d1ac058314', reg='source-encoding-1.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-1.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='946b2540327fdff54b0ffd93922317f2')
+    
     res = compile('source-encoding-7.inf')
     res.is_ok(md5='1cb7e8a3450969b44c8183b87f474b5d', reg='source-encoding-7.reg')
 
