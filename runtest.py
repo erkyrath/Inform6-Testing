@@ -1962,6 +1962,24 @@ def run_max_objects():
     res = compile('max_objects_test.inf', glulx=True)
     res.is_ok()
 
+    res = compile('max_objects_256_test.inf', zversion=3)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_error()
+
+    res = compile('max_objects_256_test.inf', zversion=4)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=4, define={ 'ONEMORE':0 })
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=5)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=5, define={ 'ONEMORE':0 })
+    res.is_ok()
+
     res = compile('max_duplicate_objects_test.inf', glulx=True)
     res.is_ok()
 
@@ -1971,6 +1989,24 @@ def run_max_classes():
     res.is_ok()
 
     res = compile('max_classes_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=3)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_error()
+
+    res = compile('max_classes_256_test.inf', zversion=4)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=4, define={ 'ONEMORE':0 })
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=5)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=5, define={ 'ONEMORE':0 })
     res.is_ok()
 
 
