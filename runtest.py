@@ -1881,6 +1881,9 @@ def run_abbreviations_test():
     res = compile('nested_abbrev_test.inf', glulx=True, economy=True)
     res.is_ok(warnings=0)
 
+    res = compile('nested_lowstring_test.inf')
+    res.is_ok(warnings=1)
+
     
     
 def run_make_abbreviations_test():
