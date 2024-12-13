@@ -1872,6 +1872,16 @@ def run_abbreviations_test():
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, define={'BADSYNTAX':None}, glulx=True)
     res.is_error(errors=8)
 
+    res = compile('nested_abbrev_test.inf')
+    res.is_ok(warnings=0)
+
+    res = compile('nested_abbrev_test.inf', economy=True)
+    res.is_ok(warnings=1)
+
+    res = compile('nested_abbrev_test.inf', glulx=True, economy=True)
+    res.is_ok(warnings=0)
+
+    
     
 def run_make_abbreviations_test():
     res = compile('abbrevtest.inf', makeabbrevs=True, economy=True)

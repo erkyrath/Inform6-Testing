@@ -1,0 +1,7 @@
+
+! This shows a warning in Z-code (but not Glulx), only if the -e switch is used.
+Abbreviate "@00 Smith";
+
+[ Main;
+];
+
