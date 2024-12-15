@@ -2179,7 +2179,13 @@ def run_max_global_variables():
     res = compile('max_global_variables_test.inf')
     res.is_ok()
     
+    res = compile('max_global_variables_test.inf', zversion=3)
+    res.is_ok()
+    
     res = compile('max_global_variables_test.inf', define={ 'ONEMORE':0 })
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
+    
+    res = compile('max_global_variables_test.inf', zversion=3, define={ 'ONEMORE':0 })
     res.is_memsetting('MAX_GLOBAL_VARIABLES')
     
     res = compile('max_global_variables_test_2.inf')
