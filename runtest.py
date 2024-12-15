@@ -2709,7 +2709,14 @@ def run_file_end_padding():
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'ZCODE_FILE_END_PADDING':0}, zversion=3)
     res.is_ok(md5='7b512bfccbb332c6b90be25c2a786b8a', reg='library_of_horror.reg')
+
     
+def run_zcode_compact_globals():
+    res = compile('show_globals.inf')
+    res.is_ok(reg='show_globals-z5.reg')
+
+    res = compile('show_globals.inf', zversion=3)
+    res.is_ok(reg='show_globals-z3.reg')
 
 
 test_catalog = [
@@ -2773,6 +2780,7 @@ test_catalog = [
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ('OMIT_SYMBOL_TABLE', run_omit_symbol_table),
     ('ZCODE_FILE_END_PADDING', run_file_end_padding),
+    ('ZCODE_COMPACT_GLOBALS', run_zcode_compact_globals),
     ]
 
 test_map = dict(test_catalog)

@@ -1,0 +1,16 @@
+* test
+
+globals begin at: 686
+arrays begin at: 1166
+
+vv1: 0
+vv2: 1
+vv3: 2
+vv4: 3
+temp_global: 239
+temp__global2: 238
+temp__global3: 237
+temp__global4: 236
+self: 235
+sender: 234
+sw__var: 233
