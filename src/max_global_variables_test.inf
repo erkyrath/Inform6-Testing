@@ -234,3 +234,7 @@ Global var_229;
 Global var_230;
 Global var_231;
 Global var_232;
+
+#ifdef ONEMORE;
+Global var_233;
+#endif;
