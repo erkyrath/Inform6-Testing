@@ -5,7 +5,7 @@ Global vv2;
 Global vv3;
 Global vv4;
 
-Array arr --> 4;
+Array arr -> 480;
 
 [ Main;
 	print "globals begin at: ", #globals_array, "^";
