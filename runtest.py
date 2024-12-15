@@ -2718,6 +2718,12 @@ def run_zcode_compact_globals():
     res = compile('show_globals.inf', zversion=3)
     res.is_ok(reg='show_globals-z3.reg')
 
+    res = compile('show_globals.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals-z5-compact.reg')
+
+    res = compile('show_globals.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals-z3-compact.reg')
+
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
