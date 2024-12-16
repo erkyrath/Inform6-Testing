@@ -4,7 +4,7 @@
 globals begin at: 770
 arrays begin at: 792
 global count (including built-ins): 11
-static memory begins at: 797
+static memory begins at: 1250
 
 vv1: 7
 vv2: 8
