@@ -1,0 +1,16 @@
+
+* test
+
+globals begin at: 686
+arrays begin at: 706
+global count (including built-ins): 10
+static memory begins at: 1166
+
+vv1: 0
+temp_global: 3
+temp__global2: 4
+temp__global3: 5
+temp__global4: 6
+self: 7
+sender: 8
+sw__var: 9
