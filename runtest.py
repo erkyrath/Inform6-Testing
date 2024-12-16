@@ -2761,6 +2761,9 @@ def run_zcode_compact_globals():
     res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
     res.is_ok(reg='show_globals_1v-z3-compact-short.reg')
 
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='03db18530d2840de9c0ebeb01cd53c39', warnings=0, reg='Advent-z.reg')
+
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
