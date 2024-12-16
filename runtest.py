@@ -2736,6 +2736,13 @@ def run_zcode_compact_globals():
     res = compile('show_globals.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
     res.is_ok(reg='show_globals-z3-compact-short.reg')
 
+    
+    res = compile('show_globals_1v.inf')
+    res.is_ok(reg='show_globals_1v-z5.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3)
+    res.is_ok(reg='show_globals_1v-z3.reg')
+
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
