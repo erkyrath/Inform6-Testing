@@ -2749,6 +2749,12 @@ def run_zcode_compact_globals():
     res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
     res.is_ok(reg='show_globals_1v-z3-compact.reg')
 
+    res = compile('show_globals_1v.inf', define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z5-short.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z3-short.reg')
+
     res = compile('show_globals_1v.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
     res.is_ok(reg='show_globals_1v-z5-compact-short.reg')
 
