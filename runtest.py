@@ -2764,6 +2764,8 @@ def run_zcode_compact_globals():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1})
     res.is_ok(md5='03db18530d2840de9c0ebeb01cd53c39', warnings=0, reg='Advent-z.reg')
 
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='6d3150a358f4c7dddd7c81388aa2d00a', reg='library_of_horror.reg')
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
