@@ -2767,6 +2767,7 @@ def run_zcode_compact_globals():
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
     res.is_ok(md5='6d3150a358f4c7dddd7c81388aa2d00a', reg='library_of_horror.reg')
 
+
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
