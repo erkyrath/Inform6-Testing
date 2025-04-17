@@ -1312,10 +1312,10 @@ def run_directives_test():
     res.is_ok()
 
     res = compile('globalredef2.inf')
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('globalredef2.inf', glulx=True)
-    res.is_ok()
+    res.is_ok(reg='allpass.reg')
 
     res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None})
     res.is_error()

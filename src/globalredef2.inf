@@ -115,7 +115,7 @@ Global glob7 = Func;    ! same function value
 
 Global glob4 = 22;    ! once more for good luck
 
-Global sys__glob1 = 123;  ! a built-in global
+Global sender = 123;  ! a built-in global
 
 Global globx1 = 11;
 Global globx2 = forwardconst;
@@ -143,7 +143,7 @@ Constant forwardconst = 99;
 	print "glob6="; check_value(glob6, Thing); print "^";
 	print "glob7="; check_value(glob7, Func); print "^";
 
-	print "sys__glob1="; check_value(sys__glob1, 123); print "^";
+	print "sender="; check_value(sender, 123); print "^";
 
 	print "globx1="; check_value(globx1, 11); print "^";
 	print "globx2="; check_value(globx2, 99); print "^";
