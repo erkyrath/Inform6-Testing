@@ -1311,6 +1311,12 @@ def run_directives_test():
     res = compile('globalredef.inf', glulx=True)
     res.is_ok()
 
+    res = compile('globalredef2.inf')
+    res.is_ok()
+
+    res = compile('globalredef2.inf', glulx=True)
+    res.is_ok()
+
     res = compile('unterm-array-test.inf')
     res.is_error(errors=2)
 
