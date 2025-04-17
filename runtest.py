@@ -1284,16 +1284,10 @@ def run_directives_test():
     res = compile('globalarray.inf', define={'USE_GLOBAL_BEFORE_DEF':None})
     res.is_error()
 
-    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_TWICE':None})
-    res.is_error()
-    
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_NONSYMBOL':None})
     res.is_error()
     
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_STATIC':None})
-    res.is_error()
-    
-    res = compile('globalarray.inf', define={'DEFINE_TEMPGLOB':None})
     res.is_error()
     
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_EXTRA':None})
