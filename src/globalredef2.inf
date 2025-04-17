@@ -108,13 +108,29 @@ Global glob7 = Func;
 Global glob1;
 Global glob2;
 Global glob3 = 13;
-Global glob4 = 22;
+Global glob4 = 22;    ! same numeric value
 Global glob5;
 Global glob6;
-Global glob7 = Func;
+Global glob7 = Func;    ! same function value
+
+Global glob4 = 22;    ! once more for good luck
+
+Global sys__glob1 = 123;  ! a built-in global
 
 Global globx1 = 11;
 Global globx2 = forwardconst;
+
+#ifdef DEFINE_GLOBX1_NUM;
+Global globx1 = 12;
+#endif; ! DEFINE_GLOBX1_NUM
+
+#ifdef DEFINE_GLOBX2_NUM;
+Global globx2 = 12;
+#endif; ! DEFINE_GLOBX2_NUM
+
+#ifdef DEFINE_GLOBX2_NUM99;
+Global globx2 = 99;   ! fails because forwardconst is not yet known
+#endif; ! DEFINE_GLOBX2_NUM99
 
 Constant forwardconst = 99;
 
@@ -126,6 +142,8 @@ Constant forwardconst = 99;
 	print "glob5="; check_value(glob5, forwardconst); print "^";
 	print "glob6="; check_value(glob6, Thing); print "^";
 	print "glob7="; check_value(glob7, Func); print "^";
+
+	print "sys__glob1="; check_value(sys__glob1, 123); print "^";
 
 	print "globx1="; check_value(globx1, 11); print "^";
 	print "globx2="; check_value(globx2, 99); print "^";
