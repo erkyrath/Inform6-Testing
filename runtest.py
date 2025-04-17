@@ -1320,10 +1320,19 @@ def run_directives_test():
     res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None})
     res.is_error()
     
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None}, glulx=True)
+    res.is_error()
+    
     res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM':None})
     res.is_error()
     
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM':None}, glulx=True)
+    res.is_error()
+    
     res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM99':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM99':None}, glulx=True)
     res.is_error()
     
     res = compile('unterm-array-test.inf')
