@@ -532,14 +532,17 @@ Verb 'take'
   * 'inventory' -> Inv;
 
 Verb 'mix'
-  * 'foo' scope=ScopeTest -> Move
-  * 'bar' noun=FilterTest -> Take
-  * 'baz' GPRTest -> Show;
+  * 'mul' multi -> Take
+  * 'num' number -> Inv
+  * 'sco' scope=ScopeTest -> Move
+  * 'nnn' noun=FilterTest -> Take
+  * 'gen' GPRTest -> Show;
 
 #iffalse (Grammar__Version == 1);
 ! forms that require GV2/3...
 
 Verb 'pull'
+  * 'top' topic -> Show
   * 'out' / 'over' / 'off' noun -> Move;
 
 Verb 'show'
