@@ -983,13 +983,16 @@ def run_grammar_test():
 
 
     res = compile('grammar-dump-test.inf')
-    res.is_ok(md5='de9161e1f87aaa119478d7b3f655f526', reg='grammardump-z-gv1.reg')
+    res.is_ok(md5='de9161e1f87aaa119478d7b3f655f526', reg='grammardump-gv1.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2})
-    res.is_ok(md5='94ded73f87b61b2fbdf6bffbe408f3ec', reg='grammardump-z-gv2.reg')
+    res.is_ok(md5='94ded73f87b61b2fbdf6bffbe408f3ec', reg='grammardump-gv2.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3})
-    res.is_ok(md5='88c6319ec6be0c0f521fd999e10f0a74', reg='grammardump-z-gv3.reg')
+    res.is_ok(md5='88c6319ec6be0c0f521fd999e10f0a74', reg='grammardump-gv3.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2}, glulx=True)
+    res.is_ok(md5='a026e3913f038ca15ddcf27fd240fc92', reg='grammardump-gv2.reg')
     
     
     # Compile with the GV3 parser.
