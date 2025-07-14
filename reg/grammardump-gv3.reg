@@ -3,6 +3,8 @@
 Grammar version 3
 GRAMMAR_META_FLAG not set
 
+# This is identical to the GV2 version.
+
 Verb 'mix'
  1 * 'mul' multi -> Take
  2 * 'num' number -> Inv
