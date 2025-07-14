@@ -121,7 +121,7 @@ Global params_wanted;
 Fake_action Xyzzy;
 
 [ RunTest val;
-	val = Xyzzy__A + ScoreSub + RestoreSub + LoadSub + ScriptSub + NotifySub;
+	val = Xyzzy__A + ScoreSub + ShowSub + RestoreSub + LoadSub + ScriptSub + NotifySub;
 	
 	print "Grammar version ", Grammar__Version, "^";
 #ifdef GRAMMAR_META_FLAG;
@@ -418,6 +418,12 @@ Verb 'take'
   * noun -> Take
   * 'inventory' -> Inv;
 
+#iffalse (Grammar__Version == 1);
+Verb 'show'
+  * noun 'to' noun -> Show
+  * noun 'from' noun -> Show reverse;
+#endif;  ! Grammar__Version
+
 #ifdef GRAMMAR_META_FLAG;
 ! You can extend a verb and set the new branch meta.
 Extend 'take'
@@ -425,6 +431,7 @@ Extend 'take'
 #endif; ! GRAMMAR_META_FLAG
 
 [ WaitSub; ];
+[ ShowSub; ];
 [ ScoreSub; ];
 [ RestartSub; ];
 [ QuitSub; ];
