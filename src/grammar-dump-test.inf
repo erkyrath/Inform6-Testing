@@ -121,7 +121,8 @@ Global params_wanted;
 Fake_action Xyzzy;
 
 [ RunTest val;
-	val = Xyzzy__A + ScoreSub + ShowSub + RestoreSub + LoadSub + ScriptSub + NotifySub;
+	! shush compiler warnings
+	val = Xyzzy__A + ScoreSub + ShowSub + MoveSub + RestoreSub + LoadSub + ScriptSub + NotifySub;
 	
 	print "Grammar version ", Grammar__Version, "^";
 #ifdef GRAMMAR_META_FLAG;
@@ -419,9 +420,15 @@ Verb 'take'
   * 'inventory' -> Inv;
 
 #iffalse (Grammar__Version == 1);
+! forms that require GV2/3...
+
+Verb 'pull'
+  * 'out' / 'over' / 'off' noun -> Move;
+
 Verb 'show'
   * noun 'to' noun -> Show
   * noun 'from' noun -> Show reverse;
+
 #endif;  ! Grammar__Version
 
 #ifdef GRAMMAR_META_FLAG;
@@ -432,6 +439,7 @@ Extend 'take'
 
 [ WaitSub; ];
 [ ShowSub; ];
+[ MoveSub; ];
 [ ScoreSub; ];
 [ RestartSub; ];
 [ QuitSub; ];
