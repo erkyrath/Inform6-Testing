@@ -1,0 +1,209 @@
+Constant Story "GrammarDumpTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! Display the grammar table.
+! This is not self-checking. Gotta compare the output to a known text.
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+Constant HDR_DICTIONARY       = $08;     ! word
+Constant HDR_STATICMEMORY     = $0E;     ! word
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+[ Main loc;
+    #Ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 loc;
+    #Endif; ! TARGET_
+
+	loc = 0;
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #ifnot;
+    print "Game file format ", 0->0, ".^";
+    #Endif; ! TARGET_GLULX
+];
+
+! Fake_action has to be defined before use; possibly that's a bug.
+Fake_action Xyzzy;
+
+[ RunTest;
+	ShowAllVerbs();
+];
+
+#Ifdef TARGET_ZCODE;
+
+[ ShowAllVerbs j da verbword;
+    da = HDR_DICTIONARY-->0;
+    for (j=0 : j<(da+5)-->0 : j++) {
+		verbword = da + 9*j + 7;
+		if ((verbword->#dict_par1) & 1)
+			ShowVerbSub(verbword);
+	}
+];
+
+[ ShowVerbSub verbword   address lines da meta i j;
+    if (verbword == 0 || ((verbword->#dict_par1) & 1) == 0)
+        "Try typing ~showverb~ and then the name of a verb.";
+    meta = ((verbword->#dict_par1) & 2)/2;
+    i = $ff-(verbword->#dict_par2);
+    address = (HDR_STATICMEMORY-->0)-->i;
+    lines = address->0;
+    address++;
+    print "Verb ";
+    if (meta) print "meta ";
+    da = HDR_DICTIONARY-->0;
+    for (j=0 : j<(da+5)-->0 : j++)
+        if (da->(j*9 + 14) == $ff-i) print "'", (address) (da + 9*j + 7), "' ";
+    new_line;
+    if (lines == 0) "has no grammar lines.";
+    for (: lines>0 : lines--) {
+		print "---^";
+    }
+];
+
+#Ifnot; ! TARGET_GLULX
+
+[ ShowAllVerbs j dictlen entrylen verbword;
+    dictlen = #dictionary_table-->0;
+    entrylen = DICT_WORD_SIZE + 7;
+    for (j=0 : j<dictlen : j++) {
+        verbword = #dictionary_table + WORDSIZE + entrylen*j;
+		if ((verbword->#dict_par1) & 1)
+			ShowVerbSub(verbword);
+    }
+];
+
+[ ShowVerbSub verbword   address lines i j meta wd dictlen entrylen;
+    if (verbword == 0 || ((verbword->#dict_par1) & 1) == 0)
+        "Try typing ~showverb~ and then the name of a verb.";
+    meta = ((verbword->#dict_par1) & 2)/2;
+    i = $ff-(verbword->#dict_par2);
+    address = (#grammar_table)-->(i+1);
+    lines = address->0;
+    address++;
+    print "Verb ";
+    if (meta) print "meta ";
+    dictlen = #dictionary_table-->0;
+    entrylen = DICT_WORD_SIZE + 7;
+    for (j=0 : j<dictlen : j++) {
+        wd = #dictionary_table + WORDSIZE + entrylen*j;
+        if (wd->#dict_par2 == $ff-i)
+            print "'", (address) wd, "' ";
+    }
+    new_line;
+    if (lines == 0) "has no grammar lines.";
+    for (: lines>0 : lines--) {
+		print "---^"; !###
+    }
+];
+
+#Endif; ! TARGET_
+
+Verb 'wait' 'z//' * -> Wait;
+
+! Meta flag at the front covers all listed actions.
+Verb meta 'restart'
+  * -> Restart
+  * 'not' -> Quit;
+
+#ifdef GRAMMAR_META_FLAG;
+
+! new-style meta verb
+Verb 'score' * -> Score meta;
+
+! "meta" on one verb line sets the flag for the whole Script action.
+Verb 'transcript' * -> Script;
+Verb 'script' * -> Script meta;
+
+! "meta" on a single Restore branch sets the flag for the whole Restore action, but not for the Load action.
+Verb 'load'
+  * noun -> Load
+  * 'file' -> Restore
+  * 'game' -> Restore meta;
+
+#endif; ! GRAMMAR_META_FLAG
+
+Verb 'take'
+  * noun -> Take
+  * 'inventory' -> Inv;
+
+#ifdef GRAMMAR_META_FLAG;
+! You can extend a verb and set the new branch meta.
+Extend 'take'
+  * 'note' -> Notify meta;
+#endif; ! GRAMMAR_META_FLAG
+
+[ WaitSub; ];
+[ ScoreSub; ];
+[ RestartSub; ];
+[ QuitSub; ];
+[ RestoreSub; ];
+[ LoadSub; ];
+[ TakeSub; ];
+[ InvSub; ];
+[ ScriptSub; ];
+[ NotifySub; ];
