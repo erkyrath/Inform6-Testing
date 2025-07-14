@@ -459,7 +459,7 @@ Fake_action Xyzzy;
         #Ifdef INFIX;
         print "noun=", (InfixPrintPA) found_tdata;
         #Ifnot;
-        print "noun=Routine(", (FuncName) found_tdata, ")";
+        print "noun=", (FuncName) found_tdata;
         #Endif; ! INFIX
       ATTR_FILTER_TT:
         print (DebugAttribute) found_tdata;
@@ -467,13 +467,13 @@ Fake_action Xyzzy;
         #Ifdef INFIX;
         print "scope=", (InfixPrintPA) found_tdata;
         #Ifnot;
-        print "scope=Routine(", (FuncName) found_tdata, ")";
+        print "scope=", (FuncName) found_tdata;
         #Endif; ! INFIX
       GPR_TT:
         #Ifdef INFIX;
         print (InfixPrintPA) found_tdata;
         #Ifnot;
-        print "Routine(", (FuncName) found_tdata, ")";
+        print (FuncName) found_tdata;
         #Endif; ! INFIX
     }
 ];
@@ -499,7 +499,7 @@ Fake_action Xyzzy;
 		print "GPRTest";
 		return;
 	}
-	print addr;
+	print "Routine(", addr, ")";
 ];
 
 
