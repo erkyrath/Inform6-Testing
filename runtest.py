@@ -994,6 +994,18 @@ def run_grammar_test():
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2}, glulx=True)
     res.is_ok(md5='a026e3913f038ca15ddcf27fd240fc92', reg='grammardump-gv2.reg')
     
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='eb4f62077d7586dcda64d5f60dc14e73', reg='grammardump-gv1-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='0a25f4dad48332f857fc0c3d23db8c71', reg='grammardump-gv2-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3, 'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='6595ea735b30fa5efa85afbcd0cf2375', reg='grammardump-gv3-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok(md5='646f05fd1f31d52d270c6be0d7482149', reg='grammardump-gv2-meta.reg')
+    
     
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
