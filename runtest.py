@@ -981,6 +981,17 @@ def run_grammar_test():
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
+
+    res = compile('grammar-dump-test.inf')
+    res.is_ok(md5='de9161e1f87aaa119478d7b3f655f526', reg='grammardump-z-gv1.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2})
+    res.is_ok(md5='94ded73f87b61b2fbdf6bffbe408f3ec', reg='grammardump-z-gv2.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3})
+    res.is_ok(md5='88c6319ec6be0c0f521fd999e10f0a74', reg='grammardump-z-gv3.reg')
+    
+    
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
     res.is_ok(md5='653e053b87a32c36c286b14a021cff05', warnings=0, reg='Advent-z.reg')
