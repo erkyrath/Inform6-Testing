@@ -995,7 +995,7 @@ def run_grammar_test():
     res.is_ok(md5='a026e3913f038ca15ddcf27fd240fc92', reg='grammardump-gv2.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='eb4f62077d7586dcda64d5f60dc14e73', reg='grammardump-gv1-meta.reg')
+    res.is_ok(md5='1021084be7e8293a39c6ed88720c2dba', reg='grammardump-gv1-meta.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1})
     res.is_ok(md5='0a25f4dad48332f857fc0c3d23db8c71', reg='grammardump-gv2-meta.reg')

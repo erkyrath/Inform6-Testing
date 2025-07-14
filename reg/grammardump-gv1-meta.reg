@@ -7,26 +7,26 @@ GRAMMAR_META_FLAG set
 ### Or maybe it's a compiler bug. But we don't care much about GV1.
 
 Verb 'load'
- 1 * noun -> Inv
- 2 * 'file' -> Wait
- 3 * 'game' -> Wait
+ 1 * noun -> Load
+ 2 * 'file' -> Restore meta
+ 3 * 'game' -> Restore meta
 Verb 'mix'
- 4 * 'mul' multi -> Notify meta
- 5 * 'num' number -> Take
- 6 * 'sco' scope=ScopeTest -> Inv
- 7 * 'nnn' noun=Routine(1) -> Load
- 8 * 'gen' GPRTest -> Move
+ 4 * 'mul' multi -> Take
+ 5 * 'num' number -> Inv
+ 6 * 'sco' scope=ScopeTest -> Move
+ 7 * 'nnn' noun=Routine(1) -> Take
+ 8 * 'gen' GPRTest -> Show
 Verb meta 'restart'
- 9 * -> Wait
- 10 * 'not' -> Score meta
+ 9 * -> Restart meta
+ 10 * 'not' -> Quit meta
 Verb 'score'
  11 * -> Score meta
 Verb 'script'
  12 * -> Script meta
 Verb 'take'
- 13 * noun -> Move
- 14 * 'inventory' -> Take
- 15 * 'note' -> Show
+ 13 * noun -> Take
+ 14 * 'inventory' -> Inv
+ 15 * 'note' -> Notify meta
 Verb 'transcrip'
  16 * -> Script meta
 Verb 'wait' 'z'
