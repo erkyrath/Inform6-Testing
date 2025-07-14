@@ -40,6 +40,13 @@ Constant NUMBER_TOKEN       = 8;
 Constant TOPIC_TOKEN        = 9;
 Constant ENDIT_TOKEN        = 15;   ! Value used to mean "end of grammar line"
 
+Global found_token;
+Global found_ttype;
+Global found_tdata;
+Global action_to_be;
+Global action_reversed;
+Global params_wanted;
+
 
 [ Main loc;
     #Ifdef TARGET_GLULX;
@@ -160,13 +167,6 @@ Fake_action Xyzzy;
 
 #iftrue (Grammar__Version == 1);
 
-Global found_token;
-Global found_ttype;
-Global found_tdata;
-Global action_to_be;
-Global action_reversed;
-Global params_wanted;
-
 [ DumpGrammarLine address i m;
 	print "     * ";
     for (i=0 : i<=5 : i++) {
@@ -225,7 +225,48 @@ Global params_wanted;
     }
 ];
 
-#endif;  ! Grammar__Version
+#endif;  ! Grammar__Version 1
+
+#iftrue (Grammar__Version == 2);
+
+[ DumpGrammarLine address i;
+	print "     * ";
+    action_to_be = 256*(address->0) + address->1;
+    action_reversed = ((action_to_be & $400) ~= 0);
+    action_to_be = action_to_be & $3ff;
+    address--;
+    params_wanted = 0;
+    for (i=0 : : i++) {
+        address = address + 3;
+        if (address->0 == ENDIT_TOKEN) break;
+        found_token = address;
+        AnalyseToken(address);
+        if (found_ttype ~= PREPOSITION_TT) params_wanted++;
+		
+        if ((found_token)->0 & $10) print "/ ";
+        print (DebugToken) found_token, " ";
+    }
+
+    print "-> ", (DebugAction) action_to_be;
+    if (action_reversed) print " reverse";
+
+	new_line;
+    return address + 1;
+];
+
+[ AnalyseToken token;
+    if (token == ENDIT_TOKEN) {
+        found_ttype = ELEMENTARY_TT;
+        found_tdata = ENDIT_TOKEN;
+        return;
+    }
+    found_ttype = (token->0) & $$1111;
+    found_tdata = (token+1)-->0;
+];
+
+
+
+#endif;  ! Grammar__Version 2
 
 [ DebugAction a anames;
     #Iftrue (Grammar__Version == 1);
