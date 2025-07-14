@@ -18,6 +18,29 @@ Constant ROM_GAMERELEASE   $34;     ! short word
 Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
 #endif; ! TARGET_GLULX
 
+! Constants used in the parser code.
+
+Constant ILLEGAL_TT         = 0;    ! Types of grammar token: illegal
+Constant ELEMENTARY_TT      = 1;    !     (one of those below)
+Constant PREPOSITION_TT     = 2;    !     e.g. 'into'
+Constant ROUTINE_FILTER_TT  = 3;    !     e.g. noun=CagedCreature
+Constant ATTR_FILTER_TT     = 4;    !     e.g. edible
+Constant SCOPE_TT           = 5;    !     e.g. scope=Spells
+Constant GPR_TT             = 6;    !     a general parsing routine
+
+Constant NOUN_TOKEN         = 0;    ! The elementary grammar tokens, and
+Constant HELD_TOKEN         = 1;    ! the numbers compiled by Inform to
+Constant MULTI_TOKEN        = 2;    ! encode them
+Constant MULTIHELD_TOKEN    = 3;
+Constant MULTIEXCEPT_TOKEN  = 4;
+Constant MULTIINSIDE_TOKEN  = 5;
+Constant CREATURE_TOKEN     = 6;
+Constant SPECIAL_TOKEN      = 7;
+Constant NUMBER_TOKEN       = 8;
+Constant TOPIC_TOKEN        = 9;
+Constant ENDIT_TOKEN        = 15;   ! Value used to mean "end of grammar line"
+
+
 [ Main loc;
     #Ifdef TARGET_GLULX;
 	@setiosys 2 0;
@@ -91,6 +114,14 @@ Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
 Fake_action Xyzzy;
 
 [ RunTest;
+	print "Grammar version ", Grammar__Version, "^";
+#ifdef GRAMMAR_META_FLAG;
+	print "GRAMMAR_META_FLAG set^";
+#ifnot;
+	print "GRAMMAR_META_FLAG not set^";
+#endif; ! GRAMMAR_META_FLAG
+	new_line;
+
 	ShowAllVerbs();
 ];
 
@@ -121,7 +152,97 @@ Fake_action Xyzzy;
     new_line;
     if (lines == 0) "has no grammar lines.";
     for (: lines>0 : lines--) {
-		print "---^";
+		address = DumpGrammarLine(address);
+    }
+];
+
+#iftrue (Grammar__Version == 1);
+
+Global found_token;
+Global found_ttype;
+Global found_tdata;
+Global action_to_be;
+Global action_reversed;
+Global params_wanted;
+
+[ DumpGrammarLine address i m;
+	print "     * ";
+    for (i=0 : i<=5 : i++) {
+        found_token = address->(i+1);
+        AnalyseToken(found_token);
+        if ((found_ttype == ELEMENTARY_TT) && (found_tdata == NOUN_TOKEN)
+           && (m == address->0)) {
+            found_token = ENDIT_TOKEN;
+            break;
+        }
+        if (found_ttype ~= PREPOSITION_TT) m++;
+		
+        if ((found_token)->0 & $10) print "/ ";
+        print (DebugToken) found_token, " ";
+    }
+
+    action_to_be = address->7;
+    action_reversed = false;
+    params_wanted = address->0;
+
+    print "-> ", (DebugAction) action_to_be;
+    if (action_reversed) print " reverse";
+
+	new_line;
+	return address + 8;
+];
+
+[ AnalyseToken token m;
+    found_tdata = token;
+    if (token < 0)   { found_ttype = ILLEGAL_TT; return; }
+    if (token <= 8)  { found_ttype = ELEMENTARY_TT; return; }
+    if (token < 15)  { found_ttype = ILLEGAL_TT; return; }
+    if (token == 15) { found_ttype = ELEMENTARY_TT; return; }
+    if (token < 48)  { found_ttype = ROUTINE_FILTER_TT;
+                       found_tdata = token - 16;
+                       return;
+    }
+    if (token < 80)  { found_ttype = GPR_TT;
+                       found_tdata = #preactions_table-->(token-48);
+                       return;
+    }
+    if (token < 128) { found_ttype = SCOPE_TT;
+                       found_tdata = #preactions_table-->(token-80);
+                       return;
+    }
+    if (token < 180) { found_ttype = ATTR_FILTER_TT;
+                       found_tdata = token - 128;
+                       return;
+    }
+
+    found_ttype = PREPOSITION_TT;
+    m = #adjectives_table;
+    for (::) {
+        if (token == m-->1) { found_tdata = m-->0; return; }
+        m = m+4;
+    }
+    m = #adjectives_table; RunTimeError(1);
+    found_tdata = m;
+];
+
+#endif;  ! Grammar__Version
+
+[ DebugAction a anames;
+    #Iftrue (Grammar__Version == 1);
+    if (a >= 256) { print "<fake action ", a-256, ">"; return; }
+    #Ifnot;
+    if (a >= 4096) { print "<fake action ", a-4096, ">"; return; }
+    #Endif; ! Grammar__Version
+    anames = #identifiers_table;
+    anames = anames + 2*(anames-->0) + 2*48;
+    print (string) anames-->a;
+];
+
+[ DebugAttribute a anames;
+    if (a < 0 || a >= 48) print "<invalid attribute ", a, ">";
+    else {
+        anames = #identifiers_table; anames = anames + 2*(anames-->0);
+        print (string) anames-->a;
     }
 ];
 
@@ -161,7 +282,72 @@ Fake_action Xyzzy;
     }
 ];
 
+[ DebugAction a str;
+    if (a >= 4096) { print "<fake action ", a-4096, ">"; return; }
+    if (a < 0 || a >= #identifiers_table-->7) print "<invalid action ", a, ">";
+    else {
+        str = #identifiers_table-->6;
+        str = str-->a;
+        if (str) print (string) str; else print "<unnamed action ", a, ">";
+    }
+];
+
+[ DebugAttribute a str;
+    if (a < 0 || a >= NUM_ATTR_BYTES*8) print "<invalid attribute ", a, ">";
+    else {
+        str = #identifiers_table-->4;
+        str = str-->a;
+        if (str) print (string) str; else print "<unnamed attribute ", a, ">";
+    }
+];
+
 #Endif; ! TARGET_
+
+[ DebugToken token;
+    AnalyseToken(token);
+    switch (found_ttype) {
+      ILLEGAL_TT:
+        print "<illegal token number ", token, ">";
+      ELEMENTARY_TT:
+        switch (found_tdata) {
+          NOUN_TOKEN:           print "noun";
+          HELD_TOKEN:           print "held";
+          MULTI_TOKEN:          print "multi";
+          MULTIHELD_TOKEN:      print "multiheld";
+          MULTIEXCEPT_TOKEN:    print "multiexcept";
+          MULTIINSIDE_TOKEN:    print "multiinside";
+          CREATURE_TOKEN:       print "creature";
+          SPECIAL_TOKEN:        print "special";
+          NUMBER_TOKEN:         print "number";
+          TOPIC_TOKEN:          print "topic";
+          ENDIT_TOKEN:          print "END";
+        }
+      PREPOSITION_TT:
+        print "'", (address) found_tdata, "'";
+      ROUTINE_FILTER_TT:
+        #Ifdef INFIX;
+        print "noun=", (InfixPrintPA) found_tdata;
+        #Ifnot;
+        print "noun=Routine(", found_tdata, ")";
+        #Endif; ! INFIX
+      ATTR_FILTER_TT:
+        print (DebugAttribute) found_tdata;
+      SCOPE_TT:
+        #Ifdef INFIX;
+        print "scope=", (InfixPrintPA) found_tdata;
+        #Ifnot;
+        print "scope=Routine(", found_tdata, ")";
+        #Endif; ! INFIX
+      GPR_TT:
+        #Ifdef INFIX;
+        print (InfixPrintPA) found_tdata;
+        #Ifnot;
+        print "Routine(", found_tdata, ")";
+        #Endif; ! INFIX
+    }
+];
+
+
 
 Verb 'wait' 'z//' * -> Wait;
 
