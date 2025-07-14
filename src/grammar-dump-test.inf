@@ -459,7 +459,7 @@ Fake_action Xyzzy;
         #Ifdef INFIX;
         print "noun=", (InfixPrintPA) found_tdata;
         #Ifnot;
-        print "noun=Routine(", found_tdata, ")";
+        print "noun=Routine(", (FuncName) found_tdata, ")";
         #Endif; ! INFIX
       ATTR_FILTER_TT:
         print (DebugAttribute) found_tdata;
@@ -467,17 +467,40 @@ Fake_action Xyzzy;
         #Ifdef INFIX;
         print "scope=", (InfixPrintPA) found_tdata;
         #Ifnot;
-        print "scope=Routine(", found_tdata, ")";
+        print "scope=Routine(", (FuncName) found_tdata, ")";
         #Endif; ! INFIX
       GPR_TT:
         #Ifdef INFIX;
         print (InfixPrintPA) found_tdata;
         #Ifnot;
-        print "Routine(", found_tdata, ")";
+        print "Routine(", (FuncName) found_tdata, ")";
         #Endif; ! INFIX
     }
 ];
 
+
+[ ScopeTest; ];
+
+[ GPRTest; ];
+
+[ FilterTest; ];
+
+[ FuncName addr;
+	! We only have a few cases here; hard-code them
+	if (addr == ScopeTest) {
+		print "ScopeTest";
+		return;
+	}
+	if (addr == FilterTest) {
+		print "FilterTest";
+		return;
+	}
+	if (addr == GPRTest) {
+		print "GPRTest";
+		return;
+	}
+	print addr;
+];
 
 
 Verb 'wait' 'z//' * -> Wait;
@@ -507,6 +530,11 @@ Verb 'load'
 Verb 'take'
   * noun -> Take
   * 'inventory' -> Inv;
+
+Verb 'mix'
+  * 'foo' scope=ScopeTest -> Move
+  * 'bar' noun=FilterTest -> Take
+  * 'baz' GPRTest -> Show;
 
 #iffalse (Grammar__Version == 1);
 ! forms that require GV2/3...
