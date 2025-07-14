@@ -113,7 +113,9 @@ Constant ENDIT_TOKEN        = 15;   ! Value used to mean "end of grammar line"
 ! Fake_action has to be defined before use; possibly that's a bug.
 Fake_action Xyzzy;
 
-[ RunTest;
+[ RunTest val;
+	val = Xyzzy__A + ScoreSub + RestoreSub + LoadSub + ScriptSub + NotifySub;
+	
 	print "Grammar version ", Grammar__Version, "^";
 #ifdef GRAMMAR_META_FLAG;
 	print "GRAMMAR_META_FLAG set^";
@@ -221,8 +223,6 @@ Global params_wanted;
         if (token == m-->1) { found_tdata = m-->0; return; }
         m = m+4;
     }
-    m = #adjectives_table; RunTimeError(1);
-    found_tdata = m;
 ];
 
 #endif;  ! Grammar__Version
