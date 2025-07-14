@@ -1,0 +1,27 @@
+* test
+
+Grammar version 3
+GRAMMAR_META_FLAG not set
+
+Verb 'mix'
+ 1 * 'mul' multi -> Take
+ 2 * 'num' number -> Inv
+ 3 * 'sco' scope=ScopeTest -> Move
+ 4 * 'nnn' noun=FilterTest -> Take
+ 5 * 'gen' GPRTest -> Show
+Verb 'pull'
+ 6 * 'top' topic -> Show
+ 7 * 'out' / 'over' / 'off' noun -> Move
+Verb meta 'restart'
+ 8 * -> Restart
+ 9 * 'not' -> Quit
+Verb 'show'
+ 10 * noun 'to' noun -> Show
+ 11 * noun 'from' noun -> Show reverse
+Verb 'take'
+ 12 * noun -> Take
+ 13 * 'inventory' -> Inv
+Verb 'wait' 'z'
+ 14 * -> Wait
+Verb 'wait' 'z'
+ 15 * -> Wait
