@@ -190,6 +190,9 @@ Fake_action Xyzzy;
 
     print "-> ", (DebugAction) action_to_be;
     if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
 
 	new_line;
 	return address + 8;
@@ -250,6 +253,9 @@ Fake_action Xyzzy;
 
     print "-> ", (DebugAction) action_to_be;
     if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
 
 	new_line;
     return address + 1;
@@ -343,6 +349,9 @@ Fake_action Xyzzy;
 
     print "-> ", (DebugAction) action_to_be;
     if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
 
 	new_line;
     return address + 1;
