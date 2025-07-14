@@ -274,9 +274,11 @@ Fake_action Xyzzy;
     found_tdata = (token+1)-->0;
 ];
 
-
-
 #endif;  ! Grammar__Version 2
+
+#iftrue (Grammar__Version == 3);
+
+#endif;  ! Grammar__Version 3
 
 [ DebugAction a anames;
     #Iftrue (Grammar__Version == 1);
