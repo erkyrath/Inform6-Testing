@@ -973,7 +973,7 @@ def run_grammar_test():
     res.is_error()
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='0746eedd27e4d9b0d5c03e88b55cf533', reg='allpass.reg')
+    res.is_ok(md5='fac25f6999a8e51a08bdf69d126ed7ab', reg='allpass.reg')
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1, 'GRAMMAR_VERSION':2})
     res.is_ok(md5='f8fa741c80cdc86af9ee2d3c987d54db', reg='allpass.reg')
