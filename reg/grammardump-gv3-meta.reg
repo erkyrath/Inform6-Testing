@@ -1,0 +1,40 @@
+* test
+
+Grammar version 3
+GRAMMAR_META_FLAG set
+
+# This is identical to the GV2 version.
+
+Verb 'load'
+ 1 * noun -> Load
+ 2 * 'file' -> Restore meta
+ 3 * 'game' -> Restore meta
+Verb 'mix'
+ 4 * 'mul' multi -> Take
+ 5 * 'num' number -> Inv
+ 6 * 'sco' scope=ScopeTest -> Move
+ 7 * 'nnn' noun=FilterTest -> Take
+ 8 * 'gen' GPRTest -> Show
+Verb 'pull'
+ 9 * 'top' topic -> Show
+ 10 * 'out' / 'over' / 'off' noun -> Move
+Verb meta 'restart'
+ 11 * -> Restart meta
+ 12 * 'not' -> Quit meta
+Verb 'score'
+ 13 * -> Score meta
+Verb 'script'
+ 14 * -> Script meta
+Verb 'show'
+ 15 * noun 'to' noun -> Show
+ 16 * noun 'from' noun -> Show reverse
+Verb 'take'
+ 17 * noun -> Take
+ 18 * 'inventory' -> Inv
+ 19 * 'note' -> Notify meta
+Verb 'transcrip'
+ 20 * -> Script meta
+Verb 'wait' 'z'
+ 21 * -> Wait
+Verb 'wait' 'z'
+ 22 * -> Wait
