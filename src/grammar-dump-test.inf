@@ -6,6 +6,13 @@ Release 1;
 ! Display the grammar table.
 ! This is not self-checking. Gotta compare the output to a known text.
 
+! This contains a ShowVerbSub() routine which is directly cribbed from
+! the I6 library. As in the library, there are separate implementation
+! for Z-code and Glulx. The internal routines (DumpGrammarLine(),
+! AnalyseToken()) are themselves split into GV1, GV2, and GV3 versions.
+! (The GV3 version is new, and can also be seen in the i6lib-611gv3
+! directory.)
+
 #ifdef TARGET_ZCODE;
 Constant HDR_GAMERELEASE      = $02;     ! word
 Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
