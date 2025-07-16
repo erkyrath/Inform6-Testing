@@ -982,6 +982,19 @@ def run_grammar_test():
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
 
+    res = compile('action-compare-test.inf')
+    res.is_ok(md5='aa7e7af46d903d1346d64e909b000090', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='ec41f185e6630b381118a642298ecfba', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', glulx=True)
+    res.is_ok(md5='08e17d252a3c99e498f13bb421391436', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok(md5='62701429bcb915e44fd5e65807a72448', reg='allpass.reg')
+
+    
     res = compile('grammar-dump-test.inf')
     res.is_ok(md5='de9161e1f87aaa119478d7b3f655f526', reg='grammardump-gv1.reg')
     
