@@ -126,6 +126,20 @@ Global action;
 	print "if (action @@126= ##Drop)... "; check_value(res, 0);
 	new_line;
 
+	action = ##Score;
+
+	res = 0;
+	if (action == ##Score)
+	  res = 3;
+	print "if (action == ##Score)... "; check_value(res, 3);
+	new_line;
+
+	res = 0;
+	if (action ~= ##Score)
+	  res = 3;
+	print "if (action @@126= ##Score)... "; check_value(res, 0);
+	new_line;
+
 	new_line;
 	if (failures == 0)
 		print "All passed.^";
