@@ -1799,6 +1799,9 @@ def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
     res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, debugfile='69deb1a620f8dfcf4682ec15b6fe54d2')
 
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
+    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0, debugfile='ea54902550855d21ef306abd4a14b3eb')
+
 
 def run_warnings_test():
     res = compile('typewarningtest.inf')
