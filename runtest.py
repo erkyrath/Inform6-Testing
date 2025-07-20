@@ -1415,19 +1415,19 @@ def run_veneer_test():
     res.is_ok(md5='86a05a59183f723f31c246e070e21a05')
     
     res = compile('obj_prop_test.inf')
-    res.is_ok(md5='f3f44fe9d6d31f8f792ee8cf6a6b2dbb')
+    res.is_ok(md5='f3f44fe9d6d31f8f792ee8cf6a6b2dbb', reg='obj_prop_test-z.reg')
     
     res = compile('obj_prop_test.inf', strict=False)
-    res.is_ok(md5='d8a86fa431147b37e93ffc5c891925a3')
+    res.is_ok(md5='d8a86fa431147b37e93ffc5c891925a3', reg='obj_prop_test-z.reg')
     
     res = compile('obj_prop_test.inf', zversion=3)
-    res.is_ok(md5='06f87532155ea09e49b1b1f88a89594d')
+    res.is_ok(md5='06f87532155ea09e49b1b1f88a89594d', reg='obj_prop_test-z.reg')
     
     res = compile('obj_prop_test.inf', glulx=True)
-    res.is_ok(md5='fa5334982d7faf56cc42ea788c8e77cc')
+    res.is_ok(md5='fa5334982d7faf56cc42ea788c8e77cc', reg='obj_prop_test-g.reg')
     
     res = compile('obj_prop_test.inf', glulx=True, strict=False)
-    res.is_ok(md5='6c6e6bcf3c2715b5f9962dd78e3adee3')
+    res.is_ok(md5='6c6e6bcf3c2715b5f9962dd78e3adee3', reg='obj_prop_test-g.reg')
     
 
 def run_statements_test():
