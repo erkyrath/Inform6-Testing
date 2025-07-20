@@ -1403,16 +1403,16 @@ def run_veneer_test():
     res.is_ok()
 
     res = compile('base_class_prop.inf', zversion=3, includedir='punylib-36')
-    res.is_ok(md5='ac96ab44530c68478cec38c5a1049658')
+    res.is_ok(md5='ac96ab44530c68478cec38c5a1049658', reg='base_class_prop.reg')
     
     res = compile('base_class_prop.inf', zversion=5, includedir='punylib-36')
-    res.is_ok(md5='4bde4d78c2be61dfbb2cd90b58091955')
+    res.is_ok(md5='4bde4d78c2be61dfbb2cd90b58091955', reg='base_class_prop.reg')
     
     res = compile('base_class_prop_2.inf', zversion=3, includedir='punylib-36')
-    res.is_ok(md5='aed71b23888e763a82ff545dadba88ba')
+    res.is_ok(md5='aed71b23888e763a82ff545dadba88ba', reg='base_class_prop_2.reg')
     
     res = compile('base_class_prop_2.inf', zversion=5, includedir='punylib-36')
-    res.is_ok(md5='86a05a59183f723f31c246e070e21a05')
+    res.is_ok(md5='86a05a59183f723f31c246e070e21a05', reg='base_class_prop_2.reg')
     
     res = compile('obj_prop_test.inf')
     res.is_ok(md5='f3f44fe9d6d31f8f792ee8cf6a6b2dbb', reg='obj_prop_test-z.reg')

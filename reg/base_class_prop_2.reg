@@ -1,0 +1,12 @@
+* test
+
+Start:
+prop_a: 2
+prop_b: 4
+iprop_c: 2
+iprop_d: 4
+Foo::description: 6
+Foo::prop_a: 8
+Foo::prop_b: 6
+Foo::iprop_c: 8
+Foo::iprop_d: 6
