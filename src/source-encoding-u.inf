@@ -1,0 +1,24 @@
+!% -Cu
+
+! This tests source-file encoding. It also lets us test the --trace dict
+! and gametext.txt output, although the test suite is not currently set
+! up to verify those.
+
+#Ifdef TARGET_ZCODE;
+Zcharacter table + '@{3a1}'; ! GREEK CAPITAL RHO
+Zcharacter table + '@{3c1}'; ! GREEK SMALL RHO
+#Endif; ! TARGET_ZCODE
+
+Dictionary 'forêt';
+Dictionary 'fœret';
+Dictionary 'fo@{3c1}et';
+
+[ Main;
+	print "Latin-1 characters:^^";
+	print "à â ä ç é è ê ë î ï ô ö ù û ü ÿ æ « » À Â Ä Ç É È Ê Ë Î Ï Ô Ö Ù Û Ü Æ^";
+	new_line;
+	print "ZSCII characters, and a couple added to ZSCII:^^";
+	print "Œ œ @{3a1} @{3c1}^";
+	new_line;
+	print (address) 'forêt', " ", (address) 'fœret', " ", (address) 'fo@{3c1}et', "^";
+];

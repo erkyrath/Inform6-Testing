@@ -1,0 +1,28 @@
+
+Global vv1;
+
+! Define a bunch of array data, as I6 libraries do.
+! But if SHORTARRAY is defined, use minimal array data to test a
+! corner case.
+
+#ifndef SHORTARRAY;
+Array arr -> 500;
+#ifnot;
+Array arr -> 4;
+#endif; ! SHORTARRAY
+
+[ Main;
+	print "globals begin at: ", #globals_array, "^";
+	print "arrays begin at: ", #array__start, "^";
+	print "global count (including built-ins): ", (#array__start-#globals_array)/WORDSIZE, "^";
+	print "static memory begins at: ", (14-->0), "^^";
+	
+	print "vv1: ", #g$vv1, "^";
+	print "temp_global: ", #g$temp_global, "^";
+	print "temp__global2: ", #g$temp__global2, "^";
+	print "temp__global3: ", #g$temp__global3, "^";
+	print "temp__global4: ", #g$temp__global4, "^";
+	print "self: ", #g$self, "^";
+	print "sender: ", #g$sender, "^";
+	print "sw__var: ", #g$sw__var, "^";
+];

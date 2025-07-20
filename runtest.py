@@ -178,8 +178,18 @@ def compile(srcfile, destfile=None,
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = run.communicate()
-    stdout = stdout.decode()
-    stderr = stderr.decode()
+    
+    try:
+        stdout = stdout.decode()
+    except UnicodeDecodeError:
+        # Fallback in case of bad output
+        stdout = stdout.decode('latin-1')
+    try:
+        stderr = stderr.decode()
+    except UnicodeDecodeError:
+        # Fallback in case of bad output
+        stderr = stderr.decode('latin-1')
+        
     res = Result(run.returncode, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
@@ -390,6 +400,12 @@ class Result:
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
 
+    def checksum_file(self, filename):
+        infl = open(filename, 'rb')
+        dat = infl.read()
+        infl.close()
+        return hashlib.md5(dat).hexdigest()
+    
     def canonical_checksum(self):
         """ Load a file and construct an MD5 checksum, allowing for
         differences in serial number and compiler version.
@@ -420,7 +436,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, reg=None, abbreviations=None, warnings=None):
+    def is_ok(self, md5=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -431,6 +447,8 @@ class Result:
         If the reg argument is passed, we run the specified regression
         test(s) and make sure *they* pass. (May be a string or list of
         strings.)
+        If the debugfile argument is passed, we check that the gameinfo.gdb
+        file matches (the md5 checksum).
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
@@ -467,6 +485,12 @@ class Result:
                 for reg in regls:
                     if not self.run_regtest(reg):
                         isok = False
+            if debugfile is not None:
+                val = self.checksum_file('build/gameinfo.dbg')
+                if val != debugfile:
+                    error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
+                    print('*** TEST FAILED ***')
+                    isok = False
             return isok
         error(self, 'Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
@@ -971,6 +995,45 @@ def run_grammar_test():
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
+
+    res = compile('action-compare-test.inf')
+    res.is_ok(md5='aa7e7af46d903d1346d64e909b000090', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='ec41f185e6630b381118a642298ecfba', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', glulx=True)
+    res.is_ok(md5='08e17d252a3c99e498f13bb421391436', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok(md5='62701429bcb915e44fd5e65807a72448', reg='allpass.reg')
+
+    
+    res = compile('grammar-dump-test.inf')
+    res.is_ok(md5='de9161e1f87aaa119478d7b3f655f526', reg='grammardump-gv1.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2})
+    res.is_ok(md5='94ded73f87b61b2fbdf6bffbe408f3ec', reg='grammardump-gv2.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3})
+    res.is_ok(md5='88c6319ec6be0c0f521fd999e10f0a74', reg='grammardump-gv3.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2}, glulx=True)
+    res.is_ok(md5='a026e3913f038ca15ddcf27fd240fc92', reg='grammardump-gv2.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='1021084be7e8293a39c6ed88720c2dba', reg='grammardump-gv1-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='0a25f4dad48332f857fc0c3d23db8c71', reg='grammardump-gv2-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3, 'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='6595ea735b30fa5efa85afbcd0cf2375', reg='grammardump-gv3-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok(md5='646f05fd1f31d52d270c6be0d7482149', reg='grammardump-gv2-meta.reg')
+    
+    
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
     res.is_ok(md5='6bd1394efa885f14b94905fbbf3fc9a4', warnings=0, reg='Advent-z.reg')
@@ -1015,6 +1078,32 @@ def run_grammar_test():
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'BADEQUALS2':None})
     res.is_error()
+    
+    
+def run_encoding_test():
+    res = compile('unisourcetest.inf', glulx=True)
+    res.is_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg')
+    
+    res = compile('source-encoding-1.inf')
+    res.is_ok(md5='9f9db0d51ec24308cb4e19d1ac058314', reg='source-encoding-1.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-1.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='946b2540327fdff54b0ffd93922317f2')
+    
+    res = compile('source-encoding-7.inf')
+    res.is_ok(md5='1cb7e8a3450969b44c8183b87f474b5d', reg='source-encoding-7.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-7.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='175f2b60c6347197eec2225e85702e75')
+    
+    res = compile('source-encoding-u.inf')
+    res.is_ok(md5='8c71355a98f3c55af71dce45e6182e06', reg='source-encoding-u.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47')
     
     
 def run_lexer_test():
@@ -1248,16 +1337,10 @@ def run_directives_test():
     res = compile('globalarray.inf', define={'USE_GLOBAL_BEFORE_DEF':None})
     res.is_error()
 
-    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_TWICE':None})
-    res.is_error()
-    
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_NONSYMBOL':None})
     res.is_error()
     
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_STATIC':None})
-    res.is_error()
-    
-    res = compile('globalarray.inf', define={'DEFINE_TEMPGLOB':None})
     res.is_error()
     
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_EXTRA':None})
@@ -1281,6 +1364,30 @@ def run_directives_test():
     res = compile('globalredef.inf', glulx=True)
     res.is_ok()
 
+    res = compile('globalredef2.inf')
+    res.is_ok(reg='allpass.reg')
+
+    res = compile('globalredef2.inf', glulx=True)
+    res.is_ok(reg='allpass.reg')
+
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None}, glulx=True)
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM':None}, glulx=True)
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM99':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM99':None}, glulx=True)
+    res.is_error()
+    
     res = compile('unterm-array-test.inf')
     res.is_error(errors=2)
 
@@ -1694,10 +1801,16 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0)
+    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0, debugfile='9077b2fa95b51e9781ad896ee8dce14b')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0)
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, debugfile='69deb1a620f8dfcf4682ec15b6fe54d2')
+
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
+    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0, debugfile='ea54902550855d21ef306abd4a14b3eb')
+
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0, debugfile='e84746a21e785db9129166042847937e')
 
 
 def run_warnings_test():
@@ -1843,6 +1956,19 @@ def run_abbreviations_test():
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, define={'BADSYNTAX':None}, glulx=True)
     res.is_error(errors=8)
 
+    res = compile('nested_abbrev_test.inf')
+    res.is_ok(warnings=0)
+
+    res = compile('nested_abbrev_test.inf', economy=True)
+    res.is_ok(warnings=1)
+
+    res = compile('nested_abbrev_test.inf', glulx=True, economy=True)
+    res.is_ok(warnings=0)
+
+    res = compile('nested_lowstring_test.inf')
+    res.is_ok(warnings=1)
+
+    
     
 def run_make_abbreviations_test():
     res = compile('abbrevtest.inf', makeabbrevs=True, economy=True)
@@ -1933,6 +2059,24 @@ def run_max_objects():
     res = compile('max_objects_test.inf', glulx=True)
     res.is_ok()
 
+    res = compile('max_objects_256_test.inf', zversion=3)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_error()
+
+    res = compile('max_objects_256_test.inf', zversion=4)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=4, define={ 'ONEMORE':0 })
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=5)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=5, define={ 'ONEMORE':0 })
+    res.is_ok()
+
     res = compile('max_duplicate_objects_test.inf', glulx=True)
     res.is_ok()
 
@@ -1942,6 +2086,24 @@ def run_max_classes():
     res.is_ok()
 
     res = compile('max_classes_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=3)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_error()
+
+    res = compile('max_classes_256_test.inf', zversion=4)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=4, define={ 'ONEMORE':0 })
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=5)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=5, define={ 'ONEMORE':0 })
     res.is_ok()
 
 
@@ -2100,6 +2262,15 @@ def run_max_global_variables():
     # limit.
     res = compile('max_global_variables_test.inf')
     res.is_ok()
+    
+    res = compile('max_global_variables_test.inf', zversion=3)
+    res.is_ok()
+    
+    res = compile('max_global_variables_test.inf', define={ 'ONEMORE':0 })
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
+    
+    res = compile('max_global_variables_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
     
     res = compile('max_global_variables_test_2.inf')
     res.is_memsetting('MAX_GLOBAL_VARIABLES')
@@ -2622,13 +2793,70 @@ def run_file_end_padding():
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'ZCODE_FILE_END_PADDING':0}, zversion=3)
     res.is_ok(md5='3df21a98f528a7743f71a3e8f91beb83', reg='library_of_horror.reg')
+
+
+def run_zcode_compact_globals():
+    res = compile('show_globals.inf')
+    res.is_ok(reg='show_globals-z5.reg')
+
+    res = compile('show_globals.inf', zversion=3)
+    res.is_ok(reg='show_globals-z3.reg')
+
+    res = compile('show_globals.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals-z5-compact.reg')
+
+    res = compile('show_globals.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals-z3-compact.reg')
+
+    res = compile('show_globals.inf', define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z5-short.reg')
+
+    res = compile('show_globals.inf', zversion=3, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z3-short.reg')
+
+    res = compile('show_globals.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z5-compact-short.reg')
+
+    res = compile('show_globals.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z3-compact-short.reg')
+
     
+    res = compile('show_globals_1v.inf')
+    res.is_ok(reg='show_globals_1v-z5.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3)
+    res.is_ok(reg='show_globals_1v-z3.reg')
+
+    res = compile('show_globals_1v.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals_1v-z5-compact.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals_1v-z3-compact.reg')
+
+    res = compile('show_globals_1v.inf', define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z5-short.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z3-short.reg')
+
+    res = compile('show_globals_1v.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z5-compact-short.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z3-compact-short.reg')
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='03db18530d2840de9c0ebeb01cd53c39', warnings=0, reg='Advent-z.reg')
+
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='6d3150a358f4c7dddd7c81388aa2d00a', reg='library_of_horror.reg')
 
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
     ('GRAMMAR', run_grammar_test),
+    ('ENCODING', run_encoding_test),
     ('LEXER', run_lexer_test),
     ('VENEER', run_veneer_test),
     ('DIRECTIVES', run_directives_test),
@@ -2685,6 +2913,7 @@ test_catalog = [
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ('OMIT_SYMBOL_TABLE', run_omit_symbol_table),
     ('ZCODE_FILE_END_PADDING', run_file_end_padding),
+    ('ZCODE_COMPACT_GLOBALS', run_zcode_compact_globals),
     ]
 
 test_map = dict(test_catalog)

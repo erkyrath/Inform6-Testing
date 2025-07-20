@@ -1,0 +1,578 @@
+Constant Story "GrammarDumpTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! Display the grammar table.
+! This is not self-checking. Gotta compare the output to a known text.
+
+! This contains a ShowVerbSub() routine which is directly cribbed from
+! the I6 library. As in the library, there are separate implementation
+! for Z-code and Glulx. The internal routines (DumpGrammarLine(),
+! AnalyseToken()) are themselves split into GV1, GV2, and GV3 versions.
+! (The GV3 version is new, and can also be seen in the i6lib-611gv3
+! directory.)
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+Constant HDR_DICTIONARY       = $08;     ! word
+Constant HDR_STATICMEMORY     = $0E;     ! word
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+! Constants used in the parser code.
+
+Constant ILLEGAL_TT         = 0;    ! Types of grammar token: illegal
+Constant ELEMENTARY_TT      = 1;    !     (one of those below)
+Constant PREPOSITION_TT     = 2;    !     e.g. 'into'
+Constant ROUTINE_FILTER_TT  = 3;    !     e.g. noun=CagedCreature
+Constant ATTR_FILTER_TT     = 4;    !     e.g. edible
+Constant SCOPE_TT           = 5;    !     e.g. scope=Spells
+Constant GPR_TT             = 6;    !     a general parsing routine
+
+Constant NOUN_TOKEN         = 0;    ! The elementary grammar tokens, and
+Constant HELD_TOKEN         = 1;    ! the numbers compiled by Inform to
+Constant MULTI_TOKEN        = 2;    ! encode them
+Constant MULTIHELD_TOKEN    = 3;
+Constant MULTIEXCEPT_TOKEN  = 4;
+Constant MULTIINSIDE_TOKEN  = 5;
+Constant CREATURE_TOKEN     = 6;
+Constant SPECIAL_TOKEN      = 7;
+Constant NUMBER_TOKEN       = 8;
+Constant TOPIC_TOKEN        = 9;
+Constant ENDIT_TOKEN        = 15;   ! Value used to mean "end of grammar line"
+
+Global found_token;
+Global found_ttype;
+Global found_tdata;
+Global action_to_be;
+Global action_reversed;
+Global params_wanted;
+
+Global line_counter;
+
+[ Main loc;
+    #Ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 loc;
+    #Endif; ! TARGET_
+
+	loc = 0;
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #ifnot;
+    print "Game file format ", 0->0, ".^";
+    #Endif; ! TARGET_GLULX
+];
+
+! Fake_action has to be defined before use; possibly that's a bug.
+Fake_action Xyzzy;
+
+[ RunTest val;
+	! shush compiler warnings
+	val = Xyzzy__A + ScoreSub + ShowSub + MoveSub + RestoreSub + LoadSub + ScriptSub + NotifySub;
+	
+	print "Grammar version ", Grammar__Version, "^";
+#ifdef GRAMMAR_META_FLAG;
+	print "GRAMMAR_META_FLAG set^";
+#ifnot;
+	print "GRAMMAR_META_FLAG not set^";
+#endif; ! GRAMMAR_META_FLAG
+	new_line;
+
+	ShowAllVerbs();
+];
+
+#Ifdef TARGET_ZCODE;
+
+[ ShowAllVerbs j da verbword;
+    da = HDR_DICTIONARY-->0;
+    for (j=0 : j<(da+5)-->0 : j++) {
+		verbword = da + 9*j + 7;
+		if ((verbword->#dict_par1) & 1)
+			ShowVerbSub(verbword);
+	}
+];
+
+[ ShowVerbSub verbword   address lines da meta i j;
+    if (verbword == 0 || ((verbword->#dict_par1) & 1) == 0)
+        "Try typing ~showverb~ and then the name of a verb.";
+    meta = ((verbword->#dict_par1) & 2)/2;
+    i = $ff-(verbword->#dict_par2);
+    address = (HDR_STATICMEMORY-->0)-->i;
+    lines = address->0;
+    address++;
+    print "Verb ";
+    if (meta) print "meta ";
+    da = HDR_DICTIONARY-->0;
+    for (j=0 : j<(da+5)-->0 : j++)
+        if (da->(j*9 + 14) == $ff-i) print "'", (address) (da + 9*j + 7), "' ";
+    new_line;
+    if (lines == 0) "has no grammar lines.";
+    for (: lines>0 : lines--) {
+		address = DumpGrammarLine(address);
+    }
+];
+
+#iftrue (Grammar__Version == 1);
+
+[ DumpGrammarLine address i m;
+	print " ", ++line_counter, " * ";
+	
+    for (i=0 : i<=5 : i++) {
+        found_token = address->(i+1);
+        AnalyseToken(found_token);
+        if ((found_ttype == ELEMENTARY_TT) && (found_tdata == NOUN_TOKEN)
+           && (m == address->0)) {
+            found_token = ENDIT_TOKEN;
+            break;
+        }
+        if (found_ttype ~= PREPOSITION_TT) m++;
+		
+        if ((found_token)->0 & $10) print "/ ";
+        print (DebugToken) found_token, " ";
+    }
+
+    action_to_be = address->7;
+    action_reversed = false;
+    params_wanted = address->0;
+
+    print "-> ", (DebugAction) action_to_be;
+    if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
+
+	new_line;
+	return address + 8;
+];
+
+[ AnalyseToken token m;
+    found_tdata = token;
+    if (token < 0)   { found_ttype = ILLEGAL_TT; return; }
+    if (token <= 8)  { found_ttype = ELEMENTARY_TT; return; }
+    if (token < 15)  { found_ttype = ILLEGAL_TT; return; }
+    if (token == 15) { found_ttype = ELEMENTARY_TT; return; }
+    if (token < 48)  { found_ttype = ROUTINE_FILTER_TT;
+                       found_tdata = token - 16;
+                       return;
+    }
+    if (token < 80)  { found_ttype = GPR_TT;
+                       found_tdata = #preactions_table-->(token-48);
+                       return;
+    }
+    if (token < 128) { found_ttype = SCOPE_TT;
+                       found_tdata = #preactions_table-->(token-80);
+                       return;
+    }
+    if (token < 180) { found_ttype = ATTR_FILTER_TT;
+                       found_tdata = token - 128;
+                       return;
+    }
+
+    found_ttype = PREPOSITION_TT;
+    m = #adjectives_table;
+    for (::) {
+        if (token == m-->1) { found_tdata = m-->0; return; }
+        m = m+4;
+    }
+];
+
+#endif;  ! Grammar__Version 1
+
+#iftrue (Grammar__Version == 2);
+
+[ DumpGrammarLine address i;
+	print " ", ++line_counter, " * ";
+	
+    action_to_be = 256*(address->0) + address->1;
+    action_reversed = ((action_to_be & $400) ~= 0);
+    action_to_be = action_to_be & $3ff;
+    address--;
+    params_wanted = 0;
+    for (i=0 : : i++) {
+        address = address + 3;
+        if (address->0 == ENDIT_TOKEN) break;
+        found_token = address;
+        AnalyseToken(address);
+        if (found_ttype ~= PREPOSITION_TT) params_wanted++;
+		
+        if ((found_token)->0 & $10) print "/ ";
+        print (DebugToken) found_token, " ";
+    }
+
+    print "-> ", (DebugAction) action_to_be;
+    if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
+
+	new_line;
+    return address + 1;
+];
+
+[ AnalyseToken token;
+    if (token == ENDIT_TOKEN) {
+        found_ttype = ELEMENTARY_TT;
+        found_tdata = ENDIT_TOKEN;
+        return;
+    }
+    found_ttype = (token->0) & $$1111;
+    found_tdata = (token+1)-->0;
+];
+
+#endif;  ! Grammar__Version 2
+
+#iftrue (Grammar__Version == 3);
+
+[ DumpGrammarLine address i count;
+	print " ", ++line_counter, " * ";
+	
+    action_to_be = 256*(address->0) + address->1;
+    count = action_to_be & $f800;
+    @log_shift count (-11) -> count;
+    action_reversed = ((action_to_be & $400) ~= 0);
+    action_to_be = action_to_be & $3ff;
+    params_wanted = 0;
+    for (i=0 : i<count : i++) {
+        address = address + 2;
+        found_token = address;
+        AnalyseToken(address);
+        if (found_ttype ~= PREPOSITION_TT) params_wanted++;
+		
+        if ((found_token)->0 & $10) print "/ ";
+        print (DebugToken) found_token, " ";
+    }
+
+    print "-> ", (DebugAction) action_to_be;
+    if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
+
+	new_line;
+    return address+2;
+];
+
+[ AnalyseToken token;
+    found_ttype = (token->0) & $$1111;
+    found_tdata = (token->1);
+    if (found_ttype == ROUTINE_FILTER_TT or SCOPE_TT or GPR_TT) {
+        found_tdata = #preactions_table-->found_tdata;
+    }
+    else if (found_ttype == PREPOSITION_TT) {
+        found_tdata = #adjectives_table-->found_tdata;
+    }
+];
+
+#endif;  ! Grammar__Version 3
+
+[ DebugAction a anames;
+    #Iftrue (Grammar__Version == 1);
+    if (a >= 256) { print "<fake action ", a-256, ">"; return; }
+    #Ifnot;
+    if (a >= 4096) { print "<fake action ", a-4096, ">"; return; }
+    #Endif; ! Grammar__Version
+    anames = #identifiers_table;
+    anames = anames + 2*(anames-->0) + 2*48;
+    print (string) anames-->a;
+];
+
+[ DebugAttribute a anames;
+    if (a < 0 || a >= 48) print "<invalid attribute ", a, ">";
+    else {
+        anames = #identifiers_table; anames = anames + 2*(anames-->0);
+        print (string) anames-->a;
+    }
+];
+
+#Ifnot; ! TARGET_GLULX
+
+[ ShowAllVerbs j dictlen entrylen verbword;
+    dictlen = #dictionary_table-->0;
+    entrylen = DICT_WORD_SIZE + 7;
+    for (j=0 : j<dictlen : j++) {
+        verbword = #dictionary_table + WORDSIZE + entrylen*j;
+		if ((verbword->#dict_par1) & 1)
+			ShowVerbSub(verbword);
+    }
+];
+
+[ ShowVerbSub verbword   address lines i j meta wd dictlen entrylen;
+    if (verbword == 0 || ((verbword->#dict_par1) & 1) == 0)
+        "Try typing ~showverb~ and then the name of a verb.";
+    meta = ((verbword->#dict_par1) & 2)/2;
+    i = $ff-(verbword->#dict_par2);
+    address = (#grammar_table)-->(i+1);
+    lines = address->0;
+    address++;
+    print "Verb ";
+    if (meta) print "meta ";
+    dictlen = #dictionary_table-->0;
+    entrylen = DICT_WORD_SIZE + 7;
+    for (j=0 : j<dictlen : j++) {
+        wd = #dictionary_table + WORDSIZE + entrylen*j;
+        if (wd->#dict_par2 == $ff-i)
+            print "'", (address) wd, "' ";
+    }
+    new_line;
+    if (lines == 0) "has no grammar lines.";
+    for (: lines>0 : lines--) {
+		address = DumpGrammarLine(address);
+    }
+];
+
+[ DumpGrammarLine address i;
+	print " ", ++line_counter, " * ";
+	
+    @aloads address 0 action_to_be;
+    action_reversed = (((address->2) & 1) ~= 0);
+    address = address - 2;
+    params_wanted = 0;
+    for (i=0 : : i++) {
+        address = address + 5;
+        if (address->0 == ENDIT_TOKEN) break;
+        found_token = address;
+        AnalyseToken(address);
+        if (found_ttype ~= PREPOSITION_TT) params_wanted++;
+		
+        if ((found_token)->0 & $10) print "/ ";
+        print (DebugToken) found_token, " ";
+    }
+
+    print "-> ", (DebugAction) action_to_be;
+    if (action_reversed) print " reverse";
+#ifdef GRAMMAR_META_FLAG;
+    if (action_to_be <= #highest_meta_action_number) print " meta";
+#endif; 
+
+	new_line;
+    return address + 1;
+];
+
+[ DebugAction a str;
+    if (a >= 4096) { print "<fake action ", a-4096, ">"; return; }
+    if (a < 0 || a >= #identifiers_table-->7) print "<invalid action ", a, ">";
+    else {
+        str = #identifiers_table-->6;
+        str = str-->a;
+        if (str) print (string) str; else print "<unnamed action ", a, ">";
+    }
+];
+
+[ DebugAttribute a str;
+    if (a < 0 || a >= NUM_ATTR_BYTES*8) print "<invalid attribute ", a, ">";
+    else {
+        str = #identifiers_table-->4;
+        str = str-->a;
+        if (str) print (string) str; else print "<unnamed attribute ", a, ">";
+    }
+];
+
+[ AnalyseToken token;
+    if (token == ENDIT_TOKEN) {
+        found_ttype = ELEMENTARY_TT;
+        found_tdata = ENDIT_TOKEN;
+        return;
+    }
+    found_ttype = (token->0) & $$1111;
+    found_tdata = (token+1)-->0;
+];
+
+#Endif; ! TARGET_
+
+[ DebugToken token;
+    AnalyseToken(token);
+    switch (found_ttype) {
+      ILLEGAL_TT:
+        print "<illegal token number ", token, ">";
+      ELEMENTARY_TT:
+        switch (found_tdata) {
+          NOUN_TOKEN:           print "noun";
+          HELD_TOKEN:           print "held";
+          MULTI_TOKEN:          print "multi";
+          MULTIHELD_TOKEN:      print "multiheld";
+          MULTIEXCEPT_TOKEN:    print "multiexcept";
+          MULTIINSIDE_TOKEN:    print "multiinside";
+          CREATURE_TOKEN:       print "creature";
+          SPECIAL_TOKEN:        print "special";
+          NUMBER_TOKEN:         print "number";
+          TOPIC_TOKEN:          print "topic";
+          ENDIT_TOKEN:          print "END";
+        }
+      PREPOSITION_TT:
+        print "'", (address) found_tdata, "'";
+      ROUTINE_FILTER_TT:
+        #Ifdef INFIX;
+        print "noun=", (InfixPrintPA) found_tdata;
+        #Ifnot;
+        print "noun=", (FuncName) found_tdata;
+        #Endif; ! INFIX
+      ATTR_FILTER_TT:
+        print (DebugAttribute) found_tdata;
+      SCOPE_TT:
+        #Ifdef INFIX;
+        print "scope=", (InfixPrintPA) found_tdata;
+        #Ifnot;
+        print "scope=", (FuncName) found_tdata;
+        #Endif; ! INFIX
+      GPR_TT:
+        #Ifdef INFIX;
+        print (InfixPrintPA) found_tdata;
+        #Ifnot;
+        print (FuncName) found_tdata;
+        #Endif; ! INFIX
+    }
+];
+
+
+[ ScopeTest; ];
+
+[ GPRTest; ];
+
+[ FilterTest; ];
+
+[ FuncName addr;
+	! We only have a few cases here; hard-code them
+	if (addr == ScopeTest) {
+		print "ScopeTest";
+		return;
+	}
+	if (addr == FilterTest) {
+		print "FilterTest";
+		return;
+	}
+	if (addr == GPRTest) {
+		print "GPRTest";
+		return;
+	}
+	print "Routine(", addr, ")";
+];
+
+
+Verb 'wait' 'z//' * -> Wait;
+
+! Meta flag at the front covers all listed actions.
+Verb meta 'restart'
+  * -> Restart
+  * 'not' -> Quit;
+
+#ifdef GRAMMAR_META_FLAG;
+
+! new-style meta verb
+Verb 'score' * -> Score meta;
+
+! "meta" on one verb line sets the flag for the whole Script action.
+Verb 'transcript' * -> Script;
+Verb 'script' * -> Script meta;
+
+! "meta" on a single Restore branch sets the flag for the whole Restore action, but not for the Load action.
+Verb 'load'
+  * noun -> Load
+  * 'file' -> Restore
+  * 'game' -> Restore meta;
+
+#endif; ! GRAMMAR_META_FLAG
+
+Verb 'take'
+  * noun -> Take
+  * 'inventory' -> Inv;
+
+Verb 'mix'
+  * 'mul' multi -> Take
+  * 'num' number -> Inv
+  * 'sco' scope=ScopeTest -> Move
+  * 'nnn' noun=FilterTest -> Take
+  * 'gen' GPRTest -> Show;
+
+#iffalse (Grammar__Version == 1);
+! forms that require GV2/3...
+
+Verb 'pull'
+  * 'top' topic -> Show
+  * 'out' / 'over' / 'off' noun -> Move;
+
+Verb 'show'
+  * noun 'to' noun -> Show
+  * noun 'from' noun -> Show reverse;
+
+#endif;  ! Grammar__Version
+
+#ifdef GRAMMAR_META_FLAG;
+! You can extend a verb and set the new branch meta.
+Extend 'take'
+  * 'note' -> Notify meta;
+#endif; ! GRAMMAR_META_FLAG
+
+[ WaitSub; ];
+[ ShowSub; ];
+[ MoveSub; ];
+[ ScoreSub; ];
+[ RestartSub; ];
+[ QuitSub; ];
+[ RestoreSub; ];
+[ LoadSub; ];
+[ TakeSub; ];
+[ InvSub; ];
+[ ScriptSub; ];
+[ NotifySub; ];
