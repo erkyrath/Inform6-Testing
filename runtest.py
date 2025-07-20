@@ -987,7 +987,7 @@ def run_grammar_test():
     res.is_error()
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='dc7af14d1a8feafbab668670830f90b2', reg='allpass.reg')
+    res.is_ok(md5='0b9211d2e2dada15ca924f1218bca7c5', reg='allpass.reg')
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1, 'GRAMMAR_VERSION':2})
     res.is_ok(md5='56bdc32b1e1d94c8f58492841688562f', reg='allpass.reg')
@@ -997,10 +997,10 @@ def run_grammar_test():
 
 
     res = compile('action-compare-test.inf')
-    res.is_ok(md5='aa7e7af46d903d1346d64e909b000090', reg='allpass.reg')
+    res.is_ok(md5='d61ec55b788b7b9dd191a095387d6c31', reg='allpass.reg')
 
     res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='ec41f185e6630b381118a642298ecfba', reg='allpass.reg')
+    res.is_ok(md5='732f24939d489781276866e9ae9310fb', reg='allpass.reg')
 
     res = compile('action-compare-test.inf', glulx=True)
     res.is_ok(md5='08e17d252a3c99e498f13bb421391436', reg='allpass.reg')
@@ -1010,25 +1010,25 @@ def run_grammar_test():
 
     
     res = compile('grammar-dump-test.inf')
-    res.is_ok(md5='de9161e1f87aaa119478d7b3f655f526', reg='grammardump-gv1.reg')
+    res.is_ok(md5='c202c3c4bdf006196ad8f66d6ae069d5', reg='grammardump-gv1.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2})
-    res.is_ok(md5='94ded73f87b61b2fbdf6bffbe408f3ec', reg='grammardump-gv2.reg')
+    res.is_ok(md5='8cf60086d546ca0f1a554916196593f8', reg='grammardump-gv2.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3})
-    res.is_ok(md5='88c6319ec6be0c0f521fd999e10f0a74', reg='grammardump-gv3.reg')
+    res.is_ok(md5='3771716590a06af208268ae3d10a7710', reg='grammardump-gv3.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2}, glulx=True)
     res.is_ok(md5='a026e3913f038ca15ddcf27fd240fc92', reg='grammardump-gv2.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='1021084be7e8293a39c6ed88720c2dba', reg='grammardump-gv1-meta.reg')
+    res.is_ok(md5='8e05391520148a55bf65ee3fec78f54c', reg='grammardump-gv1-meta.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='0a25f4dad48332f857fc0c3d23db8c71', reg='grammardump-gv2-meta.reg')
+    res.is_ok(md5='1de390904cdaed795e6fabd409dc1287', reg='grammardump-gv2-meta.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3, 'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='6595ea735b30fa5efa85afbcd0cf2375', reg='grammardump-gv3-meta.reg')
+    res.is_ok(md5='932f19d04793a4d94eeef9b22f482601', reg='grammardump-gv3-meta.reg')
     
     res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='646f05fd1f31d52d270c6be0d7482149', reg='grammardump-gv2-meta.reg')
@@ -1085,21 +1085,21 @@ def run_encoding_test():
     res.is_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg')
     
     res = compile('source-encoding-1.inf')
-    res.is_ok(md5='9f9db0d51ec24308cb4e19d1ac058314', reg='source-encoding-1.reg')
+    res.is_ok(md5='8366845344e9b7bcc5732d766c717414', reg='source-encoding-1.reg')
 
     # No output check because the file has no Glk setup
     res = compile('source-encoding-1.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
     res.is_ok(md5='946b2540327fdff54b0ffd93922317f2')
     
     res = compile('source-encoding-7.inf')
-    res.is_ok(md5='1cb7e8a3450969b44c8183b87f474b5d', reg='source-encoding-7.reg')
+    res.is_ok(md5='a57267e827b36408a906264396e689b1', reg='source-encoding-7.reg')
 
     # No output check because the file has no Glk setup
     res = compile('source-encoding-7.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
     res.is_ok(md5='175f2b60c6347197eec2225e85702e75')
     
     res = compile('source-encoding-u.inf')
-    res.is_ok(md5='8c71355a98f3c55af71dce45e6182e06', reg='source-encoding-u.reg')
+    res.is_ok(md5='bce2f5b1cf77021213c1ec8b92b44430', reg='source-encoding-u.reg')
 
     # No output check because the file has no Glk setup
     res = compile('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
@@ -1801,16 +1801,16 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0, debugfile='9077b2fa95b51e9781ad896ee8dce14b')
+    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, debugfile='9077b2fa95b51e9781ad896ee8dce14b')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, debugfile='69deb1a620f8dfcf4682ec15b6fe54d2')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='69deb1a620f8dfcf4682ec15b6fe54d2')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0, debugfile='ea54902550855d21ef306abd4a14b3eb')
+    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, debugfile='ea54902550855d21ef306abd4a14b3eb')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0, debugfile='e84746a21e785db9129166042847937e')
+    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, debugfile='e84746a21e785db9129166042847937e')
 
 
 def run_warnings_test():
@@ -2846,10 +2846,10 @@ def run_zcode_compact_globals():
     res.is_ok(reg='show_globals_1v-z3-compact-short.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1})
-    res.is_ok(md5='03db18530d2840de9c0ebeb01cd53c39', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='28a814ff94340420c6bc494a63163fbe', warnings=0, reg='Advent-z.reg')
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
-    res.is_ok(md5='6d3150a358f4c7dddd7c81388aa2d00a', reg='library_of_horror.reg')
+    res.is_ok(md5='aac6db71ab84369493308823710a9f85', reg='library_of_horror.reg')
 
 
 test_catalog = [
