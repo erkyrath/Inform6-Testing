@@ -400,6 +400,12 @@ class Result:
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
 
+    def checksum_file(self, filename):
+        infl = open(filename, 'rb')
+        dat = infl.read()
+        infl.close()
+        return hashlib.md5(dat).hexdigest()
+    
     def canonical_checksum(self):
         """ Load a file and construct an MD5 checksum, allowing for
         differences in serial number and compiler version.
@@ -430,7 +436,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, reg=None, abbreviations=None, warnings=None):
+    def is_ok(self, md5=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -441,6 +447,8 @@ class Result:
         If the reg argument is passed, we run the specified regression
         test(s) and make sure *they* pass. (May be a string or list of
         strings.)
+        If the debugfile argument is passed, we check that the gameinfo.gdb
+        file matches (the md5 checksum).
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
@@ -477,6 +485,12 @@ class Result:
                 for reg in regls:
                     if not self.run_regtest(reg):
                         isok = False
+            if debugfile is not None:
+                val = self.checksum_file('build/gameinfo.dbg')
+                if val != debugfile:
+                    error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
+                    print('*** TEST FAILED ***')
+                    isok = False
             return isok
         error(self, 'Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
@@ -1780,10 +1794,10 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
+    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0, debugfile='9077b2fa95b51e9781ad896ee8dce14b')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
+    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, debugfile='69deb1a620f8dfcf4682ec15b6fe54d2')
 
 
 def run_warnings_test():
