@@ -1239,10 +1239,10 @@ def run_directives_test():
     res.is_ok(md5='7d4bc338e99a777534f03d1a80388e58')
 
     res = compile('internaldirecttest.inf')
-    res.is_ok(md5='7fad50ebab77f541f12e51eb864ad594')
+    res.is_ok(md5='7fad50ebab77f541f12e51eb864ad594', reg='internaldirecttest.reg')
 
     res = compile('internaldirecttest.inf', glulx=True)
-    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66')
+    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66', reg='internaldirecttest.reg')
 
     res = compile('ifelsedirecttest.inf')
     res.is_ok(md5='ebdbb9f121b45bcfc54a41c71d87c029')
