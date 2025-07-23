@@ -1,0 +1,50 @@
+[ Main;
+	Test1();
+	Test2();
+	Test3();
+	Test4();
+];
+
+! Examples of loops that should cause no warning.
+
+[ Test1 word;
+	while (word--) {
+		if (word < 3) {
+			break;
+		}
+		else {
+			break;
+		}
+	}
+];
+
+[ Test2 word;
+	while (word--) {
+		if (word < 3) {
+			continue;
+		}
+		else {
+			break;
+		}
+	}
+];
+
+[ Test3 word;
+	while (word--) {
+		if (word < 3) {
+			continue;
+		}
+		break;
+	}
+];
+
+[ Test4 word;
+	while (true) {
+		word--;
+		if (word < 3) {
+			continue;
+		}
+		break;
+	}
+];
+

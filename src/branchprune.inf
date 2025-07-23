@@ -647,8 +647,8 @@ Constant stringconst = "This is a string constant, which will wind up in the sta
 	while (1) {
 		val++;
 		return val;
-	}              ! warning: not reached (on loop jump)
-	return 5;      ! (no warning, already had one)
+	}              ! no warning here
+	return 5;      ! warning: not reached
 ];
 
 [ TestDoUntilZeroReturn val;

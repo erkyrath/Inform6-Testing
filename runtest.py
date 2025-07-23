@@ -1633,6 +1633,18 @@ def run_prune_test():
     res = compile('branchprune-fwd.inf', glulx=True)
     res.is_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1, reg='allpass.reg')
 
+    res = compile('branchprune-nowarn.inf')
+    res.is_ok(md5='233e7651c598f35dc6f531b9a0d9d70d', warnings=0)
+
+    res = compile('branchprune-nowarn.inf', glulx=True)
+    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', warnings=0)
+
+    res = compile('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 })
+    res.is_ok(md5='233e7651c598f35dc6f531b9a0d9d70d', warnings=0)
+
+    res = compile('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
+    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', warnings=0)
+
     res = compile('logicprune.inf')
     res.is_ok(md5='2ec2682dcc8253fa4cb06670e92ee632', warnings=0, reg='allpass.reg')
 
