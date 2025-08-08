@@ -691,6 +691,9 @@ def run_checksum_test():
     # OMIT_UNUSED_ROUTINES is set in the source; GV3 is set in the library.
     res = compile('library_of_horror-60.inf', includedir='punylib-60', zversion=3)
     res.is_ok(md5='207e66a9d7ecd1666d8d956ba46cfd40', reg='library_of_horror.reg')
+    
+    res = compile('library_of_horror-60.inf', includedir='punylib-60', zversion=3, memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='a11d54c691edcd2a51110dc813948cab', reg='library_of_horror.reg')
 
 
 def run_dict_test():
