@@ -688,6 +688,10 @@ def run_checksum_test():
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3)
     res.is_ok(md5='8d421cc2c907dbe8a242df62e75bb821', reg='library_of_horror.reg')
 
+    # OMIT_UNUSED_ROUTINES is set in the source; GV3 is set in the library.
+    res = compile('library_of_horror-60.inf', includedir='punylib-60', zversion=3)
+    res.is_ok(md5='207e66a9d7ecd1666d8d956ba46cfd40', reg='library_of_horror.reg')
+
 
 def run_dict_test():
     res = compile('dict-size-v3test.inf', zversion=3)
