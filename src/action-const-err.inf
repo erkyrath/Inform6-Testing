@@ -1,0 +1,17 @@
+[ Main; func(); ];
+
+Object obj
+  with before [;
+    Frotz: return 1;    ! line 5 (not an error, Frotz is an action)
+  ];
+
+[ func;
+    return Frotz;       ! line 9 (error, no such constant)
+];
+
+Verb 'frotz' * -> Frotz;
+[ FrotzSub; ];
+
+#ifdef WITHCONST;
+Constant Frotz = 99;
+#endif; ! WITHCONST

@@ -1169,6 +1169,13 @@ def run_lexer_test():
     res = compile('bad-global.inf')
     res.is_error()
 
+    # we don't have a way to test this, but the error should be on line 9
+    res = compile('action-const-err.inf')
+    res.is_error()
+
+    res = compile('action-const-err.inf', define={'WITHCONST':None})
+    res.is_ok(md5='83ee946e3c894a630e0e891bd0dd3033')
+
     
 def run_directives_test():
     # md5 checks for serial.inf are useless because the checksummer ignores the serial number. Run the compiled file to check it.
