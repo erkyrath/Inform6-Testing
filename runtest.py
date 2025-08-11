@@ -178,8 +178,18 @@ def compile(srcfile, destfile=None,
     run = subprocess.Popen(argls, env=env,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = run.communicate()
-    stdout = stdout.decode()
-    stderr = stderr.decode()
+    
+    try:
+        stdout = stdout.decode()
+    except UnicodeDecodeError:
+        # Fallback in case of bad output
+        stdout = stdout.decode('latin-1')
+    try:
+        stderr = stderr.decode()
+    except UnicodeDecodeError:
+        # Fallback in case of bad output
+        stderr = stderr.decode('latin-1')
+        
     res = Result(run.returncode, stdout, stderr, srcfile=srcfile, destfile=destfile, args=showargs, zversion=zversion, glulx=glulx, makemodule=makemodule)
 
     print('...%s' % (res,))
@@ -390,6 +400,12 @@ class Result:
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
 
+    def checksum_file(self, filename):
+        infl = open(filename, 'rb')
+        dat = infl.read()
+        infl.close()
+        return hashlib.md5(dat).hexdigest()
+    
     def canonical_checksum(self):
         """ Load a file and construct an MD5 checksum, allowing for
         differences in serial number and compiler version.
@@ -420,7 +436,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, reg=None, abbreviations=None, warnings=None):
+    def is_ok(self, md5=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -431,6 +447,8 @@ class Result:
         If the reg argument is passed, we run the specified regression
         test(s) and make sure *they* pass. (May be a string or list of
         strings.)
+        If the debugfile argument is passed, we check that the gameinfo.gdb
+        file matches (the md5 checksum).
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
@@ -467,6 +485,12 @@ class Result:
                 for reg in regls:
                     if not self.run_regtest(reg):
                         isok = False
+            if debugfile is not None:
+                val = self.checksum_file('build/gameinfo.dbg')
+                if val != debugfile:
+                    error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
+                    print('*** TEST FAILED ***')
+                    isok = False
             return isok
         error(self, 'Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
@@ -586,110 +610,117 @@ def run_checksum_test():
     res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
-    res.is_ok(md5='6a90d7ed9f172551f88950dc91412d5a', warnings=0)
+    res.is_ok(md5='edcb2b211fe5ab2afba62d50b66dad95', warnings=0)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c', reg='i7-min-6G60.reg')
+    res.is_ok(md5='f95a48782e8f4fc1f84849823fab7983', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', zversion=8)
-    res.is_ok(md5='16d41aba696f3b6ea4810782bba9528e', reg='i7-min-6G60.reg')
+    res.is_ok(md5='1bda8151551b935497aa6c7882313953', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='e9735da155ab0c720e73f6be3b83bf48', reg='i7-min-6G60.reg')
+    res.is_ok(md5='f5811c171bd7f5bf843dfe813ef96e2f', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
-    res.is_ok(md5='7ec56a1fd21c2e0d0e47a16af1459c4d', reg='i7-min-6M62.reg')
+    res.is_ok(md5='2197c1d30fa3626eb5f3fcface08bb52', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', glulx=True)
-    res.is_ok(md5='83e7089561cde53a16e1c09e9fcdb2dc', reg='i7-min-6M62.reg')
+    res.is_ok(md5='00ef3d5fb6c9ac7c72dfab453c649843', reg='i7-min-6M62.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='a87a82794873b3d7a55ac50bd22dca3f', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
-    res.is_ok(md5='869493d777aa62e75d34692f61ba18c0', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='f754a939cb145e4951b3378446bd19fb', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, strict=False)
-    res.is_ok(md5='5e17c8d40fdf2af1c48fed04018f8808', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='c3bc7b1edf47b4e6afa352d074645b45', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, debug=True)
-    res.is_ok(md5='a09b6553f002d932839edf68061c941e', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='deb052b91d91f97ef3a764281ae6ce21', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, debug=True)
-    res.is_ok(md5='c2582674fc423437c922a4873f123d2b', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='bb0d1f33ade0d7053ad5475b2414e311', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', infix=True)
-    res.is_ok(md5='2d3e5c119619459877934f9211f6cabd', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='3c51bd889ac5ad49c34472096eacb13c', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6')
-    res.is_ok(md5='21074a2a0b2f5edc46b2c651cf68fa8f', warnings=0)
+    res.is_ok(md5='ab956711fffdc7044a72637e7706ef63', warnings=0)
 
     res = compile('Advent.inf', includedir='i6lib-6.12.6', glulx=True)
-    res.is_ok(md5='744f86ec3f3587a037720906b49cdcb4', warnings=1)
+    res.is_ok(md5='cc4cf1f29c0a069fec6fba2803585f78', warnings=1)
 
     res = compile('box_quote_test.inf', includedir='i6lib-611')
-    res.is_ok(md5='074dbc09049827fc021885cf256c7616', warnings=0)
+    res.is_ok(md5='9df04e29cfb266fac6ae2189c5c08dce', warnings=0)
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=False)
-    res.is_ok(md5='cc592023294af1d6a62c42db6e9533d8', warnings=2, reg='cloak-metro84.reg')
+    res.is_ok(md5='85daddc19f427d40a2afc105c8bc9a6f', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=False)
-    res.is_ok(md5='ee15a03257a469e92b8d56aa70dc17f3', warnings=2, reg='cloak-metro84.reg')
+    res.is_ok(md5='fbc8de090b9e3ad279c6fcedffe3179b', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=False)
-    res.is_ok(md5='dac502dd34a5d650db461b42112b7d37', warnings=2, reg='cloak-metro84.reg')
+    res.is_ok(md5='7fee920129cd5ad7dcda0389e3b33f22', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=3, economy=True)
-    res.is_ok(md5='2d82da285726122670136030447e9b68', warnings=2, reg='cloak-metro84.reg')
+    res.is_ok(md5='2bc19f1ad31ac6275ef0a0740a5c36b2', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=4, economy=True)
-    res.is_ok(md5='3a6c60e98e34f98dfd9b821881a8cbca', warnings=2, reg='cloak-metro84.reg')
+    res.is_ok(md5='41bba060f9af0769b95418d58f7284f6', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('cloak-metro84-v3test.inf', zversion=5, economy=True)
-    res.is_ok(md5='33fc9aa736d5fb97dd6adde04b8689a0', warnings=2, reg='cloak-metro84.reg')
+    res.is_ok(md5='d35a0874d9c980a9805915b3db3086ea', warnings=2, reg='cloak-metro84.reg')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3)
-    res.is_ok(md5='3ebaded1f6f33f0ec3e82bcd8b8e858c')
+    res.is_ok(md5='5ca55bde765400684e2efb9a12ca7bb8')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='d5b29e6eb2d8f1bc9083f04e0cdd58e9')
+    res.is_ok(md5='f7d7469375b9770b42474c52381f4db9')
 
     # OMIT_UNUSED_ROUTINES is set in the source
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3)
-    res.is_ok(md5='eb4ef5320f716e2fa14fd8a4a061950a', reg='library_of_horror.reg')
+    res.is_ok(md5='8d421cc2c907dbe8a242df62e75bb821', reg='library_of_horror.reg')
+
+    # OMIT_UNUSED_ROUTINES is set in the source; GV3 is set in the library.
+    res = compile('library_of_horror-60.inf', includedir='punylib-60', zversion=3)
+    res.is_ok(md5='207e66a9d7ecd1666d8d956ba46cfd40', reg='library_of_horror.reg')
+    
+    res = compile('library_of_horror-60.inf', includedir='punylib-60', zversion=3, memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='a11d54c691edcd2a51110dc813948cab', reg='library_of_horror.reg')
 
 
 def run_dict_test():
     res = compile('dict-size-v3test.inf', zversion=3)
-    res.is_ok(md5='f75ed33c64fbba8a53a1a02a1cbeea2b', reg='allpass.reg')
+    res.is_ok(md5='68b57b14d5ca770be53134d8f4739727', reg='allpass.reg')
 
     res = compile('dict-size-v3test.inf', zversion=5)
-    res.is_ok(md5='58fe6d80014bb250362990e21fef40c5', reg='allpass.reg')
+    res.is_ok(md5='99ad435689ac5b62dbf4fed48d4a4312', reg='allpass.reg')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=3)
-    res.is_ok(md5='4f32fb4f78295fe33bcfe1396b2a5e98', reg='allpass.reg')
+    res.is_ok(md5='9b1a1cd65bcc5225d30bde8f62493b0d', reg='allpass.reg')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=4)
-    res.is_ok(md5='e5bf355441d5e5f36c8994f733bb8a8a', reg='allpass.reg')
+    res.is_ok(md5='35d2034ccb1a27f4c38ca9b3506560f6', reg='allpass.reg')
 
     res = compile('dict-cutoff-v3test.inf', strict=False, zversion=5)
-    res.is_ok(md5='06625ab421e9c4b6915658f5fdfbc80d', reg='allpass.reg')
+    res.is_ok(md5='b4ecbc46330b345fa5025c652935341a', reg='allpass.reg')
 
     # This messes with the alphabet, which changes the output.
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=4)
-    res.is_ok(md5='d09f4ce77d4a4d197c3b553ef62d7d46', reg='dict-cutoff-alttest-v4.reg')
+    res.is_ok(md5='734be89cf0a91ac5d6b987a6ea3273d1', reg='dict-cutoff-alttest-v4.reg')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=5)
-    res.is_ok(md5='9a3b2476db96afe36f46a7360db3150d', reg='allpass.reg')
+    res.is_ok(md5='8f219602bc90b55f6b611b32a250fe81', reg='allpass.reg')
 
     res = compile('dict-cutoff-alttest.inf', strict=False, zversion=8)
-    res.is_ok(md5='a7bbc5992810c2321a3d8273c8a9d02d', reg='allpass.reg')
+    res.is_ok(md5='d0c0ce58edba3049f4c5e060201b2ffa', reg='allpass.reg')
 
     res = compile('max_dict_entries.inf')
     res.is_ok()
@@ -730,16 +761,16 @@ def run_dict_test():
     res.is_ok(md5='ff7005f93c1ff23adb38eb83e47df385')
 
     res = compile('dict-entry-size-test.inf', zversion=5)
-    res.is_ok(md5='83fe325758d4c092f0046f29eb224f5e')
+    res.is_ok(md5='ca381755a68378610d22ff5a6fa51c5c')
 
     res = compile('dict-entry-size-test.inf', zversion=5, memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='ae0d2c46bd7e1986d37359e748e4596c')
+    res.is_ok(md5='3ea3a34f41232f7b71d053b93ea8931e')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1})
-    res.is_ok(md5='3579ad9300d2414a6b60343fe254b4b9', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='2b816638ea1c79c3ea2efa8081b7be4d', warnings=0, reg='Advent-z.reg')
 
     res = compile('dict-sysconst-test.inf')
-    res.is_ok(md5='9e7686c1d206eaedca2da668dbefaa1f', reg='allpass.reg')
+    res.is_ok(md5='d03136a0683c391880f933c46db83389', reg='allpass.reg')
 
     res = compile('dictlongflagtest.inf')
     res.is_ok(md5='0d78b9f9117afe5be3047a911b0a0952')
@@ -790,10 +821,10 @@ def run_dict_test():
     res.is_error()
 
     res = compile('i7-min-6M62-z.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=8)
-    res.is_ok(md5='1d5f5aebf09a10ea18983fa9446dea97', reg='i7-min-6M62.reg')
+    res.is_ok(md5='65656e2ffa185b1dead962afecbef5b6', reg='i7-min-6M62.reg')
 
     res = compile('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True)
-    res.is_ok(md5='1d1494a4498275c2c9057c3557c46e72', reg='i7-min-6M62.reg')
+    res.is_ok(md5='132880fc7f9ce5ae3deb1c72784a208b', reg='i7-min-6M62.reg')
 
     res = compile('dictnewflagtest.inf')
     res.is_ok(md5='6a46be13dad0cb7ea0bb3b055427615a')
@@ -850,10 +881,10 @@ def run_dict_test():
     res.is_ok(md5='d3def326e708a7848c7257696e74f518')
     
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611')
-    res.is_ok(md5='88bf1fa056adc0e6b9508e70d09a420a', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='0d85f96da04a60f7c9751d995b80ecd0', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611w,i6lib-611', glulx=True)
-    res.is_ok(md5='f0ca486fa1d9f8012eae29a89d800474', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='dac7d96a50a17472941feaa8bdd87ef0', warnings=0, reg='Advent-g.reg')
 
     res = compile('dictlargeentrytest.inf', glulx=True)
     res.is_ok(md5='aa96bddd17fc8fbe78871d9f4088df1a', reg='allpass.reg')
@@ -949,51 +980,90 @@ def run_grammar_test():
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
-    res.is_ok(md5='c41a13473d6b01990bb0e781f8ac575c', reg='i7-min-6G60.reg')
+    res.is_ok(md5='f95a48782e8f4fc1f84849823fab7983', reg='i7-min-6G60.reg')
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='fd6237f501b101a2d846f6f9f6717401', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='77778a1834ec66ef7f1db3566cb3ed87', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='80c3887b4c8c98c861c5c24a6a40c62c', warnings=0, reg='Advent-g.reg')
 
     # Requires GRAMMAR_META_FLAG
     res = compile('grammar-metaflag-test.inf')
     res.is_error()
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='0746eedd27e4d9b0d5c03e88b55cf533', reg='allpass.reg')
+    res.is_ok(md5='0b9211d2e2dada15ca924f1218bca7c5', reg='allpass.reg')
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1, 'GRAMMAR_VERSION':2})
-    res.is_ok(md5='f8fa741c80cdc86af9ee2d3c987d54db', reg='allpass.reg')
+    res.is_ok(md5='56bdc32b1e1d94c8f58492841688562f', reg='allpass.reg')
 
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
+
+    res = compile('action-compare-test.inf')
+    res.is_ok(md5='d61ec55b788b7b9dd191a095387d6c31', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='732f24939d489781276866e9ae9310fb', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', glulx=True)
+    res.is_ok(md5='08e17d252a3c99e498f13bb421391436', reg='allpass.reg')
+
+    res = compile('action-compare-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok(md5='62701429bcb915e44fd5e65807a72448', reg='allpass.reg')
+
+    
+    res = compile('grammar-dump-test.inf')
+    res.is_ok(md5='c202c3c4bdf006196ad8f66d6ae069d5', reg='grammardump-gv1.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2})
+    res.is_ok(md5='8cf60086d546ca0f1a554916196593f8', reg='grammardump-gv2.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3})
+    res.is_ok(md5='3771716590a06af208268ae3d10a7710', reg='grammardump-gv3.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2}, glulx=True)
+    res.is_ok(md5='a026e3913f038ca15ddcf27fd240fc92', reg='grammardump-gv2.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='8e05391520148a55bf65ee3fec78f54c', reg='grammardump-gv1-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='1de390904cdaed795e6fabd409dc1287', reg='grammardump-gv2-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':3, 'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='932f19d04793a4d94eeef9b22f482601', reg='grammardump-gv3-meta.reg')
+    
+    res = compile('grammar-dump-test.inf', memsettings={'GRAMMAR_VERSION':2, 'GRAMMAR_META_FLAG':1}, glulx=True)
+    res.is_ok(md5='646f05fd1f31d52d270c6be0d7482149', reg='grammardump-gv2-meta.reg')
+    
+    
     # Compile with the GV3 parser.
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
-    res.is_ok(md5='653e053b87a32c36c286b14a021cff05', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='6bd1394efa885f14b94905fbbf3fc9a4', warnings=0, reg='Advent-z.reg')
 
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
-    res.is_ok(md5='5b8b91439c15a69083fa3e99b14567c4', warnings=0)
+    res.is_ok(md5='797eba5a2f2c9b11a65da16fd53a1493', warnings=0)
     
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True)
-    res.is_ok(md5='7b727879c043c5a18e189c8a6091e1d8', warnings=0)
+    res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', warnings=0)
 
     # All of the following should compile the same.
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=0)
+    res.is_ok(md5='9c49ae534b716fc7b194b073ebcc78a5', warnings=0)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
+    res.is_ok(md5='9c49ae534b716fc7b194b073ebcc78a5', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
+    res.is_ok(md5='9c49ae534b716fc7b194b073ebcc78a5', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
-    res.is_ok(md5='360072f8688e9f1ad5c44e9ccdc81b51', warnings=1)
+    res.is_ok(md5='9c49ae534b716fc7b194b073ebcc78a5', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS1':None})
     res.is_error()
@@ -1015,6 +1085,32 @@ def run_grammar_test():
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'BADEQUALS2':None})
     res.is_error()
+    
+    
+def run_encoding_test():
+    res = compile('unisourcetest.inf', glulx=True)
+    res.is_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg')
+    
+    res = compile('source-encoding-1.inf')
+    res.is_ok(md5='8366845344e9b7bcc5732d766c717414', reg='source-encoding-1.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-1.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='946b2540327fdff54b0ffd93922317f2')
+    
+    res = compile('source-encoding-7.inf')
+    res.is_ok(md5='a57267e827b36408a906264396e689b1', reg='source-encoding-7.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-7.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='175f2b60c6347197eec2225e85702e75')
+    
+    res = compile('source-encoding-u.inf')
+    res.is_ok(md5='bce2f5b1cf77021213c1ec8b92b44430', reg='source-encoding-u.reg')
+
+    # No output check because the file has no Glk setup
+    res = compile('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4})
+    res.is_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47')
     
     
 def run_lexer_test():
@@ -1070,8 +1166,15 @@ def run_lexer_test():
     res = compile('icl-linebreak-oldmac.inf', glulx=True)
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
-    res = compile('bad_global.inf')
+    res = compile('bad-global.inf')
     res.is_error()
+
+    # we don't have a way to test this, but the error should be on line 9
+    res = compile('action-const-err.inf')
+    res.is_error()
+
+    res = compile('action-const-err.inf', define={'WITHCONST':None})
+    res.is_ok(md5='83ee946e3c894a630e0e891bd0dd3033')
 
     
 def run_directives_test():
@@ -1096,13 +1199,13 @@ def run_directives_test():
     res.is_error()
     
     res = compile('staticarraytest.inf')
-    res.is_ok(md5='23fed66fd87f9b95586af51afd27fd00')
+    res.is_ok(md5='5fd2e8e4c1a0381dd87b8b4b78985dc9', reg='staticarraytest-z.reg')
 
     res = compile('staticarraytest.inf', glulx=True)
-    res.is_ok(md5='29abadec278f29e1c0b5eea0fd9c3495')
+    res.is_ok(md5='29abadec278f29e1c0b5eea0fd9c3495', reg='staticarraytest-g.reg')
 
     res = compile('undefdirectivetest.inf')
-    res.is_ok(md5='de2f2e32f82bf14a4178f3a992762e6b')
+    res.is_ok(md5='09380607fae21b0251f684e99ef6268e')
 
     res = compile('undefdirectivetest.inf', glulx=True)
     res.is_ok(md5='b981cf8a2508c9d56b7c4593ac336048')
@@ -1126,64 +1229,64 @@ def run_directives_test():
     res.is_error()
 
     res = compile('replacerenametest.inf', includedir='src')
-    res.is_ok(md5='20f77c3bc7002792f218a345f547b91c')
+    res.is_ok(md5='585210f59b0d02454b936752400fa085')
 
     res = compile('replacerenametest.inf', includedir='src', glulx=True)
     res.is_ok(md5='0a1fc0c94e71b42e406d8401517636d4')
 
     res = compile('replacerecursetest.inf')
-    res.is_ok(md5='9b89cd42cd723d4fb5197a6276e595c0')
+    res.is_ok(md5='3fe1f129f814e08cf0856907d572e046')
 
     res = compile('replacerecursetest.inf', glulx=True)
     res.is_ok(md5='2382f2a66978bdd09e42825bdeb551aa')
 
     res = compile('dictflagtest.inf')
-    res.is_ok(md5='6a9dbacc4efc4f13d07ddcea846b5f58')
+    res.is_ok(md5='75a906ad7747e412f9a1e6daba11f095')
 
     res = compile('dictflagtest.inf', glulx=True)
     res.is_ok(md5='05d9526ea9c2bc9bf5fdb41c9e3024e1')
 
     res = compile('actionextension.inf')
-    res.is_ok(md5='8434dd954b155675ec9a853052b5a5bc')
+    res.is_ok(md5='e105c7073f389c8f10c6f4d28899d69d')
 
     res = compile('actionextension.inf', glulx=True)
     res.is_ok(md5='7d4bc338e99a777534f03d1a80388e58')
 
     res = compile('internaldirecttest.inf')
-    res.is_ok(md5='7fad50ebab77f541f12e51eb864ad594')
+    res.is_ok(md5='5db4c2d81231ca02c0856edac3e793aa', reg='internaldirecttest.reg')
 
     res = compile('internaldirecttest.inf', glulx=True)
-    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66')
+    res.is_ok(md5='8f7bef97e18c912ec45760b57de6fa66', reg='internaldirecttest.reg')
 
     res = compile('ifelsedirecttest.inf')
-    res.is_ok(md5='ebdbb9f121b45bcfc54a41c71d87c029')
+    res.is_ok(md5='abdfb04e7cd456ed0b6b387ccf534729')
 
     res = compile('ifelsedirecttest.inf', glulx=True)
     res.is_ok(md5='c0724fca3f6783e10f7188ca4dbb1d3d')
 
     res = compile('ifdef_vn_test.inf')
-    res.is_ok(md5='45f86d7b6218cace38b16f2ca08e8d71')
+    res.is_ok(md5='16165e92193921df8803a6a2c141e161')
 
     res = compile('ifdef_vn_test.inf', glulx=True)
     res.is_ok(md5='5ad58c728862dce11b17d7a93adaaa51')
 
     res = compile('classordertest.inf')
-    res.is_ok(md5='334ef7ef87df98ed6f3b1dd99829deeb', reg='allpass.reg')
+    res.is_ok(md5='2946e51d9915a645781ae1b966ed7db8', reg='allpass.reg')
 
     res = compile('classordertest.inf', glulx=True)
     res.is_ok(md5='4025856ed2133af211feda4aa187d1fe', reg='allpass.reg')
 
     res = compile('classcopytest.inf')
-    res.is_ok(md5='4c53497c6c9a93e3163db0b619d9e1f6', reg='allpass.reg')
+    res.is_ok(md5='2d66e679eac466c66050705156976bad', reg='allpass.reg')
 
     res = compile('classcopytest.inf', glulx=True)
     res.is_ok(md5='9f6c50b53599e2a3dec440715759877d', reg='allpass.reg')
 
     res = compile('forwardproptest.inf')
-    res.is_ok(md5='d2a0621f1b3703523a9e0e00da8270d6', reg='allpass.reg')
+    res.is_ok(md5='ebcc5fc18ee9cc4362738a07ba27d609', reg='allpass.reg')
 
     res = compile('forwardproptest.inf', strict=False)
-    res.is_ok(md5='b181a2d7edd1d8188e0575767f53a886', reg='allpass.reg')
+    res.is_ok(md5='9a2c74338f936f1f44fa296857c6e8a5', reg='allpass.reg')
 
     res = compile('forwardproptest.inf', glulx=True)
     res.is_ok(md5='95095b05c3e5d9765822da3b725a108d', reg='allpass.reg')
@@ -1192,16 +1295,16 @@ def run_directives_test():
     res.is_ok(md5='82029b0f66f3536734d46ea80c1dab6c', reg='allpass.reg')
 
     res = compile('indivproptest.inf')
-    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f', reg='allpass.reg')
+    res.is_ok(md5='4339ec686df6e9f4ff849a27032fdb87', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None})
-    res.is_ok(md5='fa04f51e34f31a52fb764fab498a620f', reg='allpass.reg')
+    res.is_ok(md5='4339ec686df6e9f4ff849a27032fdb87', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV2':None})
-    res.is_ok(md5='3d4a3fdc6ff5ca44599c7b62f155c614', reg='allpass.reg')
+    res.is_ok(md5='2aefb40c89156aa8d3d52924947fcc11', reg='allpass.reg')
 
     res = compile('indivproptest.inf', define={'DEF_INDIV1':None,'DEF_INDIV2':None})
-    res.is_ok(md5='cde12cbf22e618d63a345a8995199686', reg='allpass.reg')
+    res.is_ok(md5='6aa46bb4987b59a881c8e1bdbcc4540e', reg='allpass.reg')
 
     res = compile('indivproptest.inf', glulx=True)
     res.is_ok(md5='fe01898bcf2f6b7639be92c213706252', reg='allpass.reg')
@@ -1216,10 +1319,10 @@ def run_directives_test():
     res.is_ok(md5='bda9d7dcc34ea1d463b336852a6d515b', reg='allpass.reg')
 
     res = compile('indivproptest_2.inf')
-    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=0, reg='allpass.reg')
+    res.is_ok(md5='d83e681d9bc10536d1f4ac417d8cdd26', warnings=0, reg='allpass.reg')
 
     res = compile('indivproptest_2.inf', define={'LONG_PROP_WARN':None})
-    res.is_ok(md5='93d8d451f9d7fe20ee127c242e0a39bd', warnings=1, reg='allpass.reg')
+    res.is_ok(md5='d83e681d9bc10536d1f4ac417d8cdd26', warnings=1, reg='allpass.reg')
 
     res = compile('indivproptest_2.inf', glulx=True)
     res.is_ok(md5='7e806bf207e3618424ad493ac7d187e7', warnings=0, reg='allpass.reg')
@@ -1248,16 +1351,10 @@ def run_directives_test():
     res = compile('globalarray.inf', define={'USE_GLOBAL_BEFORE_DEF':None})
     res.is_error()
 
-    res = compile('globalarray.inf', define={'DEFINE_GLOBAL_TWICE':None})
-    res.is_error()
-    
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_NONSYMBOL':None})
     res.is_error()
     
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_STATIC':None})
-    res.is_error()
-    
-    res = compile('globalarray.inf', define={'DEFINE_TEMPGLOB':None})
     res.is_error()
     
     res = compile('globalarray.inf', define={'DEFINE_GLOBAL_EXTRA':None})
@@ -1281,6 +1378,30 @@ def run_directives_test():
     res = compile('globalredef.inf', glulx=True)
     res.is_ok()
 
+    res = compile('globalredef2.inf')
+    res.is_ok(reg='allpass.reg')
+
+    res = compile('globalredef2.inf', glulx=True)
+    res.is_ok(reg='allpass.reg')
+
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX1_NUM':None}, glulx=True)
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM':None}, glulx=True)
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM99':None})
+    res.is_error()
+    
+    res = compile('globalredef2.inf', define={'DEFINE_GLOBX2_NUM99':None}, glulx=True)
+    res.is_error()
+    
     res = compile('unterm-array-test.inf')
     res.is_error(errors=2)
 
@@ -1296,31 +1417,31 @@ def run_veneer_test():
     res.is_ok()
 
     res = compile('base_class_prop.inf', zversion=3, includedir='punylib-36')
-    res.is_ok(md5='ac96ab44530c68478cec38c5a1049658')
+    res.is_ok(md5='302ab21102de8e69767ff53cf5376951', reg='base_class_prop.reg')
     
     res = compile('base_class_prop.inf', zversion=5, includedir='punylib-36')
-    res.is_ok(md5='4bde4d78c2be61dfbb2cd90b58091955')
+    res.is_ok(md5='ccb3e7d37851b916ca0fff3193c3354d', reg='base_class_prop.reg')
     
     res = compile('base_class_prop_2.inf', zversion=3, includedir='punylib-36')
-    res.is_ok(md5='aed71b23888e763a82ff545dadba88ba')
+    res.is_ok(md5='e1882635f85b995c7253ac3a441ebf82', reg='base_class_prop_2.reg')
     
     res = compile('base_class_prop_2.inf', zversion=5, includedir='punylib-36')
-    res.is_ok(md5='86a05a59183f723f31c246e070e21a05')
+    res.is_ok(md5='fd0032dacba95fdeff108c39a563e297', reg='base_class_prop_2.reg')
     
     res = compile('obj_prop_test.inf')
-    res.is_ok(md5='f3f44fe9d6d31f8f792ee8cf6a6b2dbb')
+    res.is_ok(md5='f3f11b36aaa04848372757fd56dd3b55', reg='obj_prop_test-z.reg')
     
     res = compile('obj_prop_test.inf', strict=False)
-    res.is_ok(md5='d8a86fa431147b37e93ffc5c891925a3')
+    res.is_ok(md5='b0805b8e7ade11de01dbbb105d319196', reg='obj_prop_test-z.reg')
     
     res = compile('obj_prop_test.inf', zversion=3)
-    res.is_ok(md5='06f87532155ea09e49b1b1f88a89594d')
+    res.is_ok(md5='1f6ff0b4f3dfcb1d389198ebcd64887c', reg='obj_prop_test-z.reg')
     
     res = compile('obj_prop_test.inf', glulx=True)
-    res.is_ok(md5='fa5334982d7faf56cc42ea788c8e77cc')
+    res.is_ok(md5='fa5334982d7faf56cc42ea788c8e77cc', reg='obj_prop_test-g.reg')
     
     res = compile('obj_prop_test.inf', glulx=True, strict=False)
-    res.is_ok(md5='6c6e6bcf3c2715b5f9962dd78e3adee3')
+    res.is_ok(md5='6c6e6bcf3c2715b5f9962dd78e3adee3', reg='obj_prop_test-g.reg')
     
 
 def run_statements_test():
@@ -1370,10 +1491,10 @@ def run_statements_test():
     res.is_error()
 
     res = compile('jumpopcodetest.inf')
-    res.is_ok(md5='85052b512ed6aba4ab2e5a07ef8116f2')
+    res.is_ok(md5='fd8a1258b39111c6e585e21f23961a7f')
 
     res = compile('jumpopcodetest.inf', define={'OPFORM':None})
-    res.is_ok(md5='85052b512ed6aba4ab2e5a07ef8116f2')
+    res.is_ok(md5='fd8a1258b39111c6e585e21f23961a7f')
 
     res = compile('jumpopcodetest.inf', glulx=True)
     res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94')
@@ -1390,7 +1511,7 @@ def run_statements_test():
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')
-    res.is_ok(md5='255de4bef4c60f886d9d86074a259b6b', reg='allpass.reg')
+    res.is_ok(md5='a5f08ebde4b94aed7b699ff07f544010', reg='allpass.reg')
 
     res = compile('unaryop_err_test.inf', glulx=True)
     res.is_ok(md5='92cf289c108ffb48be16e3aa69be9956', reg='allpass.reg')
@@ -1441,11 +1562,18 @@ def run_expressions_test():
     res.is_error(errors=2)
     
     res = compile('randomfunc.inf')
-    res.is_ok(md5='a1ad53866c6fa2838b3a001e460b9aa5')
+    res.is_ok(md5='17f65ec1505d5719886cc265365171a5')
 
     res = compile('randomfunc.inf', glulx=True)
     res.is_ok(md5='de075fc5d37611be364d0772ee082ec5')
 
+    # non-strict because we're testing low-level prop opcodes
+    res = compile('prop_store_optim.inf', strict=False)
+    res.is_ok(md5='12037d2e96d5d11f5a8f3527aae87799', reg='allpass.reg')
+    
+    res = compile('prop_store_optim.inf', strict=False, glulx=True)
+    res.is_ok(md5='14efea1ea6f04af863bed183ba33989f', reg='allpass.reg')
+    
 
 def run_debugflag_test():
     res = compile('no_debug_flag_test.inf')
@@ -1496,7 +1624,7 @@ def run_assembytes_test():
     
 def run_prune_test():
     res = compile('branchprune.inf')
-    res.is_ok(md5='ddf87f1d68837b26e90068f5b64dcb12', reg='allpass.reg')
+    res.is_ok(md5='a26c68adf166a508f0571e9762a77481', reg='allpass.reg')
 
     res = compile('branchprune.inf', glulx=True)
     res.is_ok(md5='acf2fe351129855c4962e3b625cde3f7', reg='allpass.reg')
@@ -1508,46 +1636,58 @@ def run_prune_test():
     res.is_error()
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 })
-    res.is_ok(md5='cd66fef4890d2640c9717a9d5f0afc20', reg='allpass.reg')
+    res.is_ok(md5='ab8b270528ab5e9e5ec35a358ea3a342', reg='allpass.reg')
 
     res = compile('branchprune.inf', define={ 'BAD_JUMPS':None }, memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
     res.is_ok(md5='73f2f9dd957cb4d62b0dfaa698681c1e', reg='allpass.reg')
 
     res = compile('branchprune-fwd.inf')
-    res.is_ok(md5='e8330c0fc42a9c459f3e3b9baf284e8e', warnings=1, reg='allpass.reg')
+    res.is_ok(md5='b5897f477ea57fa18d4a751ace4ac8ce', warnings=1, reg='allpass.reg')
 
     res = compile('branchprune-fwd.inf', glulx=True)
     res.is_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1, reg='allpass.reg')
 
+    res = compile('branchprune-nowarn.inf')
+    res.is_ok(md5='40f14e9e351ca712626a5dfc88068f3b', warnings=0)
+
+    res = compile('branchprune-nowarn.inf', glulx=True)
+    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', warnings=0)
+
+    res = compile('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 })
+    res.is_ok(md5='40f14e9e351ca712626a5dfc88068f3b', warnings=0)
+
+    res = compile('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
+    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', warnings=0)
+
     res = compile('logicprune.inf')
-    res.is_ok(md5='22c4bf399be25593f1bac737312b07dc', warnings=0, reg='allpass.reg')
+    res.is_ok(md5='2ec2682dcc8253fa4cb06670e92ee632', warnings=0, reg='allpass.reg')
 
     res = compile('logicprune.inf', glulx=True)
     res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0, reg='allpass.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
-    res.is_ok(md5='d9b4b1a788ab20554d842c278f590f86', reg='tasksacktest.reg')
+    res.is_ok(md5='795d007a1ecddd50fdc6014e8eaa1270', reg='tasksacktest.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None })
-    res.is_ok(md5='70443c63b9c049ae1e5760c5e962f1fc', reg='tasksacktest-t.reg')
+    res.is_ok(md5='a63a1e018183ef184adfa47698e3e2e4', reg='tasksacktest-t.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None })
-    res.is_ok(md5='9cde2861ba066676bb5d6ed3efc760db', reg='tasksacktest-s.reg')
+    res.is_ok(md5='f2bf2a9208e9e4343f21b5932089d2cb', reg='tasksacktest-s.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None })
-    res.is_ok(md5='ab96f1acc336cb54d55424f035c658ab', reg='tasksacktest-st.reg')
+    res.is_ok(md5='9351be8a4454fafcd1d185db86ed2112', reg='tasksacktest-st.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='268e2f8851d5aa6bd986c20734ff0932', reg='tasksacktest.reg')
+    res.is_ok(md5='db854286b0c5580ebaeea4f605b63db1', reg='tasksacktest.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='3294f6066418e864a9368ad67ef69455', reg='tasksacktest-t.reg')
+    res.is_ok(md5='6c469f61037ddf09ba701cedd18f69d5', reg='tasksacktest-t.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None }, glulx=True)
-    res.is_ok(md5='d269bcee381dfe11afac8bbf335023e6', reg='tasksacktest-s.reg')
+    res.is_ok(md5='1ac647839b26706e615aa15ccc985b53', reg='tasksacktest-s.reg')
 
     res = compile('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None }, glulx=True)
-    res.is_ok(md5='d442688ba330916028fc2ec362458796', reg='tasksacktest-st.reg')
+    res.is_ok(md5='74176ff2736cc48596a0228da91f36f4', reg='tasksacktest-st.reg')
 
 
 def run_compileopt_test():
@@ -1570,19 +1710,19 @@ def run_compileopt_test():
     
 def run_defineopt_test():
     res = compile('defineopttest.inf')
-    res.is_ok(md5='18316446546580127dfa84c75bec115d')
+    res.is_ok(md5='3672fc9946a1952baadff1c2a53cb670')
 
     res = compile('defineopttest.inf', debug=True)
-    res.is_ok(md5='604cd60bc7d5762b3605bbf093a1eb39')
+    res.is_ok(md5='90e5c14bf9cae22c27f6fabe3ac9b0ef')
 
     res = compile('defineopttest.inf', define={ 'DEBUG':None })
-    res.is_ok(md5='604cd60bc7d5762b3605bbf093a1eb39')
+    res.is_ok(md5='90e5c14bf9cae22c27f6fabe3ac9b0ef')
 
     res = compile('defineopttest.inf', define={ 'DEBUG':0 })
-    res.is_ok(md5='604cd60bc7d5762b3605bbf093a1eb39')
+    res.is_ok(md5='90e5c14bf9cae22c27f6fabe3ac9b0ef')
 
     res = compile('defineopttest.inf', define={ 'FOO':26, 'BAR':-923, 'BAZ':None, 'QUUX':123, 'MUM':-1, 'NERTZ':99999 })
-    res.is_ok(md5='6ae1d0138c4da1c7536a7fb8762cabd0')
+    res.is_ok(md5='670a794936e642762d40c458dc6344b6')
 
     # Can't redefine a compiler constant
     res = compile('defineopttest.inf', define={ 'WORDSIZE':3 })
@@ -1605,10 +1745,10 @@ def run_defineopt_test():
 
     # Redefining a constant to the same value is ok
     res = compile('defineopttest.inf', define={ 'WORDSIZE':2 })
-    res.is_ok(md5='18316446546580127dfa84c75bec115d')
+    res.is_ok(md5='3672fc9946a1952baadff1c2a53cb670')
 
     res = compile('defineopttest.inf', define={ 'XFOO':3, 'xfoo':3 })
-    res.is_ok(md5='18316446546580127dfa84c75bec115d')
+    res.is_ok(md5='3672fc9946a1952baadff1c2a53cb670')
 
     res = compile('defineopttest.inf', glulx=True)
     res.is_ok(md5='333fe8a75515113435491c94d3d6e57f')
@@ -1705,10 +1845,16 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3', warnings=0)
+    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, debugfile='8b6a1752e1a5b2d5fa9f586bab6ba867')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5', warnings=0)
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='d9df0dec31f611a3a3b29703f23e4440')
+
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
+    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, debugfile='be327df45cd90d7e3d733dd86b5cf4b0')
+
+    res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, debugfile='6e93f5a5beb2526c39e1135f57b51de8')
 
 
 def run_warnings_test():
@@ -1731,7 +1877,7 @@ def run_warnings_test():
     res.is_ok(warnings=11)
     
     res = compile('or_condition_test.inf')
-    res.is_ok(md5='04d4c51ead347b626bf34bfdb80ac81c', warnings=4, reg='allpass.reg')
+    res.is_ok(md5='dade25d1bf44788bed7850001aa94ee9', warnings=4, reg='allpass.reg')
 
     res = compile('or_condition_test.inf', glulx=True)
     res.is_ok(md5='34cbc765cb174293b06b97d3bdbc8258', warnings=4, reg='allpass.reg')
@@ -1854,6 +2000,19 @@ def run_abbreviations_test():
     res = compile('symbolic_abbrev_test.inf', memsettings={'MAX_DYNAMIC_STRINGS':102}, define={'BADSYNTAX':None}, glulx=True)
     res.is_error(errors=8)
 
+    res = compile('nested_abbrev_test.inf')
+    res.is_ok(warnings=0)
+
+    res = compile('nested_abbrev_test.inf', economy=True)
+    res.is_ok(warnings=1)
+
+    res = compile('nested_abbrev_test.inf', glulx=True, economy=True)
+    res.is_ok(warnings=0)
+
+    res = compile('nested_lowstring_test.inf')
+    res.is_ok(warnings=1)
+
+    
     
 def run_make_abbreviations_test():
     res = compile('abbrevtest.inf', makeabbrevs=True, economy=True)
@@ -1944,6 +2103,24 @@ def run_max_objects():
     res = compile('max_objects_test.inf', glulx=True)
     res.is_ok()
 
+    res = compile('max_objects_256_test.inf', zversion=3)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_error()
+
+    res = compile('max_objects_256_test.inf', zversion=4)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=4, define={ 'ONEMORE':0 })
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=5)
+    res.is_ok()
+
+    res = compile('max_objects_256_test.inf', zversion=5, define={ 'ONEMORE':0 })
+    res.is_ok()
+
     res = compile('max_duplicate_objects_test.inf', glulx=True)
     res.is_ok()
 
@@ -1953,6 +2130,24 @@ def run_max_classes():
     res.is_ok()
 
     res = compile('max_classes_test.inf', glulx=True)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=3)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_error()
+
+    res = compile('max_classes_256_test.inf', zversion=4)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=4, define={ 'ONEMORE':0 })
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=5)
+    res.is_ok()
+
+    res = compile('max_classes_256_test.inf', zversion=5, define={ 'ONEMORE':0 })
     res.is_ok()
 
 
@@ -2111,6 +2306,15 @@ def run_max_global_variables():
     # limit.
     res = compile('max_global_variables_test.inf')
     res.is_ok()
+    
+    res = compile('max_global_variables_test.inf', zversion=3)
+    res.is_ok()
+    
+    res = compile('max_global_variables_test.inf', define={ 'ONEMORE':0 })
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
+    
+    res = compile('max_global_variables_test.inf', zversion=3, define={ 'ONEMORE':0 })
+    res.is_memsetting('MAX_GLOBAL_VARIABLES')
     
     res = compile('max_global_variables_test_2.inf')
     res.is_memsetting('MAX_GLOBAL_VARIABLES')
@@ -2283,13 +2487,13 @@ def run_max_dynamic_strings():
     
 def run_max_inline_string():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64})
-    res.is_ok(md5='e3a3596dc96cb0831ba6479a454c15c9', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='e4cfbb9ac147183de8e20a603a12fa67', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':800})
-    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='34afeaa4b22c45577277c3c44f9ff56c', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':10000})
-    res.is_ok(md5='a1d869ded019775884d7e5a6351356b2', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='34afeaa4b22c45577277c3c44f9ff56c', warnings=0, reg='Advent-z.reg')
 
     res = compile('max_inline_string_test.inf')
     res.is_ok(warnings=0)
@@ -2304,31 +2508,31 @@ def run_max_inline_string():
     
 def run_max_abbrevs():
     res = compile('abbrevtest.inf')
-    res.is_ok(md5='870285d50c252cde8bbd0ef2bc977a56')
+    res.is_ok(md5='c0f8d9fb515af2c18a7087dfb24314a6')
     
     res = compile('abbrevtest.inf', glulx=True)
     res.is_ok(md5='fa2130036715d5ec0f6b7e53a1f74e2c')
     
     res = compile('abbrevtest.inf', economy=True)
-    res.is_ok(md5='99be12467aea61fb46ee46143d903906')
+    res.is_ok(md5='4b6461cd7cd56826832c15def33fa182')
     
     res = compile('abbrevtest.inf', glulx=True, economy=True)
     res.is_ok(md5='774d0dd65eabbbc84a41aa1324f567c3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='253056d3e169c9c3d871525918260eb3')
+    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='b2bb42f3ff9b001cb11238bcbd3ae0f5')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
-    res.is_ok(md5='e64e6549b6d6387f775f6d92be482cf6')
+    res.is_ok(md5='a492e2f1370ada62c609606bc3707144')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True)
-    res.is_ok(md5='9d24eb5f77a07a03c83993ae3c503801')
+    res.is_ok(md5='b74045fe8a5101805fc2e3a57fd03fed')
     
     res = compile('i7-min-6G60-abbrev.inf', zversion=8, economy=True)
-    res.is_ok(md5='ac0ff916044088c303bb441a92378eb7', reg='i7-min-6G60.reg')
+    res.is_ok(md5='0fa9f2ebe61a6af2fda9d5321c6790e9', reg='i7-min-6G60.reg')
     
     res = compile('max_abbrevs_test_64.inf', economy=True, memsettings={})
     res.is_ok()
@@ -2471,10 +2675,10 @@ def run_unused_verbs():
     res.is_ok(warnings=1)
     
     res = compile('unused_verbs_lib.inf', includedir='i6lib-611')
-    res.is_ok(md5='f94c7a7bc1f91993e9af839d23406375', warnings=2)
+    res.is_ok(md5='6f211b036f111f10a0e57700a7335022', warnings=2, reg='unused_verbs_lib.reg')
     
     res = compile('unused_verbs_lib.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='05be572921b1a2d3ae9ee71314ebaf97', warnings=2)
+    res.is_ok(md5='d5b4e881b69ecb1354f0752450513518', warnings=2, reg='unused_verbs_lib.reg')
     
     
 def run_max_actions():
@@ -2580,17 +2784,17 @@ def run_max_zcode_size():
 def run_omit_unused_routines():
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
-    res.is_ok(md5='ff71d68c123d6b9a14c2b517ffee6092', reg='i7-min-6G60.reg')
+    res.is_ok(md5='b5717ab1e9b2ad06c78854e0fd734bce', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
     res.is_ok()
-    res.is_ok(md5='b13da005eaa80081fed605a9a4bd5b38', reg='i7-min-6G60.reg')
+    res.is_ok(md5='2468b145e1d809d180f47dc21233e9d3', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1})
-    res.is_ok(md5='14a490c75ad8817fb6816648f1078475', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='3e02450e2a3729b8cd0736b69064596c', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True)
-    res.is_ok(md5='413afb10dc9d7f0a6f177c6b645262cd', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='5c4e12640123585c013351a883b01c40', warnings=0, reg='Advent-g.reg')
 
     res = compile('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
@@ -2603,16 +2807,16 @@ def run_omit_unused_routines():
 
 def run_omit_symbol_table():
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='8b41c12a48a958390f5df982caf61925', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
-    res.is_ok(md5='6b4d9ac807dda0711273a68088656a27', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='6ddd65bd86cc1c3b6e172189c4831ef1', warnings=0, reg='Advent-g.reg')
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'OMIT_SYMBOL_TABLE':1}, zversion=3)
-    res.is_ok(md5='056bbf78da27da63d3458ec48ea238c0', reg='library_of_horror.reg')
+    res.is_ok(md5='a6bffcbf81a809bdb67a594be557b80b', reg='library_of_horror.reg')
     
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='1807eb07c43622227080f765948a59f0', warnings=0)
+    res.is_ok(md5='0acf770f4b52c56577913b94da592a54', warnings=0)
 
     res = compile('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True)
     res.is_ok(md5='c674e8217a693124dfd0404fbe9b36dc', warnings=0)
@@ -2623,23 +2827,80 @@ def run_file_end_padding():
     res.is_ok(md5='1847d28cc183ec23c50bd5bca52a1b21')
 
     res = compile('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
-    res.is_ok(md5='7147492b1d2c624e78dea4e696f61c99', reg='i7-min-6G60.reg')
+    res.is_ok(md5='9ac7e781b2884e747fe172b219ce70b4', reg='i7-min-6G60.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
-    res.is_ok(md5='91ceadaf4e9077a111941a27f342a4dd', reg='Advent-z.reg')
+    res.is_ok(md5='a87a82794873b3d7a55ac50bd22dca3f', reg='Advent-z.reg')
 
     res = compile('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0})
-    res.is_ok(md5='80077189b1e682930e661cbe09e46d0a')
+    res.is_ok(md5='4d046c7a2727f4ef6288cd6920f3dd95')
 
     res = compile('library_of_horror-36.inf', includedir='punylib-36', memsettings={'ZCODE_FILE_END_PADDING':0}, zversion=3)
-    res.is_ok(md5='7b512bfccbb332c6b90be25c2a786b8a', reg='library_of_horror.reg')
+    res.is_ok(md5='3df21a98f528a7743f71a3e8f91beb83', reg='library_of_horror.reg')
+
+
+def run_zcode_compact_globals():
+    res = compile('show_globals.inf')
+    res.is_ok(reg='show_globals-z5.reg')
+
+    res = compile('show_globals.inf', zversion=3)
+    res.is_ok(reg='show_globals-z3.reg')
+
+    res = compile('show_globals.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals-z5-compact.reg')
+
+    res = compile('show_globals.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals-z3-compact.reg')
+
+    res = compile('show_globals.inf', define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z5-short.reg')
+
+    res = compile('show_globals.inf', zversion=3, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z3-short.reg')
+
+    res = compile('show_globals.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z5-compact-short.reg')
+
+    res = compile('show_globals.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals-z3-compact-short.reg')
+
     
+    res = compile('show_globals_1v.inf')
+    res.is_ok(reg='show_globals_1v-z5.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3)
+    res.is_ok(reg='show_globals_1v-z3.reg')
+
+    res = compile('show_globals_1v.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals_1v-z5-compact.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(reg='show_globals_1v-z3-compact.reg')
+
+    res = compile('show_globals_1v.inf', define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z5-short.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z3-short.reg')
+
+    res = compile('show_globals_1v.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z5-compact-short.reg')
+
+    res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
+    res.is_ok(reg='show_globals_1v-z3-compact-short.reg')
+
+    res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='28a814ff94340420c6bc494a63163fbe', warnings=0, reg='Advent-z.reg')
+
+    res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='aac6db71ab84369493308823710a9f85', reg='library_of_horror.reg')
 
 
 test_catalog = [
     ('CHECKSUM', run_checksum_test),
     ('DICT', run_dict_test),
     ('GRAMMAR', run_grammar_test),
+    ('ENCODING', run_encoding_test),
     ('LEXER', run_lexer_test),
     ('VENEER', run_veneer_test),
     ('DIRECTIVES', run_directives_test),
@@ -2697,6 +2958,7 @@ test_catalog = [
     ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
     ('OMIT_SYMBOL_TABLE', run_omit_symbol_table),
     ('ZCODE_FILE_END_PADDING', run_file_end_padding),
+    ('ZCODE_COMPACT_GLOBALS', run_zcode_compact_globals),
     ]
 
 test_map = dict(test_catalog)

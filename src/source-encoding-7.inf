@@ -1,0 +1,22 @@
+!% -C7
+
+! This tests source-file encoding. It also lets us test the --trace dict
+! and gametext.txt output, although the test suite is not currently set
+! up to verify those.
+
+[ Main val;
+	print "Greek alphabet (ISO 8859-7):^^";
+	print "Б В Г Д Е Ж З И Й К Л М Н О П Р С У Ф Х Ц Ч Ш Щ Ъ Ы Ь Э Ю Я^";
+    print "б в г д е ж з и й к л м н о п р с т у ф х ц ч ш щ ъ ы ь э ю^";
+	new_line;
+	val = 'бв';
+	print "Dict word: ", (address) val, "^";
+	val = 'гamma';
+	print "Dict word: ", (address) val, "^";
+];
+
+! The following lines tell Emacs the file encoding:
+!
+! Local Variables:
+! coding: iso-8859-7
+! End:

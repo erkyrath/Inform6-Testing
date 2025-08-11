@@ -1,0 +1,156 @@
+Constant Story "GlobalRedefTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! This is a compiler unit test for redefining globals.
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+Global failures;
+
+[ Main loc;
+    #Ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 loc;
+    #Endif; ! TARGET_
+
+	loc = 0;
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #ifnot;
+    print "Game file format ", 0->0, ".^";
+    #Endif; ! TARGET_GLULX
+];
+
+[ check_value val1 val2;
+	print val1;
+	if (val1 ~= val2) {
+		failures++;
+		print " (ERROR, should be ", val2, ")";
+	}
+];
+
+Object Thing;
+[ Func; ];
+
+Global glob1;
+Global glob2 = 17;
+Global glob3;
+Global glob4 = 22;
+Global glob5 = forwardconst;
+Global glob6 = Thing;
+Global glob7 = Func;
+
+Global glob1;
+Global glob2;
+Global glob3 = 13;
+Global glob4 = 22;    ! same numeric value
+Global glob5;
+Global glob6;
+Global glob7 = Func;    ! same function value
+
+Global glob4 = 22;    ! once more for good luck
+
+Global sender = 123;  ! a built-in global
+
+Global globx1 = 11;
+Global globx2 = forwardconst;
+
+#ifdef DEFINE_GLOBX1_NUM;
+Global globx1 = 12;
+#endif; ! DEFINE_GLOBX1_NUM
+
+#ifdef DEFINE_GLOBX2_NUM;
+Global globx2 = 12;
+#endif; ! DEFINE_GLOBX2_NUM
+
+#ifdef DEFINE_GLOBX2_NUM99;
+Global globx2 = 99;   ! fails because forwardconst is not yet known
+#endif; ! DEFINE_GLOBX2_NUM99
+
+Constant forwardconst = 99;
+
+[ RunTest;
+	print "glob1="; check_value(glob1, 0); print "^";
+	print "glob2="; check_value(glob2, 17); print "^";
+	print "glob3="; check_value(glob3, 13); print "^";
+	print "glob4="; check_value(glob4, 22); print "^";
+	print "glob5="; check_value(glob5, forwardconst); print "^";
+	print "glob6="; check_value(glob6, Thing); print "^";
+	print "glob7="; check_value(glob7, Func); print "^";
+
+	print "sender="; check_value(sender, 123); print "^";
+
+	print "globx1="; check_value(globx1, 11); print "^";
+	print "globx2="; check_value(globx2, 99); print "^";
+	
+	new_line;
+	if (failures == 0)
+		print "All passed.^";
+	else
+		print failures, " errors!^";
+];

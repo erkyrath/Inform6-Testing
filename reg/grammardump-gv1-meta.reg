@@ -1,0 +1,35 @@
+* test
+
+Grammar version 1
+GRAMMAR_META_FLAG set
+
+### "noun=Routine(1)" may indicate a bug in the I6 library for GV1.
+### Or maybe it's a compiler bug. But we don't care much about GV1.
+
+Verb 'load'
+ 1 * noun -> Load
+ 2 * 'file' -> Restore meta
+ 3 * 'game' -> Restore meta
+Verb 'mix'
+ 4 * 'mul' multi -> Take
+ 5 * 'num' number -> Inv
+ 6 * 'sco' scope=ScopeTest -> Move
+ 7 * 'nnn' noun=Routine(1) -> Take
+ 8 * 'gen' GPRTest -> Show
+Verb meta 'restart'
+ 9 * -> Restart meta
+ 10 * 'not' -> Quit meta
+Verb 'score'
+ 11 * -> Score meta
+Verb 'script'
+ 12 * -> Script meta
+Verb 'take'
+ 13 * noun -> Take
+ 14 * 'inventory' -> Inv
+ 15 * 'note' -> Notify meta
+Verb 'transcrip'
+ 16 * -> Script meta
+Verb 'wait' 'z'
+ 17 * -> Wait
+Verb 'wait' 'z'
+ 18 * -> Wait

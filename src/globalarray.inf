@@ -51,12 +51,9 @@ Global glob1;
 ! It's okay to define an array after use
 Array array1 --> 2;
 
-
-#ifdef DEFINE_GLOBAL_TWICE;
+! It's okay to define a global twice.
 Global glob2;
-! ...is a name already in use and may not be used as a new global variable name
 Global glob2;
-#endif; ! DEFINE_GLOBAL_TWICE
 
 #ifdef DEFINE_GLOBAL_NONSYMBOL;
 ! Expected new global variable name but found...
@@ -72,16 +69,10 @@ Global glob3 static;
 ! It's okay to redefine built-in globals
 Global self;
 Global temp__global2;
+Global sys__glob0;
 
 ! And even to give one a new initial value
 Global temp__global1 = 99;
-
-
-#ifdef DEFINE_TEMPGLOB;
-! While sys__glob0 is a built-in global, it's not one that can be redefined.
-! ...is a name already in use...
-Global sys__glob0;
-#endif; ! DEFINE_TEMPGLOB
 
 
 #ifdef DEFINE_GLOBAL_EXTRA;

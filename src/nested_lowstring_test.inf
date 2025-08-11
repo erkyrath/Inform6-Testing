@@ -1,0 +1,9 @@
+
+! This shows a warning in Z-code. (Glulx doesn't accept Lowstring.)
+
+Lowstring low0 "@00 Smith";
+
+[ Main;
+	string 1 low0;
+];
+
