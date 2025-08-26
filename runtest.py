@@ -410,6 +410,8 @@ class Result:
 
         pat = re.compile(b'content-creator-version="[0-9.]+"')
         dat = pat.sub(b'content-creator-version="..."', dat)
+        pat = re.compile(b'<story-file-prefix>[a-zA-Z0-9+/=]*</story-file-prefix>')
+        dat = pat.sub(b'<story-file-prefix/>', dat)
         
         return hashlib.md5(dat).hexdigest()
     
@@ -1834,16 +1836,16 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, debugfile='8b6a1752e1a5b2d5fa9f586bab6ba867')
+    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, debugfile='4898d249645a51e3ef2e2e77f912673c')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='d9df0dec31f611a3a3b29703f23e4440')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='8821854e9a765d19f40c6154fe309ad0')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, debugfile='be327df45cd90d7e3d733dd86b5cf4b0')
+    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, debugfile='75b98e8aee1446b119a054785fd5cfa7')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, debugfile='6e93f5a5beb2526c39e1135f57b51de8')
+    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, debugfile='c77fe9be7a526be3a0765110845345ae')
 
 
 def run_warnings_test():
