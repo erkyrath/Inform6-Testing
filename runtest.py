@@ -400,14 +400,21 @@ class Result:
             res = res + ' (%s failed)' % (self.memsetting,)
         return res + '>'
 
-    def checksum_file(self, filename):
+    def canonical_debugfile_checksum(self, filename):
+        """ Load a gameinfo file and construct an MD5 checksum, allowing for
+        differences in compiler version.
+        """
         infl = open(filename, 'rb')
         dat = infl.read()
         infl.close()
+
+        pat = re.compile(b'content-creator-version="[0-9.]+"')
+        dat = pat.sub(b'content-creator-version="..."', dat)
+        
         return hashlib.md5(dat).hexdigest()
     
     def canonical_checksum(self):
-        """ Load a file and construct an MD5 checksum, allowing for
+        """ Load a game file and construct an MD5 checksum, allowing for
         differences in serial number and compiler version.
         """
         infl = open(self.filename, 'rb')
@@ -486,7 +493,7 @@ class Result:
                     if not self.run_regtest(reg):
                         isok = False
             if debugfile is not None:
-                val = self.checksum_file('build/gameinfo.dbg')
+                val = self.canonical_debugfile_checksum('build/gameinfo.dbg')
                 if val != debugfile:
                     error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
                     print('*** TEST FAILED ***')
