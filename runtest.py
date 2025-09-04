@@ -2898,6 +2898,14 @@ def run_zcode_compact_globals():
     res = compile('show_globals_1v.inf', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1}, define={ 'SHORTARRAY':0 })
     res.is_ok(reg='show_globals_1v-z3-compact-short.reg')
 
+    
+    res = compile('compact_array_bug.inf')
+    res.is_ok(md5='7fee7b885f380c9deec03cd31abc014b', reg='allpass.reg')
+
+    res = compile('compact_array_bug.inf', memsettings={'ZCODE_COMPACT_GLOBALS':1})
+    res.is_ok(md5='2ecc41c17b32b78ead077d200a74138e', reg='allpass.reg')
+
+    
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1})
     res.is_ok(md5='28a814ff94340420c6bc494a63163fbe', warnings=0, reg='Advent-z.reg')
 
