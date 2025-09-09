@@ -1674,6 +1674,16 @@ def run_prune_test():
     res = compile('logicprune.inf', glulx=True)
     res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0, reg='allpass.reg')
 
+    res = compile('branchreduce.inf')
+    res.is_ok(md5='43ff258fc65366bc3a9ac6336b621bec', warnings=0, reg='allpass.reg')
+    
+    res = compile('branchreduce.inf', strict=False)
+    res.is_ok(md5='cc20ee49ddae1064f18816d2a5e978c6', warnings=0, reg='allpass.reg')
+    
+    res = compile('branchreduce.inf', zversion=3)
+    res.is_ok(md5='9c5d84a9bef35fd918aea5e64e2d8500', warnings=0, reg='allpass.reg')
+    
+
     res = compile('tasksacktest.inf', includedir='i6lib-611')
     res.is_ok(md5='795d007a1ecddd50fdc6014e8eaa1270', reg='tasksacktest.reg')
 
