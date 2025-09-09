@@ -152,6 +152,25 @@ Global failures;
 	print "jg_two(0): "; check_value(val, 18);
 	print ".^";
 	
+	val = func_je_false(1, 2);
+	print "je_false(1, 2): "; check_value(val, 0);
+	print "; ";
+	val = func_je_false(2, 2);
+	print "je_false(2, 2): "; check_value(val, 19);
+	print ".^";
+	val = func_je_true(1, 2);
+	print "je_true(1, 2): "; check_value(val, 1);
+	print "; ";
+	val = func_je_true(2, 2);
+	print "je_true(2, 2): "; check_value(val, 20);
+	print ".^";
+	val = func_je_two(1, 2);
+	print "je_two(1, 2): "; check_value(val, 2);
+	print "; ";
+	val = func_je_two(2, 2);
+	print "je_two(2, 2): "; check_value(val, 21);
+	print ".^";
+	
 	new_line;
 	if (failures == 0)
 		print "All passed.^";
@@ -221,6 +240,28 @@ Global failures;
 [ func_jg_two arg;
 	if (arg <= 0) {
 		return 18;
+	}
+	return 2;
+];
+
+
+[ func_je_false arg1 arg2;
+	if (arg1 == arg2) {
+		return 19;
+	}
+	rfalse;
+];
+
+[ func_je_true arg1 arg2;
+	if (arg1 == arg2) {
+		return 20;
+	}
+	rtrue;
+];
+
+[ func_je_two arg1 arg2;
+	if (arg1 == arg2) {
+		return 21;
 	}
 	return 2;
 ];
