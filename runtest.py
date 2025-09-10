@@ -1517,6 +1517,12 @@ def run_statements_test():
     res = compile('jumpbadtest.inf', glulx=True);
     res.is_error()
 
+    res = compile('branchbadtest.inf');
+    res.is_error()
+
+    res = compile('branchbadtest.inf', glulx=True);
+    res.is_error()
+
 
 def run_expressions_test():
     res = compile('unaryop_err_test.inf')

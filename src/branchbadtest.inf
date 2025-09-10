@@ -1,0 +1,8 @@
+[ Main val;
+	! branch to a nonexistent label.
+	#ifdef TARGET_ZCODE;
+	@jz val ?xxxx;
+	#ifnot;
+	@jz val ?xxxx;
+	#endif;
+];
