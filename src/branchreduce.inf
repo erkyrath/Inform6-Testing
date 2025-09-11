@@ -95,6 +95,50 @@ Global failures;
 ];
 
 [ RunTest val;
+	val = func_je(11, 1, 1);
+	print "je(11, 1, 1): "; check_value(val, 11);
+	print "; ";
+	val = func_je(11, 1, 2);
+	print "je(11, 1, 2): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_je(12, 1, 1);
+	print "je(12, 1, 1): "; check_value(val, 1);
+	print "; ";
+	val = func_je(12, 1, 2);
+	print "je(12, 1, 2): "; check_value(val, 12);
+	print "^";
+
+	val = func_je(13, 3);
+	print "je(13, 3): "; check_value(val, 13);
+	print "; ";
+	val = func_je(13, 4);
+	print "je(13, 4): "; check_value(val, 1);
+	print "; ";
+
+	val = func_je(14, 3);
+	print "je(14, 3): "; check_value(val, 14);
+	print "; ";
+	val = func_je(14, 4);
+	print "je(14, 4): "; check_value(val, 1);
+	print "^";
+
+	val = func_je(15, 333);
+	print "je(15, 333): "; check_value(val, 15);
+	print "; ";
+	val = func_je(15, 444);
+	print "je(15, 444): "; check_value(val, 1);
+	print "; ";
+
+	val = func_je(16, 333);
+	print "je(16, 333): "; check_value(val, 16);
+	print "; ";
+	val = func_je(16, 444);
+	print "je(16, 444): "; check_value(val, 1);
+	print "^";
+
+	new_line;
+
 	val = func_jz_false(0);
 	print "jz_false(0): "; check_value(val, 0);
 	print "; ";
@@ -176,6 +220,37 @@ Global failures;
 		print "All passed.^";
 	else
 		print failures, " errors!^";
+];
+
+
+[ func_je val arg1 arg2;
+	switch (val) {
+		11:
+			if (arg1 == arg2)
+				return 11;
+			return;
+		12:
+			if (arg1 ~= arg2)
+				return 12;
+			return;
+		13:
+			if (arg1 == 3)
+				return 13;
+			return;
+		14:
+			if (4 ~= arg1)
+				return 14;
+			return;
+		15:
+			if (arg1 == 333)
+				return 15;
+			return;
+		16:
+			if (444 ~= arg1)
+				return 16;
+			return;
+	}
+	rfalse;
 ];
 
 
@@ -265,3 +340,4 @@ Global failures;
 	}
 	return 2;
 ];
+
