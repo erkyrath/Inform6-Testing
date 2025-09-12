@@ -245,6 +245,34 @@ Global failures;
 	print "jin(24, room): "; check_value(val, 24);
 	print "^";
 
+	val = func_testattr(21, box, attr1);
+	print "testattr(21, box, attr1): "; check_value(val, 21);
+	print "; ";
+	val = func_testattr(21, box, attr2);
+	print "testattr(21, box, attr2): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_testattr(22, coin, attr2);
+	print "testattr(22, coin, attr2): "; check_value(val, 1);
+	print "; ";
+	val = func_testattr(22, coin, attr1);
+	print "testattr(22, coin, attr1): "; check_value(val, 22);
+	print "^";
+
+	val = func_testattr(23, box);
+	print "testattr(23, box): "; check_value(val, 23);
+	print "; ";
+	val = func_testattr(23, coin);
+	print "testattr(23, coin): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_testattr(24, attr1);
+	print "testattr(24, attr1): "; check_value(val, 24);
+	print "; ";
+	val = func_testattr(24, attr2);
+	print "testattr(24, attr2): "; check_value(val, 1);
+	print "^";
+
 	new_line;
 	if (failures == 0)
 		print "All passed.^";
