@@ -34,6 +34,10 @@ Constant Grammar__Version = 3;
 Constant Grammar__Version = 4;
 #endif;
 
+#ifdef SET_GV_NONCONST;
+Constant Grammar__Version = InvSub;
+#endif;
+
 [ Main;
 	print "Grammar version ", Grammar__Version, "^";
 ];

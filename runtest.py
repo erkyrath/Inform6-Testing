@@ -1011,6 +1011,10 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', define={'EARLY_ACTION_CASE':None, 'SET_GV_2':None})
     res.is_ok()
 
+    # non-constant Grammar__Version
+    res = compile('grammar-version-test.inf', define={'SET_GV_NONCONST':None})
+    res.is_error()
+
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
     res.is_ok(md5='f95a48782e8f4fc1f84849823fab7983', reg='i7-min-6G60.reg')
