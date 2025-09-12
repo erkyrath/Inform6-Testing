@@ -274,6 +274,37 @@ Global failures;
 	print "^";
 
 	new_line;
+
+	val = func_getchild_box_true();
+	print "getchild_box_true(): "; check_value(val, coin);
+	print "; ";
+	val = func_getchild_coin_true();
+	print "getchild_coin_true(): "; check_value(val, 1);
+	print ".^";
+
+	new_line;
+
+	val = func_getchild_false(box);
+	print "getchild_false(box): "; check_value(val, coin);
+	print "; ";
+	val = func_getchild_false(coin);
+	print "getchild_false(coin): "; check_value(val, 0);
+	print ".^";
+	val = func_getchild_true(box);
+	print "getchild_true(box): "; check_value(val, coin);
+	print "; ";
+	val = func_getchild_true(coin);
+	print "getchild_true(coin): "; check_value(val, 1);
+	print ".^";
+	val = func_getchild_two(box);
+	print "getchild_two(box): "; check_value(val, coin);
+	print "; ";
+	val = func_getchild_two(coin);
+	print "getchild_two(coin): "; check_value(val, 2);
+	print ".^";
+	
+
+	new_line;
 	if (failures == 0)
 		print "All passed.^";
 	else
@@ -449,3 +480,40 @@ Object -> -> coin has attr2;
 	}
 	rfalse;
 ];
+
+
+[ func_getchild_box_true val;
+	@get_child box -> val ?~LABEL;
+	return val;
+	.LABEL;
+	rtrue;
+];
+
+[ func_getchild_coin_true val;
+	@get_child coin -> val ?~LABEL;
+	return val;
+	.LABEL;
+	rtrue;
+];
+
+[ func_getchild_false arg val;
+	@get_child arg -> val ?~LABEL;
+	return val;
+	.LABEL;
+	rfalse;
+];
+
+[ func_getchild_true arg val;
+	@get_child arg -> val ?~LABEL;
+	return val;
+	.LABEL;
+	rtrue;
+];
+
+[ func_getchild_two arg val;
+	@get_child arg -> val ?~LABEL;
+	return val;
+	.LABEL;
+	return 2;
+];
+
