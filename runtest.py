@@ -953,6 +953,10 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':3})
     res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
 
+    # two constants decls, the later one wins
+    res = compile('grammar-version-test.inf', define={'SET_GV_2':None, 'SET_GV_3':None})
+    res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
+    
     # command-line setting overrides constant decl
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':3}, define={'SET_GV_2':None})
     res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
