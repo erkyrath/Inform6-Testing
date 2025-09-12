@@ -1681,13 +1681,13 @@ def run_prune_test():
     res.is_ok(md5='e33841ca3794d30b24265ec70311e53b', warnings=0, reg='allpass.reg')
 
     res = compile('branchreduce.inf')
-    res.is_ok(md5='f4dfe55d4812c9947d12c2edb81b94e2', warnings=0, reg='allpass.reg')
+    res.is_ok(md5='d0cb1de87b2371be0fb1e91174a460b2', warnings=0, reg='allpass.reg')
     
     res = compile('branchreduce.inf', strict=False)
-    res.is_ok(md5='fd5100ded0b4200785b68edae817dc67', warnings=0, reg='allpass.reg')
+    res.is_ok(md5='cd1f6419679ebd6edb64abd0cdff6edf', warnings=0, reg='allpass.reg')
     
     res = compile('branchreduce.inf', zversion=3)
-    res.is_ok(md5='c9b0092ee8e749758cff720800a6dd24', warnings=0, reg='allpass.reg')
+    res.is_ok(md5='df6b16693ef19caba96b1d3fbb7fc3e1', warnings=0, reg='allpass.reg')
     
 
     res = compile('tasksacktest.inf', includedir='i6lib-611')
