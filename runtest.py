@@ -1898,16 +1898,16 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, debugfile='4898d249645a51e3ef2e2e77f912673c')
+    res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, debugfile='e8541e58a9607cb9ad7d539c3b79e7f6')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='8821854e9a765d19f40c6154fe309ad0')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='b303432b1da9b195813d851260a9f886')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
-    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, debugfile='75b98e8aee1446b119a054785fd5cfa7')
+    res.is_ok(md5='574abd17e0718eb8133cd64aacf1c2df', warnings=0, debugfile='7229def581c0eade2a1290e46534f6b6')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, debugfile='c77fe9be7a526be3a0765110845345ae')
+    res.is_ok(md5='3ce8f473cf07a855c0e829daa018b64f', warnings=0, debugfile='0ed66f4bf1809e8b51feb9eb0b52cb76')
 
 
 def run_warnings_test():
