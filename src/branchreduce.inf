@@ -214,7 +214,65 @@ Global failures;
 	val = func_je_two(2, 2);
 	print "je_two(2, 2): "; check_value(val, 21);
 	print ".^";
+
+	new_line;
 	
+	val = func_jin(21, box, room);
+	print "jin(21, box, room): "; check_value(val, 21);
+	print "; ";
+	val = func_jin(21, box, coin);
+	print "jin(21, box, coin): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_jin(22, box, room);
+	print "jin(22, box, room): "; check_value(val, 1);
+	print "; ";
+	val = func_jin(22, box, coin);
+	print "jin(22, box, coin): "; check_value(val, 22);
+	print "^";
+
+	val = func_jin(23, box);
+	print "jin(23, box): "; check_value(val, 23);
+	print "; ";
+	val = func_jin(23, coin);
+	print "jin(23, coin): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_jin(24, box);
+	print "jin(24, box): "; check_value(val, 1);
+	print "; ";
+	val = func_jin(24, room);
+	print "jin(24, room): "; check_value(val, 24);
+	print "^";
+
+	val = func_testattr(21, box, attr1);
+	print "testattr(21, box, attr1): "; check_value(val, 21);
+	print "; ";
+	val = func_testattr(21, box, attr2);
+	print "testattr(21, box, attr2): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_testattr(22, coin, attr2);
+	print "testattr(22, coin, attr2): "; check_value(val, 1);
+	print "; ";
+	val = func_testattr(22, coin, attr1);
+	print "testattr(22, coin, attr1): "; check_value(val, 22);
+	print "^";
+
+	val = func_testattr(23, box);
+	print "testattr(23, box): "; check_value(val, 23);
+	print "; ";
+	val = func_testattr(23, coin);
+	print "testattr(23, coin): "; check_value(val, 1);
+	print "; ";
+	
+	val = func_testattr(24, attr1);
+	print "testattr(24, attr1): "; check_value(val, 24);
+	print "; ";
+	val = func_testattr(24, attr2);
+	print "testattr(24, attr2): "; check_value(val, 1);
+	print "^";
+
 	new_line;
 	if (failures == 0)
 		print "All passed.^";
@@ -341,3 +399,53 @@ Global failures;
 	return 2;
 ];
 
+Attribute attr1;
+Attribute attr2;
+
+Object room;
+Object -> box has attr1;
+Object -> -> coin has attr2;
+
+[ func_jin val arg1 arg2;
+	switch (val) {
+		21:
+			if (arg1 in arg2)
+				return 21;
+			return;
+		22:
+			if (arg1 notin arg2)
+				return 22;
+			return;
+		23:
+			if (arg1 in room)
+				return 23;
+			return;
+		24:
+			if (coin notin arg1)
+				return 24;
+			return;
+	}
+	rfalse;
+];
+
+[ func_testattr val arg1 arg2;
+	switch (val) {
+		21:
+			if (arg1 has arg2)
+				return 21;
+			return;
+		22:
+			if (arg1 hasnt arg2)
+				return 22;
+			return;
+		23:
+			if (arg1 has attr1)
+				return 23;
+			return;
+		24:
+			if (coin hasnt arg1)
+				return 24;
+			return;
+	}
+	rfalse;
+];
