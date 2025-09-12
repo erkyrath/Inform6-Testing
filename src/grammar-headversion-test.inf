@@ -1,24 +1,5 @@
 !% $GRAMMAR_VERSION=3
 
-#ifdef EARLY_ACTION_VERB;
-Verb 'whatever' * -> Inv;
-#endif;
-
-#ifdef EARLY_FAKE_ACTION;
-Fake_Action xyzzy;
-#endif;
-
-#ifdef EARLY_ACTION_CONST;
-Global actionconst = ##Inv;
-#endif;
-
-#ifdef EARLY_ACTION_CASE;
-[ TestFunc;
-  Inv: rtrue;
-  Smooch: rfalse;
-];
-#endif;
-
 #ifdef SET_GV_1;
 Constant Grammar__Version = 1;
 #endif;
