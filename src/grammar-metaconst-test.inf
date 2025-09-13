@@ -1,0 +1,55 @@
+
+#ifdef EARLY_ACTION_VERB;
+Verb 'whatever' * -> Inv;
+#endif;
+
+#ifdef EARLY_FAKE_ACTION;
+Fake_Action xyzzy;
+#endif;
+
+#ifdef EARLY_ACTION_CONST;
+Global actionconst = ##Inv;
+#endif;
+
+#ifdef EARLY_ACTION_CASE;
+[ TestFunc;
+  Inv: rtrue;
+  Smooch: rfalse;
+];
+#endif;
+
+#ifdef SET_META_0;
+Constant Grammar_Meta__Value = 0;
+#endif;
+
+#ifdef SET_META_1;
+Constant Grammar_Meta__Value = 1;
+#endif;
+
+#ifdef SET_META_2;
+Constant Grammar_Meta__Value = 2;
+#endif;
+
+#ifdef SET_META_NONCONST;
+Constant Grammar_Meta__Value = InvSub;
+#endif;
+
+[ Main;
+	print "Grammar_Meta__Value: ", Grammar_Meta__Value, "^";
+#ifdef GRAMMAR_META_FLAG;
+	print "GRAMMAR_META_FLAG defined.^";
+#ifnot;
+	print "GRAMMAR_META_FLAG not defined.^";
+#endif;
+];
+
+Verb 'take'
+  * 'inventory' -> Inv
+  * noun -> Take;
+  
+Verb 'kiss'
+  * creature -> Smooch;
+
+[ InvSub; ];
+[ TakeSub; ];
+[ SmoochSub; ];
