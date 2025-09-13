@@ -636,6 +636,9 @@ def run_checksum_test():
     res = compile('i7-min-6M62-g.inf', glulx=True)
     res.is_ok(md5='00ef3d5fb6c9ac7c72dfab453c649843', reg='i7-min-6M62.reg')
 
+    res = compile('i7-min-10-1-2.inf', glulx=True)
+    res.is_ok(md5='cef07fe326a8883fba34456d2b146ea3', reg='i7-min-10.reg')
+
     res = compile('Advent.inf', includedir='i6lib-611')
     res.is_ok(md5='92fd9a35a3f8b9fd823dd7b9844dfc04', warnings=0, reg='Advent-z.reg')
 
