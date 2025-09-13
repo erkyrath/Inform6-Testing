@@ -2,6 +2,10 @@ Constant Story "Test";
 Constant Headline "^A test^";
 Release 1;
 
+#ifdef SET_META_CONST;
+Constant Grammar_Meta__Value = 1;
+#endif;
+
 Include "Parser";
 Include "VerbLib";
 
