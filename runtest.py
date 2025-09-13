@@ -1142,6 +1142,10 @@ def run_grammar_test():
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
     res.is_ok(md5='6bd1394efa885f14b94905fbbf3fc9a4', warnings=0, reg='Advent-z.reg')
 
+    # Compile with GRAMMAR_META_FLAG
+    res = compile('library_of_horror-60.inf', includedir='punylib-60meta,punylib-60', zversion=3)
+    res.is_ok(md5='a11d54c691edcd2a51110dc813948cab')  ###md5match!
+
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
     res.is_ok(md5='797eba5a2f2c9b11a65da16fd53a1493', warnings=0)
