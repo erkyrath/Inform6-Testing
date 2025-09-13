@@ -1040,6 +1040,35 @@ def run_grammar_test():
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
 
+    res = compile('grammar-metaconst-test.inf')
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':0})
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_0':None})
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_1':None})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_2':None})
+    res.is_error()
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_0':None})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':0}, define={'SET_META_1':None})
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_2':None})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+
+    
+
     res = compile('action-compare-test.inf')
     res.is_ok(md5='d61ec55b788b7b9dd191a095387d6c31', reg='allpass.reg')
 
