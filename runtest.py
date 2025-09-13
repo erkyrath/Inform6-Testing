@@ -74,6 +74,7 @@ popt.add_option('--vital',
 
 testname = '???'
 errorlist = []
+md5map = {}  # maps match-keys to md5 checksums
 
 def compile(srcfile, destfile=None,
             glulx=False, zversion=None, versiondirective=False,
@@ -445,7 +446,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
+    def is_ok(self, md5=None, md5match=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -466,10 +467,20 @@ class Result:
                 return False
             # Any or all of the following could fail.
             isok = True
-            if md5 or opts.checksum:
+            if md5 or md5match or opts.checksum:
+                # All of these need the checksum computed
                 val = self.canonical_checksum()
                 if opts.checksum:
                     print('--- checksum:', val)
+                if md5match:
+                    prevval = md5map.get(md5match)
+                    if prevval is None:
+                        md5map[md5match] = val
+                    else:
+                        if val != prevval:
+                            error(self, 'Game files mismatch [%s]: %s is not %s' % (md5match, val, prevval,))
+                            print('*** TEST FAILED ***')
+                            isok = False
                 if md5 and val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
                     print('*** TEST FAILED ***')
@@ -1041,31 +1052,31 @@ def run_grammar_test():
 
 
     res = compile('grammar-metaconst-test.inf')
-    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
 
     res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':0})
-    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
 
     res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
 
     res = compile('grammar-metaconst-test.inf', define={'SET_META_0':None})
-    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
 
     res = compile('grammar-metaconst-test.inf', define={'SET_META_1':None})
-    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
 
     res = compile('grammar-metaconst-test.inf', define={'SET_META_2':None})
     res.is_error()
 
     res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_0':None})
-    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
 
     res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':0}, define={'SET_META_1':None})
-    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76')
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
 
     res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_2':None})
-    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
 
     # Fake_Action before Grammar_Meta__Value 1
     res = compile('grammar-metaconst-test.inf', define={'EARLY_FAKE_ACTION':None, 'SET_META_1':None})
