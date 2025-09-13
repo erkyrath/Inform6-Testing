@@ -1067,6 +1067,26 @@ def run_grammar_test():
     res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_2':None})
     res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542')
 
+    # Fake_Action before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_FAKE_ACTION':None, 'SET_META_1':None})
+    res.is_error()
+
+    # Real action before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_ACTION_VERB':None, 'SET_META_1':None})
+    res.is_error()
+
+    # ##Action before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_ACTION_CONST':None, 'SET_META_1':None})
+    res.is_error()
+
+    # action-case before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_ACTION_CASE':None, 'SET_META_1':None})
+    res.is_error()
+
+    # non-constant Grammar_Meta__Value
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_NONCONST':None})
+    res.is_error()
+
     
 
     res = compile('action-compare-test.inf')
