@@ -1151,16 +1151,16 @@ def run_grammar_test():
 
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
-    res.is_ok(md5='243924e3a45f988431b31222b4a2038c', warnings=0)
+    res.is_ok(md5='243924e3a45f988431b31222b4a2038c', md5match='withdaemon:z:meta=1', warnings=0)
     
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', debug=True, define={'SET_META_CONST':None})
-    res.is_ok(md5='243924e3a45f988431b31222b4a2038c', warnings=0)   ###md5match!
+    res.is_ok(md5='243924e3a45f988431b31222b4a2038c', md5match='withdaemon:z:meta=1', warnings=0)
     
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True)
-    res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', warnings=0)
+    res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', md5match='withdaemon:g:meta=1', warnings=0)
 
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', define={'SET_META_CONST':None}, debug=True, glulx=True)
-    res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', warnings=0)  ###md5match!
+    res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', md5match='withdaemon:g:meta=1', warnings=0)
 
     
     # All of the following should compile the same.
