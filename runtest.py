@@ -716,7 +716,7 @@ def run_checksum_test():
     res.is_ok(md5='94be3db231d7edb9d9a35112192bb965', reg='library_of_horror.reg')
     
     res = compile('library_of_horror-60.inf', includedir='punylib-60', zversion=3, memsettings={'GRAMMAR_META_FLAG':1})
-    res.is_ok(md5='536081944e40c13c4977ec6ccca0906c', reg='library_of_horror.reg')
+    res.is_ok(md5='536081944e40c13c4977ec6ccca0906c', md5match='library_of_horror-60:meta=1', reg='library_of_horror.reg')
 
 
 def run_dict_test():
@@ -1147,7 +1147,7 @@ def run_grammar_test():
 
     # Compile with GRAMMAR_META_FLAG
     res = compile('library_of_horror-60.inf', includedir='punylib-60meta,punylib-60', zversion=3)
-    res.is_ok(md5='536081944e40c13c4977ec6ccca0906c')  ###md5match!
+    res.is_ok(md5='536081944e40c13c4977ec6ccca0906c', md5match='library_of_horror-60:meta=1')
 
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
