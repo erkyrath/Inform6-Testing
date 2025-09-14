@@ -600,7 +600,7 @@ def error(res, msg):
 
 def run_checksum_test():
     res = compile('minimal_test.inf')
-    res.is_ok(md5='90866a483312a4359bc00db776e6eed4', warnings=0)
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4', md5match='minimal_test:z', warnings=0)
 
     res = compile('minimal_test.inf', zversion=3)
     res.is_ok(md5='6143c98e20a44d843c1a6fbe2c19ecae')
@@ -609,7 +609,7 @@ def run_checksum_test():
     res.is_ok(md5='f82709a196ebbefe109525084220c35a')
 
     res = compile('minimal_test.inf', zversion=5)
-    res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4', md5match='minimal_test:z')
 
     res = compile('minimal_test.inf', zversion=6)
     res.is_ok(md5='08b59209daa947437a5119b8060522ef')
@@ -627,7 +627,7 @@ def run_checksum_test():
     res.is_ok(md5='fa7fc9bbe032d27355b0fcf4fb4f2c53')
 
     res = compile('minimal_test.inf', glulx=True)
-    res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', warnings=0)
+    res.is_ok(md5='6e647107c3b3c46fc9556da0330db3a6', md5match='minimal_test:g', warnings=0)
     
     res = compile('glulxercise.inf', glulx=True)
     res.is_ok(md5='edcb2b211fe5ab2afba62d50b66dad95', warnings=0)
@@ -1913,7 +1913,7 @@ def run_fwconst_test():
     res.is_ok(md5='e8b044eaef2b489db9ab0a1cc0f2bc5f')
 
     res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z5', define={ 'FORWARD_CONSTANT':5 })
-    res.is_ok(md5='90866a483312a4359bc00db776e6eed4')
+    res.is_ok(md5='90866a483312a4359bc00db776e6eed4', md5match='minimal_test:z')
 
     res = compile('fwconst_version_test.inf', destfile='fwconst_version_test.z8', define={ 'FORWARD_CONSTANT':8 })
     res.is_ok(md5='fa7fc9bbe032d27355b0fcf4fb4f2c53')
