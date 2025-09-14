@@ -1147,7 +1147,7 @@ def run_grammar_test():
 
     # Compile with GRAMMAR_META_FLAG
     res = compile('library_of_horror-60.inf', includedir='punylib-60meta,punylib-60', zversion=3)
-    res.is_ok(md5='a11d54c691edcd2a51110dc813948cab')  ###md5match!
+    res.is_ok(md5='536081944e40c13c4977ec6ccca0906c')  ###md5match!
 
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
