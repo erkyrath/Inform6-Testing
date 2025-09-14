@@ -947,19 +947,19 @@ def run_grammar_test():
     res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48', md5match='grammar-version-test:gv=1')
 
     res = compile('grammar-version-test.inf', define={'SET_GV_2':None})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:z:gv=2')
 
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:z:gv=2')
 
     res = compile('grammar-version-test.inf', glulx=True)
-    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398', md5match='grammar-version-test:g:gv=2')
 
     res = compile('grammar-version-test.inf', glulx=True, define={'SET_GV_2':None})
-    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398', md5match='grammar-version-test:g:gv=2')
 
     res = compile('grammar-version-test.inf', glulx=True, memsettings={'GRAMMAR_VERSION':2})
-    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398', md5match='grammar-version-test:g:gv=2')
 
     res = compile('grammar-version-test.inf', define={'SET_GV_3':None})
     res.is_ok(md5='4516571efb9e088b090f6e7536a7031a', md5match='grammar-version-test:gv=3')
@@ -977,11 +977,11 @@ def run_grammar_test():
 
     # command-line setting overrides constant decl
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2}, define={'SET_GV_3':None})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:z:gv=2')
 
     # command-line setting overrides constant decl
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2}, define={'SET_GV_4':None})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:z:gv=2')
 
     # header comment overrides constant decl
     res = compile('grammar-headversion-test.inf', define={'SET_GV_2':None})
