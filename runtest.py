@@ -651,13 +651,13 @@ def run_checksum_test():
     res.is_ok(md5='cef07fe326a8883fba34456d2b146ea3', reg='i7-min-10.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611')
-    res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356', warnings=0, reg='Advent-z.reg')
+    res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356', md5match='Advent:z', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8)
     res.is_ok(md5='8de9c0e2d32add1e6756bbba1f046797', warnings=0, reg='Advent-z.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, reg='Advent-g.reg')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g', warnings=0, reg='Advent-g.reg')
 
     res = compile('Advent.inf', includedir='i6lib-611', zversion=8, strict=False)
     res.is_ok(md5='a9078cdb157b2e67300af07030b46588', warnings=0, reg='Advent-z.reg')
@@ -1972,10 +1972,10 @@ def run_fwconst_test():
 
 def run_debugfile_test():
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
-    res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356', warnings=0, debugfile='6dea9fb59235543578d221b36811056a')
+    res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356', md5match='Advent:z', warnings=0, debugfile='6dea9fb59235543578d221b36811056a')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True)
-    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', warnings=0, debugfile='b303432b1da9b195813d851260a9f886')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g', warnings=0, debugfile='b303432b1da9b195813d851260a9f886')
 
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1})
     res.is_ok(md5='cb63e6bb7762d2e971449883a85c3a31', warnings=0, debugfile='d0fb598d01e67179a5e616feff9a71d3')
@@ -2647,10 +2647,10 @@ def run_max_abbrevs():
     res.is_ok(md5='774d0dd65eabbbc84a41aa1324f567c3')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611')
-    res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356')
+    res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356', md5match='Advent:z')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', glulx=True)
-    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c')
+    res.is_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g')
     
     res = compile('Advent-abbrev.inf', includedir='i6lib-611', economy=True)
     res.is_ok(md5='0e51938d460a03844ec7b048343dab40')
