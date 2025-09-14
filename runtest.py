@@ -633,13 +633,13 @@ def run_checksum_test():
     res.is_ok(md5='edcb2b211fe5ab2afba62d50b66dad95', warnings=0)
     
     res = compile('i7-min-6G60.inf')
-    res.is_ok(md5='4605bd510515f9f2c2b126d5fe0722b0', reg='i7-min-6G60.reg')
+    res.is_ok(md5='4605bd510515f9f2c2b126d5fe0722b0', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', zversion=8)
     res.is_ok(md5='9471ff4d0799673a40572c9e072348ea', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6G60.inf', glulx=True)
-    res.is_ok(md5='f5811c171bd7f5bf843dfe813ef96e2f', reg='i7-min-6G60.reg')
+    res.is_ok(md5='f5811c171bd7f5bf843dfe813ef96e2f', md5match='i7-min-6G60:g', reg='i7-min-6G60.reg')
 
     res = compile('i7-min-6M62-z.inf', zversion=8)
     res.is_ok(md5='f49638e84991d96038873dc61e65e280', reg='i7-min-6M62.reg')
@@ -1031,7 +1031,7 @@ def run_grammar_test():
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
-    res.is_ok(md5='4605bd510515f9f2c2b126d5fe0722b0', reg='i7-min-6G60.reg')
+    res.is_ok(md5='4605bd510515f9f2c2b126d5fe0722b0', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg')
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1})
