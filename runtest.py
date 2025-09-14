@@ -74,6 +74,7 @@ popt.add_option('--vital',
 
 testname = '???'
 errorlist = []
+md5map = {}  # maps match-keys to md5 checksums
 
 def compile(srcfile, destfile=None,
             glulx=False, zversion=None, versiondirective=False,
@@ -445,7 +446,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
+    def is_ok(self, md5=None, md5match=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -466,10 +467,20 @@ class Result:
                 return False
             # Any or all of the following could fail.
             isok = True
-            if md5 or opts.checksum:
+            if md5 or md5match or opts.checksum:
+                # All of these need the checksum computed
                 val = self.canonical_checksum()
                 if opts.checksum:
                     print('--- checksum:', val)
+                if md5match:
+                    prevval = md5map.get(md5match)
+                    if prevval is None:
+                        md5map[md5match] = val
+                    else:
+                        if val != prevval:
+                            error(self, 'Game files mismatch [%s]: %s is not %s' % (md5match, val, prevval,))
+                            print('*** TEST FAILED ***')
+                            isok = False
                 if md5 and val != md5:
                     error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
                     print('*** TEST FAILED ***')
@@ -956,6 +967,30 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':3})
     res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
 
+    # two constants decls, the later one wins
+    res = compile('grammar-version-test.inf', define={'SET_GV_2':None, 'SET_GV_3':None})
+    res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
+    
+    # command-line setting overrides constant decl
+    res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':3}, define={'SET_GV_2':None})
+    res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
+
+    # command-line setting overrides constant decl
+    res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2}, define={'SET_GV_3':None})
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+
+    # command-line setting overrides constant decl
+    res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2}, define={'SET_GV_4':None})
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+
+    # header comment overrides constant decl
+    res = compile('grammar-headversion-test.inf', define={'SET_GV_2':None})
+    res.is_ok(md5='4516571efb9e088b090f6e7536a7031a')
+
+    # command-line setting overrides both
+    res = compile('grammar-headversion-test.inf', memsettings={'GRAMMAR_VERSION':1}, define={'SET_GV_2':None})
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+
     res = compile('grammar-version-test.inf', glulx=True, define={'SET_GV_3':None})
     res.is_error()
 
@@ -990,6 +1025,10 @@ def run_grammar_test():
     res = compile('grammar-version-test.inf', define={'EARLY_ACTION_CASE':None, 'SET_GV_2':None})
     res.is_ok()
 
+    # non-constant Grammar__Version
+    res = compile('grammar-version-test.inf', define={'SET_GV_NONCONST':None})
+    res.is_error()
+
     # Same as i7-min-6G60.inf, except we set the grammar by option
     res = compile('i7-min-6G60-gvopt.inf')
     res.is_ok(md5='4605bd510515f9f2c2b126d5fe0722b0', reg='i7-min-6G60.reg')
@@ -1014,6 +1053,55 @@ def run_grammar_test():
     res = compile('grammar-metaflag-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, glulx=True)
     res.is_ok(md5='b00bcb640c314ca7e28571deadfc6612', reg='allpass.reg')
 
+
+    res = compile('grammar-metaconst-test.inf')
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':0})
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
+
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_0':None})
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
+
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_1':None})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
+
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_2':None})
+    res.is_error()
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_0':None})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':0}, define={'SET_META_1':None})
+    res.is_ok(md5='0731d623fc67675539aeb8f4ccddbb76', md5match='grammar-metaconst-test:meta=0')
+
+    res = compile('grammar-metaconst-test.inf', memsettings={'GRAMMAR_META_FLAG':1}, define={'SET_META_2':None})
+    res.is_ok(md5='1a67edeeaa3af94ca857ca41f6b97542', md5match='grammar-metaconst-test:meta=1')
+
+    # Fake_Action before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_FAKE_ACTION':None, 'SET_META_1':None})
+    res.is_error()
+
+    # Real action before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_ACTION_VERB':None, 'SET_META_1':None})
+    res.is_error()
+
+    # ##Action before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_ACTION_CONST':None, 'SET_META_1':None})
+    res.is_error()
+
+    # action-case before Grammar_Meta__Value 1
+    res = compile('grammar-metaconst-test.inf', define={'EARLY_ACTION_CASE':None, 'SET_META_1':None})
+    res.is_error()
+
+    # non-constant Grammar_Meta__Value
+    res = compile('grammar-metaconst-test.inf', define={'SET_META_NONCONST':None})
+    res.is_error()
+
+    
 
     res = compile('action-compare-test.inf')
     res.is_ok(md5='cd19d19081968c1bee3f9a2ac2348c7d', reg='allpass.reg')
@@ -1057,13 +1145,24 @@ def run_grammar_test():
     res = compile('Advent.inf', includedir='i6lib-611gv3,i6lib-611')
     res.is_ok(md5='44a2cc0636f2daffccdfc3eb89dbfe91', warnings=0, reg='Advent-z.reg')
 
+    # Compile with GRAMMAR_META_FLAG
+    res = compile('library_of_horror-60.inf', includedir='punylib-60meta,punylib-60', zversion=3)
+    res.is_ok(md5='a11d54c691edcd2a51110dc813948cab')  ###md5match!
+
     # Compile with the modified parser; meta verbs should be meta.
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True)
     res.is_ok(md5='243924e3a45f988431b31222b4a2038c', warnings=0)
     
+    res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', debug=True, define={'SET_META_CONST':None})
+    res.is_ok(md5='797eba5a2f2c9b11a65da16fd53a1493', warnings=0)   ###md5match!
+    
     res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True)
     res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', warnings=0)
 
+    res = compile('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', define={'SET_META_CONST':None}, debug=True, glulx=True)
+    res.is_ok(md5='6d07796bd4bc8b9dd5b3f233eadba309', warnings=0)  ###md5match!
+
+    
     # All of the following should compile the same.
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None})
     res.is_ok(md5='396593c986c6727524a2e638fe9afe00', warnings=0)

@@ -1,22 +1,4 @@
-
-#ifdef EARLY_ACTION_VERB;
-Verb 'whatever' * -> Inv;
-#endif;
-
-#ifdef EARLY_FAKE_ACTION;
-Fake_Action xyzzy;
-#endif;
-
-#ifdef EARLY_ACTION_CONST;
-Global actionconst = ##Inv;
-#endif;
-
-#ifdef EARLY_ACTION_CASE;
-[ TestFunc;
-  Inv: rtrue;
-  Smooch: rfalse;
-];
-#endif;
+!% $GRAMMAR_VERSION=3
 
 #ifdef SET_GV_1;
 Constant Grammar__Version = 1;
@@ -32,10 +14,6 @@ Constant Grammar__Version = 3;
 
 #ifdef SET_GV_4;
 Constant Grammar__Version = 4;
-#endif;
-
-#ifdef SET_GV_NONCONST;
-Constant Grammar__Version = InvSub;
 #endif;
 
 [ Main;

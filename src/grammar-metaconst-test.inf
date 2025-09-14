@@ -18,28 +18,29 @@ Global actionconst = ##Inv;
 ];
 #endif;
 
-#ifdef SET_GV_1;
-Constant Grammar__Version = 1;
+#ifdef SET_META_0;
+Constant Grammar_Meta__Value = 0;
 #endif;
 
-#ifdef SET_GV_2;
-Constant Grammar__Version = 2;
+#ifdef SET_META_1;
+Constant Grammar_Meta__Value = 1;
 #endif;
 
-#ifdef SET_GV_3;
-Constant Grammar__Version = 3;
+#ifdef SET_META_2;
+Constant Grammar_Meta__Value = 2;
 #endif;
 
-#ifdef SET_GV_4;
-Constant Grammar__Version = 4;
-#endif;
-
-#ifdef SET_GV_NONCONST;
-Constant Grammar__Version = InvSub;
+#ifdef SET_META_NONCONST;
+Constant Grammar_Meta__Value = InvSub;
 #endif;
 
 [ Main;
-	print "Grammar version ", Grammar__Version, "^";
+	print "Grammar_Meta__Value: ", Grammar_Meta__Value, "^";
+#ifdef GRAMMAR_META_FLAG;
+	print "GRAMMAR_META_FLAG defined.^";
+#ifnot;
+	print "GRAMMAR_META_FLAG not defined.^";
+#endif;
 ];
 
 Verb 'take'
