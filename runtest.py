@@ -938,19 +938,19 @@ def run_grammar_test():
     # File compiles the same whether the grammar version is set by Constant or compiler option
     
     res = compile('grammar-version-test.inf')
-    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48', md5match='grammar-version-test:gv=1')
 
     res = compile('grammar-version-test.inf', define={'SET_GV_1':None})
-    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48', md5match='grammar-version-test:gv=1')
 
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':1})
-    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48', md5match='grammar-version-test:gv=1')
 
     res = compile('grammar-version-test.inf', define={'SET_GV_2':None})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
 
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
 
     res = compile('grammar-version-test.inf', glulx=True)
     res.is_ok(md5='d47bae32d9bd18f7f2dbd80577795398')
@@ -977,11 +977,11 @@ def run_grammar_test():
 
     # command-line setting overrides constant decl
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2}, define={'SET_GV_3':None})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
 
     # command-line setting overrides constant decl
     res = compile('grammar-version-test.inf', memsettings={'GRAMMAR_VERSION':2}, define={'SET_GV_4':None})
-    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2')
+    res.is_ok(md5='d0c7c637051334c0886d4ea1500837f2', md5match='grammar-version-test:gv=2')
 
     # header comment overrides constant decl
     res = compile('grammar-headversion-test.inf', define={'SET_GV_2':None})
@@ -989,7 +989,7 @@ def run_grammar_test():
 
     # command-line setting overrides both
     res = compile('grammar-headversion-test.inf', memsettings={'GRAMMAR_VERSION':1}, define={'SET_GV_2':None})
-    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48')
+    res.is_ok(md5='d9dfd1f956beeeff947a30c4617dab48', md5match='grammar-version-test:gv=1')
 
     res = compile('grammar-version-test.inf', glulx=True, define={'SET_GV_3':None})
     res.is_error()
@@ -1165,16 +1165,16 @@ def run_grammar_test():
     
     # All of the following should compile the same.
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None})
-    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', warnings=0)
+    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', md5match='verbclash', warnings=0)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None})
-    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', warnings=1)
+    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', md5match='verbclash', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None})
-    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', warnings=1)
+    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', md5match='verbclash', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None})
-    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', warnings=1)
+    res.is_ok(md5='396593c986c6727524a2e638fe9afe00', md5match='verbclash', warnings=1)
     
     res = compile('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS1':None})
     res.is_error()
