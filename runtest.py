@@ -1602,16 +1602,16 @@ def run_statements_test():
     res.is_error()
 
     res = compile('jumpopcodetest.inf')
-    res.is_ok(md5='e03a9568ceca8fc90067108f8ea1ffde')
+    res.is_ok(md5='e03a9568ceca8fc90067108f8ea1ffde', md5match='jumpopcodetest:z')
 
     res = compile('jumpopcodetest.inf', define={'OPFORM':None})
-    res.is_ok(md5='e03a9568ceca8fc90067108f8ea1ffde')
+    res.is_ok(md5='e03a9568ceca8fc90067108f8ea1ffde', md5match='jumpopcodetest:z')
 
     res = compile('jumpopcodetest.inf', glulx=True)
-    res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94')
+    res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94', md5match='jumpopcodetest:g')
 
     res = compile('jumpopcodetest.inf', glulx=True, define={'OPFORM':None})
-    res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94')
+    res.is_ok(md5='4286b36138e51806e5c955bc3c66ff94', md5match='jumpopcodetest:g')
 
     res = compile('jumpbadtest.inf');
     res.is_error()
@@ -1765,16 +1765,16 @@ def run_prune_test():
     res.is_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1, reg='allpass.reg')
 
     res = compile('branchprune-nowarn.inf')
-    res.is_ok(md5='a961b02b9c344d957d2a4fd482da0464', warnings=0)
+    res.is_ok(md5='a961b02b9c344d957d2a4fd482da0464', md5match='branchprune-nowarn:z:strip', warnings=0)
 
     res = compile('branchprune-nowarn.inf', glulx=True)
-    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', warnings=0)
+    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', md5match='branchprune-nowarn:z', warnings=0)
 
     res = compile('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 })
-    res.is_ok(md5='a961b02b9c344d957d2a4fd482da0464', warnings=0)
+    res.is_ok(md5='a961b02b9c344d957d2a4fd482da0464', md5match='branchprune-nowarn:z:strip', warnings=0)
 
     res = compile('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True)
-    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', warnings=0)
+    res.is_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', md5match='branchprune-nowarn:z', warnings=0)
 
     res = compile('logicprune.inf')
     res.is_ok(md5='01a8b8cbf478357d59f9e27012ccba9a', warnings=0, reg='allpass.reg')
