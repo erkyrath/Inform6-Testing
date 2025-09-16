@@ -1684,6 +1684,18 @@ def run_expressions_test():
     res = compile('randomfunc.inf', glulx=True)
     res.is_ok(md5='de075fc5d37611be364d0772ee082ec5')
 
+    res = compile('sysfunc.inf')
+    res.is_ok(md5='d67662f864739751bd352bfb32de7a6e', reg='allpass.reg')
+
+    res = compile('sysfunc.inf', glulx=True)
+    res.is_ok(md5='0ae529afa2f30bde9bce6b20bcbb277c', reg='allpass.reg')
+
+    res = compile('sysfunc.inf', strict=False)
+    res.is_ok(md5='a7b52b44fbb8a1d3b596eea1d1ca89a1', reg='allpass.reg')
+
+    res = compile('sysfunc.inf', glulx=True, strict=False)
+    res.is_ok(md5='8072699b6e1d28b723593667fc4be90a', reg='allpass.reg')
+
     # non-strict because we're testing low-level prop opcodes
     res = compile('prop_store_optim.inf', strict=False)
     res.is_ok(md5='da82bc142be965aa60e7a352728b514d', reg='allpass.reg')
