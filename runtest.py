@@ -1277,6 +1277,9 @@ def run_lexer_test():
     res = compile('icl-linebreak-oldmac.inf', glulx=True)
     res.is_memsetting('MAX_DYNAMIC_STRINGS')
 
+    res = compile('icl-semicolon.inf', glulx=True)
+    res.is_ok(md5='3067f025bcc31115e5ec7397761e2f41')
+
     res = compile('bad-global.inf')
     res.is_error()
 
