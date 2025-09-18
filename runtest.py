@@ -2268,7 +2268,7 @@ class Run_Max_Ifdef_Stack(TestGroup, key='MAX_IFDEF_STACK'):
     Test('max_ifdef_stack_33.inf',
          res=_memsetting('MAX_IFDEF_STACK'))
 
-class Run_Max_switch_case_values(TestGroup, key='MAX_SWITCH_CASE_VALUES'):
+class Run_Max_Switch_Case_Values(TestGroup, key='MAX_SWITCH_CASE_VALUES'):
     # Fixed limit
 
     Test('max_switch_case_values.inf',
@@ -2278,7 +2278,7 @@ class Run_Max_switch_case_values(TestGroup, key='MAX_SWITCH_CASE_VALUES'):
          res=_memsetting('MAX_SPEC_STACK'))
 
     
-class Run_Max_inclusion_depth(TestGroup, key='MAX_INCLUSION_DEPTH'):
+class Run_Max_Inclusion_Depth(TestGroup, key='MAX_INCLUSION_DEPTH'):
     Test('max_inclusion_depth_test.inf', includedir='src/include',
          res=_ok())
     
@@ -2286,7 +2286,7 @@ class Run_Max_inclusion_depth(TestGroup, key='MAX_INCLUSION_DEPTH'):
          res=_ok())
 
 
-class Run_Max_source_files(TestGroup, key='MAX_SOURCE_FILES'):
+class Run_Max_Source_Files(TestGroup, key='MAX_SOURCE_FILES'):
     Test('max_source_files_test.inf', includedir='src/include',
          res=_ok())
     
@@ -2299,7 +2299,7 @@ class Run_Max_Unicode_Chars(TestGroup, key='MAX_UNICODE_CHARS'):
          res=_ok())
 
     
-class Run_Max_symbols(TestGroup, key='MAX_SYMBOLS'):
+class Run_Max_Symbols(TestGroup, key='MAX_SYMBOLS'):
     Test('max_symbols_test.inf',
          res=_ok())
     
@@ -2307,7 +2307,7 @@ class Run_Max_symbols(TestGroup, key='MAX_SYMBOLS'):
          res=_ok())
 
 
-class Run_symbols_chunk_size(TestGroup, key='SYMBOLS_CHUNK_SIZE'):
+class Run_Symbols_Chunk_Size(TestGroup, key='SYMBOLS_CHUNK_SIZE'):
     Test('max_symbols_test.inf',
          res=_ok())
     
@@ -2315,7 +2315,7 @@ class Run_symbols_chunk_size(TestGroup, key='SYMBOLS_CHUNK_SIZE'):
          res=_ok())
 
 
-class Run_Max_objects(TestGroup, key='MAX_OBJECTS'):
+class Run_Max_Objects(TestGroup, key='MAX_OBJECTS'):
     Test('max_objects_test.inf',
          res=_ok())
 
@@ -2344,7 +2344,7 @@ class Run_Max_objects(TestGroup, key='MAX_OBJECTS'):
          res=_ok())
 
 
-class Run_Max_classes(TestGroup, key='MAX_CLASSES'):
+class Run_Max_Classes(TestGroup, key='MAX_CLASSES'):
     Test('max_classes_test.inf',
          res=_ok())
 
@@ -2370,7 +2370,7 @@ class Run_Max_classes(TestGroup, key='MAX_CLASSES'):
          res=_ok())
 
 
-class Run_Max_arrays(TestGroup, key='MAX_ARRAYS'):
+class Run_Max_Arrays(TestGroup, key='MAX_ARRAYS'):
     Test('max_arrays_test.inf',
          res=_ok())
 
@@ -2390,7 +2390,7 @@ class Run_Max_arrays(TestGroup, key='MAX_ARRAYS'):
          res=_ok())
 
 
-class Run_Max_attr_bytes(TestGroup, key='MAX_ATTR_BYTES'):
+class Run_Max_Attr_Bytes(TestGroup, key='MAX_ATTR_BYTES'):
     Test('max_attributes.inf',
          res=_memsetting('MAX_ATTRIBUTES'))
     
@@ -2401,7 +2401,7 @@ class Run_Max_attr_bytes(TestGroup, key='MAX_ATTR_BYTES'):
          res=_ok())
     
 
-class Run_Max_prop_table_size(TestGroup, key='MAX_PROP_TABLE_SIZE'):
+class Run_Max_Prop_Table_Size(TestGroup, key='MAX_PROP_TABLE_SIZE'):
     Test('max_prop_table_size_test.inf',
          res=_ok())
 
@@ -2427,7 +2427,7 @@ class Run_Max_prop_table_size(TestGroup, key='MAX_PROP_TABLE_SIZE'):
          res=_memsetting('MAX_SHORT_NAME_LENGTH'))
 
 
-class Run_Max_common_prop_count(TestGroup, key='MAX_COMMON_PROP_COUNT'):
+class Run_Max_Common_Prop_Count(TestGroup, key='MAX_COMMON_PROP_COUNT'):
     Test('max_common_props_test.inf',
          res=_memsetting('MAX_COMMON_PROPS'))
 
@@ -2453,7 +2453,7 @@ class Run_Max_common_prop_count(TestGroup, key='MAX_COMMON_PROP_COUNT'):
          res=_memsetting('MAX_COMMON_PROPS'))
 
 
-class Run_Max_common_prop_size(TestGroup, key='MAX_COMMON_PROP_SIZE'):
+class Run_Max_Common_Prop_Size(TestGroup, key='MAX_COMMON_PROP_SIZE'):
     Test('max_prop_size_test.inf', define={ 'MAX_COMMON_PROP':0 },
          res=_ok())
     
@@ -2491,19 +2491,19 @@ class Run_Max_common_prop_size(TestGroup, key='MAX_COMMON_PROP_SIZE'):
          res=_memsetting('MAX_PROP_LENGTH_ZCODE'))
     
     
-class Run_Max_indiv_prop_table_size(TestGroup, key='MAX_INDIV_PROP_TABLE_SIZE'):
+class Run_Max_Indiv_Prop_Table_Size(TestGroup, key='MAX_INDIV_PROP_TABLE_SIZE'):
     Test('max_indiv_prop_table_size_test.inf',
          res=_ok())
 
     # Glulx does not use this setting, so no Glulx tests.
 
     
-class Run_Max_obj_prop_table_size(TestGroup, key='MAX_OBJ_PROP_TABLE_SIZE'):
+class Run_Max_obj_Prop_Table_Size(TestGroup, key='MAX_OBJ_PROP_TABLE_SIZE'):
     Test('max_obj_prop_table_size_test.inf', glulx=True,
          res=_ok())
 
 
-class Run_Max_obj_prop_count(TestGroup, key='MAX_OBJ_PROP_COUNT'):
+class Run_Max_Obj_Prop_Count(TestGroup, key='MAX_OBJ_PROP_COUNT'):
     Test('max_obj_prop_count_test.inf', glulx=True,
          res=_ok())
 
@@ -2520,7 +2520,7 @@ class Run_Max_obj_prop_count(TestGroup, key='MAX_OBJ_PROP_COUNT'):
          res=_ok())
     
 
-class Run_Max_global_variables(TestGroup, key='MAX_GLOBAL_VARIABLES'):
+class Run_Max_Global_Variables(TestGroup, key='MAX_GLOBAL_VARIABLES'):
     # In Z-code, at most 233 globals are available, and you can't raise the
     # limit.
     Test('max_global_variables_test.inf',
@@ -2542,7 +2542,7 @@ class Run_Max_global_variables(TestGroup, key='MAX_GLOBAL_VARIABLES'):
          res=_ok())
 
 
-class Run_Max_local_variables(TestGroup, key='MAX_LOCAL_VARIABLES'):
+class Run_Max_Local_Variables(TestGroup, key='MAX_LOCAL_VARIABLES'):
     # In Z-code, at most 15 locals are available, and you can't raise the
     # limit. In Glulx, at most 118.
     
@@ -2568,7 +2568,7 @@ class Run_Max_local_variables(TestGroup, key='MAX_LOCAL_VARIABLES'):
          res=_memsetting('MAX_LOCAL_VARIABLES'))
 
     
-class Run_Max_static_data(TestGroup, key='MAX_STATIC_DATA'):
+class Run_Max_Static_Data(TestGroup, key='MAX_STATIC_DATA'):
     Test('max_static_data_test.inf',
          res=_ok())
 
@@ -2588,14 +2588,14 @@ class Run_Max_static_data(TestGroup, key='MAX_STATIC_DATA'):
          res=_ok())
 
 
-class Run_Max_num_static_strings(TestGroup, key='MAX_NUM_STATIC_STRINGS'):
+class Run_Max_Num_Static_Strings(TestGroup, key='MAX_NUM_STATIC_STRINGS'):
     # Glulx only
 
     Test('static_text_test.inf', glulx=True,
          res=_ok())
 
     
-class Run_Max_qtext_size(TestGroup, key='MAX_QTEXT_SIZE'):
+class Run_Max_Qtext_Size(TestGroup, key='MAX_QTEXT_SIZE'):
     Test('max_static_strings_test.inf',
          res=_ok())
 
@@ -2603,7 +2603,7 @@ class Run_Max_qtext_size(TestGroup, key='MAX_QTEXT_SIZE'):
          res=_ok())
 
     
-class Run_Max_static_strings(TestGroup, key='MAX_STATIC_STRINGS'):
+class Run_Max_Static_Strings(TestGroup, key='MAX_STATIC_STRINGS'):
     # The compiler ensures that MAX_STATIC_STRINGS is (at least) twice
     # MAX_QTEXT_SIZE.
     
@@ -2614,14 +2614,14 @@ class Run_Max_static_strings(TestGroup, key='MAX_STATIC_STRINGS'):
          res=_ok())
 
 
-class Run_Max_low_strings(TestGroup, key='MAX_LOW_STRINGS'):
+class Run_Max_Low_Strings(TestGroup, key='MAX_LOW_STRINGS'):
     # Only meaningful for Z-code.
     
     Test('max_low_strings_test.inf',
          res=_ok())
 
     
-class Run_Max_dynamic_strings(TestGroup, key='MAX_DYNAMIC_STRINGS'):
+class Run_Max_Dynamic_Strings(TestGroup, key='MAX_DYNAMIC_STRINGS'):
     Test('max_dynamic_strings_test_at15.inf', memsettings={},
          res=_ok())
 
@@ -2704,7 +2704,7 @@ class Run_Max_dynamic_strings(TestGroup, key='MAX_DYNAMIC_STRINGS'):
          res=_ok())
 
     
-class Run_Max_inline_string(TestGroup, key='MAX_INLINE_STRING'):
+class Run_Max_Inline_String(TestGroup, key='MAX_INLINE_STRING'):
     Test('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64},
          res=_ok(md5='efddd2f66f953d33bc5e7545e3834adc', warnings=0, reg='Advent-z.reg'))
 
