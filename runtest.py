@@ -598,7 +598,7 @@ def note_error(res, msg):
 
 # And now, the tests themselves.
 
-def run_checksum_test():
+class Run_Checksum(TestGroup, key='CHECKSUM'):
     res = compile('minimal_test.inf')
     res.is_ok(md5='90866a483312a4359bc00db776e6eed4', md5match='minimal_test:z', warnings=0)
 
@@ -719,7 +719,7 @@ def run_checksum_test():
     res.is_ok(md5='536081944e40c13c4977ec6ccca0906c', md5match='library_of_horror-60:meta=1', reg='library_of_horror.reg')
 
 
-def run_dict_test():
+class Run_Dict(TestGroup, key='DICT'):
     res = compile('dict-size-v3test.inf', zversion=3)
     res.is_ok(md5='68b57b14d5ca770be53134d8f4739727', reg='allpass.reg')
 
@@ -934,7 +934,7 @@ def run_dict_test():
     res.is_ok(md5='d42460263e3fe758098c7b975f994239', reg='allpass.reg')
     
 
-def run_grammar_test():
+class Run_Grammar(TestGroup, key='GRAMMAR'):
     # File compiles the same whether the grammar version is set by Constant or compiler option
     
     res = compile('grammar-version-test.inf')
@@ -1198,7 +1198,7 @@ def run_grammar_test():
     res.is_error()
     
     
-def run_encoding_test():
+class Run_Encoding(TestGroup, key='ENCODING'):
     res = compile('unisourcetest.inf', glulx=True)
     res.is_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg')
     
@@ -1224,7 +1224,7 @@ def run_encoding_test():
     res.is_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47')
     
     
-def run_lexer_test():
+class Run_Lexer(TestGroup, key='LEXER'):
     res = compile('long_identifier_test.inf')
     res.is_ok()
 
@@ -1291,7 +1291,7 @@ def run_lexer_test():
     res.is_ok(md5='da64b2564896d50f76f6dc324c95ad52')
 
     
-def run_directives_test():
+class Run_Directives(TestGroup, key='DIRECTIVES'):
     # md5 checks for serial.inf are useless because the checksummer ignores the serial number. Run the compiled file to check it.
     
     res = compile('serial.inf', define={'SETFIXEDSERIAL':None, 'CHECKYEAR':12, 'CHECKMONTH':34, 'CHECKDAY':56})
@@ -1520,7 +1520,7 @@ def run_directives_test():
     res.is_error(errors=2)
 
 
-def run_veneer_test():
+class Run_Veneer(TestGroup, key='VENEER'):
     res = compile('obj_prop_call.inf')
     res.is_ok()
     
@@ -1558,7 +1558,7 @@ def run_veneer_test():
     res.is_ok(md5='6c6e6bcf3c2715b5f9962dd78e3adee3', reg='obj_prop_test-g.reg')
     
 
-def run_statements_test():
+class Run_Statements(TestGroup, key='STATEMENTS'):
     res = compile('switchcasetest.inf')
     res.is_ok(reg='allpass.reg')
 
@@ -1629,7 +1629,7 @@ def run_statements_test():
     res.is_error()
 
 
-def run_expressions_test():
+class Run_Expressions(TestGroup, key='EXPRESSIONS'):
     res = compile('unaryop_err_test.inf')
     res.is_ok(md5='3ef4055b570b0549c34e51778a7e0e3d', reg='allpass.reg')
 
@@ -1707,7 +1707,7 @@ def run_expressions_test():
     res.is_ok(md5='14efea1ea6f04af863bed183ba33989f', reg='allpass.reg')
     
 
-def run_debugflag_test():
+class Run_DebugFlag(TestGroup, key='DEBUGFLAG'):
     res = compile('no_debug_flag_test.inf')
     res.is_ok(warnings=0)
 
@@ -1728,7 +1728,7 @@ def run_debugflag_test():
     res.is_error(warnings=1)
 
 
-def run_assembytes_test():
+class Run_AssemBytes(TestGroup, key='ASSEMBYTES'):
     res = compile('assembytes_test.inf')
     res.is_ok(reg='allpass.reg')
 
@@ -1754,7 +1754,7 @@ def run_assembytes_test():
     res.is_error()
     
     
-def run_prune_test():
+class Run_Prune(TestGroup, key='PRUNE'):
     res = compile('branchprune.inf')
     res.is_ok(md5='a4e1b3045396265935aaf8a0fd1dcd1d', reg='allpass.reg')
 
@@ -1832,7 +1832,7 @@ def run_prune_test():
     res.is_ok(md5='74176ff2736cc48596a0228da91f36f4', reg='tasksacktest-st.reg')
 
 
-def run_compileopt_test():
+class Run_CompileOpt(TestGroup, key='COMPILEOPT'):
     # Can't change DICT_WORD_SIZE in Z-code
     res = compile('optprectest.inf')
     res.is_error()
@@ -1850,7 +1850,7 @@ def run_compileopt_test():
     res.is_ok(md5='08f73f6698bc2c4329d5c1b1f472b93a')
     
     
-def run_defineopt_test():
+class Run_DefineOpt(TestGroup, key='DEFINEOPT'):
     res = compile('defineopttest.inf')
     res.is_ok(md5='b28c63d4787d39b9e6ecb1afe3b5a215')
 
@@ -1908,7 +1908,7 @@ def run_defineopt_test():
     res.is_ok(md5='333fe8a75515113435491c94d3d6e57f')
 
 
-def run_fwconst_test():
+class Run_FwConst(TestGroup, key='FWCONST'):
     res = compile('fwconst_release_test.inf')
     res.is_error()
 
@@ -1985,7 +1985,7 @@ def run_fwconst_test():
     res.is_ok()
 
 
-def run_debugfile_test():
+class Run_DebugFile(TestGroup, key='DEBUGFILE'):
     res = compile('Advent.inf', includedir='i6lib-611', debugfile=True)
     res.is_ok(md5='9652cc4d31d4cd136c127e8fa7cfc356', md5match='Advent:z', warnings=0, debugfile='6dea9fb59235543578d221b36811056a')
 
@@ -1999,7 +1999,7 @@ def run_debugfile_test():
     res.is_ok(md5='28ab5c4574d709a655dac82873da6018', warnings=0, debugfile='e431a943368b982e56b6c2f10e295941')
 
 
-def run_warnings_test():
+class Run_Warnings(TestGroup, key='WARNINGS'):
     res = compile('typewarningtest.inf')
     res.is_ok(warnings=83)
     
@@ -2025,7 +2025,7 @@ def run_warnings_test():
     res.is_ok(md5='34cbc765cb174293b06b97d3bdbc8258', warnings=4, reg='allpass.reg')
 
 
-def run_trace_test():
+class Run_Trace(TestGroup, key='TRACE'):
     res = compile('Advent.inf', includedir='i6lib-611', trace={ 'ACTIONS':1 })
     res.is_ok()
 
@@ -2114,7 +2114,7 @@ def run_trace_test():
     res.is_ok()
 
 
-def run_abbreviations_test():
+class Run_Abbreviations(TestGroup, key='ABBREVIATIONS'):
     res = compile('max_abbrev_len_test.inf')
     res.is_ok(warnings=0)
     
@@ -2156,7 +2156,7 @@ def run_abbreviations_test():
 
     
     
-def run_make_abbreviations_test():
+class Run_Make_Abbreviations(TestGroup, key='MAKE_ABBREVIATIONS'):
     res = compile('abbrevtest.inf', makeabbrevs=True, economy=True)
     res.is_ok(abbreviations=['. ', ', ', '**]', "='@", ' the', 'tried to print (', 'string', 'objec', ' on something n', ' here', ' tha', "31'.^", 'ing', ' to ', 'tribute', '~ o', 'lass', 'ate', 'ther', 'which', 'for', ': 0', "16'", 'ave', 'loop', 'can', 'mber', 'tion', 'is n', 'cre', 'use', 'ed ', 'at ', 'or ', 'ot ', 'has', "00'", "01'", '-- ', 'est', 'er ', 'hall ', 'is ', 'in ', 'we ', 'ead', 'of ', 'out', 'rem', ' a ', 'not', 'nse', 'ove', ' de', ' to', ' it', ' wh', ' us', 'se ', 'de '], warnings=11)
 
@@ -2182,7 +2182,7 @@ def run_make_abbreviations_test():
     res.is_ok(abbreviations=['. ', ', ', 'You ', '\'t ', 'ing ', '**]', 'The', 'That', 'you can', 'someth', '_to)', 're ', 'closed', 'bject', 'But ', 's no', 'already ', 'which ', 'Command', 'script', ' to ', 'ing', 'can', 'You\'', 'ome', 'tion', 'the', 'your', 't of', 'achieve', 'Language', 'have', 'ou aren', 'Those', 'ou wan', 'this', 'provid', 'would', 'ter', 'unexpected', 'lock', 'nd ', 'you', 'at ', 'noth', 'of ', 'ed.', 'ed ', 'se ', 'ch ', 'is ', 'Not', 'not ', 'in ', 'seem', 'read', 'on ', 'You', 'ere.', 'est', 'er ', '~ or ', 'ight', 'first', 'int', 've ', 'see ', 'as ', 'ly ', 'ide ', 'ect', 'put ', 'en ', 'an ', 'lass ', 'ns ', 'record', 'It ', 'ent', '\'s ', 'off ', 'get ', 'nce ', 'I d', 'ort', 'le.', 'be ', 'wit', 'le ', 'ious ', 'gam', 'n\'t', 'off.', 'on.', ' th', ' on'])
 
     
-def run_max_ifdef_stack():
+class Run_Max_Ifdef_Stack(TestGroup, key='MAX_IFDEF_STACK'):
     # Fixed limit; no memory setting to change.
     
     res = compile('max_ifdef_stack_32.inf')
@@ -2191,7 +2191,7 @@ def run_max_ifdef_stack():
     res = compile('max_ifdef_stack_33.inf')
     res.is_memsetting('MAX_IFDEF_STACK')
 
-def run_max_switch_case_values():
+class Run_Max_switch_case_values(TestGroup, key='MAX_SWITCH_CASE_VALUES'):
     # Fixed limit
 
     res = compile('max_switch_case_values.inf')
@@ -2201,7 +2201,7 @@ def run_max_switch_case_values():
     res.is_memsetting('MAX_SPEC_STACK')
 
     
-def run_max_inclusion_depth():
+class Run_Max_inclusion_depth(TestGroup, key='MAX_INCLUSION_DEPTH'):
     res = compile('max_inclusion_depth_test.inf', includedir='src/include')
     res.is_ok()
     
@@ -2209,7 +2209,7 @@ def run_max_inclusion_depth():
     res.is_ok()
 
 
-def run_max_source_files():
+class Run_Max_source_files(TestGroup, key='MAX_SOURCE_FILES'):
     res = compile('max_source_files_test.inf', includedir='src/include')
     res.is_ok()
     
@@ -2217,12 +2217,12 @@ def run_max_source_files():
     res.is_ok()
     
 
-def run_max_unicode_chars_test():
+class Run_Max_Unicode_Chars(TestGroup, key='MAX_UNICODE_CHARS'):
     res = compile('max_unicode_chars_test.inf', glulx=True)
     res.is_ok()
 
     
-def run_max_symbols():
+class Run_Max_symbols(TestGroup, key='MAX_SYMBOLS'):
     res = compile('max_symbols_test.inf')
     res.is_ok()
     
@@ -2230,7 +2230,7 @@ def run_max_symbols():
     res.is_ok()
 
 
-def run_symbols_chunk_size():
+class Run_symbols_chunk_size(TestGroup, key='SYMBOLS_CHUNK_SIZE'):
     res = compile('max_symbols_test.inf')
     res.is_ok()
     
@@ -2238,7 +2238,7 @@ def run_symbols_chunk_size():
     res.is_ok()
 
 
-def run_max_objects():
+class Run_Max_objects(TestGroup, key='MAX_OBJECTS'):
     res = compile('max_objects_test.inf')
     res.is_ok()
 
@@ -2267,7 +2267,7 @@ def run_max_objects():
     res.is_ok()
 
 
-def run_max_classes():
+class Run_Max_classes(TestGroup, key='MAX_CLASSES'):
     res = compile('max_classes_test.inf')
     res.is_ok()
 
@@ -2293,7 +2293,7 @@ def run_max_classes():
     res.is_ok()
 
 
-def run_max_arrays():
+class Run_Max_arrays(TestGroup, key='MAX_ARRAYS'):
     res = compile('max_arrays_test.inf')
     res.is_ok()
 
@@ -2313,7 +2313,7 @@ def run_max_arrays():
     res.is_ok()
 
 
-def run_max_attr_bytes():
+class Run_Max_attr_bytes(TestGroup, key='MAX_ATTR_BYTES'):
     res = compile('max_attributes.inf')
     res.is_memsetting('MAX_ATTRIBUTES')
     
@@ -2324,7 +2324,7 @@ def run_max_attr_bytes():
     res.is_ok()
     
 
-def run_max_prop_table_size():
+class Run_Max_prop_table_size(TestGroup, key='MAX_PROP_TABLE_SIZE'):
     res = compile('max_prop_table_size_test.inf')
     res.is_ok()
 
@@ -2350,7 +2350,7 @@ def run_max_prop_table_size():
     res.is_memsetting('MAX_SHORT_NAME_LENGTH')
 
 
-def run_max_common_prop_count():
+class Run_Max_common_prop_count(TestGroup, key='MAX_COMMON_PROP_COUNT'):
     res = compile('max_common_props_test.inf')
     res.is_memsetting('MAX_COMMON_PROPS')
 
@@ -2376,7 +2376,7 @@ def run_max_common_prop_count():
     res.is_memsetting('MAX_COMMON_PROPS')
 
 
-def run_max_common_prop_size():
+class Run_Max_common_prop_size(TestGroup, key='MAX_COMMON_PROP_SIZE'):
     res = compile('max_prop_size_test.inf', define={ 'MAX_COMMON_PROP':0 })
     res.is_ok()
     
@@ -2414,19 +2414,19 @@ def run_max_common_prop_size():
     res.is_memsetting('MAX_PROP_LENGTH_ZCODE')
     
     
-def run_max_indiv_prop_table_size():
+class Run_Max_indiv_prop_table_size(TestGroup, key='MAX_INDIV_PROP_TABLE_SIZE'):
     res = compile('max_indiv_prop_table_size_test.inf')
     res.is_ok()
 
     # Glulx does not use this setting, so no Glulx tests.
 
     
-def run_max_obj_prop_table_size():
+class Run_Max_obj_prop_table_size(TestGroup, key='MAX_OBJ_PROP_TABLE_SIZE'):
     res = compile('max_obj_prop_table_size_test.inf', glulx=True)
     res.is_ok()
 
 
-def run_max_obj_prop_count():
+class Run_Max_obj_prop_count(TestGroup, key='MAX_OBJ_PROP_COUNT'):
     res = compile('max_obj_prop_count_test.inf', glulx=True)
     res.is_ok()
 
@@ -2443,7 +2443,7 @@ def run_max_obj_prop_count():
     res.is_ok()
     
 
-def run_max_global_variables():
+class Run_Max_global_variables(TestGroup, key='MAX_GLOBAL_VARIABLES'):
     # In Z-code, at most 233 globals are available, and you can't raise the
     # limit.
     res = compile('max_global_variables_test.inf')
@@ -2465,7 +2465,7 @@ def run_max_global_variables():
     res.is_ok()
 
 
-def run_max_local_variables():
+class Run_Max_local_variables(TestGroup, key='MAX_LOCAL_VARIABLES'):
     # In Z-code, at most 15 locals are available, and you can't raise the
     # limit. In Glulx, at most 118.
     
@@ -2491,7 +2491,7 @@ def run_max_local_variables():
     res.is_memsetting('MAX_LOCAL_VARIABLES')
 
     
-def run_max_static_data():
+class Run_Max_static_data(TestGroup, key='MAX_STATIC_DATA'):
     res = compile('max_static_data_test.inf')
     res.is_ok()
 
@@ -2511,14 +2511,14 @@ def run_max_static_data():
     res.is_ok()
 
 
-def run_max_num_static_strings():
+class Run_Max_num_static_strings(TestGroup, key='MAX_NUM_STATIC_STRINGS'):
     # Glulx only
 
     res = compile('static_text_test.inf', glulx=True)
     res.is_ok()
 
     
-def run_max_qtext_size():
+class Run_Max_qtext_size(TestGroup, key='MAX_QTEXT_SIZE'):
     res = compile('max_static_strings_test.inf')
     res.is_ok()
 
@@ -2526,7 +2526,7 @@ def run_max_qtext_size():
     res.is_ok()
 
     
-def run_max_static_strings():
+class Run_Max_static_strings(TestGroup, key='MAX_STATIC_STRINGS'):
     # The compiler ensures that MAX_STATIC_STRINGS is (at least) twice
     # MAX_QTEXT_SIZE.
     
@@ -2537,14 +2537,14 @@ def run_max_static_strings():
     res.is_ok()
 
 
-def run_max_low_strings():
+class Run_Max_low_strings(TestGroup, key='MAX_LOW_STRINGS'):
     # Only meaningful for Z-code.
     
     res = compile('max_low_strings_test.inf')
     res.is_ok()
 
     
-def run_max_dynamic_strings():
+class Run_Max_dynamic_strings(TestGroup, key='MAX_DYNAMIC_STRINGS'):
     res = compile('max_dynamic_strings_test_at15.inf', memsettings={})
     res.is_ok()
 
@@ -2627,7 +2627,7 @@ def run_max_dynamic_strings():
     res.is_ok()
 
     
-def run_max_inline_string():
+class Run_Max_inline_string(TestGroup, key='MAX_INLINE_STRING'):
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64})
     res.is_ok(md5='efddd2f66f953d33bc5e7545e3834adc', warnings=0, reg='Advent-z.reg')
 
@@ -2648,7 +2648,7 @@ def run_max_inline_string():
 
     
     
-def run_max_abbrevs():
+class Run_Max_Abbrevs(TestGroup, key='MAX_ABBREVS'):
     res = compile('abbrevtest.inf')
     res.is_ok(md5='e3354e1acd1591f835c6226c88b9620a')
     
@@ -2716,7 +2716,7 @@ def run_max_abbrevs():
     res.is_ok()
 
 
-def run_max_verb_word_size():
+class Run_Max_verb_word_size(TestGroup, key='MAX_VERB_WORD_SIZE'):
     # Fixed limit; no memory setting to change.
     
     res = compile('max_verb_word_size.inf')
@@ -2732,7 +2732,7 @@ def run_max_verb_word_size():
     res.is_ok()
 
 
-def run_max_lines_per_verb():
+class Run_Max_lines_per_verb(TestGroup, key='MAX_LINES_PER_VERB'):
     res = compile('max_lines_per_verb_32.inf')
     res.is_ok()
 
@@ -2758,12 +2758,12 @@ def run_max_lines_per_verb():
     res.is_ok()
 
     
-def run_max_linespace():
+class Run_Max_linespace(TestGroup, key='MAX_LINESPACE'):
     res = compile('max_linespace_test.inf')
     res.is_ok()
 
     
-def run_max_verb_synonyms():
+class Run_Max_verb_synonyms(TestGroup, key='MAX_VERB_SYNONYMS'):
     res = compile('max_verb_synonyms_32.inf')
     res.is_ok()
 
@@ -2771,7 +2771,7 @@ def run_max_verb_synonyms():
     res.is_ok()
     
     
-def run_max_verbs():
+class Run_Max_Verbs(TestGroup, key='MAX_VERBS'):
     res = compile('max_verbs.inf')
     res.is_ok()
     
@@ -2791,7 +2791,7 @@ def run_max_verbs():
     res.is_ok()
     
     
-def run_unused_verbs():
+class Run_unused_verbs(TestGroup, key='UNUSED_VERBS'):
     res = compile('unused_verbs.inf')
     res.is_ok(warnings=0)
     
@@ -2823,7 +2823,7 @@ def run_unused_verbs():
     res.is_ok(md5='d5b4e881b69ecb1354f0752450513518', warnings=2, reg='unused_verbs_lib.reg')
     
     
-def run_max_actions():
+class Run_Max_actions(TestGroup, key='MAX_ACTIONS'):
     res = compile('max_actions.inf')
     res.is_ok()
 
@@ -2851,7 +2851,7 @@ def run_max_actions():
     res.is_ok()
 
     
-def run_max_adjectives():
+class Run_Max_adjectives(TestGroup, key='MAX_ADJECTIVES'):
     res = compile('max_adjectives.inf')
     res.is_ok()
 
@@ -2875,7 +2875,7 @@ def run_max_adjectives():
     res.is_ok()
 
     
-def run_max_expression_nodes():
+class Run_Max_expression_nodes(TestGroup, key='MAX_EXPRESSION_NODES'):
     res = compile('max_expression_nodes_test.inf')
     res.is_ok()
 
@@ -2895,7 +2895,7 @@ def run_max_expression_nodes():
     res.is_ok()
 
 
-def run_max_labels():
+class Run_Max_labels(TestGroup, key='MAX_LABELS'):
     res = compile('max_labels_test.inf')
     res.is_ok()
     
@@ -2903,7 +2903,7 @@ def run_max_labels():
     res.is_ok()
 
 
-def run_max_zcode_size():
+class Run_Max_zcode_size(TestGroup, key='MAX_ZCODE_SIZE'):
     res = compile('large_opcode_text_test.inf', memsettings={'MAX_QTEXT_SIZE':8001})
     res.is_ok()
 
@@ -2923,7 +2923,7 @@ def run_max_zcode_size():
     res.is_ok()
 
 
-def run_omit_unused_routines():
+class Run_Omit_Unused_Routines(TestGroup, key='OMIT_UNUSED_ROUTINES'):
     res = compile('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1})
     res.is_ok()
     res.is_ok(md5='786386c4dd2562eccc714b109333ad97', reg='i7-min-6G60.reg')
@@ -2947,7 +2947,7 @@ def run_omit_unused_routines():
     res.is_ok(md5='5ebeba63f77407fc175f00055f565933')
 
 
-def run_omit_symbol_table():
+class Run_Omit_Symbol_Table(TestGroup, key='OMIT_SYMBOL_TABLE'):
     res = compile('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1})
     res.is_ok(md5='cb63e6bb7762d2e971449883a85c3a31', warnings=0, reg='Advent-z.reg')
 
@@ -2964,7 +2964,7 @@ def run_omit_symbol_table():
     res.is_ok(md5='c674e8217a693124dfd0404fbe9b36dc', warnings=0)
 
     
-def run_file_end_padding():
+class Run_ZCode_File_End_Padding(TestGroup, key='ZCODE_FILE_END_PADDING'):
     res = compile('minimal_test.inf', memsettings={'ZCODE_FILE_END_PADDING':0})
     res.is_ok(md5='1847d28cc183ec23c50bd5bca52a1b21')
 
@@ -2981,7 +2981,7 @@ def run_file_end_padding():
     res.is_ok(md5='e2f1e710cb314f865b6695302ac37c50', reg='library_of_horror.reg')
 
 
-def run_zcode_compact_globals():
+class Run_ZCode_Compact_Globals(TestGroup, key='ZCODE_COMPACT_GLOBALS'):
     res = compile('show_globals.inf')
     res.is_ok(reg='show_globals-z5.reg')
 
@@ -3045,71 +3045,6 @@ def run_zcode_compact_globals():
     res = compile('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1})
     res.is_ok(md5='fdf47c140c1123df4a87fa67bfb5f957', reg='library_of_horror.reg')
 
-
-test_catalog = [
-    ('CHECKSUM', run_checksum_test),
-    ('DICT', run_dict_test),
-    ('GRAMMAR', run_grammar_test),
-    ('ENCODING', run_encoding_test),
-    ('LEXER', run_lexer_test),
-    ('VENEER', run_veneer_test),
-    ('DIRECTIVES', run_directives_test),
-    ('STATEMENTS', run_statements_test),
-    ('EXPRESSIONS', run_expressions_test),
-    ('ASSEMBYTES', run_assembytes_test),
-    ('PRUNE', run_prune_test),
-    ('DEBUGFLAG', run_debugflag_test),
-    ('COMPILEOPT', run_compileopt_test),
-    ('DEFINEOPT', run_defineopt_test),
-    ('FWCONST', run_fwconst_test),
-    ('DEBUGFILE', run_debugfile_test),
-    ('WARNINGS', run_warnings_test),
-    ('TRACE', run_trace_test),
-    ('ABBREVIATIONS', run_abbreviations_test),
-    ('MAKE_ABBREVIATIONS', run_make_abbreviations_test),
-    ('MAX_IFDEF_STACK', run_max_ifdef_stack),
-    ('MAX_SWITCH_CASE_VALUES', run_max_switch_case_values),
-    ('MAX_INCLUSION_DEPTH', run_max_inclusion_depth),
-    ('MAX_SOURCE_FILES', run_max_source_files),
-    ('MAX_UNICODE_CHARS', run_max_unicode_chars_test),
-    ('MAX_SYMBOLS', run_max_symbols),
-    ('SYMBOLS_CHUNK_SIZE', run_symbols_chunk_size),
-    ('MAX_OBJECTS', run_max_objects),
-    ('MAX_CLASSES', run_max_classes),
-    ('MAX_ARRAYS', run_max_arrays),
-    ('MAX_ATTR_BYTES', run_max_attr_bytes),
-    ('MAX_PROP_TABLE_SIZE', run_max_prop_table_size),
-    ('MAX_COMMON_PROP_COUNT', run_max_common_prop_count),
-    ('MAX_COMMON_PROP_SIZE', run_max_common_prop_size),
-    ('MAX_INDIV_PROP_TABLE_SIZE', run_max_indiv_prop_table_size),
-    ('MAX_OBJ_PROP_TABLE_SIZE', run_max_obj_prop_table_size),
-    ('MAX_OBJ_PROP_COUNT', run_max_obj_prop_count),
-    ('MAX_GLOBAL_VARIABLES', run_max_global_variables),
-    ('MAX_LOCAL_VARIABLES', run_max_local_variables),
-    ('MAX_STATIC_DATA', run_max_static_data),
-    ('MAX_NUM_STATIC_STRINGS', run_max_num_static_strings),
-    ('MAX_QTEXT_SIZE', run_max_qtext_size),
-    ('MAX_STATIC_STRINGS', run_max_static_strings),
-    ('MAX_LOW_STRINGS', run_max_low_strings),
-    ('MAX_DYNAMIC_STRINGS', run_max_dynamic_strings),
-    ('MAX_INLINE_STRING', run_max_inline_string),
-    ('MAX_ABBREVS', run_max_abbrevs),
-    ('MAX_VERBS', run_max_verbs),
-    ('UNUSED_VERBS', run_unused_verbs),
-    ('MAX_VERB_WORD_SIZE', run_max_verb_word_size),
-    ('MAX_VERB_SYNONYMS', run_max_verb_synonyms),
-    ('MAX_LINES_PER_VERB', run_max_lines_per_verb),
-    ('MAX_LINESPACE', run_max_linespace),
-    ('MAX_ACTIONS', run_max_actions),
-    ('MAX_ADJECTIVES', run_max_adjectives),
-    ('MAX_EXPRESSION_NODES', run_max_expression_nodes),
-    ('MAX_LABELS', run_max_labels),
-    ('MAX_ZCODE_SIZE', run_max_zcode_size),
-    ('OMIT_UNUSED_ROUTINES', run_omit_unused_routines),
-    ('OMIT_SYMBOL_TABLE', run_omit_symbol_table),
-    ('ZCODE_FILE_END_PADDING', run_file_end_padding),
-    ('ZCODE_COMPACT_GLOBALS', run_zcode_compact_globals),
-    ]
 
 test_map = dict(test_catalog)
 
