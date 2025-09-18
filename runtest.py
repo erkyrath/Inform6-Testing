@@ -616,7 +616,14 @@ class TestGroup:
 
     @classmethod
     def runtests(cla, filters=[]):
-        for test in cla.tests:
+        if not filters:
+            ls = cla.tests
+        else:
+            ls = []
+            for test in cla.tests:
+                if any([ test.match(filter) for filter in filters ]):
+                    ls.append(test)
+        for test in ls:
             testlist.append(test)
             test.run()
 
@@ -633,6 +640,11 @@ class Test:
 
     def __repr__(self):
         return '<Test %s: "%s">' % (self.group, self.filename,)
+
+    def match(self, filter):
+        if self.filename == filter:
+            return True
+        return False
 
     def run(self):
         res = compile(self.filename, **self.args)
