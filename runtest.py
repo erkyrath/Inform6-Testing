@@ -7,6 +7,10 @@
 #
 # To run: "python runtest.py".
 #
+# You can also specify "python runtest.py FOO" to run only the named test
+# group, or "python runtest.py Advent.inf" or "python runtest.py dict*"
+# to run only tests with the named source file(s).
+#
 # This currently works on MacOSX only. It uses the "libgmalloc" debugging
 # library available on OSX. (Type "man libgmalloc".) It could be adapted
 # to other debugging-malloc libraries, but you'd have to adjust the
@@ -3117,6 +3121,10 @@ if not os.path.exists(opts.binary):
 if not os.path.exists('build'):
     os.mkdir('build')
 
+# Figure out which arguments are test groups and which are filename
+# filters. Good thing filenames always contain dots and test groups
+# never do.
+    
 filterargs = []
 groupargs = []
 for arg in args:
