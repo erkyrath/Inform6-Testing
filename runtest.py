@@ -73,6 +73,7 @@ popt.add_option('--vital',
 (opts, args) = popt.parse_args()
 
 testname = '???'
+testlist = []
 errorlist = []
 md5map = {}  # maps match-keys to md5 checksums
 
@@ -600,14 +601,20 @@ class TestGroup:
     accumtests = []
     groups = []
     
-    def __init_subclass__(cls, key, **kwargs):
+    def __init_subclass__(cla, key, **kwargs):
         super().__init_subclass__(**kwargs)
-        cls.key = key
-        cls.tests = TestGroup.accumtests
+        cla.key = key
+        cla.tests = TestGroup.accumtests
         TestGroup.accumtests = []
-        for test in cls.tests:
+        for test in cla.tests:
             test.group = key
-        TestGroup.groups.append(cls)
+        TestGroup.groups.append(cla)
+
+    @classmethod
+    def runtests(cla):
+        for test in cla.tests:
+            testlist.append(test)
+            ###
 
 class Test:
     def __init__(self, filename, **kwargs):
@@ -3079,13 +3086,13 @@ class Run_ZCode_Compact_Globals(TestGroup, key='ZCODE_COMPACT_GLOBALS'):
          res=_ok(md5='fdf47c140c1123df4a87fa67bfb5f957', reg='library_of_horror.reg'))
 
 
-test_catalog = [ (grp.key, grp.tests) for grp in TestGroup.groups ]
+test_catalog = [ (grp.key, grp) for grp in TestGroup.groups ]
 test_map = dict(test_catalog)
 
 if (opts.listtests):
     print('Tests in this suite:')
-    for (key, func) in test_catalog:
-        print(' ', key)
+    for (key, grp) in test_catalog:
+        print(' %-30s (%d tests)' % (key, len(grp.tests),))
     sys.exit(-1)
 
 if opts.alignment not in (1, 4, 16):
@@ -3100,21 +3107,21 @@ if not os.path.exists('build'):
     os.mkdir('build')
 
 if (not args):
-    args = [ key for (key, func) in test_catalog ]
+    args = [ key for (key, grp) in test_catalog ]
 
 for key in args:
     key = key.upper()
     set_testname(key)
-    func = test_map.get(key)
-    if (not func):
+    grp = test_map.get(key)
+    if (not grp):
         note_error(None, 'No such test!')
         continue
-    func()
+    grp.runtests()
     
 print()
 
 if (not errorlist):
-    print('All tests passed.')
+    print('All %d tests passed.' % (len(testlist),))
 else:
     print('%d test failures!' % (len(errorlist),))
     for (test, label, msg) in errorlist:
