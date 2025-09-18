@@ -258,7 +258,7 @@ class Result:
                     break
             self.status = Result.SIGNAL
             self.signame = signame
-            error(self, 'Run ended with signal %s' % (signame,))
+            note_error(self, 'Run ended with signal %s' % (signame,))
         else:
             lines = stderr.split('\n')
             for ln in lines:
@@ -268,7 +268,7 @@ class Result:
                         if re.match('GuardMalloc[^:]*: version [0-9.]*', ln):
                             inheader = False
                         continue
-                    error(self, 'Apparent libgmalloc error ' + ln)
+                    note_error(self, 'Apparent libgmalloc error ' + ln)
             
             lines = stdout.split('\n')
             outlines = 0
@@ -333,7 +333,7 @@ class Result:
 
                 match = re.match(r'.*.Compiler errors. should never occur.*', ln)
                 if (match):
-                    error(self, 'Compiler error')
+                    note_error(self, 'Compiler error')
                     continue
                 
                 match = re.match(r'(?:"[^"]*", )?line (\d+)(?:[:] [(]"[^"]*"[)])?: Fatal error:', ln)
@@ -371,20 +371,20 @@ class Result:
                 
                 match = re.match('Compiled', ln)
                 if (match):
-                    error(self, 'Unmatched "Compiled" line in output: ' + ln)
+                    note_error(self, 'Unmatched "Compiled" line in output: ' + ln)
                     continue
 
             if (outlines > 1):
-                error(self, 'Too many "Compiled" lines in output')
+                note_error(self, 'Too many "Compiled" lines in output')
 
             if (retcode == 0):
                 self.status = Result.OK
                 if (self.errors):
-                    error(self, 'Run status zero despite %d errors' % (self.errors,))
+                    note_error(self, 'Run status zero despite %d errors' % (self.errors,))
             else:
                 self.status = Result.ERROR
                 if (not self.errors):
-                    error(self, 'Run status nonzero despite no errors')
+                    note_error(self, 'Run status nonzero despite no errors')
 
     def __str__(self):
         if (self.status == Result.SIGNAL):
@@ -462,7 +462,7 @@ class Result:
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
-                error(self, 'Game file does not exist: %s' % (self.filename,))
+                note_error(self, 'Game file does not exist: %s' % (self.filename,))
                 print('*** TEST FAILED ***')
                 return False
             # Any or all of the following could fail.
@@ -478,23 +478,23 @@ class Result:
                         md5map[md5match] = val
                     else:
                         if val != prevval:
-                            error(self, 'Game files mismatch [%s]: %s is not %s' % (md5match, val, prevval,))
+                            note_error(self, 'Game files mismatch [%s]: %s is not %s' % (md5match, val, prevval,))
                             print('*** TEST FAILED ***')
                             isok = False
                 if md5 and val != md5:
-                    error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
+                    note_error(self, 'Game file mismatch: %s is not %s' % (val, md5,))
                     print('*** TEST FAILED ***')
                     isok = False
             if abbreviations is not None:
                 s1 = set(abbreviations)
                 s2 = set(self.abbreviations)
                 if s1 != s2:
-                    error(self, 'Abbreviations list mismatch: missing %s, extra %s' % (list(s1-s2), list(s2-s1),))
+                    note_error(self, 'Abbreviations list mismatch: missing %s, extra %s' % (list(s1-s2), list(s2-s1),))
                     print('*** TEST FAILED ***')
                     isok = False
             if warnings is not None:
                 if self.warnings != warnings:
-                    error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
+                    note_error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
                     print('*** TEST FAILED ***')
                     isok = False
             if opts.runreg and reg is not None:
@@ -508,11 +508,11 @@ class Result:
             if debugfile is not None:
                 val = self.canonical_debugfile_checksum('build/gameinfo.dbg')
                 if val != debugfile:
-                    error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
+                    note_error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
                     print('*** TEST FAILED ***')
                     isok = False
             return isok
-        error(self, 'Should be ok, but was: %s' % (self,))
+        note_error(self, 'Should be ok, but was: %s' % (self,))
         print('*** TEST FAILED ***')
         return False
 
@@ -524,7 +524,7 @@ class Result:
         """
         if (self.status == Result.ERROR and self.memsetting == val):
             return True
-        error(self, 'Should be error (%s), but was: %s' % (val, self,))
+        note_error(self, 'Should be error (%s), but was: %s' % (val, self,))
         print('*** TEST FAILED ***')
         return False
 
@@ -535,23 +535,23 @@ class Result:
         if (self.status == Result.ERROR and not self.memsetting):
             if errors is not None:
                 if self.errors != errors:
-                    error(self, 'Errors mismatch: expected %s but got %s' % (errors, self.errors,))
+                    note_error(self, 'Errors mismatch: expected %s but got %s' % (errors, self.errors,))
                     print('*** TEST FAILED ***')
                     return False
             if warnings is not None:
                 if self.warnings != warnings:
-                    error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
+                    note_error(self, 'Warnings mismatch: expected %s but got %s' % (warnings, self.warnings,))
                     print('*** TEST FAILED ***')
                     return False
             return True
-        error(self, 'Should be error, but was: %s' % (self,))
+        note_error(self, 'Should be error, but was: %s' % (self,))
         print('*** TEST FAILED ***')
         return False
 
     def run_regtest(self, reg):
         regfile = os.path.join('reg', reg)
         if not os.path.exists(regfile):
-            error(self, 'Regression test file does not exist: %s' % (regfile,))
+            note_error(self, 'Regression test file does not exist: %s' % (regfile,))
             return False
         # Oughta add options for the remterp selection...
         if self.glulx:
@@ -571,7 +571,7 @@ class Result:
             subprocess.run(argls, check=True, capture_output=True, encoding='utf8')
         except subprocess.CalledProcessError as ex:
             errtext = '...'+ex.stdout.replace('\n', '\n...')
-            error(self, 'Regression test failed: %s\n%s' % (regfile, errtext))
+            note_error(self, 'Regression test failed: %s\n%s' % (regfile, errtext))
             return False
         return True
 
@@ -584,7 +584,7 @@ def set_testname(val):
     print('* Test:', testname)
     print()
     
-def error(res, msg):
+def note_error(res, msg):
     """Note an error in the global error list.
     """
     label = '-'
@@ -3138,7 +3138,7 @@ for key in args:
     set_testname(key)
     func = test_map.get(key)
     if (not func):
-        error(None, 'No such test!')
+        note_error(None, 'No such test!')
         continue
     func()
     
