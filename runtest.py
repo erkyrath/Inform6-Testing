@@ -614,7 +614,7 @@ class TestGroup:
     def runtests(cla):
         for test in cla.tests:
             testlist.append(test)
-            ###
+            test.run()
 
 class Test:
     def __init__(self, filename, **kwargs):
@@ -630,6 +630,17 @@ class Test:
     def __repr__(self):
         return '<Test %s: "%s">' % (self.group, self.filename,)
 
+    def run(self):
+        res = compile(self.filename, **self.args)
+        wanted, args = self.res
+        if wanted == 'OK':
+            res.is_ok(**args)
+        elif wanted == 'ERROR':
+            res.is_error(**args)
+        elif wanted == 'MEMSETTING':
+            res.is_memsetting(args)
+        else:
+            raise Exception('test had no outcome: %s' % (self,))
 
 def _ok(**kwargs):
     return ('OK', kwargs)
