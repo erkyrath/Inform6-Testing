@@ -602,6 +602,7 @@ class TestGroup:
     
     def __init_subclass__(cls, key, **kwargs):
         super().__init_subclass__(**kwargs)
+        cls.key = key
         cls.tests = TestGroup.accumtests
         TestGroup.accumtests = []
         for test in cls.tests:
@@ -3078,6 +3079,7 @@ class Run_ZCode_Compact_Globals(TestGroup, key='ZCODE_COMPACT_GLOBALS'):
          res=_ok(md5='fdf47c140c1123df4a87fa67bfb5f957', reg='library_of_horror.reg'))
 
 
+test_catalog = [ (grp.key, grp.tests) for grp in TestGroup.groups ]
 test_map = dict(test_catalog)
 
 if (opts.listtests):
