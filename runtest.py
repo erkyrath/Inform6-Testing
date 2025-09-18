@@ -33,6 +33,7 @@
 import sys
 import os
 import re
+import fnmatch
 import hashlib
 import signal
 import subprocess
@@ -643,6 +644,8 @@ class Test:
 
     def match(self, filter):
         if self.filename == filter:
+            return True
+        if fnmatch.fnmatch(self.filename, filter):
             return True
         return False
 
