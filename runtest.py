@@ -603,6 +603,16 @@ def note_error(res, msg):
         raise Exception('aborting after one error')
 
 class TestGroup:
+    """TestGroup: Base class for a group of tests.
+
+    A test group will be represented as a class. We don't instantiate the
+    class; it's just a grouping mechanism really. This base class has
+    machinery to gather up all Test instances defined in its scope and
+    stuff them into a list in the class object. The class object, in turn,
+    is stuffed into the TestGroup.groups[] list.
+
+    (Don't make that face. I could have used decorators. Or metaclasses.)
+    """
     accumtests = []
     groups = []
     
@@ -632,6 +642,15 @@ class TestGroup:
             test.run()
 
 class Test:
+    """One test. This contains the information needed to run the test --
+    that is, to call compile() and then call is_ok() (or etc) on the Result
+    that returns.
+
+    (If this tool were better organized, compile() would be a method of this
+    class. But it's evolved in stages.)
+
+    Tests should only be instantiated in the body of a TestGroup class.
+    """
     def __init__(self, filename, **kwargs):
         self.filename = filename
         if 'res' not in kwargs:
