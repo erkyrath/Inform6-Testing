@@ -611,7 +611,7 @@ class TestGroup:
         TestGroup.groups.append(cla)
 
     @classmethod
-    def runtests(cla):
+    def runtests(cla, filters=[]):
         for test in cla.tests:
             testlist.append(test)
             test.run()
@@ -3117,17 +3117,25 @@ if not os.path.exists(opts.binary):
 if not os.path.exists('build'):
     os.mkdir('build')
 
-if (not args):
-    args = [ key for (key, grp) in test_catalog ]
+filterargs = []
+groupargs = []
+for arg in args:
+    if '.' in arg or '*' in arg:
+        filterargs.append(arg)
+    else:
+        groupargs.append(arg)
+    
+if not groupargs:
+    groupargs = [ key for (key, grp) in test_catalog ]
 
-for key in args:
+for key in groupargs:
     key = key.upper()
     set_testname(key)
     grp = test_map.get(key)
     if (not grp):
         note_error(None, 'No such test!')
         continue
-    grp.runtests()
+    grp.runtests(filterargs)
     
 print()
 
