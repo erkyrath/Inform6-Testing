@@ -624,6 +624,9 @@ class TestGroup:
             for test in cla.tests:
                 if any([ test.match(filter) for filter in filters ]):
                     ls.append(test)
+        if not ls:
+            return
+        set_testname(cla.key)
         for test in ls:
             testlist.append(test)
             test.run()
@@ -3153,10 +3156,10 @@ if not groupargs:
 
 for key in groupargs:
     key = key.upper()
-    set_testname(key)
     grp = test_map.get(key)
     if (not grp):
-        note_error(None, 'No such test!')
+        set_testname(key)
+        note_error(None, 'No such test group!')
         continue
     grp.runtests(filterargs)
     
