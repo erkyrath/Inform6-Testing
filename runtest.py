@@ -729,16 +729,16 @@ class Run_Checksum(TestGroup, key='CHECKSUM'):
          res=_ok(md5='edcb2b211fe5ab2afba62d50b66dad95', warnings=0))
     
     Test('i7-min-6G60.inf',
-         res=_ok(md5='f787c0290b860c6c2a368f47504cdb8f', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
+         res=_ok(md5='37401d71331bcec07cf44c73f5474b44', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6G60.inf', zversion=8,
-         res=_ok(md5='732298e1a0cb0d5896c5fb9d934f817d', reg='i7-min-6G60.reg'))
+         res=_ok(md5='14d9fabfc427dae8087ada57a51c72e1', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6G60.inf', glulx=True,
          res=_ok(md5='f5811c171bd7f5bf843dfe813ef96e2f', md5match='i7-min-6G60:g', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6M62-z.inf', zversion=8,
-         res=_ok(md5='c7658d3b04e56bf980cb93749126f059', reg='i7-min-6M62.reg'))
+         res=_ok(md5='40f3782f9a3f0dd0ef973608d0bf4a92', reg='i7-min-6M62.reg'))
 
     Test('i7-min-6M62-g.inf', glulx=True,
          res=_ok(md5='00ef3d5fb6c9ac7c72dfab453c649843', reg='i7-min-6M62.reg'))
@@ -771,7 +771,7 @@ class Run_Checksum(TestGroup, key='CHECKSUM'):
          res=_ok(md5='e99660354a805f0fb81e83f51c7adc87', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-6.12.6',
-         res=_ok(md5='65b73f620952e24f428195e32f5ea2a6', warnings=0))
+         res=_ok(md5='96112c01dad9566b093af9ac7f20100c', warnings=0))
 
     Test('Advent.inf', includedir='i6lib-6.12.6', glulx=True,
          res=_ok(md5='cc4cf1f29c0a069fec6fba2803585f78', warnings=1))
@@ -940,7 +940,7 @@ class Run_Dict(TestGroup, key='DICT'):
          res=_error())
 
     Test('i7-min-6M62-z.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, zversion=8,
-         res=_ok(md5='458a53561a4bc00ba8e932e5f97065fb', reg='i7-min-6M62.reg'))
+         res=_ok(md5='942c4f87b212f13d219c53aaf54b6008', reg='i7-min-6M62.reg'))
 
     Test('i7-min-6M62-g.inf', memsettings={'LONG_DICT_FLAG_BUG':0}, glulx=True,
          res=_ok(md5='132880fc7f9ce5ae3deb1c72784a208b', reg='i7-min-6M62.reg'))
@@ -1127,7 +1127,7 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     Test('i7-min-6G60-gvopt.inf',
-         res=_ok(md5='f787c0290b860c6c2a368f47504cdb8f', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
+         res=_ok(md5='37401d71331bcec07cf44c73f5474b44', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     Test('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1},
@@ -1876,13 +1876,13 @@ class Run_Prune(TestGroup, key='PRUNE'):
          res=_ok(md5='9c48ebcfe754389a50c80c54ee780eb1', warnings=1, reg='allpass.reg'))
 
     Test('branchprune-nowarn.inf',
-         res=_ok(md5='47f77359b195ff061ec90cf5155539d9', md5match='branchprune-nowarn:z:strip', warnings=0))
+         res=_ok(md5='a961b02b9c344d957d2a4fd482da0464', md5match='branchprune-nowarn:z:strip', warnings=0))
 
     Test('branchprune-nowarn.inf', glulx=True,
          res=_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', md5match='branchprune-nowarn:z', warnings=0))
 
     Test('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 },
-         res=_ok(md5='47f77359b195ff061ec90cf5155539d9', md5match='branchprune-nowarn:z:strip', warnings=0))
+         res=_ok(md5='a961b02b9c344d957d2a4fd482da0464', md5match='branchprune-nowarn:z:strip', warnings=0))
 
     Test('branchprune-nowarn.inf', memsettings={'STRIP_UNREACHABLE_LABELS':0 }, glulx=True,
          res=_ok(md5='170eae8487d1ce20b88de8beee1f9d5c', md5match='branchprune-nowarn:z', warnings=0))
@@ -2770,7 +2770,7 @@ class Run_Max_Abbrevs(TestGroup, key='MAX_ABBREVS'):
          res=_ok(md5='b74045fe8a5101805fc2e3a57fd03fed'))
     
     Test('i7-min-6G60-abbrev.inf', zversion=8, economy=True,
-         res=_ok(md5='068e0dca363f1f9916f5a496f8c6d636', reg='i7-min-6G60.reg'))
+         res=_ok(md5='c0db8cc8edd8f9973e1d75222102be2f', reg='i7-min-6G60.reg'))
     
     Test('max_abbrevs_test_64.inf', economy=True, memsettings={},
          res=_ok())
@@ -3021,7 +3021,7 @@ class Run_Max_zcode_size(TestGroup, key='MAX_ZCODE_SIZE'):
 
 class Run_Omit_Unused_Routines(TestGroup, key='OMIT_UNUSED_ROUTINES'):
     Test('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1},
-         res=_ok(md5='a923e28b76e58c1a3928dc0dc6a93e31', reg='i7-min-6G60.reg'))
+         res=_ok(md5='8021f52ee8b50848d6dda8bfa62b2aea', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True,
          res=_ok(md5='2468b145e1d809d180f47dc21233e9d3', reg='i7-min-6G60.reg'))
@@ -3033,7 +3033,7 @@ class Run_Omit_Unused_Routines(TestGroup, key='OMIT_UNUSED_ROUTINES'):
          res=_ok(md5='5c4e12640123585c013351a883b01c40', warnings=0, reg='Advent-g.reg'))
 
     Test('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1},
-         res=_ok(md5='78f921e9f08da09cfe2b979b9b0c014f'))
+         res=_ok(md5='07bd8dcf2c8f3a8e544a53584e417ad2'))
 
     Test('strip_func_test.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True,
          res=_ok(md5='5ebeba63f77407fc175f00055f565933'))
@@ -3061,7 +3061,7 @@ class Run_ZCode_File_End_Padding(TestGroup, key='ZCODE_FILE_END_PADDING'):
          res=_ok(md5='1847d28cc183ec23c50bd5bca52a1b21'))
 
     Test('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0},
-         res=_ok(md5='62b0950b695e34b0b272f797b8946171', reg='i7-min-6G60.reg'))
+         res=_ok(md5='0214595edb8233dfec4c051d758a4e18', reg='i7-min-6G60.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', zversion=8,
          res=_ok(md5='2ed4f9a623ad7e3c5407c7f8fca5d59a', reg='Advent-z.reg'))
