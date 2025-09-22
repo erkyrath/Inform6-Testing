@@ -1906,6 +1906,9 @@ class Run_Prune(TestGroup, key='PRUNE'):
     Test('branchcorner.inf',
          res=_ok(md5='xx', warnings=0, reg='allpass.reg'))
     
+    Test('branchcorner.inf', strict=False,
+         res=_ok(md5='xx', warnings=0, reg='allpass.reg'))
+    
     Test('branchcorner.inf', glulx=True,
          res=_ok(md5='xx', warnings=0, reg='allpass.reg'))
     
