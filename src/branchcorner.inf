@@ -160,6 +160,65 @@ Global glob;
 	print " glob="; check_value(glob, 4);
 	print "^";
 
+	val = switch_base(0);
+	print "switch_base(0): "; check_value(val, 0);
+	print " glob="; check_value(glob, 0);
+	print "; ";
+	val = switch_base(1);
+	print "switch_base(1): "; check_value(val, 1);
+	print " glob="; check_value(glob, 11);
+	print "; ";
+	val = switch_base(2);
+	print "switch_base(2): "; check_value(val, 1);
+	print " glob="; check_value(glob, 22);
+	print "; ";
+	val = switch_base(3);
+	print "switch_base(3): "; check_value(val, 1);
+	print " glob="; check_value(glob, 33);
+	print "^";
+
+	val = switch_false(0);
+	print "switch_false(0): "; check_value(val, 0);
+	print " glob="; check_value(glob, 0);
+	print "; ";
+	val = switch_false(4);
+	print "switch_false(4): "; check_value(val, 1);
+	print " glob="; check_value(glob, 0);
+	print "; ";
+	val = switch_false(1);
+	print "switch_false(1): "; check_value(val, 0);
+	print " glob="; check_value(glob, 11);
+	print "; ";
+	val = switch_false(2);
+	print "switch_false(2): "; check_value(val, 0);
+	print " glob="; check_value(glob, 22);
+	print "; ";
+	val = switch_false(3);
+	print "switch_false(3): "; check_value(val, 0);
+	print " glob="; check_value(glob, 33);
+	print "^";
+
+	val = switch_two(0);
+	print "switch_two(0): "; check_value(val, 2);
+	print " glob="; check_value(glob, 0);
+	print "; ";
+	val = switch_two(4);
+	print "switch_two(4): "; check_value(val, 1);
+	print " glob="; check_value(glob, 0);
+	print "; ";
+	val = switch_two(1);
+	print "switch_two(1): "; check_value(val, 2);
+	print " glob="; check_value(glob, 11);
+	print "; ";
+	val = switch_two(2);
+	print "switch_two(2): "; check_value(val, 2);
+	print " glob="; check_value(glob, 22);
+	print "; ";
+	val = switch_two(3);
+	print "switch_two(3): "; check_value(val, 2);
+	print " glob="; check_value(glob, 33);
+	print "^";
+
 	new_line;
 	if (failures == 0)
 		print "All passed.^";
@@ -246,6 +305,42 @@ Global glob;
 			glob++;
 		}
 		rfalse;
+	}
+	return 2;
+];
+
+[ switch_base val;
+	glob = 0;
+	switch (val) {
+		1: glob = 11;
+		2: glob = 22;
+		3: glob = 33;
+		default: rfalse;
+	}
+];
+
+[ switch_false val;
+	glob = 0;
+	if (val > 0) {
+		switch (val) {
+			1: glob = 11;
+			2: glob = 22;
+			3: glob = 33;
+			default: rtrue;
+		}
+	}
+	rfalse;
+];
+
+[ switch_two val;
+	glob = 0;
+	if (val > 0) {
+		switch (val) {
+			1: glob = 11;
+			2: glob = 22;
+			3: glob = 33;
+			default: rtrue;
+		}
 	}
 	return 2;
 ];
