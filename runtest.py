@@ -1904,13 +1904,13 @@ class Run_Prune(TestGroup, key='PRUNE'):
     
 
     Test('branchcorner.inf',
-         res=_ok(md5='xx', warnings=0, reg='allpass.reg'))
+         res=_ok(md5='7743938cb50d9e33be6083d04199bfb4', warnings=0, reg='allpass.reg'))
     
     Test('branchcorner.inf', strict=False,
-         res=_ok(md5='xx', warnings=0, reg='allpass.reg'))
+         res=_ok(md5='45962aed5033d4603dcc7866186e957b', warnings=0, reg='allpass.reg'))
     
     Test('branchcorner.inf', glulx=True,
-         res=_ok(md5='xx', warnings=0, reg='allpass.reg'))
+         res=_ok(md5='b9c1fc28cf7af0df0a71a9d7f16947d0', warnings=0, reg='allpass.reg'))
     
     
     Test('tasksacktest.inf', includedir='i6lib-611',
