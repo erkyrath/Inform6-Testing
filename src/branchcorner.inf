@@ -94,6 +94,8 @@ Global failures;
 	}
 ];
 
+Global glob;
+
 [ RunTest val;
 	val = jumpnext_false();
 	print "jumpnext_false(): "; check_value(val, 0);
@@ -143,6 +145,19 @@ Global failures;
 	print "; ";
 	val = prunebranch_with(1);
 	print "prunebranch_with(1): "; check_value(val, 2);
+	print "^";
+
+	val = endloop_false(0);
+	print "endloop_false(0): "; check_value(val, 2);
+	print " glob="; check_value(glob, 0);
+	print "; ";
+	val = endloop_false(1);
+	print "endloop_false(1): "; check_value(val, 0);
+	print " glob="; check_value(glob, 1);
+	print "; ";
+	val = endloop_false(4);
+	print "endloop_false(4): "; check_value(val, 0);
+	print " glob="; check_value(glob, 4);
 	print "^";
 
 	new_line;
@@ -221,5 +236,17 @@ Global failures;
 		rtrue;
 	}
 	return 3;
+];
+
+[ endloop_false val;
+	glob = 0;
+	if (val) {
+		while (val > 0) {
+			val--;
+			glob++;
+		}
+		rfalse;
+	}
+	return 2;
 ];
 
