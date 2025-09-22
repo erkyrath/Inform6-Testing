@@ -171,6 +171,7 @@ Global failures;
 ];
 
 [ multilabel_with val;
+	! The @verify opcode always branches but is not optimized.
 	@verify ?LABEL2;
 	
 	if (val == 1)
