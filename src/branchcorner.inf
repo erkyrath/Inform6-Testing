@@ -131,6 +131,20 @@ Global failures;
 	print "multilabel_with(4): "; check_value(val, 1);
 	print "^";
 
+	val = prunebranch_base(0);
+	print "prunebranch_base(0): "; check_value(val, 3);
+	print "; ";
+	val = prunebranch_base(1);
+	print "prunebranch_base(1): "; check_value(val, 2);
+	print "^";
+
+	val = prunebranch_with(0);
+	print "prunebranch_with(0): "; check_value(val, 3);
+	print "; ";
+	val = prunebranch_with(1);
+	print "prunebranch_with(1): "; check_value(val, 2);
+	print "^";
+
 	new_line;
 	if (failures == 0)
 		print "All passed.^";
@@ -189,5 +203,23 @@ Global failures;
 	.LABEL2;
 	.LABEL3;
 	rtrue;
+];
+
+[ prunebranch_base val;
+	if (val) {
+		if (true) return 2;
+		rtrue;
+	}
+	return 3;
+];
+
+! This should compile the same as prunebranch_base().
+[ prunebranch_with val;
+	if (val) {
+		if (true) return 2;
+		.LABEL;
+		rtrue;
+	}
+	return 3;
 ];
 
