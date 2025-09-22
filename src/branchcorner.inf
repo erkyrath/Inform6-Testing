@@ -171,8 +171,12 @@ Global failures;
 ];
 
 [ multilabel_with val;
+#ifdef TARGET_ZCODE;
 	! The @verify opcode always branches but is not optimized.
 	@verify ?LABEL2;
+#ifnot;
+	@jeq val val ?LABEL2;
+#endif; ! TARGET_GLULX
 	
 	if (val == 1)
 		jump LABEL1;
