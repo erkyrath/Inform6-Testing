@@ -1,0 +1,6 @@
+!% $ZALPHABET="abcdefghijklmn@{6F}pqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!@{3f}@{05F}#'/\-@{000003A}()"
+
+[ Main;
+	print "This is a line of text. ~Quotes.~ 123.^";
+	print "At sign @@64; tilde @@126; (more) punctuation $ # /@{5C} {}? Yes!^";
+];

@@ -1325,6 +1325,9 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('zalphabet-header.inf',
          res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
 
+    Test('zalphabet-header-esc.inf',
+         res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
+
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-:()'},
          res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
 
