@@ -1343,7 +1343,7 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_error())
 
     # Non-ASCII
-    Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-ä()'},
+    Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-\xE4()'},
          res=_error())
 
     # Empty braces
