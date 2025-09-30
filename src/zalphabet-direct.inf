@@ -1,0 +1,12 @@
+
+! This is almost the default Z-machine alphabet. The double-quote winds up
+! in a different spot due to the way the Zcharacter directive works.
+
+Zcharacter "abcdefghijklmnopqrstuvwxyz"
+           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+           "0123456789.,!?_#'/@{5C}-:()";
+
+[ Main;
+	print "This is a line of text. ~Quotes.~ 123.^";
+	print "At sign @@64; tilde @@126; (more) punctuation $ # /@{5C} {}? Yes!^";
+];

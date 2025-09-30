@@ -1318,7 +1318,16 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     # No output check because the file has no Glk setup
     Test('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4},
          res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47'))
+
+    Test('zalphabet-direct.inf',
+         res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
     
+    Test('zalphabet-header.inf',
+         res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
+
+    Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-:()'},
+         res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
