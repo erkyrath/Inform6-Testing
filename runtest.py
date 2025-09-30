@@ -1331,6 +1331,9 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-:()'},
          res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
 
+    Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789@{2E},!?_@{00023}\'/\\-:()'},
+         res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
