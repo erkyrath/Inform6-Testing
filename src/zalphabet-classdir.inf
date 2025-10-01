@@ -1,0 +1,11 @@
+
+Zcharacter "abcdefghijklmnopqrstuvwxyz"
+           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+           "0123456789.,!?_#'/@{5C}-:()";
+
+[ Main;
+	print "Class: ", (name) Class, "^";
+	print "Object: ", (name) Object, "^";
+	print "String: ", (name) String, "^";
+	print "Routine: ", (name) Routine, "^";
+];

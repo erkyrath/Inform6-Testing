@@ -1,0 +1,14 @@
+
+Zcharacter "abcdefghijklmnopqstruvwxyz"
+           "BCDEFGHIJKLMNOPQRSTUVWXYZA"
+           "0123456789.,!?_#'/@{5C}-:()";
+
+! This uses a non-standard alphabet, and the class names come out wrong.
+! (Unless you override the directive with a command-line argument.)
+
+[ Main;
+	print "Class: ", (name) Class, "^";
+	print "Object: ", (name) Object, "^";
+	print "String: ", (name) String, "^";
+	print "Routine: ", (name) Routine, "^";
+];

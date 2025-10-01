@@ -1,0 +1,10 @@
+!% $ZALPHABET="abcdefghijklmnopqstruvwxyz BCDEFGHIJKLMNOPQRSTUVWXYZA 0123456789.,!?_#'/\-:()"
+
+! This uses a non-standard alphabet, but should still print the class names correctly.
+
+[ Main;
+	print "Class: ", (name) Class, "^";
+	print "Object: ", (name) Object, "^";
+	print "String: ", (name) String, "^";
+	print "Routine: ", (name) Routine, "^";
+];
