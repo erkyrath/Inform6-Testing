@@ -1295,6 +1295,12 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
     
     
 class Run_Encoding(TestGroup, key='ENCODING'):
+    Test('escape-doubleat.inf',
+         res=_ok(md5='cbcda041aad5e781b50216d3c2fdf106', reg='escape-doubleat.reg'))
+    
+    Test('escape-doubleat.inf', glulx=True,
+         res=_ok(md5='abdc8b11f89d6a70bf611d27bea71f1d', reg='escape-doubleat.reg'))
+    
     Test('unisourcetest.inf', glulx=True,
          res=_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg'))
     
