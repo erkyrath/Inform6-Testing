@@ -1334,6 +1334,15 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789@{2E},!?_@{00023}\'/\\-:()'},
          res=_ok(md5='996c6a5dacd3d87a345918c1de50c12a', md5match='zalphabet'))
 
+    Test('zalphabet-classbad.inf',
+         res=_ok(md5='de7d36a65dc50f8b65e8fed07e1c0f77'))
+    
+    Test('zalphabet-classname.inf',
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1'))
+    
+    Test('zalphabet-classdir.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqstruvwxyz BCDEFGHIJKLMNOPQRSTUVWXYZA 0123456789.,!?_@{23}\'/\\-:()'},
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1'))
+    
     # One char short
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 123456789.,!?_#\'/\\-:()'},
          res=_error())
@@ -1348,6 +1357,10 @@ class Run_Encoding(TestGroup, key='ENCODING'):
 
     # Empty braces
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-@{}()'},
+         res=_error())
+
+    # Seven chars in braces
+    Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-@{000003A}()'},
          res=_error())
 
     # Non-hex character in braces
