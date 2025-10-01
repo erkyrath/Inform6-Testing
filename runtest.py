@@ -1338,10 +1338,10 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_ok(md5='de7d36a65dc50f8b65e8fed07e1c0f77'))
     
     Test('zalphabet-classname.inf',
-         res=_ok(md5='408b3307995197d2a88305ed98d61ef1'))
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class'))
     
     Test('zalphabet-classdir.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqstruvwxyz BCDEFGHIJKLMNOPQRSTUVWXYZA 0123456789.,!?_@{23}\'/\\-:()'},
-         res=_ok(md5='408b3307995197d2a88305ed98d61ef1'))
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class'))
     
     # One char short
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 123456789.,!?_#\'/\\-:()'},
