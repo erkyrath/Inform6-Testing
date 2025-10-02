@@ -120,5 +120,9 @@ Array arr2 --> "@@64@@94@@126@@228@^a";
 	#ifdef BAD_NO_DIGITS;
 	print "err: no digits is @@.^";
 	#endif;
+	
+	#ifdef BAD_DICT_ABBREV;
+	val = 'xx@00yy';
+	#endif;
 ];
 

@@ -1307,6 +1307,12 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('escape-doubleat.inf', define={'BAD_NO_DIGITS':None}, glulx=True,
          res=_error())
     
+    Test('escape-doubleat.inf', define={'BAD_DICT_ABBREV':None},
+         res=_error())
+    
+    Test('escape-doubleat.inf', define={'BAD_DICT_ABBREV':None}, glulx=True,
+         res=_error())
+    
     Test('escape-brace.inf',
          res=_ok(md5='a085617b0ece1df985ba41c5932b424d', reg='escape-both.reg'))
     
