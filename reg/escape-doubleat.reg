@@ -1,8 +1,13 @@
 * test
 
-at is @.
-caret is ^.
-tilde is ~.
-a-umlaut is ä.
-e-accent is é.
+str at is @.
+str caret is ^.
+str tilde is ~.
+str a-umlaut is ä.
+str e-accent is é.
 a bunch of these is @@äé.
+char caret is ^.
+word a-at is a@.
+word b-u-umlaut-x is büx.
+arr-->(0..4): @^~éÂ.
+arr2-->(0..4): @^~äâ.

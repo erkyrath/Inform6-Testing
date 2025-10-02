@@ -1296,10 +1296,10 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
     
 class Run_Encoding(TestGroup, key='ENCODING'):
     Test('escape-doubleat.inf',
-         res=_ok(md5='cbcda041aad5e781b50216d3c2fdf106', reg='escape-doubleat.reg'))
+         res=_ok(md5='a085617b0ece1df985ba41c5932b424d', reg='escape-doubleat.reg'))
     
     Test('escape-doubleat.inf', glulx=True,
-         res=_ok(md5='abdc8b11f89d6a70bf611d27bea71f1d', reg='escape-doubleat.reg'))
+         res=_ok(md5='bdb7ad1d78d24d434135ea97cac88c32', reg='escape-doubleat.reg'))
     
     Test('escape-doubleat.inf', define={'BAD_NO_DIGITS':None},
          res=_error())
@@ -1308,10 +1308,10 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_error())
     
     Test('escape-brace.inf',
-         res=_ok(md5='cbcda041aad5e781b50216d3c2fdf106', reg='escape-doubleat.reg'))
+         res=_ok(md5='a085617b0ece1df985ba41c5932b424d', reg='escape-doubleat.reg'))
     
     Test('escape-brace.inf', glulx=True,
-         res=_ok(md5='abdc8b11f89d6a70bf611d27bea71f1d', reg='escape-doubleat.reg'))
+         res=_ok(md5='bdb7ad1d78d24d434135ea97cac88c32', reg='escape-doubleat.reg'))
     
     Test('escape-brace.inf', define={'BAD_NO_DIGITS':None},
          res=_error())

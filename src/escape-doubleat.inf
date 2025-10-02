@@ -84,13 +84,38 @@ Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
     #Endif; ! TARGET_GLULX
 ];
 
-[ RunTest;
-	print "at is @@64.^";
-	print "caret is @@94.^";
-	print "tilde is @@126.^";
-	print "a-umlaut is @:a.^";
-	print "e-accent is @'e.^";
+Array arr --> '@@64' '@@94' '@@126' '@@233' '@^A';
+Array arr2 --> "@@64@@94@@126@@228@^a";
+
+[ RunTest ix val;
+	print "str at is @@64.^";
+	print "str caret is @@94.^";
+	print "str tilde is @@126.^";
+	print "str a-umlaut is @:a.^";
+	print "str e-accent is @'e.^";
 	print "a bunch of these is @@064@@0064@:a@'e.^";
+
+	val = '@@94';
+	print "char caret is ", (char) val, ".^";
+
+	val = 'a@@64';
+	print "word a-at is ", (address) val, ".^";
+	val = 'b@:ux';
+	print "word b-u-umlaut-x is ", (address) val, ".^";
+
+	print "arr-->(0..4): ";
+	for (ix=0 : ix<5 : ix++) {
+		val = arr-->ix;
+		print (char) val;
+	}
+	print ".^";
+
+	print "arr2-->(0..4): ";
+	for (ix=0 : ix<5 : ix++) {
+		val = arr2-->ix;
+		print (char) val;
+	}
+	print ".^";
 
 	#ifdef BAD_NO_DIGITS;
 	print "err: no digits is @@.^";
