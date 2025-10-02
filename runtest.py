@@ -1295,6 +1295,37 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
     
     
 class Run_Encoding(TestGroup, key='ENCODING'):
+    Test('escape-doubleat.inf',
+         res=_ok(md5='a085617b0ece1df985ba41c5932b424d', reg='escape-both.reg'))
+    
+    Test('escape-doubleat.inf', glulx=True,
+         res=_ok(md5='bdb7ad1d78d24d434135ea97cac88c32', reg='escape-both.reg'))
+    
+    Test('escape-doubleat.inf', define={'BAD_NO_DIGITS':None},
+         res=_error())
+    
+    Test('escape-doubleat.inf', define={'BAD_NO_DIGITS':None}, glulx=True,
+         res=_error())
+    
+    Test('escape-brace.inf',
+         res=_ok(md5='a085617b0ece1df985ba41c5932b424d', reg='escape-both.reg'))
+    
+    Test('escape-brace.inf', glulx=True,
+         res=_ok(md5='bdb7ad1d78d24d434135ea97cac88c32', reg='escape-both.reg'))
+    
+    Test('escape-brace.inf', define={'BAD_NO_DIGITS':None},
+         res=_error())
+    
+    Test('escape-brace.inf', define={'BAD_NO_DIGITS':None}, glulx=True,
+         res=_error())
+
+    Test('escape-brace.inf', define={'BAD_SEVEN_DIGITS':None},
+         res=_error())
+    
+    Test('escape-brace.inf', define={'BAD_SEVEN_DIGITS':None}, glulx=True,
+         res=_error())
+
+    
     Test('unisourcetest.inf', glulx=True,
          res=_ok(md5='e8d37802d6ca98f4f8c31ac5068b0dbc', reg='unisourcetest.reg'))
     
