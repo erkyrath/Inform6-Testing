@@ -1393,6 +1393,10 @@ class Run_Header(TestGroup, key='HEADER'):
     Test('zflags_test.inf', zversion=3, define={'STATUS_TIME':None}, memsettings={'ZCODE_HEADER_FLAGS_1_CLR':2},
          res=_ok(md5='8c909ba291bc20105fa666e52babfefe', md5match='zflags_test:z3'))
 
+    # flags2 bit 7 (with the current spec)
+    Test('zflags_test.inf', zversion=3, define={'SOUND_EFFECT':None},
+         res=_ok(md5='6bfbfa887b2e7c4abf7ab17ebfd07c46'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
