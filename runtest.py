@@ -1330,10 +1330,10 @@ class Run_Header(TestGroup, key='HEADER'):
          res=_ok(md5='751cd599b3af1ea8b84933b67f030361', md5match='zflags_test:z5'))
 
     Test('zflags_test.inf', zversion=3,
-         res=_ok(md5='8c909ba291bc20105fa666e52babfefe'))
+         res=_ok(md5='8c909ba291bc20105fa666e52babfefe', md5match='zflags_test:z3'))
 
     Test('zflags_test.inf', zversion=6,
-         res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5'))
+         res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5', md5match='zflags_test:z6'))
 
     Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_1':129},
          res=_ok(md5='1404fd78b569b0180a4e0b5adf1bb6ab'))
@@ -1364,6 +1364,22 @@ class Run_Header(TestGroup, key='HEADER'):
     # so this is exactly the same as the original
     Test('zflags_test.inf', define={'SAVE_UNDO':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':16, 'OMIT_UNUSED_ROUTINES':1},
          res=_ok(md5='751cd599b3af1ea8b84933b67f030361', md5match='zflags_test:z5'))
+
+    # flags2 bit 3
+    Test('zflags_test.inf', zversion=6, define={'DRAW_PICTURE':None},
+         res=_ok(md5='aa56b3d5e22ce7c12c185f17a619d6c5'))
+
+    # flags2 bit 5
+    Test('zflags_test.inf', zversion=6, define={'MOUSE_WINDOW':None},
+         res=_ok(md5='757a6cd3b73b093f98002ae31a7eaaf6'))
+
+    # flags2 bit 8
+    Test('zflags_test.inf', zversion=6, define={'MAKE_MENU':None},
+         res=_ok(md5='fe069b73700567ebf4c17e8c10abaa88'))
+
+    # clear bit and drop routine
+    Test('zflags_test.inf', zversion=6, define={'MAKE_MENU':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':256, 'OMIT_UNUSED_ROUTINES':1},
+         res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5', md5match='zflags_test:z6'))
 
     
 class Run_Lexer(TestGroup, key='LEXER'):
