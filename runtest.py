@@ -1381,6 +1381,18 @@ class Run_Header(TestGroup, key='HEADER'):
     Test('zflags_test.inf', zversion=6, define={'MAKE_MENU':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':256, 'OMIT_UNUSED_ROUTINES':1},
          res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5', md5match='zflags_test:z6'))
 
+    # flags1 bit 1
+    Test('zflags_test.inf', zversion=3, define={'STATUS_TIME':None},
+         res=_ok(md5='88b15dd39da4ef86dea82a1c2a50e9c7', md5match='zflags_test:z3:f1=1'))
+
+    # same
+    Test('zflags_test.inf', zversion=3, memsettings={'ZCODE_HEADER_FLAGS_1':2},
+         res=_ok(md5='88b15dd39da4ef86dea82a1c2a50e9c7', md5match='zflags_test:z3:f1=1'))
+
+    # clear bit
+    Test('zflags_test.inf', zversion=3, define={'STATUS_TIME':None}, memsettings={'ZCODE_HEADER_FLAGS_1_CLR':2},
+         res=_ok(md5='8c909ba291bc20105fa666e52babfefe', md5match='zflags_test:z3'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
