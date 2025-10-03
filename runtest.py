@@ -1318,7 +1318,44 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     # No output check because the file has no Glk setup
     Test('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4},
          res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47'))
+
+
+class Run_Header(TestGroup, key='HEADER'):
     
+    Test('zflags_test.inf',
+         res=_ok(md5='751cd599b3af1ea8b84933b67f030361'))
+
+    Test('zflags_test.inf', zversion=3,
+         res=_ok(md5='8c909ba291bc20105fa666e52babfefe'))
+
+    Test('zflags_test.inf', zversion=6,
+         res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5'))
+
+    Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_1':129},
+         res=_ok(md5='1404fd78b569b0180a4e0b5adf1bb6ab'))
+
+    Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_2':513},
+         res=_ok(md5='e9062731c82496120c679cb82cd1b27d'))
+
+    Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_3':1027},
+         res=_ok(md5='a63a7a0727f9b4d9831e4a3d578decf9'))
+
+    # flags2 bit 7
+    Test('zflags_test.inf', define={'SOUND_EFFECT':None},
+         res=_ok(md5='72643e0c80ab3d5007a50930e9bc240d'))
+
+    # flags2 bit 7 is cleared
+    Test('zflags_test.inf', define={'SOUND_EFFECT':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':128},
+         res=_ok(md5='2011525d89789485a4461c2313449104'))
+
+    # flags2 bit 6
+    Test('zflags_test.inf', define={'SET_COLOUR':None},
+         res=_ok(md5='4caa087a8e9e6313a3ca7cc750f8b3bb'))
+
+    # flags2 bit 4
+    Test('zflags_test.inf', define={'SAVE_UNDO':None},
+         res=_ok(md5='bb1f0c701303957d9921c14d4a67a814'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',

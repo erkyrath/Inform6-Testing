@@ -51,7 +51,7 @@ Statusline time;
 
 #ifdef SET_COLOUR;
 [ func_set_colour;
-	@set_colour 1;
+	@set_colour 1 2;
 ];
 #endif;
 
