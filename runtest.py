@@ -1321,9 +1321,13 @@ class Run_Encoding(TestGroup, key='ENCODING'):
 
 
 class Run_Header(TestGroup, key='HEADER'):
+
+    # The test file prints out the runtime values of the flags.
+    # We're not going to check that, because it would wind up being
+    # a test of Bocfel behavior rather than Inform behavior.
     
     Test('zflags_test.inf',
-         res=_ok(md5='751cd599b3af1ea8b84933b67f030361'))
+         res=_ok(md5='751cd599b3af1ea8b84933b67f030361', md5match='zflags_test:z5'))
 
     Test('zflags_test.inf', zversion=3,
          res=_ok(md5='8c909ba291bc20105fa666e52babfefe'))
@@ -1355,6 +1359,11 @@ class Run_Header(TestGroup, key='HEADER'):
     # flags2 bit 4
     Test('zflags_test.inf', define={'SAVE_UNDO':None},
          res=_ok(md5='bb1f0c701303957d9921c14d4a67a814'))
+
+    # flags2 bit 4 is cleared, and the func_save_undo() routine is dropped,
+    # so this is exactly the same as the original
+    Test('zflags_test.inf', define={'SAVE_UNDO':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':16, 'OMIT_UNUSED_ROUTINES':1},
+         res=_ok(md5='751cd599b3af1ea8b84933b67f030361', md5match='zflags_test:z5'))
 
     
 class Run_Lexer(TestGroup, key='LEXER'):
