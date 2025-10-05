@@ -1408,6 +1408,9 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-()@{123'},
          res=_error())
 
+    Test('ztable-direct.inf',
+         res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
