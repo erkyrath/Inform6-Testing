@@ -1425,12 +1425,22 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ \u03b1 @{3B2} @@947 @{2655} @@9812'},
          res=_error())
 
+    # Ascii
+    Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ A @{03b1} @{3B2} @@947 @{2655} @@9812'},
+         res=_error())
+
     # Non-hex character in braces
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3q2} @@947 @{2655} @@9812'},
          res=_error())
 
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @@947 @{2655} @@9812', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_@{3B1}@@9813/\\-:()'},
          res=_ok(md5='2e4651bba538c641d7a74889935a297f'))
+
+    ### non-plus test
+
+    ### too many chars
+
+    ### option overrides directive
 
 
 class Run_Lexer(TestGroup, key='LEXER'):
