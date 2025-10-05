@@ -1429,6 +1429,9 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3q2} @@947 @{2655} @@9812'},
          res=_error())
 
+    Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @@947 @{2655} @@9812', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_@{3B1}@@9813/\\-:()'},
+         res=_ok(md5='2e4651bba538c641d7a74889935a297f'))
+
 
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
