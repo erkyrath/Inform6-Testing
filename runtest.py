@@ -1411,7 +1411,25 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-direct.inf',
          res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
 
-    
+    # Unicode characters not placed in the table
+    Test('ztable-base.inf',
+         res=_error())
+
+    Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @@947 @{2655} @@9812'},
+         res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
+
+    Test('ztable-header.inf',
+         res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
+
+    # Non-ascii
+    Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ \u03b1 @{3B2} @@947 @{2655} @@9812'},
+         res=_error())
+
+    # Non-hex character in braces
+    Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3q2} @@947 @{2655} @@9812'},
+         res=_error())
+
+
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
          res=_ok())

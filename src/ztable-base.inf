@@ -1,0 +1,12 @@
+
+[ Main;
+	print "Various accents: @:a, @'e, @/o.^";
+	print "Greek letters: @{3B1}, @{3B2}, @@945.^";
+	print "Chess pieces: @{2654} @{2655}.^";
+
+	print "In dict words: ~", (address) '@:a@'e',
+		"~, ~", (address) 'x@{2654}y', "~^";
+
+	! E3/E4 is where the chess pieces land in the table
+	print "As single chars: ", (char) $E4, " ", (char) $E3, "^";
+];
