@@ -1449,9 +1449,14 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-toomany.inf',
          res=_error())
 
-    Test('ztable-prec.inf',
-         res=_ok(md5='21719ff75e5a3baf4643f36feb40d7eb'))
+    Test('ztable-prec-head.inf',
+         res=_ok(md5='21719ff75e5a3baf4643f36feb40d7eb', md5match='ztable-prec'))
 
+    Test('ztable-prec.inf',
+         res=_error())
+
+    Test('ztable-prec.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @{3b3} @{2655} @@9812', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#@{3B2}/\\-@{2655}()'},
+         res=_ok(md5='21719ff75e5a3baf4643f36feb40d7eb', md5match='ztable-prec'))
 
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',
