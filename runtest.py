@@ -1445,9 +1445,9 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'@@945 @{3B2} @@947 @{2655} @@9812 @{E4} @{E9} @@248', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_@{3B1}@@9813/\\-:()'},
          res=_ok(md5='7c59e74868d1f0779902144c516a9bd9'))
 
-    ### reg?
-
-    ### too many chars
+    # Too many chars to fit in the extension table
+    Test('ztable-toomany.inf',
+         res=_error())
 
     ### option overrides directive
 
