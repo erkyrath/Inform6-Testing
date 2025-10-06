@@ -1449,7 +1449,8 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-toomany.inf',
          res=_error())
 
-    ### option overrides directive
+    Test('ztable-prec.inf',
+         res=_ok(md5='21719ff75e5a3baf4643f36feb40d7eb'))
 
 
 class Run_Lexer(TestGroup, key='LEXER'):

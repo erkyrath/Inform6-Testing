@@ -1,0 +1,23 @@
+!% $ZCHAR_TABLE="+ @@945 @{3B2} @{3b3} @{2655} @@9812"
+!% $ZALPHABET="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#@{3B2}/\-@{2655}()"
+
+! Directives are ignored because the options are set above.
+
+Zcharacter table '@{413}' '@{414}' '@{415}';
+Zcharacter table + '@{415}';
+
+Zcharacter "abcdefghijklmnopqrstuvwxyz"
+           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+           "0123456789.,!?_#'/@{499}-:()";
+
+[ Main;
+	print "Various accents: @:a, @'e, @/o.^";
+	print "Greek letters: @{3B1}, @{3B2}, @@945.^";
+	print "Chess pieces: @{2654} @{2655}.^";
+
+	print "In dict words: ~", (address) '@:a@'e',
+		"~, ~", (address) 'x@{2654}y', "~^";
+
+	! E3/E4 is where the chess pieces land in the table
+	print "As single chars: ", (char) $E4, " ", (char) $E3, "^";
+];
