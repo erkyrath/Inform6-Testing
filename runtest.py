@@ -1416,7 +1416,7 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_error())
 
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @@947 @{2655} @@9812'},
-         res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
+         res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable', reg='ztable-base.reg'))
 
     Test('ztable-header.inf',
          res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
@@ -1438,9 +1438,10 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_error())
 
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @@947 @{2655} @@9812', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_@{3B1}@@9813/\\-:()'},
-         res=_ok(md5='2e4651bba538c641d7a74889935a297f'))
+         res=_ok(md5='2e4651bba538c641d7a74889935a297f', reg='ztable-base.reg'))
 
     # Non-plus form of ZCHAR_TABLE
+    # (This does not print the "as single chars" line correctly, because ZSCII $E3/$E4 wind up undefined.)
     Test('ztable-base.inf', memsettings={'ZCHAR_TABLE':'@@945 @{3B2} @@947 @{2655} @@9812 @{E4} @{E9} @@248', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_@{3B1}@@9813/\\-:()'},
          res=_ok(md5='7c59e74868d1f0779902144c516a9bd9'))
 
