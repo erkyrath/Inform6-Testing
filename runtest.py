@@ -1355,7 +1355,85 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     # No output check because the file has no Glk setup
     Test('source-encoding-u.inf', glulx=True, memsettings={'DICT_CHAR_SIZE':4},
          res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47'))
+
+
+class Run_Header(TestGroup, key='HEADER'):
+
+    # The test file prints out the runtime values of the flags.
+    # We're not going to check that, because it would wind up being
+    # a test of Bocfel behavior rather than Inform behavior.
     
+    Test('zflags_test.inf',
+         res=_ok(md5='751cd599b3af1ea8b84933b67f030361', md5match='zflags_test:z5'))
+
+    Test('zflags_test.inf', zversion=3,
+         res=_ok(md5='8c909ba291bc20105fa666e52babfefe', md5match='zflags_test:z3'))
+
+    Test('zflags_test.inf', zversion=6,
+         res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5', md5match='zflags_test:z6'))
+
+    Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_1':129},
+         res=_ok(md5='1404fd78b569b0180a4e0b5adf1bb6ab'))
+
+    Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_2':513},
+         res=_ok(md5='e9062731c82496120c679cb82cd1b27d'))
+
+    Test('zflags_test.inf', memsettings={'ZCODE_HEADER_FLAGS_3':1027},
+         res=_ok(md5='a63a7a0727f9b4d9831e4a3d578decf9'))
+
+    # flags2 bit 7
+    Test('zflags_test.inf', define={'SOUND_EFFECT':None},
+         res=_ok(md5='72643e0c80ab3d5007a50930e9bc240d'))
+
+    # flags2 bit 7 is cleared
+    Test('zflags_test.inf', define={'SOUND_EFFECT':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':128},
+         res=_ok(md5='2011525d89789485a4461c2313449104'))
+
+    # flags2 bit 6
+    Test('zflags_test.inf', define={'SET_COLOUR':None},
+         res=_ok(md5='4caa087a8e9e6313a3ca7cc750f8b3bb'))
+
+    # flags2 bit 4
+    Test('zflags_test.inf', define={'SAVE_UNDO':None},
+         res=_ok(md5='bb1f0c701303957d9921c14d4a67a814'))
+
+    # flags2 bit 4 is cleared, and the func_save_undo() routine is dropped,
+    # so this is exactly the same as the original
+    Test('zflags_test.inf', define={'SAVE_UNDO':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':16, 'OMIT_UNUSED_ROUTINES':1},
+         res=_ok(md5='751cd599b3af1ea8b84933b67f030361', md5match='zflags_test:z5'))
+
+    # flags2 bit 3
+    Test('zflags_test.inf', zversion=6, define={'DRAW_PICTURE':None},
+         res=_ok(md5='aa56b3d5e22ce7c12c185f17a619d6c5'))
+
+    # flags2 bit 5
+    Test('zflags_test.inf', zversion=6, define={'MOUSE_WINDOW':None},
+         res=_ok(md5='757a6cd3b73b093f98002ae31a7eaaf6'))
+
+    # flags2 bit 8
+    Test('zflags_test.inf', zversion=6, define={'MAKE_MENU':None},
+         res=_ok(md5='fe069b73700567ebf4c17e8c10abaa88'))
+
+    # clear bit and drop routine
+    Test('zflags_test.inf', zversion=6, define={'MAKE_MENU':None}, memsettings={'ZCODE_HEADER_FLAGS_2_CLR':256, 'OMIT_UNUSED_ROUTINES':1},
+         res=_ok(md5='ffdb273384939639a8d3bb544ff8cbc5', md5match='zflags_test:z6'))
+
+    # flags1 bit 1
+    Test('zflags_test.inf', zversion=3, define={'STATUS_TIME':None},
+         res=_ok(md5='88b15dd39da4ef86dea82a1c2a50e9c7', md5match='zflags_test:z3:f1=1'))
+
+    # same
+    Test('zflags_test.inf', zversion=3, memsettings={'ZCODE_HEADER_FLAGS_1':2},
+         res=_ok(md5='88b15dd39da4ef86dea82a1c2a50e9c7', md5match='zflags_test:z3:f1=1'))
+
+    # clear bit
+    Test('zflags_test.inf', zversion=3, define={'STATUS_TIME':None}, memsettings={'ZCODE_HEADER_FLAGS_1_CLR':2},
+         res=_ok(md5='8c909ba291bc20105fa666e52babfefe', md5match='zflags_test:z3'))
+
+    # flags2 bit 7 (with the current spec)
+    Test('zflags_test.inf', zversion=3, define={'SOUND_EFFECT':None},
+         res=_ok(md5='6bfbfa887b2e7c4abf7ab17ebfd07c46'))
+
     
 class Run_Lexer(TestGroup, key='LEXER'):
     Test('long_identifier_test.inf',

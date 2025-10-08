@@ -1,0 +1,83 @@
+[ Main val addr;
+	val = 0->0;
+	print "Version ", val, "^";
+	val = 0->1;
+
+	! Print the flags as they are seen at runtime. This will not
+	! be the same as they are in the game file; the interpreter
+	! adjusts them at startup.
+	
+	print "Flags1: ", (bin) val, "^";
+	val = 0-->8;
+	print "Flags2: ", (bin) val, "^";
+
+	addr = 0-->13;
+	if (addr && addr-->0 >= 4) {
+		val = addr-->4;
+		print "Flags3: ", (bin) val, "^";
+	}
+];
+
+Array bitmask -->
+	$1 $2 $4 $8
+	$10 $20 $40 $80
+	$100 $200 $400 $800
+	$1000 $2000 $4000 $8000;
+
+! Print a 16-bit number in binary.
+[ bin val   ix bit any;
+	print val, " (";
+	for (ix=15 : ix>=0 : ix--) {
+		bit = bitmask-->ix;
+		bit = ((val & bit) ~= 0);
+		if (bit)
+			any = true;
+		if (any || ix==0) {
+			print bit;
+		}
+	}
+	print ")";
+];
+
+#ifdef STATUS_TIME;
+Statusline time;
+#endif;
+
+#ifdef SOUND_EFFECT;
+[ func_sound_effect;
+	@sound_effect 1;
+];
+#endif;
+
+#ifdef SET_COLOUR;
+[ func_set_colour;
+	@set_colour 1 2;
+];
+#endif;
+
+#ifdef SAVE_UNDO;
+[ func_save_undo val;
+	@save_undo -> val;
+];
+#endif;
+
+#ifdef DRAW_PICTURE;
+[ func_draw_picture;
+	@draw_picture 1;
+];
+#endif;
+
+#ifdef MOUSE_WINDOW;
+[ func_mouse_window;
+	@mouse_window 1;
+];
+#endif;
+
+#ifdef MAKE_MENU;
+[ func_make_menu;
+	@make_menu 1 0 ?LABEL;
+	.LABEL;
+	return;
+];
+#endif;
+
