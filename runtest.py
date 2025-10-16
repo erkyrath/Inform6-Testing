@@ -1408,6 +1408,15 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('zalphabet-base.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#\'/\\-()@{123'},
          res=_error())
 
+    Test('zalphabet-direct-bad.inf',
+         res=_ok())
+    
+    Test('zalphabet-direct-bad.inf', define={'STRING_CONSTANT':None},
+         res=_error(errors=1))
+    
+    Test('zalphabet-direct-bad.inf', define={'DEF_OBJECT':None},
+         res=_error(errors=1))
+    
     Test('ztable-direct.inf',
          res=_ok(md5='aa322d13723cf5992af423a62566d7c2', md5match='ztable'))
 

@@ -1,0 +1,17 @@
+
+#ifdef STRING_CONSTANT;
+Constant foo = "Hello.";
+#endif;
+
+#ifdef DEF_OBJECT;
+Object foo "foo";
+#endif;
+
+Zcharacter "abcdefghijklmnopqrstuvwxyz"
+           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+           "0123456789.,!?_#'/@{5C}-:()";
+
+[ Main;
+	print "This is a line of text. ~Quotes.~ 123.^";
+	print "At sign @@64; tilde @@126; (more) punctuation $ # /@{5C} {}? Yes!^";
+];
