@@ -426,6 +426,21 @@ class Result:
         
         return hashlib.md5(dat).hexdigest()
     
+    def canonical_transcriptfile_checksum(self, filename):
+        """ Load a gametext file and construct an MD5 checksum, allowing for
+        differences in compiler version.
+        """
+        infl = open(filename, 'rb')
+        dat = infl.read()
+        infl.close()
+
+        pat = re.compile(b'\\[From Inform 6[.][^]]+\\]')
+        dat = pat.sub(b'[From Inform 6...]', dat)
+        pat = re.compile(b'\\[End of transcript: release [0-9]+, serial [0-9]+\\]')
+        dat = pat.sub(b'[End of transcript: release ..., serial ...]', dat)
+        
+        return hashlib.md5(dat).hexdigest()
+    
     def canonical_checksum(self):
         """ Load a game file and construct an MD5 checksum, allowing for
         differences in serial number and compiler version.
@@ -2342,6 +2357,12 @@ class Run_DebugFile(TestGroup, key='DEBUGFILE'):
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1},
          res=_ok(md5='f9c856a53a5f0a825c8baa182a4035d1', warnings=0, debugfile='654a95c08a946599d0e54a629cf19cff'))
 
+
+class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
+    Test('Advent.inf', includedir='i6lib-611', transcriptfile=True,
+         res=_ok(md5='4b60c92f0e1d0b7735a6b237b1b99733', md5match='Advent:z', warnings=0, transcriptfile='4589d82d50b27cebe54880d24a9821c0'))
+    
+    
 
 class Run_Warnings(TestGroup, key='WARNINGS'):
     Test('typewarningtest.inf',
