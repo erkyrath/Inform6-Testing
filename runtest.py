@@ -88,7 +88,7 @@ def compile(srcfile, destfile=None,
             memsettings={}, define={}, trace={},
             debug=False, strict=True, infix=False,
             economy=False, makeabbrevs=False,
-            debugfile=False,
+            debugfile=False, transcriptfile=False,
             bigmem=False,
             makemodule=False, usemodules=False):
     """Perform one Inform compile, and return a Result object.
@@ -107,6 +107,7 @@ def compile(srcfile, destfile=None,
     - economy turns on economy (abbreviation) mode (-e)
     - makeabbrevs generates abbreviations (-u)
     - debugfile generates gameinfo.dbg (-k)
+    - transcriptfile generates gametext.txt (-r)
     - bigmem turns on large-memory (odd-even) mode for V6/7 (-B)
     - makemodule generates a .m5 link module (-M)
     - usemodules uses modules for verblibm/parserm (-U)
@@ -150,6 +151,9 @@ def compile(srcfile, destfile=None,
     if debugfile:
         showargs.append('-k')
         showargs.append('+debugging_name=build/gameinfo.dbg')
+    if transcriptfile:
+        showargs.append('-r')
+        showargs.append('+transcript_name=build/gametext.txt')
     if bigmem:
         showargs.append('-B')
     if makemodule:
@@ -452,7 +456,7 @@ class Result:
 
         return hashlib.md5(dat).hexdigest()
 
-    def is_ok(self, md5=None, md5match=None, reg=None, abbreviations=None, debugfile=None, warnings=None):
+    def is_ok(self, md5=None, md5match=None, reg=None, abbreviations=None, debugfile=None, transcriptfile=None, warnings=None):
         """ Assert that the compile was successful.
         If the md5 argument is passed, we check that the resulting binary
         matches.
@@ -464,7 +468,8 @@ class Result:
         test(s) and make sure *they* pass. (May be a string or list of
         strings.)
         If the debugfile argument is passed, we check that the gameinfo.gdb
-        file matches (the md5 checksum).
+        file matches (the md5 checksum). Similarly with transcriptfile
+        and gametext.txt.
         """
         if (self.status == Result.OK):
             if not os.path.exists(self.filename):
@@ -515,6 +520,12 @@ class Result:
                 val = self.canonical_debugfile_checksum('build/gameinfo.dbg')
                 if val != debugfile:
                     note_error(self, 'gameinfo.dbg mismatch: %s is not %s' % (val, debugfile,))
+                    print('*** TEST FAILED ***')
+                    isok = False
+            if transcriptfile is not None:
+                val = self.canonical_transcriptfile_checksum('build/gametext.txt')
+                if val != transcriptfile:
+                    note_error(self, 'gametext.txt mismatch: %s is not %s' % (val, transcriptfile,))
                     print('*** TEST FAILED ***')
                     isok = False
             return isok
