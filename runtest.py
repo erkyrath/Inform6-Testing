@@ -2362,6 +2362,15 @@ class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True,
          res=_ok(md5='4b60c92f0e1d0b7735a6b237b1b99733', md5match='Advent:z', warnings=0, transcriptfile='4589d82d50b27cebe54880d24a9821c0'))
     
+    Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1},
+         res=_ok(md5='4b60c92f0e1d0b7735a6b237b1b99733', md5match='Advent:z', warnings=0, transcriptfile='16885ea2d72d985e4086a6badfd9d7bc'))
+    
+    Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, glulx=True,
+         res=_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g', warnings=0, transcriptfile='ad81b759162775fff2a6171db42c05ab'))
+    
+    Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1}, glulx=True,
+         res=_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g', warnings=0, transcriptfile='7eb34dfca31b782ede3b449a80fd74b2'))
+    
     
 
 class Run_Warnings(TestGroup, key='WARNINGS'):
