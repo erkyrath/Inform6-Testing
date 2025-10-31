@@ -1,0 +1,22 @@
+[ Main;
+	func();
+];
+
+Array buffer -> 123;
+Array parse buffer 63;
+
+Global glob;
+
+[ func val;
+	! Use the version of @read which is *not* supported in this Z-code version.
+	
+#iftrue (#version_number == 3);
+	@aread buffer parse -> glob;
+#ifnot;
+	#iftrue (#version_number == 4);
+		@aread buffer parse -> glob;
+	#ifnot;
+		@sread buffer parse;
+	#endif;
+#endif;
+];

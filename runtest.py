@@ -1907,6 +1907,23 @@ class Run_Veneer(TestGroup, key='VENEER'):
          res=_ok(md5='6c6e6bcf3c2715b5f9962dd78e3adee3', reg='obj_prop_test-g.reg'))
     
 
+class Run_Veneer(TestGroup, key='ASM'):
+    Test('bad-read-opcode.inf', zversion=3,
+         res=_error(errors=1))
+
+    Test('bad-read-opcode.inf', zversion=4,
+         res=_error(errors=1))
+
+    Test('bad-read-opcode.inf', zversion=5,
+         res=_error(errors=1))
+
+    Test('bad-read-opcode.inf', zversion=6,
+         res=_error(errors=1))
+
+    Test('bad-read-opcode.inf', zversion=8,
+         res=_error(errors=1))
+
+
 class Run_Statements(TestGroup, key='STATEMENTS'):
     Test('switchcasetest.inf',
          res=_ok(reg='allpass.reg'))
