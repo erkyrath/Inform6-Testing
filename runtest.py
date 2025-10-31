@@ -2394,11 +2394,13 @@ class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
     Test('source-encoding-u.inf', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1},
          res=_ok(md5='0a3b48f42fb285dda46b2fda4b13cee3', reg='source-encoding-u.reg', transcriptfile='16b7ef9f9495a7d6d952aae4c8a61d4f'))
 
+    # no reg= for the Glulx versions, because the test case isn't set up for Glulx output
+    
     Test('source-encoding-u.inf', transcriptfile=True, memsettings={'DICT_CHAR_SIZE':4}, glulx=True,
-         res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47', reg='source-encoding-u.reg', transcriptfile='0f26e1a5db2be06f26744b353cfaaa77'))
+         res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47', transcriptfile='0f26e1a5db2be06f26744b353cfaaa77'))
 
     Test('source-encoding-u.inf', transcriptfile=True, memsettings={'DICT_CHAR_SIZE':4, 'TRANSCRIPT_FORMAT':1}, glulx=True,
-         res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47', reg='source-encoding-u.reg', transcriptfile='c2b0ca6a1b88f8d29b1ea91e41803043'))
+         res=_ok(md5='6211a900cfa1ca2d84ae2eb065efeb47', transcriptfile='c2b0ca6a1b88f8d29b1ea91e41803043'))
 
     
 
