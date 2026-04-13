@@ -2374,6 +2374,9 @@ class Run_DebugFile(TestGroup, key='DEBUGFILE'):
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1},
          res=_ok(md5='f9c856a53a5f0a825c8baa182a4035d1', warnings=0, debugfile='49218cd0ca7f231534b55370e8da63b7'))
 
+    Test('undefdefault.inf', debugfile=True,
+         res=_ok(md5='90866a483312a4359bc00db776e6eed4', warnings=0, debugfile='7af465341b1f20bd9b684e7442468db9'))
+
 
 class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True,
