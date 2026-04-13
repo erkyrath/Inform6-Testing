@@ -2363,16 +2363,16 @@ class Run_FwConst(TestGroup, key='FWCONST'):
 
 class Run_DebugFile(TestGroup, key='DEBUGFILE'):
     Test('Advent.inf', includedir='i6lib-611', debugfile=True,
-         res=_ok(md5='4b60c92f0e1d0b7735a6b237b1b99733', md5match='Advent:z', warnings=0, debugfile='a3d2311173164759356b6066a8f748c9'))
+         res=_ok(md5='4b60c92f0e1d0b7735a6b237b1b99733', md5match='Advent:z', warnings=0, debugfile='0b0016f02d17c51d3e2b851e04469656'))
 
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True,
-         res=_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g', warnings=0, debugfile='b303432b1da9b195813d851260a9f886'))
+         res=_ok(md5='6ba4eeca5bf7834488216bcc1f62586c', md5match='Advent:g', warnings=0, debugfile='6a28c1d63043017d43267df5c06ff0f9'))
 
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1},
-         res=_ok(md5='ecf5622e340ac49276f0acfcc1b03279', warnings=0, debugfile='9959112940a9d05d082e0aec4c615030'))
+         res=_ok(md5='ecf5622e340ac49276f0acfcc1b03279', warnings=0, debugfile='7132de1c276d970d7cd98bc3551f587c'))
 
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1},
-         res=_ok(md5='f9c856a53a5f0a825c8baa182a4035d1', warnings=0, debugfile='654a95c08a946599d0e54a629cf19cff'))
+         res=_ok(md5='f9c856a53a5f0a825c8baa182a4035d1', warnings=0, debugfile='49218cd0ca7f231534b55370e8da63b7'))
 
 
 class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
