@@ -26,8 +26,6 @@ filenames (`Advent.inf`) or filename glob patterns (`unused*`,
 `*header.inf`, `*6G60*`). Use the `--list` option to see a list of
 groups.
 
-Test names can be groups (`LEXER`, `STATEMENTS`, etc) or filename glob patterns (`unused*`, `*header.inf`, `*6G60*`). Use the `--list` option to see a list of groups.
-
 If you don't name a test, it will run every test.
 
 The `--reg` argument tells the script to execute game files and validate
