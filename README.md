@@ -39,11 +39,13 @@ errors. However, this feature currently works on MacOSX only. It uses the
 It could be adapted to other debugging-malloc libraries, but you'd have to
 adjust the magic environment variables, and maybe the stderr parsing.
 
-Historical note: I started writing these tests in 2011, as part of a
-general cleanup of the compiler code. (Thanks to Daniel Fremont for
-the many bug reports uncovered by his input-fuzzing project.) The
-tests lived in an unmerged branch of my fork of the Inform repository.
-You could find them on github, but you had to know where to look.
+### Historical note
+
+I started writing these tests in 2011, as part of a general cleanup of
+the compiler code. (Thanks to Daniel Fremont for the many bug reports
+uncovered by his input-fuzzing project.) The tests lived in an unmerged
+branch of my fork of the Inform repository. You could find them on github,
+but you had to know where to look.
 
 In 2020, I decided to split the tests off as a separate repository. I
 also added the checksum tests. These validate our
