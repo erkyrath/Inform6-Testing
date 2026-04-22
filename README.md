@@ -49,9 +49,17 @@ adjust the magic environment variables, and maybe the stderr parsing.
 
 ### Argument reference
 
-- `--reg`: Run game execution tests.
-- `--binary`: Path to the Inform 6 binary
-- `--regtest`: Path to the `regtest` script
+- `--list`: List all test group names.
+- `--reg`: Run game execution tests after compiling.
+- `--binary`: Path to the Inform 6 binary.
+- `--regtest`: Path to the `regtest` script.
+- `--stdout`: Display compiler stdout. (May be useful if a test failed unexpectedly.)
+- `--stdout`: Display compiler stderr.
+- `--checksum`: Display game-file checksums for every compile.
+- `--vital`: Fail out on the first error.
+- `--nolibgmalloc`: Skip using the libgmalloc library.
+- `--underflow`: Tell libgmalloc to guard against array underflow (rather than overflow).
+- `--alignment=1/4/16`: Tell libgmalloc to align allocations on the given byte boundaries.
 
 ### Historical note
 
