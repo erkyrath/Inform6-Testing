@@ -19,7 +19,7 @@ supply the `--binary` argument.)
 
 To run:
 
-    python3 runtest.py [ --binary INFORM ] [ TESTS... ]
+    python3 runtest.py [ TESTS... ]
 
 Test names can be groups (`LEXER`, `STATEMENTS`, etc) or source
 filenames (`Advent.inf`) or filename glob patterns (`unused*`,
@@ -31,13 +31,27 @@ If you don't name a test, it will run every test.
 The `--reg` argument tells the script to execute game files and validate
 their output against the scripts in the `reg` directory. This option
 assumes that RemGlk interpreters named `bocfelr` and `glulxer` are in
-your `$PATH`.
+your `$PATH`, and a script called `regtest` is in the current directory.
+The `regtest` script should invoke [regtest.py][], perhaps like this:
+
+[regtest.py]: https://github.com/erkyrath/plotex/blob/master/regtest.py
+
+```
+#!/bin/bash
+python3 regtest.py "$@"
+```
 
 The test framework tries to use a strict malloc library to detect memory
 errors. However, this feature currently works on MacOSX only. It uses the
 "libgmalloc" debugging library available on OSX. (Type "man libgmalloc".)
 It could be adapted to other debugging-malloc libraries, but you'd have to
 adjust the magic environment variables, and maybe the stderr parsing.
+
+### Argument reference
+
+- `--reg`: Run game execution tests.
+- `--binary`: Path to the Inform 6 binary
+- `--regtest`: Path to the `regtest` script
 
 ### Historical note
 
