@@ -2562,6 +2562,12 @@ class Run_Abbreviations(TestGroup, key='ABBREVIATIONS'):
     Test('nested_lowstring_test.inf',
          res=_ok(warnings=1))
 
+    Test('Advent-abbrev.inf', includedir='i6lib-611', economy=True,
+         res=_ok(md5='603b390c1464bec7a4b88a548ebb4ff2', reg='Advent-z.reg'))
+    
+    Test('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True,
+         res=_ok(md5='d345a418c5e1aa376212ef24c37bab29', reg='Advent-g.reg'))
+    
     
     
 class Run_Make_Abbreviations(TestGroup, key='MAKE_ABBREVIATIONS'):
