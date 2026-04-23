@@ -1397,7 +1397,7 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_ok(md5='de7d36a65dc50f8b65e8fed07e1c0f77'))
     
     Test('zalphabet-classname.inf',
-         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class'))
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class', reg='zalphabet-classname.reg'))
     
     Test('zalphabet-classdir.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqstruvwxyz BCDEFGHIJKLMNOPQRSTUVWXYZA 0123456789.,!?_@{23}\'/\\-:()'},
          res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class'))
@@ -1503,9 +1503,6 @@ class Run_Encoding(TestGroup, key='ENCODING'):
 
     Test('zalphabet-classname.inf', zversion=4,
          res=_ok(md5='412dab4a3c5a5008a43ba5a87e751a85', reg='zalphabet-classname.reg'))
-
-    Test('zalphabet-classname.inf', zversion=5,
-         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', reg='zalphabet-classname.reg'))
 
 
 class Run_Header(TestGroup, key='HEADER'):
