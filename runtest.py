@@ -2562,6 +2562,24 @@ class Run_Abbreviations(TestGroup, key='ABBREVIATIONS'):
     Test('nested_lowstring_test.inf',
          res=_ok(warnings=1))
 
+    Test('abbrevtest-squiggle.inf', economy=False,
+         res=_ok(reg='abbrevtest-squiggle.reg'))
+
+    Test('abbrevtest-squiggle.inf', glulx=True, economy=False,
+         res=_ok(reg='abbrevtest-squiggle.reg'))
+
+    Test('abbrevtest-squiggle.inf', economy=True,
+         res=_ok(reg='abbrevtest-squiggle.reg'))
+
+    Test('abbrevtest-squiggle.inf', glulx=True, economy=True,
+         res=_ok(reg='abbrevtest-squiggle.reg'))
+
+    Test('Advent-abbrev.inf', includedir='i6lib-611', economy=True,
+         res=_ok(md5='603b390c1464bec7a4b88a548ebb4ff2', reg='Advent-z.reg'))
+    
+    Test('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True,
+         res=_ok(md5='d345a418c5e1aa376212ef24c37bab29', reg='Advent-g.reg'))
+    
     
     
 class Run_Make_Abbreviations(TestGroup, key='MAKE_ABBREVIATIONS'):
@@ -3079,7 +3097,7 @@ class Run_Max_Abbrevs(TestGroup, key='MAX_ABBREVS'):
          res=_ok(md5='603b390c1464bec7a4b88a548ebb4ff2'))
     
     Test('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True,
-         res=_ok(md5='b74045fe8a5101805fc2e3a57fd03fed'))
+         res=_ok(md5='d345a418c5e1aa376212ef24c37bab29'))
     
     Test('i7-min-6G60-abbrev.inf', zversion=8, economy=True,
          res=_ok(md5='c0db8cc8edd8f9973e1d75222102be2f', reg='i7-min-6G60.reg'))
