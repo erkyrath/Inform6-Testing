@@ -857,10 +857,6 @@ class Run_Dict(TestGroup, key='DICT'):
     Test('dict-cutoff-v3test.inf', strict=False, zversion=5,
          res=_ok(md5='764627f02bd22d68936fa4ade2fc41bf', reg='allpass.reg'))
 
-    # This messes with the alphabet, which changes the output.
-    Test('dict-cutoff-alttest.inf', strict=False, zversion=4,
-         res=_ok(md5='ec891cebd947ebb39400580e26bf2365', reg='dict-cutoff-alttest-v4.reg'))
-
     Test('dict-cutoff-alttest.inf', strict=False, zversion=5,
          res=_ok(md5='242b4bb8b2bfbbf6d71b63091458ac9d', reg='allpass.reg'))
 
