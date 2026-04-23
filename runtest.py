@@ -1489,6 +1489,23 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-prec.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @{3b3} @{2655} @@9812', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#@{3B2}/\\-@{2655}()'},
          res=_ok(md5='21719ff75e5a3baf4643f36feb40d7eb', md5match='ztable-prec'))
 
+    # Error cases
+
+    Test('zalphabet-direct.inf', zversion=3,
+         res=_error())
+
+    Test('zalphabet-direct.inf', zversion=4,
+         res=_error())
+
+    # This compiles, but the $ZALPHABET is entirely ignored.
+    Test('zalphabet-classname.inf', zversion=3,
+         res=_ok(md5='49669d575efdfdb6488dec9d8b1f0895', reg='zalphabet-classname.reg'))
+
+    Test('zalphabet-classname.inf', zversion=4,
+         res=_ok(md5='412dab4a3c5a5008a43ba5a87e751a85', reg='zalphabet-classname.reg'))
+
+    Test('zalphabet-classname.inf', zversion=5,
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', reg='zalphabet-classname.reg'))
 
 
 class Run_Header(TestGroup, key='HEADER'):
