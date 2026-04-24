@@ -2014,6 +2014,12 @@ class Run_BraceBlocks(TestGroup, key='BRACEBLOCKS'):
     Test('braceblocks-new2.inf', glulx=True,
          res=_ok(md5match='braceblocks:g'))
 
+    Test('braceblocks-badbreak.inf', define={'BAD1':None},
+         res=_error())
+
+    Test('braceblocks-badbreak.inf', define={'BAD2':None},
+         res=_error())
+
 
 class Run_Expressions(TestGroup, key='EXPRESSIONS'):
     Test('unaryop_err_test.inf',

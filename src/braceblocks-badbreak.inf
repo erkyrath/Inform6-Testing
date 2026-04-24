@@ -1,0 +1,20 @@
+[ Main;
+];
+
+#ifdef BAD1;
+[ func1 val;
+	val++;
+	{
+		break;
+	}
+];
+#endif; ! BAD1
+
+#ifdef BAD2;
+[ func2 val;
+	if (val) {{
+		break;
+	}}
+];
+#endif; ! BAD1
+
