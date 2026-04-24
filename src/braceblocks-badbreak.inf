@@ -18,3 +18,12 @@
 ];
 #endif; ! BAD1
 
+#ifdef BAD3;
+[ func1 val;
+	{
+		val++;
+		continue;
+	}
+];
+#endif; ! BAD3
+
