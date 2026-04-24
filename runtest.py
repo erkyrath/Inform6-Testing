@@ -1997,13 +1997,22 @@ class Run_Statements(TestGroup, key='STATEMENTS'):
 
 class Run_BraceBlocks(TestGroup, key='BRACEBLOCKS'):
     Test('braceblocks-orig.inf',
-         res=_ok(md5match='braceblocks'))
+         res=_ok(md5match='braceblocks:z'))
 
     Test('braceblocks-new.inf',
-         res=_ok(md5match='braceblocks'))
+         res=_ok(md5match='braceblocks:z'))
 
     Test('braceblocks-new2.inf',
-         res=_ok(md5match='braceblocks'))
+         res=_ok(md5match='braceblocks:z'))
+
+    Test('braceblocks-orig.inf', glulx=True,
+         res=_ok(md5match='braceblocks:g'))
+
+    Test('braceblocks-new.inf', glulx=True,
+         res=_ok(md5match='braceblocks:g'))
+
+    Test('braceblocks-new2.inf', glulx=True,
+         res=_ok(md5match='braceblocks:g'))
 
 
 class Run_Expressions(TestGroup, key='EXPRESSIONS'):
