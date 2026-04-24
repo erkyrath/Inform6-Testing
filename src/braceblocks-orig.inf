@@ -1,0 +1,35 @@
+[ Main;
+	func();
+	func2();
+];
+
+Global glob = 1;
+
+[ func val;
+	val = 1;
+	val = 2;
+	while (val) {
+		val--;
+	}
+	if (val) {
+		val = 3;
+		val = val + glob;
+	}
+	else {
+		val = 5;
+		val = 6 + glob;
+	}
+	val++;
+	return val;
+];
+
+[ func2 val;
+	for (val=0 : val<10 : val++) {
+		if (val == 5) {
+			val--;
+			break;
+		}
+	}
+	return val;
+];
+

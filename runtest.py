@@ -1995,6 +1995,17 @@ class Run_Statements(TestGroup, key='STATEMENTS'):
          res=_error())
 
 
+class Run_BraceBlocks(TestGroup, key='BRACEBLOCKS'):
+    Test('braceblocks-orig.inf',
+         res=_ok(md5match='braceblocks'))
+
+    Test('braceblocks-new.inf',
+         res=_ok(md5match='braceblocks'))
+
+    Test('braceblocks-new2.inf',
+         res=_ok(md5match='braceblocks'))
+
+
 class Run_Expressions(TestGroup, key='EXPRESSIONS'):
     Test('unaryop_err_test.inf',
          res=_ok(md5='938b3674a095c3db4e8ec9de3cc65c3c', reg='allpass.reg'))
