@@ -2014,13 +2014,13 @@ class Run_BraceBlocks(TestGroup, key='BRACEBLOCKS'):
     Test('braceblocks-new2.inf', glulx=True,
          res=_ok(md5match='braceblocks:g'))
 
-    Test('braceblocks-badbreak.inf', define={'BAD1':None},
+    Test('braceblocks-bad.inf', define={'BADBREAK1':None},
          res=_error())
 
-    Test('braceblocks-badbreak.inf', define={'BAD2':None},
+    Test('braceblocks-bad.inf', define={'BADBREAK2':None},
          res=_error())
 
-    Test('braceblocks-badbreak.inf', define={'BAD3':None},
+    Test('braceblocks-bad.inf', define={'BADCONTINUE':None},
          res=_error())
 
 

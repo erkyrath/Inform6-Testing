@@ -1,29 +1,29 @@
 [ Main;
 ];
 
-#ifdef BAD1;
+#ifdef BADBREAK1;
 [ func1 val;
 	val++;
 	{
 		break;
 	}
 ];
-#endif; ! BAD1
+#endif; ! BADBREAK1
 
-#ifdef BAD2;
+#ifdef BADBREAK2;
 [ func2 val;
 	if (val) {{
 		break;
 	}}
 ];
-#endif; ! BAD1
+#endif; ! BADBREAK2
 
-#ifdef BAD3;
+#ifdef BADCONTINUE;
 [ func1 val;
 	{
 		val++;
 		continue;
 	}
 ];
-#endif; ! BAD3
+#endif; ! BADCONTINUE
 
