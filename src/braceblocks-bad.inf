@@ -1,6 +1,7 @@
 [ Main;
 ];
 
+
 #ifdef BADBREAK1;
 [ func1 val;
 	val++;
@@ -10,6 +11,7 @@
 ];
 #endif; ! BADBREAK1
 
+
 #ifdef BADBREAK2;
 [ func2 val;
 	if (val) {{
@@ -17,6 +19,7 @@
 	}}
 ];
 #endif; ! BADBREAK2
+
 
 #ifdef BADCONTINUE;
 [ func1 val;
@@ -27,3 +30,19 @@
 ];
 #endif; ! BADCONTINUE
 
+
+#ifdef NOCLOSE1;
+[ func1 val;
+	{
+		val++;
+];
+#endif; ! NOCLOSE1
+
+
+#ifdef NOCLOSE2;
+[ func1 val;
+	{{
+		val++;
+	}
+];
+#endif; ! NOCLOSE2

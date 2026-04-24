@@ -2023,6 +2023,12 @@ class Run_BraceBlocks(TestGroup, key='BRACEBLOCKS'):
     Test('braceblocks-bad.inf', define={'BADCONTINUE':None},
          res=_error())
 
+    Test('braceblocks-bad.inf', define={'NOCLOSE1':None},
+         res=_error())
+
+    Test('braceblocks-bad.inf', define={'NOCLOSE2':None},
+         res=_error())
+
 
 class Run_Expressions(TestGroup, key='EXPRESSIONS'):
     Test('unaryop_err_test.inf',
