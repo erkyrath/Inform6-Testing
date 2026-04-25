@@ -2,6 +2,7 @@
 	func();
 	func2();
 	func3();
+	func4();
 ];
 
 Global glob = 1;
@@ -66,6 +67,25 @@ Fake_Action foo3;
 				return val;
 		}
 	default: {
+		if (val > 5) {
+			val++;
+			return val;
+		}
+	}
+];
+
+
+[ func4 val;
+	switch (val) {
+	1:
+		return val;
+	2:
+		val++;
+		return val;
+	3:
+		if (val)
+			return val;
+	default:
 		if (val > 5) {
 			val++;
 			return val;
