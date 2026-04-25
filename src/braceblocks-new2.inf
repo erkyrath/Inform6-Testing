@@ -1,6 +1,7 @@
 [ Main;
 	func();
 	func2();
+	func3();
 ];
 
 Global glob = 1;
@@ -46,3 +47,28 @@ Global glob = 1;
 ];
 
 
+
+Fake_Action foo1;
+Fake_Action foo2;
+Fake_Action foo3;
+
+[ func3 val;
+	foo1: {{
+		return val;
+	}}
+	foo2: {
+		val++;
+		return val;
+	}
+	foo3:
+		{
+			if (val)
+				return val;
+		}
+	default: {
+		if (val > 5) {
+			val++;
+			return val;
+		}
+	}
+];
