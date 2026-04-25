@@ -91,6 +91,11 @@ Fake_Action foo3;
 			if (val)
 				return val;
 		}}
+	4: {
+		if (val)
+			break;
+		val++;
+	}
 	default:
 		if (val > 5) {
 			{
