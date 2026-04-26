@@ -104,8 +104,10 @@ Global failures;
 		print failures, " errors!^";
 ];
 
+Global glob = 0;
+
 Array arr1 --> [ 0 1 2 [; return 345; ]; 4 5 ];
-Array arr2 --> [ [; return 123; ]; 11 22 ];
+Array arr2 --> [ [; return 123; ]; 11 22 [; glob++; ]; ];
 
 [ test_word_arrays val;
 	print "arr1--> "; check_value(arr1-->0, 0);
@@ -117,9 +119,14 @@ Array arr2 --> [ [; return 123; ]; 11 22 ];
 	print ", "; check_value(arr1-->5, 5);
 	new_line;
 
+	glob = 0;
+	
 	print "arr2--> "; check_value((arr2-->0)(), 123);
 	print ", "; check_value(arr2-->1, 11);
 	print ", "; check_value(arr2-->2, 22);
+	! Inline routine with a side effect and default return value 0:
+	print ", "; check_value((arr2-->3)(), 0);
+	new_line;
+	print "glob "; check_value(glob, 1);
 	new_line;
 ];
-
