@@ -1667,6 +1667,12 @@ class Run_Directives(TestGroup, key='DIRECTIVES'):
     Test('staticarraytest.inf', glulx=True,
          res=_ok(md5='29abadec278f29e1c0b5eea0fd9c3495', reg='staticarraytest-g.reg'))
 
+    Test('array-inline-func.inf',
+         res=_ok(md5='6b5866b7091c45d02d41d70e24e82e06', reg='allpass.reg'))
+
+    Test('array-inline-func.inf', glulx=True,
+         res=_ok(md5='30487f0b9a0c17b023bd12820039b7c9', reg='allpass.reg'))
+
     Test('undefdirectivetest.inf',
          res=_ok(md5='4f7ad0f17634dec6df2a494b13823600'))
 
