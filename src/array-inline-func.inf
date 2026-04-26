@@ -96,6 +96,7 @@ Global failures;
 
 [ RunTest;
 	test_word_arrays();
+	test_table_arrays();
 	
 	new_line;
 	if (failures == 0)
@@ -129,4 +130,38 @@ Array arr2 --> [ [; return 123; ]; 11 22 [; glob++; ]; ];
 	new_line;
 	print "glob "; check_value(glob, 1);
 	new_line;
+];
+
+[ sum_table arr ix val sum;
+	for (ix=1 : ix <= arr-->0 : ix++) {
+		val = arr-->ix;
+		if (val < 100) {
+			sum = sum + val;
+		}
+		else {
+			sum = sum + val();
+		}
+	}
+	return sum;
+];
+
+Array tab1 table 1 4 17 20;
+Array tab2 table [
+	2
+	[; return 3; ]
+	9
+	[; glob = 101; ]
+	11
+	[ val;
+		val = glob+1;
+		return val;
+	]
+	1
+];
+Array tab3 table [ [; return 101;]; [; return 102;]; [; return 103;]; ];
+
+[ test_table_arrays;
+	print "tab1: sum "; check_value(sum_table(tab1), 42); new_line;
+	print "tab2: sum "; check_value(sum_table(tab2), 128); new_line;
+	print "tab3: sum "; check_value(sum_table(tab3), 306); new_line;
 ];
