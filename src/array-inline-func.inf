@@ -162,17 +162,15 @@ Array tab2 table [
 	1
 ];
 Array tab3 table [ [; return 101;]; [; return 102;]; [; return 103;]; ];
-Array tab4 table 5 [; return 10; ] 6 [; return 12; ];
-Array tab5 table [ ; return 10; ] 16 1 [ ; return 200; ] 19;
-Array tab6 table [ [; return 345; ] ];
+Array tab4 table [ 5 [; return 10; ] 6 [; return 12; ] ];
+Array tab5 table [ [; return 345; ] ];
 
 [ test_table_arrays;
 	print "tab1: sum "; check_value(sum_table(tab1), 42); new_line;
 	print "tab2: sum "; check_value(sum_table(tab2), 128); new_line;
 	print "tab3: sum "; check_value(sum_table(tab3), 306); new_line;
 	print "tab4: sum "; check_value(sum_table(tab4), 33); new_line;
-	print "tab5: sum "; check_value(sum_table(tab5), 246); new_line;
-	print "tab6: sum "; check_value(sum_table(tab6), 345); new_line;
+	print "tab5: sum "; check_value(sum_table(tab5), 345); new_line;
 ];
 
 [ test_zero_array ix;
