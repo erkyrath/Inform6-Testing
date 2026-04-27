@@ -1,0 +1,78 @@
+[ Main;
+	func();
+	func2();
+	func3();
+	func4();
+];
+
+Global glob = 1;
+
+[ func val;
+	val = 1;
+	val = 2;
+	while (val) {
+		val--;
+	}
+	if (val) {
+		val = 3;
+		val = val + glob;
+	}
+	else {
+		val = 5;
+		val = 6 + glob;
+	}
+	val++;
+	return val;
+];
+
+[ func2 val;
+	for (val=0 : val<10 : val++) {
+		if (val == 5) {
+			val--;
+			break;
+		}
+	}
+	return val;
+];
+
+Fake_Action foo1;
+Fake_Action foo2;
+Fake_Action foo3;
+
+[ func3 val;
+	foo1:
+		return val;
+	foo2:
+		val++;
+		return val;
+	foo3:
+		if (val)
+			return val;
+	default:
+		if (val > 5) {
+			val++;
+			return val;
+		}
+];
+
+[ func4 val;
+	switch (val) {
+	1:
+		return val;
+	2:
+		val++;
+		return val;
+	3:
+		if (val)
+			return val;
+	4:
+		if (val)
+			break;
+		val++;
+	default:
+		if (val > 5) {
+			val++;
+			return val;
+		}
+	}
+];

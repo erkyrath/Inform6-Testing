@@ -1,0 +1,48 @@
+[ Main;
+];
+
+
+#ifdef BADBREAK1;
+[ func1 val;
+	val++;
+	{
+		break;
+	}
+];
+#endif; ! BADBREAK1
+
+
+#ifdef BADBREAK2;
+[ func2 val;
+	if (val) {{
+		break;
+	}}
+];
+#endif; ! BADBREAK2
+
+
+#ifdef BADCONTINUE;
+[ func1 val;
+	{
+		val++;
+		continue;
+	}
+];
+#endif; ! BADCONTINUE
+
+
+#ifdef NOCLOSE1;
+[ func1 val;
+	{
+		val++;
+];
+#endif; ! NOCLOSE1
+
+
+#ifdef NOCLOSE2;
+[ func1 val;
+	{{
+		val++;
+	}
+];
+#endif; ! NOCLOSE2
