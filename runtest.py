@@ -857,10 +857,6 @@ class Run_Dict(TestGroup, key='DICT'):
     Test('dict-cutoff-v3test.inf', strict=False, zversion=5,
          res=_ok(md5='764627f02bd22d68936fa4ade2fc41bf', reg='allpass.reg'))
 
-    # This messes with the alphabet, which changes the output.
-    Test('dict-cutoff-alttest.inf', strict=False, zversion=4,
-         res=_ok(md5='ec891cebd947ebb39400580e26bf2365', reg='dict-cutoff-alttest-v4.reg'))
-
     Test('dict-cutoff-alttest.inf', strict=False, zversion=5,
          res=_ok(md5='242b4bb8b2bfbbf6d71b63091458ac9d', reg='allpass.reg'))
 
@@ -1401,7 +1397,7 @@ class Run_Encoding(TestGroup, key='ENCODING'):
          res=_ok(md5='de7d36a65dc50f8b65e8fed07e1c0f77'))
     
     Test('zalphabet-classname.inf',
-         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class'))
+         res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class', reg='zalphabet-classname.reg'))
     
     Test('zalphabet-classdir.inf', memsettings={'ZALPHABET':'abcdefghijklmnopqstruvwxyz BCDEFGHIJKLMNOPQRSTUVWXYZA 0123456789.,!?_@{23}\'/\\-:()'},
          res=_ok(md5='408b3307995197d2a88305ed98d61ef1', md5match='zalphabet-class'))
@@ -1493,6 +1489,20 @@ class Run_Encoding(TestGroup, key='ENCODING'):
     Test('ztable-prec.inf', memsettings={'ZCHAR_TABLE':'+ @@945 @{3B2} @{3b3} @{2655} @@9812', 'ZALPHABET':'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789.,!?_#@{3B2}/\\-@{2655}()'},
          res=_ok(md5='21719ff75e5a3baf4643f36feb40d7eb', md5match='ztable-prec'))
 
+    # Error cases
+
+    Test('zalphabet-direct.inf', zversion=3,
+         res=_error())
+
+    Test('zalphabet-direct.inf', zversion=4,
+         res=_error())
+
+    # This compiles, but the $ZALPHABET is entirely ignored.
+    Test('zalphabet-classname.inf', zversion=3,
+         res=_ok(md5='49669d575efdfdb6488dec9d8b1f0895', reg='zalphabet-classname.reg'))
+
+    Test('zalphabet-classname.inf', zversion=4,
+         res=_ok(md5='412dab4a3c5a5008a43ba5a87e751a85', reg='zalphabet-classname.reg'))
 
 
 class Run_Header(TestGroup, key='HEADER'):
