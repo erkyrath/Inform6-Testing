@@ -1,0 +1,11 @@
+[ Main;
+];
+
+#ifdef NOBRACKET;
+! Can't have inline functions without brackets.
+Array arr --> 0 [; return; ] 1 2 3;
+#endif; ! NOBRACKET
+
+#ifdef NOCLOSE;
+Array arr --> [ 0 [; return; ] 2;
+#endif; ! NOCLOSE
