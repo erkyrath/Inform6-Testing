@@ -2253,6 +2253,14 @@ class Run_Prune(TestGroup, key='PRUNE'):
          res=_ok(md5='74176ff2736cc48596a0228da91f36f4', reg='tasksacktest-st.reg'))
 
 
+class Run_Coalesce(TestGroup, key='COALESCE'):
+    Test('onechar-strings.inf',
+         res=_ok(reg='onechar-strings.reg'))
+
+    Test('onechar-strings.inf', glulx=True,
+         res=_ok(reg='onechar-strings.reg'))
+
+
 class Run_CompileOpt(TestGroup, key='COMPILEOPT'):
     # Can't change DICT_WORD_SIZE in Z-code
     Test('optprectest.inf',
