@@ -2260,6 +2260,12 @@ class Run_Coalesce(TestGroup, key='COALESCE'):
     Test('onechar-strings.inf', glulx=True,
          res=_ok(reg='onechar-strings.reg'))
 
+    Test('onechar-strings.inf', define={ 'BAD_SINGLE_AT':None },
+         res=_error())
+
+    Test('onechar-strings.inf', define={ 'BAD_SINGLE_AT':None }, glulx=True,
+         res=_error())
+
 
 class Run_CompileOpt(TestGroup, key='COMPILEOPT'):
     # Can't change DICT_WORD_SIZE in Z-code
