@@ -1,0 +1,132 @@
+!% -C2
+
+Constant Story "OneCharStringsTest";
+Constant Headline "Not a game.^";
+
+Release 1;
+
+! This is a compiler unit test for optimizing one-char strings.
+
+#ifdef TARGET_ZCODE;
+Constant HDR_GAMERELEASE      = $02;     ! word
+Constant HDR_GAMESERIAL       = $12;     ! six ASCII characters
+#ifnot;
+Global gg_mainwin;
+Constant HDR_GLULXVERSION  $04;     ! long word
+Constant ROM_GAMERELEASE   $34;     ! short word
+Constant ROM_GAMESERIAL    $36;     ! six ASCII characters
+#endif; ! TARGET_GLULX
+
+#ifdef TARGET_ZCODE;
+Zcharacter table + '@{3C0}';
+#endif; ! TARGET_ZCODE
+
+[ Main loc;
+    #Ifdef TARGET_GLULX;
+	@setiosys 2 0;
+	@push 201; @push 3; @push 0; @push 0; @push 0;
+	@glk $0023 5 gg_mainwin;
+
+	@push gg_mainwin;
+	@glk $002F 1 loc;
+    #Endif; ! TARGET_
+
+	loc = 0;
+
+	Banner();
+	new_line;
+	RunTest();
+];
+
+[ Banner  ix;
+    if (Story ~= 0) {
+        #ifdef TARGET_ZCODE;
+        #ifV5; style bold; #Endif;
+        print (string) Story;
+        #ifV5; style roman; #Endif;
+        #ifnot; ! TARGET_GLULX;
+        glk($0086, 3); ! set header style
+        print (string) Story;
+        glk($0086, 0); ! set normal style
+        #Endif; ! TARGET_
+    }
+    if (Headline ~= 0) print ": ", (string) Headline;
+    #ifdef TARGET_ZCODE;
+    print "Release ", (HDR_GAMERELEASE-->0) & $03ff, " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) HDR_GAMESERIAL->ix;
+    #ifnot; ! TARGET_GLULX;
+    print "Release ";
+    @aloads ROM_GAMERELEASE 0 ix;
+    print ix;
+    print " / Serial number ";
+    for (ix=0 : ix<6 : ix++) print (char) ROM_GAMESERIAL->ix;
+    #Endif; ! TARGET_
+    print " / Inform v"; inversion;
+    print ", compiler options ";
+    ix = false;
+    #ifdef STRICT_MODE;
+    print "S"; ix++;
+    #Endif; ! STRICT_MODE
+    #ifdef INFIX;
+    print "X"; ix++;
+    #ifnot;
+    #ifdef DEBUG;
+    print "D"; ix++;
+    #Endif; ! DEBUG
+    #Endif; ! INFIX
+    if (~~ix) print "(none)";
+    new_line;
+
+    #ifdef TARGET_GLULX;
+    @gestalt 1 0 ix;
+    print "Interpreter version ", ix / $10000, ".", (ix & $FF00) / $100,
+    ".", ix & $FF, " / ";
+    @gestalt 0 0 ix;
+    print "VM ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, " / ";
+    ix = HDR_GLULXVERSION-->0;
+    print "game file format ", ix / $10000, ".", (ix & $FF00) / $100, ".", ix & $FF, "^";
+    #ifnot;
+    print "Game file format ", 0->0, ".^";
+    #Endif; ! TARGET_GLULX
+];
+
+
+[ RunTest;
+	basic_test();
+	iso_source_test();
+];
+
+[ basic_test;
+	print "^Basic:^";
+	
+	print "one letter:", "a", "...^";
+	print "two letters:", "aa", "...^";
+	print "three letters:", "aaa", "...^";
+	print "digit:", "3", "...^";
+	print "space:", " ", "...^";
+	print "period exclam:", ".", "!", "...^";
+	print "quote:", "~", "...^";
+	print "newline:", "^", "...was newline...^";
+	print "dollar:", "$", "...^";
+	print "bar:", "|", "...^";
+	print "brace:", "{", "...^";
+
+	print "at dec-escape:", "@@64", "...^";
+	print "quote dec-escape:", "@@34", "...^";
+	print "u-umlaut dec-escape:", "@@252", "...^";
+	print "pi dec-escape:", "@@960", "...^";
+
+	print "at hex-escape:", "@{40}", "...^";
+	print "quote hex-escape:", "@{22}", "...^";
+	print "u-umlaut hex-escape:", "@{FC}", "...^";
+	print "pi hex-escape:", "@{3C0}", "...^";
+];
+
+[ iso_source_test;
+	print "^ISO-Latin-2 source:^";
+
+	print "L-stroke iso-2:", "£", "...^";
+	print "a-ogonek iso-2:", "±", "...^";
+	print "z-dot iso-2:", "¿", "...^";
+	print "o-double-acute iso-2:", "õ", "...^";
+];
