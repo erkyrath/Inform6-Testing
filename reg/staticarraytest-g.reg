@@ -7,7 +7,7 @@ wordarray-->0: 10
 wordarray-->1: 11012
 wordarray-->2: foo; is string:1
 wordarray-->3: 11764
-wordarray-->4: 2978
+wordarray-->4: 2957
 wordarray-->5: 14
 wordarray-->6: 11044
 wordarray-->7: 10308
@@ -63,10 +63,10 @@ wordarrayst-->0: 11
 wordarrayst-->1: 11076
 wordarrayst-->2: 11764
 wordarrayst-->3: foo; is string:1
-wordarrayst-->4: 2978
+wordarrayst-->4: 2957
 wordarrayst-->5: 11108
-wordarrayst-->6: 9487
-wordarrayst-->7: 9523
+wordarrayst-->6: 9393
+wordarrayst-->7: 9429
 wordarrayst-->8: 99
 bytearrayst->0: 15
 bytearrayst->3: 18
@@ -79,17 +79,17 @@ tablearrayst-->6: 0
 bufferarrayst-->0: 13
 bufferarrayst->W+0: 0
 bufferarrayst->W+12: 0
-bytearraystref: 9523
-stringarraystref: 9527
-testobjst.bufferarrayprop: 9565
-propobjst.tablearrayprop: 9533
-propobjst.wordarrayprop: 9487
-wordarrayst: 9487 is static.
-bytearrayst: 9523 is static.
-stringarrayst: 9527 is static.
-tablearrayst: 9533 is static.
-bufferarrayst: 9565 is static.
-bigarrayst: 9582 is static.
+bytearraystref: 9429
+stringarraystref: 9433
+testobjst.bufferarrayprop: 9471
+propobjst.tablearrayprop: 9439
+propobjst.wordarrayprop: 9393
+wordarrayst: 9393 is static.
+bytearrayst: 9429 is static.
+stringarrayst: 9433 is static.
+tablearrayst: 9439 is static.
+bufferarrayst: 9471 is static.
+bigarrayst: 9488 is static.
 
 The following lines should produce 4 veneer programming errors, as we access outside array bounds. This is expected!
 
