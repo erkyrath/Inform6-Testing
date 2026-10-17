@@ -2439,30 +2439,30 @@ class Run_DebugFile(TestGroup, key='DEBUGFILE'):
 
 class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True,
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, transcriptfile='4589d82d50b27cebe54880d24a9821c0'))
+         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, transcriptfile='cea5c49f474a3af53aacc6c62eb71f86'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1},
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, transcriptfile='16885ea2d72d985e4086a6badfd9d7bc'))
+         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, transcriptfile='81c825e994d5ed82b1be9eece7b0f85d'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, glulx=True,
-         res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, transcriptfile='ad81b759162775fff2a6171db42c05ab'))
+         res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, transcriptfile='f9a6cec6d2e674ab0f5a6c1b230fb232'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1}, glulx=True,
-         res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, transcriptfile='7eb34dfca31b782ede3b449a80fd74b2'))
+         res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, transcriptfile='b480ebb779e96d704f60bfc3aeedb785'))
     
     Test('source-encoding-u.inf', transcriptfile=True,
-         res=_ok(md5='644bd6e55b30520a182dad4bc3b61a27', reg='source-encoding-u.reg', transcriptfile='154cc9aa4db0e2273592c81528362801'))
+         res=_ok(md5='644bd6e55b30520a182dad4bc3b61a27', reg='source-encoding-u.reg', transcriptfile='f86689cfeb61c9a888164565a8b30734'))
 
     Test('source-encoding-u.inf', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1},
-         res=_ok(md5='644bd6e55b30520a182dad4bc3b61a27', reg='source-encoding-u.reg', transcriptfile='16b7ef9f9495a7d6d952aae4c8a61d4f'))
+         res=_ok(md5='644bd6e55b30520a182dad4bc3b61a27', reg='source-encoding-u.reg', transcriptfile='e9cb23cbe92ab2d855730e9244fe78b6'))
 
     # no reg= for the Glulx versions, because the test case isn't set up for Glulx output
     
     Test('source-encoding-u.inf', transcriptfile=True, memsettings={'DICT_CHAR_SIZE':4}, glulx=True,
-         res=_ok(md5='d8ac6c6191086e52fe9206270e86b068', transcriptfile='0f26e1a5db2be06f26744b353cfaaa77'))
+         res=_ok(md5='d8ac6c6191086e52fe9206270e86b068', transcriptfile='66d80ad2023df8b1ed3b315ebee0dfde'))
 
     Test('source-encoding-u.inf', transcriptfile=True, memsettings={'DICT_CHAR_SIZE':4, 'TRANSCRIPT_FORMAT':1}, glulx=True,
-         res=_ok(md5='d8ac6c6191086e52fe9206270e86b068', transcriptfile='c2b0ca6a1b88f8d29b1ea91e41803043'))
+         res=_ok(md5='d8ac6c6191086e52fe9206270e86b068', transcriptfile='eb1c8f3aa672125dd1810b91fcfa842b'))
 
     
 
