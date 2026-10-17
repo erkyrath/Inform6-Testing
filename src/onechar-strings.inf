@@ -94,9 +94,12 @@ Zcharacter table + '@{3C0}';
 [ RunTest;
 	basic_test();
 	unicode_source_test();
+	final_char_test();
 ];
 
 [ basic_test;
+	print "^Basic:^";
+	
 	print "one letter:", "a", "...^";
 	print "two letters:", "aa", "...^";
 	print "three letters:", "aaa", "...^";
@@ -125,8 +128,18 @@ Zcharacter table + '@{3C0}';
 ];
 
 [ unicode_source_test;
+	print "^Unicode source:^";
+	
 	print "u-umlaut utf:", "ü", "...^";
 	print "pi utf:", "π", "...^";
+];
+
+[ final_char_test;
+	print "^Final char:^";
+
+	print "Line ends";
+	! This only changes to char-print in Glulx.
+	print_ret "!";
 ];
 
 #ifdef BAD_SINGLE_AT;
