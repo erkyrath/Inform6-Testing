@@ -120,6 +120,10 @@ Zcharacter table + '@{3C0}';
 	print "quote hex-escape:", "@{22}", "...^";
 	print "u-umlaut hex-escape:", "@{FC}", "...^";
 	print "pi hex-escape:", "@{3C0}", "...^";
+
+	print "o-slash hex-escape:", "@{F8}", "...^";
+	print "AE-lig hex-escape:", "@{C6}", "...^";
+	print "invert-? hex-escape:", "@{BF}", "...^";
 ];
 
 [ iso_source_test;
@@ -129,5 +133,4 @@ Zcharacter table + '@{3C0}';
 	print "o-slash iso-1:", "ø", "...^";
 	print "AE-lig iso-1:", "Æ", "...^";
 	print "invert-? iso-1:", "¿", "...^";
-
 ];

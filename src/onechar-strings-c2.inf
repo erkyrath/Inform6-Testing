@@ -120,6 +120,11 @@ Zcharacter table + '@{3C0}';
 	print "quote hex-escape:", "@{22}", "...^";
 	print "u-umlaut hex-escape:", "@{FC}", "...^";
 	print "pi hex-escape:", "@{3C0}", "...^";
+
+	print "L-stroke hex-escape:", "@{141}", "...^";
+	print "a-ogonek hex-escape:", "@{105}", "...^";
+	print "z-dot hex-escape:", "@{17C}", "...^";
+	print "o-double-acute hex-escape:", "@{151}", "...^";
 ];
 
 [ iso_source_test;
