@@ -2451,10 +2451,10 @@ class Run_DebugFile(TestGroup, key='DEBUGFILE'):
 
 class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True,
-         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, transcriptfile='cea5c49f474a3af53aacc6c62eb71f86'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, transcriptfile='95682f0b3a10a176f5367d35d2d5e5ee'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1},
-         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, transcriptfile='81c825e994d5ed82b1be9eece7b0f85d'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, transcriptfile='8e97a5e1a71b08371809a5826a72c7fd'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, glulx=True,
          res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, transcriptfile='f9a6cec6d2e674ab0f5a6c1b230fb232'))
