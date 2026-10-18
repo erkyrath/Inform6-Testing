@@ -95,6 +95,7 @@ Zcharacter table + '@{3C0}';
 	basic_test();
 	unicode_source_test();
 	final_char_test();
+	final_char_multi_test();
 ];
 
 [ basic_test;
@@ -140,6 +141,12 @@ Zcharacter table + '@{3C0}';
 	print "Line ends";
 	! This only changes to char-print in Glulx.
 	print_ret "!";
+];
+
+[ final_char_multi_test;
+	print "^Final char multi-token:^";
+
+	print_ret "Line ends:", 22, "/", 11, "=", 2, "!";
 ];
 
 #ifdef BAD_SINGLE_AT;
