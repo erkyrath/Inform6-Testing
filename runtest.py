@@ -755,10 +755,10 @@ class Run_Checksum(TestGroup, key='CHECKSUM'):
          res=_ok(md5='c44b9a95823e2ff499a81fc0ef2e6ea2', warnings=0))
     
     Test('i7-min-6G60.inf',
-         res=_ok(md5='fa69553d9e2a5917928b6d1b30b38c0f', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
+         res=_ok(md5='d6ceb15cfaea5e2bc4bee66c1b192a40', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6G60.inf', zversion=8,
-         res=_ok(md5='24cf678fc077291ab045280f44fe95f7', reg='i7-min-6G60.reg'))
+         res=_ok(md5='710c36032943ec12c09b1f29a6b19c32', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6G60.inf', glulx=True,
          res=_ok(md5='2c69bf065bef9d5b6ddd12b83b846745', md5match='i7-min-6G60:g', reg='i7-min-6G60.reg'))
@@ -773,72 +773,72 @@ class Run_Checksum(TestGroup, key='CHECKSUM'):
          res=_ok(md5='7473b5d5b51682a778551f5841adf16e', reg='i7-min-10.reg'))
 
     Test('Advent.inf', includedir='i6lib-611',
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', zversion=8,
-         res=_ok(md5='7ea18d6a2f7da766cce549cfcaa3b44a', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='6f4cdf56b8da521f9bb8324981b7ade4', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', glulx=True,
          res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, reg='Advent-g.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', zversion=8, strict=False,
-         res=_ok(md5='fc105a4024a59e0ff15e302d57155776', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='bafca891649c0a4b568a377a68ce078e', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', glulx=True, strict=False,
          res=_ok(md5='27837de129ec0b6ac57cb88b22c85023', warnings=0, reg='Advent-g.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', zversion=8, debug=True,
-         res=_ok(md5='b66d0af02b0716e8d0a68bf343a67115', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='112e6982d751bb8c78a95ccdb219b98f', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', glulx=True, debug=True,
          res=_ok(md5='e472575804f7fb5325f3f0527fb9f8d2', warnings=0, reg='Advent-g.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', infix=True,
-         res=_ok(md5='03ef1fdadf0a389220c7ce0204741f88', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='bde1106656e789fc0c5a2e03bd62a0ac', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-6.12.6',
-         res=_ok(md5='d9729da5b8d8b8b419298ca985d42347', warnings=0))
+         res=_ok(md5='6c797ff5514724f82c507ff50d46055e', warnings=0))
 
     Test('Advent.inf', includedir='i6lib-6.12.6', glulx=True,
          res=_ok(md5='c4bd486a6a1ff53ce9d8965f98921684', warnings=1))
 
     Test('box_quote_test.inf', includedir='i6lib-611',
-         res=_ok(md5='978db958d32c55954463576b310afaca', warnings=0))
+         res=_ok(md5='9467dd4bd2395e7fe4247b3a13bc3bad', warnings=0))
 
     Test('cloak-metro84-v3test.inf', zversion=3, economy=False,
-         res=_ok(md5='af7d07712bb76d70afdac7b7424ec062', warnings=2, reg='cloak-metro84.reg'))
+         res=_ok(md5='13008a398e302ef80eab3d5b348af02d', warnings=2, reg='cloak-metro84.reg'))
 
     Test('cloak-metro84-v3test.inf', zversion=4, economy=False,
-         res=_ok(md5='6493b2c2704f15ec99ac753e52069d3d', warnings=2, reg='cloak-metro84.reg'))
+         res=_ok(md5='767010206087f3e143017624bb17f885', warnings=2, reg='cloak-metro84.reg'))
 
     Test('cloak-metro84-v3test.inf', zversion=5, economy=False,
-         res=_ok(md5='bdf521b5b77496be7ffb6577be5dd49e', warnings=2, reg='cloak-metro84.reg'))
+         res=_ok(md5='bf23f522914fd14a206b728c98cac849', warnings=2, reg='cloak-metro84.reg'))
 
     Test('cloak-metro84-v3test.inf', zversion=3, economy=True,
-         res=_ok(md5='53a74ec4bb3d1e7b033a755a3a924a8d', warnings=2, reg='cloak-metro84.reg'))
+         res=_ok(md5='969af6416274b93230681a93a62eb86c', warnings=2, reg='cloak-metro84.reg'))
 
     Test('cloak-metro84-v3test.inf', zversion=4, economy=True,
-         res=_ok(md5='3ceaefd25c9b1719a50f39da8bced00d', warnings=2, reg='cloak-metro84.reg'))
+         res=_ok(md5='963df4963b54c479c7dfcf354574de2f', warnings=2, reg='cloak-metro84.reg'))
 
     Test('cloak-metro84-v3test.inf', zversion=5, economy=True,
-         res=_ok(md5='77d52387e849ef4b8d5fb393d663cec6', warnings=2, reg='cloak-metro84.reg'))
+         res=_ok(md5='51df85b40204a7b16fee32f7cc79b640', warnings=2, reg='cloak-metro84.reg'))
 
     Test('library_of_horror-16.inf', includedir='punylib-16', zversion=3,
-         res=_ok(md5='39ef33340670084b98af8ad35932597e'))
+         res=_ok(md5='011db8c9719286abd71aa44d3042dcd3'))
 
     Test('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'OMIT_UNUSED_ROUTINES':1},
-         res=_ok(md5='ea7735372b96d7df9d1c687625db603b'))
+         res=_ok(md5='ec26f84ee28489482fe5afc71ce35e8a'))
 
     # OMIT_UNUSED_ROUTINES is set in the source
     Test('library_of_horror-36.inf', includedir='punylib-36', zversion=3,
-         res=_ok(md5='d5d0e2c1b5b816301f6a2fd0b97295c7', reg='library_of_horror.reg'))
+         res=_ok(md5='74f4ab84454d6afecd2ce7de7a37e804', reg='library_of_horror.reg'))
 
     # OMIT_UNUSED_ROUTINES is set in the source; GV3 is set in the library.
     Test('library_of_horror-60.inf', includedir='punylib-60', zversion=3,
-         res=_ok(md5='b2fdf970847c4467119c3f13543b3ee1', reg='library_of_horror.reg'))
+         res=_ok(md5='288915fc2fcfc2eca9ed4001ed5b427c', reg='library_of_horror.reg'))
     
     Test('library_of_horror-60.inf', includedir='punylib-60', zversion=3, memsettings={'GRAMMAR_META_FLAG':1},
-         res=_ok(md5='4ed5aeefb91710dd362089306c84296e', md5match='library_of_horror-60:meta=1', reg='library_of_horror.reg'))
+         res=_ok(md5='52454c4b4f9e9903a2463647807ea562', md5match='library_of_horror-60:meta=1', reg='library_of_horror.reg'))
 
 
 class Run_Dict(TestGroup, key='DICT'):
@@ -908,7 +908,7 @@ class Run_Dict(TestGroup, key='DICT'):
          res=_ok(md5='8eed22965d44d92bb5061ea9fceac172'))
 
     Test('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_LESS_DICT_DATA':1},
-         res=_ok(md5='4b96bed3903697a235fa54f556aca55c', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='dc032df6f459d6e8e5642c44cefa9549', warnings=0, reg='Advent-z.reg'))
 
     Test('dict-sysconst-test.inf',
          res=_ok(md5='47b62a91364d91a17305d716201cd3fc', reg='allpass.reg'))
@@ -1022,7 +1022,7 @@ class Run_Dict(TestGroup, key='DICT'):
          res=_ok(md5='d3def326e708a7848c7257696e74f518'))
     
     Test('Advent.inf', includedir='i6lib-611w,i6lib-611',
-         res=_ok(md5='3aaf39e4a4a63ecaf248a987f23828c2', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='2239487327f0f0464c10f2c9df9de426', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611w,i6lib-611', glulx=True,
          res=_ok(md5='de05c4c19f5196fc887dc6e377792603', warnings=0, reg='Advent-g.reg'))
@@ -1149,11 +1149,11 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
 
     # Same as i7-min-6G60.inf, except we set the grammar by option
     Test('i7-min-6G60-gvopt.inf',
-         res=_ok(md5='fa69553d9e2a5917928b6d1b30b38c0f', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
+         res=_ok(md5='d6ceb15cfaea5e2bc4bee66c1b192a40', md5match='i7-min-6G60:z', reg='i7-min-6G60.reg'))
 
     # Advent with GRAMMAR_META_FLAG should run correctly
     Test('Advent.inf', includedir='i6lib-611', memsettings={'GRAMMAR_META_FLAG':1},
-         res=_ok(md5='be866e8bcf38c83c2be6c4f612ec1f7c', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='66325f07a5ac0bd833ed4b9e6ade60cf', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', glulx=True, memsettings={'GRAMMAR_META_FLAG':1},
          res=_ok(md5='56b547a1d720a4e86c68fcd4d5071bcf', warnings=0, reg='Advent-g.reg'))
@@ -1261,18 +1261,18 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
     
     # Compile with the GV3 parser.
     Test('Advent.inf', includedir='i6lib-611gv3,i6lib-611',
-         res=_ok(md5='fea479b76a3aa48b76f3628f05461aa6', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='d2e1cc8cd038905db0a2fd4b3383b8d1', warnings=0, reg='Advent-z.reg'))
 
     # Compile with GRAMMAR_META_FLAG
     Test('library_of_horror-60.inf', includedir='punylib-60meta,punylib-60', zversion=3,
-         res=_ok(md5='4ed5aeefb91710dd362089306c84296e', md5match='library_of_horror-60:meta=1'))
+         res=_ok(md5='52454c4b4f9e9903a2463647807ea562', md5match='library_of_horror-60:meta=1'))
 
     # Compile with the modified parser; meta verbs should be meta.
     Test('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True,
-         res=_ok(md5='9fb9f503734f7b5e56dc51b214ba7fe4', md5match='withdaemon:z:meta=1', warnings=0))
+         res=_ok(md5='19f9bb3f2f79e820183f04d84e91ac02', md5match='withdaemon:z:meta=1', warnings=0))
     
     Test('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', debug=True, define={'SET_META_CONST':None},
-         res=_ok(md5='9fb9f503734f7b5e56dc51b214ba7fe4', md5match='withdaemon:z:meta=1', warnings=0))
+         res=_ok(md5='19f9bb3f2f79e820183f04d84e91ac02', md5match='withdaemon:z:meta=1', warnings=0))
     
     Test('withdaemon.inf', includedir='i6lib-611meta,i6lib-611', memsettings={'GRAMMAR_META_FLAG':1}, debug=True, glulx=True,
          res=_ok(md5='d5a9fec733f869815f7bca9dec99501d', md5match='withdaemon:g:meta=1', warnings=0))
@@ -1283,16 +1283,16 @@ class Run_Grammar(TestGroup, key='GRAMMAR'):
     
     # All of the following should compile the same.
     Test('verbclash.inf', includedir='i6lib-611', define={'EXTENDLAST':None},
-         res=_ok(md5='fb7fb5f6e80917a8ce87515d0a9038c1', md5match='verbclash', warnings=0))
+         res=_ok(md5='7ed444b5d0615fa14ff1903d4ce62312', md5match='verbclash', warnings=0))
     
     Test('verbclash.inf', includedir='i6lib-611', define={'EXACTSAME':None},
-         res=_ok(md5='fb7fb5f6e80917a8ce87515d0a9038c1', md5match='verbclash', warnings=1))
+         res=_ok(md5='7ed444b5d0615fa14ff1903d4ce62312', md5match='verbclash', warnings=1))
     
     Test('verbclash.inf', includedir='i6lib-611', define={'CASESAME':None},
-         res=_ok(md5='fb7fb5f6e80917a8ce87515d0a9038c1', md5match='verbclash', warnings=1))
+         res=_ok(md5='7ed444b5d0615fa14ff1903d4ce62312', md5match='verbclash', warnings=1))
     
     Test('verbclash.inf', includedir='i6lib-611', define={'TRUNCSAME':None},
-         res=_ok(md5='fb7fb5f6e80917a8ce87515d0a9038c1', md5match='verbclash', warnings=1))
+         res=_ok(md5='7ed444b5d0615fa14ff1903d4ce62312', md5match='verbclash', warnings=1))
     
     Test('verbclash.inf', includedir='i6lib-611', define={'DIFFERENTVERBS1':None},
          res=_error())
@@ -1890,16 +1890,16 @@ class Run_Veneer(TestGroup, key='VENEER'):
          res=_ok())
 
     Test('base_class_prop.inf', zversion=3, includedir='punylib-36',
-         res=_ok(md5='524277179fc34ddf6a61a95dc34613e0', reg='base_class_prop.reg'))
+         res=_ok(md5='bfa1d272848c604e57a6c2d9f0975ad3', reg='base_class_prop.reg'))
     
     Test('base_class_prop.inf', zversion=5, includedir='punylib-36',
-         res=_ok(md5='d1d27db99cc068eb37345cb8860c06e9', reg='base_class_prop.reg'))
+         res=_ok(md5='972cfc0af868f194bffa62bd5b06c39e', reg='base_class_prop.reg'))
     
     Test('base_class_prop_2.inf', zversion=3, includedir='punylib-36',
-         res=_ok(md5='8d57de74d7170b286fc4e20bf593369c', reg='base_class_prop_2.reg'))
+         res=_ok(md5='70f4264c0e782d756ecc3414ed184fc8', reg='base_class_prop_2.reg'))
     
     Test('base_class_prop_2.inf', zversion=5, includedir='punylib-36',
-         res=_ok(md5='31d88f07501dbfacf154817ae021a7bd', reg='base_class_prop_2.reg'))
+         res=_ok(md5='c43fe796433d8a7061a41db35200e5d6', reg='base_class_prop_2.reg'))
     
     Test('obj_prop_test.inf',
          res=_ok(md5='f7f2e5aeda6d8a0d00b96f1364b4ad17', reg='obj_prop_test-z.reg'))
@@ -2229,16 +2229,16 @@ class Run_Prune(TestGroup, key='PRUNE'):
     
     
     Test('tasksacktest.inf', includedir='i6lib-611',
-         res=_ok(md5='34e7ec236c4d6d7a00bc5e10af939f76', reg='tasksacktest.reg'))
+         res=_ok(md5='92a1750af00067763854733f8658cac9', reg='tasksacktest.reg'))
 
     Test('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_TASKS':None },
-         res=_ok(md5='c3fbb63eea333ea3326f92ec01e19d42', reg='tasksacktest-t.reg'))
+         res=_ok(md5='e0c3151030443510918c3013de792f15', reg='tasksacktest-t.reg'))
 
     Test('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None },
-         res=_ok(md5='031d2c3e545b287b1696e746d7986de9', reg='tasksacktest-s.reg'))
+         res=_ok(md5='9fe7290c0b698065153389ef7fc403d0', reg='tasksacktest-s.reg'))
 
     Test('tasksacktest.inf', includedir='i6lib-611', define={ 'COMPILE_SACK':None, 'COMPILE_TASKS':None },
-         res=_ok(md5='64296327ef40e731545848e5b54c7638', reg='tasksacktest-st.reg'))
+         res=_ok(md5='83bda546bda8676e70811042079d55d3', reg='tasksacktest-st.reg'))
 
     Test('tasksacktest.inf', includedir='i6lib-611', glulx=True,
          res=_ok(md5='f249971ea038f216494699e15dc79c0d', reg='tasksacktest.reg'))
@@ -2434,16 +2434,16 @@ class Run_FwConst(TestGroup, key='FWCONST'):
 
 class Run_DebugFile(TestGroup, key='DEBUGFILE'):
     Test('Advent.inf', includedir='i6lib-611', debugfile=True,
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, debugfile='38388187e70bd8a40007f53dd08fcb28'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, debugfile='38388187e70bd8a40007f53dd08fcb28'))
 
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, glulx=True,
          res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, debugfile='1f51de406031f1d8a44377e3351d80d7'))
 
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'OMIT_SYMBOL_TABLE':1},
-         res=_ok(md5='410f302b1e1b0702f8d016d6f31975d0', warnings=0, debugfile='56322b9201b6adebce61ca8df26ee55e'))
+         res=_ok(md5='73d30a4be4e843782223c1199131b95c', warnings=0, debugfile='56322b9201b6adebce61ca8df26ee55e'))
 
     Test('Advent.inf', includedir='i6lib-611', debugfile=True, memsettings={'GRAMMAR_META_FLAG':1},
-         res=_ok(md5='be866e8bcf38c83c2be6c4f612ec1f7c', warnings=0, debugfile='228a1ff6652e286b9e4f49a2b562ad37'))
+         res=_ok(md5='66325f07a5ac0bd833ed4b9e6ade60cf', warnings=0, debugfile='228a1ff6652e286b9e4f49a2b562ad37'))
 
     Test('undefdefault.inf', debugfile=True,
          res=_ok(md5='90866a483312a4359bc00db776e6eed4', warnings=0, debugfile='7af465341b1f20bd9b684e7442468db9'))
@@ -2451,10 +2451,10 @@ class Run_DebugFile(TestGroup, key='DEBUGFILE'):
 
 class Run_TranscriptFile(TestGroup, key='TRANSCRIPTFILE'):
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True,
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, transcriptfile='cea5c49f474a3af53aacc6c62eb71f86'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, transcriptfile='cea5c49f474a3af53aacc6c62eb71f86'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, memsettings={'TRANSCRIPT_FORMAT':1},
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z', warnings=0, transcriptfile='81c825e994d5ed82b1be9eece7b0f85d'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z', warnings=0, transcriptfile='81c825e994d5ed82b1be9eece7b0f85d'))
     
     Test('Advent.inf', includedir='i6lib-611', transcriptfile=True, glulx=True,
          res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g', warnings=0, transcriptfile='f9a6cec6d2e674ab0f5a6c1b230fb232'))
@@ -2646,7 +2646,7 @@ class Run_Abbreviations(TestGroup, key='ABBREVIATIONS'):
          res=_ok(reg='abbrevtest-squiggle.reg'))
 
     Test('Advent-abbrev.inf', includedir='i6lib-611', economy=True,
-         res=_ok(md5='02f642b1fb24e14522fa7e9d126fde9f', reg='Advent-z.reg'))
+         res=_ok(md5='85bfc0fccd42e954f49d19a32e0f2064', reg='Advent-z.reg'))
     
     Test('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True,
          res=_ok(md5='bec3db86580b8bb219369992e504a92d', reg='Advent-g.reg'))
@@ -3126,13 +3126,13 @@ class Run_Max_Dynamic_Strings(TestGroup, key='MAX_DYNAMIC_STRINGS'):
     
 class Run_Max_Inline_String(TestGroup, key='MAX_INLINE_STRING'):
     Test('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':64},
-         res=_ok(md5='4f2e4a02974e289c9bad777505ea42e0', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='bcc522cfeeb05fd233870383f751a93e', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':800},
-         res=_ok(md5='dd8b5f0a87714ffa9b9cff3c93693c2c', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='3e65686fc36976306065ac21eebce8ea', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_MAX_INLINE_STRING':10000},
-         res=_ok(md5='dd8b5f0a87714ffa9b9cff3c93693c2c', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='3e65686fc36976306065ac21eebce8ea', warnings=0, reg='Advent-z.reg'))
 
     Test('max_inline_string_test.inf',
          res=_ok(warnings=0))
@@ -3159,19 +3159,19 @@ class Run_Max_Abbrevs(TestGroup, key='MAX_ABBREVS'):
          res=_ok(md5='443bdf885069cea19b251c7d03866be3'))
     
     Test('Advent-abbrev.inf', includedir='i6lib-611',
-         res=_ok(md5='39e332cb533985f5fd22a76cb1b93b45', md5match='Advent:z'))
+         res=_ok(md5='02f786431a0f0ac51bb945cf736bd6d9', md5match='Advent:z'))
     
     Test('Advent-abbrev.inf', includedir='i6lib-611', glulx=True,
          res=_ok(md5='3bd969ddadb139f028e9cc6d0d5534cc', md5match='Advent:g'))
     
     Test('Advent-abbrev.inf', includedir='i6lib-611', economy=True,
-         res=_ok(md5='02f642b1fb24e14522fa7e9d126fde9f'))
+         res=_ok(md5='85bfc0fccd42e954f49d19a32e0f2064'))
     
     Test('Advent-abbrev.inf', includedir='i6lib-611', glulx=True, economy=True,
          res=_ok(md5='bec3db86580b8bb219369992e504a92d'))
     
     Test('i7-min-6G60-abbrev.inf', zversion=8, economy=True,
-         res=_ok(md5='07eeab49614b569c002c88ce77d9ac1c', reg='i7-min-6G60.reg'))
+         res=_ok(md5='9dc9e7b74097f6dafd2d787973ead2ce', reg='i7-min-6G60.reg'))
     
     Test('max_abbrevs_test_64.inf', economy=True, memsettings={},
          res=_ok())
@@ -3314,7 +3314,7 @@ class Run_unused_verbs(TestGroup, key='UNUSED_VERBS'):
          res=_ok(warnings=1))
     
     Test('unused_verbs_lib.inf', includedir='i6lib-611',
-         res=_ok(md5='c19bf11522eb25ff304e32c9537ceae4', warnings=2, reg='unused_verbs_lib.reg'))
+         res=_ok(md5='4c02be50d2ef0b15993dab877f6e4475', warnings=2, reg='unused_verbs_lib.reg'))
     
     Test('unused_verbs_lib.inf', includedir='i6lib-611', glulx=True,
          res=_ok(md5='125ee3c3ec1f503fe988630d21cb3023', warnings=2, reg='unused_verbs_lib.reg'))
@@ -3422,13 +3422,13 @@ class Run_Max_zcode_size(TestGroup, key='MAX_ZCODE_SIZE'):
 
 class Run_Omit_Unused_Routines(TestGroup, key='OMIT_UNUSED_ROUTINES'):
     Test('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1},
-         res=_ok(md5='95803b63d07051762ad091c3b4f73877', reg='i7-min-6G60.reg'))
+         res=_ok(md5='d2bbe264d5da008f81998eb33b87d8db', reg='i7-min-6G60.reg'))
 
     Test('i7-min-6G60.inf', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True,
          res=_ok(md5='4678a78a83d070e07599f105086f64ec', reg='i7-min-6G60.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1},
-         res=_ok(md5='ea36b95f4ae4b9b27073d51de0d04310', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='787a04fa8874e740a3cf7b2fb5df2077', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_UNUSED_ROUTINES':1}, glulx=True,
          res=_ok(md5='8095df83b6fb9f88959bb14bb07c6f65', warnings=0, reg='Advent-g.reg'))
@@ -3442,13 +3442,13 @@ class Run_Omit_Unused_Routines(TestGroup, key='OMIT_UNUSED_ROUTINES'):
 
 class Run_Omit_Symbol_Table(TestGroup, key='OMIT_SYMBOL_TABLE'):
     Test('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1},
-         res=_ok(md5='410f302b1e1b0702f8d016d6f31975d0', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='73d30a4be4e843782223c1199131b95c', warnings=0, reg='Advent-z.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', memsettings={'OMIT_SYMBOL_TABLE':1}, glulx=True,
          res=_ok(md5='cd58737aa25c957fa79147aabd3cb5a7', warnings=0, reg='Advent-g.reg'))
 
     Test('library_of_horror-36.inf', includedir='punylib-36', memsettings={'OMIT_SYMBOL_TABLE':1}, zversion=3,
-         res=_ok(md5='0f0557f059a3fa88cf091850d13ae089', reg='library_of_horror.reg'))
+         res=_ok(md5='e8f322ab035ef3951435fe2dbe67fc44', reg='library_of_horror.reg'))
     
     Test('omit-symbol-table-test.inf', memsettings={'OMIT_SYMBOL_TABLE':1},
          res=_ok(md5='4098a8d2602bd004f0c727bf547ecab9', warnings=0))
@@ -3462,16 +3462,16 @@ class Run_ZCode_File_End_Padding(TestGroup, key='ZCODE_FILE_END_PADDING'):
          res=_ok(md5='1847d28cc183ec23c50bd5bca52a1b21'))
 
     Test('i7-min-6G60.inf', memsettings={'ZCODE_FILE_END_PADDING':0},
-         res=_ok(md5='79ff992106e788cb528284389851dbf8', reg='i7-min-6G60.reg'))
+         res=_ok(md5='b733b867a280bebf1ba5373de9e78b71', reg='i7-min-6G60.reg'))
 
     Test('Advent.inf', includedir='i6lib-611', zversion=8,
-         res=_ok(md5='7ea18d6a2f7da766cce549cfcaa3b44a', reg='Advent-z.reg'))
+         res=_ok(md5='6f4cdf56b8da521f9bb8324981b7ade4', reg='Advent-z.reg'))
 
     Test('library_of_horror-16.inf', includedir='punylib-16', zversion=3, memsettings={'ZCODE_FILE_END_PADDING':0},
-         res=_ok(md5='00e99576ac5b98e79325c624ad7e18b0'))
+         res=_ok(md5='8ae29e08b22dd53875f7e84ffed26983'))
 
     Test('library_of_horror-36.inf', includedir='punylib-36', memsettings={'ZCODE_FILE_END_PADDING':0}, zversion=3,
-         res=_ok(md5='44cd1518499f351ee85c99f42dee1609', reg='library_of_horror.reg'))
+         res=_ok(md5='644ddfb4a320491904cd7b27bbc4b713', reg='library_of_horror.reg'))
 
 
 class Run_ZCode_Compact_Globals(TestGroup, key='ZCODE_COMPACT_GLOBALS'):
@@ -3533,10 +3533,10 @@ class Run_ZCode_Compact_Globals(TestGroup, key='ZCODE_COMPACT_GLOBALS'):
 
     
     Test('Advent.inf', includedir='i6lib-611', memsettings={'ZCODE_COMPACT_GLOBALS':1},
-         res=_ok(md5='6473a6b9fcf388272a136b30f84db6ab', warnings=0, reg='Advent-z.reg'))
+         res=_ok(md5='61cce9fc0aa8494c4107f9386955adec', warnings=0, reg='Advent-z.reg'))
 
     Test('library_of_horror-36.inf', includedir='punylib-36', zversion=3, memsettings={'ZCODE_COMPACT_GLOBALS':1},
-         res=_ok(md5='e9f579e77c21cbfc57811cbd2319737e', reg='library_of_horror.reg'))
+         res=_ok(md5='4e46447f8c9081c7311be9a65f0307b3', reg='library_of_horror.reg'))
 
 
 test_catalog = [ (grp.key, grp) for grp in TestGroup.groups ]
